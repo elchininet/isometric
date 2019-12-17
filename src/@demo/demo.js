@@ -1,0 +1,40 @@
+import '../../node_modules/google-code-prettify/bin/run_prettify.min';
+import '../../node_modules/google-code-prettify/bin/prettify.min.css';
+import './tomorrow.min.css';
+import './styles.scss';
+import { Isometric } from '../';
+import demo1 from './demo1';
+import demo2 from './demo2';
+
+const functioToString = (fn) => {
+    const article = document.createElement('article');
+    const pre = document.createElement('pre');
+    article.classList.add('function-container');
+    pre.classList.add('prettyprint');
+    article.appendChild(pre);
+    pre.innerHTML = fn.toString();
+    return article;
+};
+
+const demos = new Map([
+    ['demo1', demo1],
+    ['demo2', demo2]
+]);
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    demos.forEach((module, div) => {
+        const demo = document.getElementById(div);
+        const container = document.createElement('div');
+        const wrapper = document.createElement('div');
+        
+        container.classList.add('demo-container');
+        wrapper.classList.add('demo-wrapper');
+
+        module(Isometric, wrapper);
+        container.appendChild(wrapper);
+        demo.appendChild(container);
+        demo.appendChild(functioToString(module));
+    });
+
+});

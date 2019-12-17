@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "module": "commonjs",
+        "target": "es5",
+        "moduleResolution": "node",
+        "declaration": true,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "baseUrl": "./src",
+        "paths": {
+            "@types": ["@types"],
+            "@constants": ["@constants"],
+            "@utils": ["@utils"],         
+            "@components/*": ["@components/*"]
+        }
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
+}

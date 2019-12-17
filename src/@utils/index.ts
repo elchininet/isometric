@@ -1,0 +1,50 @@
+import { Point } from '@types';
+import { SQRT3, DECIMALS } from '@constants';
+import { CommandPoint, Command } from '@components/IsometricPath';
+
+export interface IsometricPoint {
+    x: number;
+    y: number;
+}
+
+export interface SVGProps {
+    [key: string]: string;
+}
+
+export const round = (n: number, d: number): number => {
+    const exp = Math.pow(10, d);
+    return Math.round(n * exp) / exp;
+};
+
+export const toIsometricPoint = (point: Point, scale: number): IsometricPoint => {
+    return {
+        x: (point.r - point.l) * scale * SQRT3,
+        y: ((point.r + point.l) / 2 - point.t) * scale
+    };
+};
+
+export const addSVGProperties = (svg: SVGElement, props: SVGProps): void => {
+    Object.keys(props).forEach((prop: string): void => {
+        svg.setAttributeNS(null, prop, props[prop]);
+    });
+};
+
+export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: number, scale: number): string => {
+    const svgPaths = commands.map((c: CommandPoint) => {
+        const point = toIsometricPoint(c.point, scale);
+        const x = round(centerX + point.x, DECIMALS);
+        const y = round(centerY + point.y, DECIMALS);
+        switch (c.command) {
+            case Command.move:
+                return `M${x},${y}`;
+            case Command.line:
+                return `L${x},${y}`;
+            default:
+                return '';
+        }
+    });
+    if (svgPaths.length) {
+        return `${svgPaths.join(' ')}z`;
+    }
+    return '';
+};

@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i&display=swap');
+
+body,
+html {
+  font-family: Roboto;
+  height: 100%;
+}
+
+body {
+  background-color: #FFF;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  padding: 2em;
+  .logo {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 500px;
+  }
+}
+
+.separator {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #fff;
+  font-family: Roboto;
+  font-weight: 300;
+  margin: 2em 2em 1.5em;
+  text-align: center;
+}
+
+.demo {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1.5em 2em 3em;
+
+  article {
+    font-size: 13px;
+    overflow-x: auto;
+    width: 50%;
+    padding: 2em;
+
+    @media screen and (max-width: 768px) {
+      font-size: 11px;
+      width: 100%;
+    }
+  }
+
+  .prettyprint {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &.demo-square .demo-wrapper {
+    padding-top: 100%;
+  }
+
+  &.demo-square-half .demo-wrapper {
+    padding-top: 50%;
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.demo-container {
+  max-width: 500px;
+  position: relative;
+  width: 100%;
+}
+
+.demo-wrapper {
+  width: 100%;
+
+  & > svg {
+    width: 100%;
+  }
+}
+
+.github-buttons {
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+
+  span {
+    padding: 0 0.5em;
+  }
+}
