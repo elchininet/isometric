@@ -41,7 +41,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            title: 'IsometricJS demo',
+            title: 'Isometric demo',
             logo: 'images/logo.svg',
             favicon: './src/@demo/favicon.png',
             template: 'src/@demo/demo.html'

@@ -1,17 +1,17 @@
-import { SVG_NAMESPACE, SVG_ELEMENTS } from '@constants';
-import { addSVGProperties, getSVGPath } from '@utils';
-import { Graphic, GraphicProps } from '@components/Graphic';
 import { Command, CommandPoint } from './types';
+import { SVG_NAMESPACE, SVG_ELEMENTS } from '@constants';
+import { Graphic, GraphicProps } from '@components/Graphic';
+import { addSVGProperties, getSVGPath } from '@utils';
+import { GlobalData } from '@global';
 
 export class IsometricPath extends Graphic {
 
     public constructor(props: GraphicProps) {
+
         super(props);
         this.commands = [];
-        this.pathX = 0;
-        this.pathY = 0;
-        this.pathScale = 1;
         this.path = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.path);
+
         addSVGProperties(this.path, {
             fill: this.fillColor,
             stroke: this.strokeColor,
@@ -21,26 +21,31 @@ export class IsometricPath extends Graphic {
             'stroke-linejoin': this.strokeLinejoin,
             'stroke-width': `${this.strokeWidth}`
         });
+
     }
 
     private commands: CommandPoint[];
     private path: SVGPathElement;
-    private pathX: number;
-    private pathY: number;
-    private pathScale: number;
+    private commandsReg = /(M|L)\s*(\d+\.?\d*|\.\d+)\s*,\s*(\d+\.?\d*|\.\d+)\s*,\s*(\d+\.?\d*|\.\d+)/g;
 
-    private updatePath(): void {
-        addSVGProperties(this.path, {
-            d: getSVGPath(this.commands, this.pathX, this.pathY, this.pathScale)
-        });
+    public update(): void {
+        if (this.path.parentNode) {
+            addSVGProperties(this.path, {
+                d: getSVGPath(this.commands, GlobalData.centerX, GlobalData.centerY, GlobalData.scale)
+            });
+        }
+    }
+
+    public getPath(): SVGPathElement {
+        return this.path;
     }
 
     public moveTo(right: number, left: number, top: number): IsometricPath {
         this.commands.push({
             command: Command.move,
             point: { r: right, l: left, t: top }
-        });
-        this.updatePath();
+        });        
+        this.update();
         return this;
     }
 
@@ -48,8 +53,8 @@ export class IsometricPath extends Graphic {
         this.commands.push({
             command: Command.line,
             point: { r: right, l: left, t: top }
-        });
-        this.updatePath();
+        });       
+        this.update();
         return this;
     }
 
@@ -61,30 +66,19 @@ export class IsometricPath extends Graphic {
         return this.lineTo(right, left, top);
     }
 
-    public set x(value: number) {
-        this.pathX = value;
-        this.updatePath();
-    }
-
-    public set y(value: number) {
-        this.pathY = value;
-        this.updatePath();
-    }
-
-    public set scale(value: number) {
-        this.pathScale = value;
-        this.updatePath();
-    }
-
-    public setProps(x: number, y: number, scale: number): void {
-        this.pathX = x;
-        this.pathY = y;
-        this.pathScale = scale;
-        this.updatePath();
-    }
-
-    public get svgPath(): SVGPathElement {
-        return this.path;
+    public draw(commands: string): void {
+        let array;
+        while ((array = this.commandsReg.exec(commands)) !== null) {
+            switch(array[1]) {
+                case 'M':
+                    this.moveTo(+array[2], +array[3], +array[4]);
+                    break;
+                case 'L':
+                    this.lineTo(+array[2], +array[3], +array[4]);
+                    break;
+            }
+        }
+        
     }
 
 }

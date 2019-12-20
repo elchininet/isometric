@@ -1,10 +1,10 @@
 <p align="center">
     <a href="https://elchininet.github.io/isometric/">
-        <img src="./src/@demo/images/logo.png?raw=true" width="335" title="isometric" />
+        <img src="./src/@demo/images/logo.png?raw=true" width="400" title="isometric" />
     </a>
 </p>
 
-A JavaScript library written in TypeScript to create isometric projections using SVGs
+A lightweight JavaScript library written in TypeScript to create isometric projections using SVGs
 
 ## Demo
 
@@ -28,7 +28,7 @@ yarn add @elchininet/isometric
 
 It is possible to include a compiled version of the package directly in an HTML file. It will create a global `Isometric` object that can be accessed from anywhere in your JavaScript code.
 
-1. Copy the JavaScript file `isometricjs.web.js`, located in the `dist` folder
+1. Copy the JavaScript file `isometric.web.js`, located in the `dist` folder
 2. Put it in the folder that you prefer in your web server
 3. Include it in your HTML file
 
@@ -149,10 +149,14 @@ const path = new IsometricPath([properties]);
 | lineTo(right, left, top)    | Create a line from the current position to the designated isometric point
 | mt(right, left, top)        | Alias of the moveTo method
 | lt(right, left, top)        | Alias of the lineTo method
+| draw(commands)              | Draws a path using SVG-like commands ([Check demo3][4] to see an example)
+
+
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
 [2]: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linecap
 [3]: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin
+[4]: https://elchininet.github.io/isometric/#demo3
 
 
 

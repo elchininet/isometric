@@ -1,26 +1,23 @@
-import { SVG_NAMESPACE, SVG_ELEMENTS, SVG_PROPERTIES } from '@constants';
+import { SVG_NAMESPACE, SVG_ELEMENTS, SVG_PROPERTIES, DEFAULT_WIDTH, DEFAULT_HEIGHT } from '@constants';
 import { Colors } from '@types';
 import { IsometricCanvasProps } from './types';
 import { IsometricPath } from '@components/IsometricPath';
 import { addSVGProperties } from '@utils';
+import { GlobalData } from '@global';
 
 const defaultProps: IsometricCanvasProps = {
     devMode: false,
     backgroundColor: Colors.white,
     scale: 1,
-    height: 480,
-    width: 640
+    height: DEFAULT_HEIGHT,
+    width: DEFAULT_WIDTH
 };
 
 export class IsometricCanvas {
 
     public constructor(container: Node, props: IsometricCanvasProps = {}) {
         this.props = { ...defaultProps, ...props };
-
-        this.centerY = this.height / 2;
-        this.centerX = this.width / 2;
         this.paths = [];
-
         this.svg = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.svg);
 
         addSVGProperties(this.svg, {
@@ -41,11 +38,13 @@ export class IsometricCanvas {
 
         this.svg.appendChild(background);
         container.appendChild(this.svg);
+
+        GlobalData.setSizes( this.props.width, this.props.height );
+        GlobalData.scale = this.props.scale;
+
     }
     
     private props: IsometricCanvasProps;
-    private centerX: number;
-    private centerY: number;
     private paths: IsometricPath[];
     private svg: SVGElement;
 
@@ -66,9 +65,9 @@ export class IsometricCanvas {
     }
 
     public addPath(path: IsometricPath): IsometricCanvas {
-        path.setProps(this.centerX, this.centerY, this.scale);
         this.paths.push(path);
-        this.svg.appendChild(path.svgPath);
+        this.svg.appendChild(path.getPath());
+        path.update();
         return this;
     }
 

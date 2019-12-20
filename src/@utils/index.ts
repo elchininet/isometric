@@ -16,7 +16,7 @@ export const round = (n: number, d: number): number => {
     return Math.round(n * exp) / exp;
 };
 
-export const toIsometricPoint = (point: Point, scale: number): IsometricPoint => {
+export const getPointFromIsometricPoint = (point: Point, scale: number): IsometricPoint => {
     return {
         x: (point.r - point.l) * scale * SQRT3,
         y: ((point.r + point.l) / 2 - point.t) * scale
@@ -31,7 +31,7 @@ export const addSVGProperties = (svg: SVGElement, props: SVGProps): void => {
 
 export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: number, scale: number): string => {
     const svgPaths = commands.map((c: CommandPoint) => {
-        const point = toIsometricPoint(c.point, scale);
+        const point = getPointFromIsometricPoint(c.point, scale);
         const x = round(centerX + point.x, DECIMALS);
         const y = round(centerY + point.y, DECIMALS);
         switch (c.command) {

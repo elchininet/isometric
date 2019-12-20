@@ -19,7 +19,7 @@ WebpackCconfig.module.rules.push(
 );
 WebpackCconfig.plugins = [
     new HtmlWebpackPlugin({
-        title: 'IsometricJS demo',
+        title: 'Isometric demo',
         logo: './src/@demo/images/logo.svg',
         favicon: './src/@demo/favicon.png',
         template: 'src/@demo/demo.html'
