@@ -82,81 +82,238 @@ Opens a development server that provides live reloading using [webpack-dev-serve
 
 ## API
 
-#### Class IsometricCanvas
+### Class IsometricCanvas
 
-This is the base class, is the one that creates the isometric canvas (an SVG object)
+This is the base class, it creates an isometric canvas (an SVG object)
 
 ```javascript
 const isometric = new IsometricCanvas(element[, properties]);
 ```
 
-##### Class instance parameters
+**Parameters:**
 
-| Instance parameters | Description                                              |
-| ------------------- | -------------------------------------------------------- |
-| element             | The HTML element in which the isometric will be inserted
-| properties          | Optional object to set the properties of the isometric canvas
+* `element`\
+The DOM element in which the isometric will be inserted
 
-##### Object properties possible values
+* `properties` _(optional)_\
+Object to set the properties of the isometric canvas
 
-| Properties       | Default value | Description                                      |
-| ---------------- | ------------- | ------------------------------------------------ |
-| backgroundColor  | white         | Set the background color of the isometric canvas
-| scale            | 1             | Set how many pixels will be taken by an isometric unit
-| height           | 480           | Set the height of the isometric canvas
-| width            | 640           | Set the width of the isometric canvas
+  * `backgroundColor` _(string)_\
+  Sets the background color of the isometric canvas\
+  Default value: "white"
+  * `scale` _(number)_\
+  Sets the scale multiplier of each isometric unit\
+  Default value: 1
+  * `height` _(number)_\
+  Sets the height of the isometric canvas\
+  Default value: 480
+  * `width` _(number)_\
+  Sets the width of the isometric canvas
+  Default value: 640
 
-##### Class methods
+**Instance methods:**
 
-| Method                      | Description                                           |
-| --------------------------- | ----------------------------------------------------- |
-| addPath(path)               | Add an isometric path to the isometric canvas
-| addPaths(path1, path2, ...) | Add multiple isometric paths to the isometric canvas
+>All the instance methods return the same instance, so they are chainable.
+
+```javascript
+addPath(path)
+```
+* `path` _(IsometricPath)_\
+Adds an isometric path to the isometric canvas
+
+```javascript
+addPaths(path, path, path...)
+```
+* `path` _(IsometricPath)_\
+Adds multiple isometric paths to the isometric canvas
+
+```javascript
+removePath(path)
+```
+* `path` _(IsometricPath)_\
+Removes an isometric path from the isometric canvas
+
+```javascript
+removePathByIndex(index)
+```
+* `index` _(number)_\
+Removes an isometric path taking into account its index in the paths tree
+
+```javascript
+clear()
+```
+* Cleans the isometric canvas (removes all the isometric paths from it)
+
+**Instance properties:**
+
+```javascript
+backgroundColor
+```
+* _(string)_\
+Gets and sets the background color of the isometric canvas
+
+```javascript
+scale
+```
+* _(number)_\
+Gets and sets the multiplier scale of the isometric canvas
+
+```javascript
+height
+```
+* _(number)_\
+Gets and sets the height of the isometric canvas
+
+```javascript
+width
+```
+* _(number)_\
+Gets and sets the width of the isometric canvas
 
 
-#### Class IsometricPath
+### Class IsometricPath
 
-This is the class to create the different path elements of the isometric canvas
+This is the class to create isometric paths that can be added to the isometric canvas
 
 ```javascript
 const path = new IsometricPath([properties]);
 ```
 
-##### Class instance parameters
+**Parameters:**
 
-| Instance parameters | Description                                              |
-| ------------------- | -------------------------------------------------------- |
-| properties          | Optional object to set the properties<br>of the isometric path
+* `properties` _(optional)_\
+Object to set the properties of the isometric path
 
-##### Object properties possible values
+  * `fillColor` _(string)_\
+  Sets the fill color of the isometric path\
+  Default value: "white"
+  * `fillOpacity` _(number)_\
+  Sets the fill opacity of the isometric path\
+  Default value: 1
+  * `strokeColor` _(string)_\
+  Sets the stroke color of the isometric path\
+  Default value: "black"
+  * `strokeOpacity` _(number)_\
+  Sets stroke opacity of the isometric path\
+  Default value: 1
+  * `strokeDasharray` _(Array\<number>)_\
+  Sets the [SVG stroke dasharray][1] of the isometric path\
+  Default value: []
+  * `strokeLinecap` _(string)_\
+  Sets the [SVG stroke linecap][2] of the isometric path\
+  Default value: "butt"
+  * `strokeLinejoin` _(string)_\
+  Sets the [SVG stroke linejoin][3] of the isometric path\
+  Default value: "round"
+  * `strokeWidth` _(number)_\
+  Sets the stroke width of the isometric path\
+  Default value: 1
+  
+**Instance methods:**
 
-| Properties       | Default value | Description                                      |
-| ---------------- | ------------- | ------------------------------------------------ |
-| fillColor        | white         | Set the fill color of the isometric path
-| fillOpacity      | 1             | Set the fill opacity of the isometric path
-| strokeColor      | black         | Set the stroke color of the isometric path
-| strokeDasharray  | []            | Set the [SVG stroke dasharray][1] of the isometric path
-| strokeLinecap    | 'butt'        | Set the [SVG stroke linecap][2] of the isometric path
-| strokeLinejoin   | 'round'       | Set the [SVG stroke linejoin][3] of the isometric path
-| strokeOpacity    | 1             | Set the stroke opacity of the isometric path
-| strokeWidth      | 1             | Set the stroke width of the isometric path
+>All the instance methods return the same instance, so they are chainable.
 
-##### Class methods
+```javascript
+getPath()
+```
+* Returns the SVG path object
 
-| Method                      | Description                                           |
-| --------------------------- | ----------------------------------------------------- |
-| moveTo(right, left, top)    | Move to an isometric point
-| lineTo(right, left, top)    | Create a line from the current position to the designated isometric point
-| mt(right, left, top)        | Alias of the moveTo method
-| lt(right, left, top)        | Alias of the lineTo method
-| draw(commands)              | Draws a path using SVG-like commands ([Check demo3][4] to see an example)
+```javascript
+update()
+```
+* Forces a re-render of the SVG path
 
+```javascript
+moveTo(right, left, top)
+```
+* Move the cursor to an isometric point, if the cursor was already in another point, no line is drawn between them.
+	* `right` _(number)_\
+	Right value in the isometric coordinates
+	* `left` _(number)_\
+	Left value in the isometric coordinates
+	* `top` _(number)_\
+	Top value in the isometric coordinates
+    
+```javascript
+lineTo(right, left, top)
+```
+* Draws a line from the previous isometric point to the designated point.
+	* `right` _(number)_\
+	Right value in the isometric coordinates
+	* `left` _(number)_\
+	Left value in the isometric coordinates
+	* `top` _(number)_\
+	Top value in the isometric coordinates
+    
+```javascript
+mt(right, left, top)
+```
+* Alias of `moveTo`.
+
+```javascript
+lt(right, left, top)
+```
+* Alias of `lineTo`.
+
+```javascript
+draw(commands)
+```
+* Draws a line taking into account a series of drawing commands.
+	* `commands` _(string)_\
+    A series of drawing commands. For example, `M0,0,0 L1,1,1`has the same effect as `moveTo(0, 0, 0).lineTo(1, 1, 1)`
+    
+**Instance properties:**
+
+```javascript
+fillColor
+```
+* _(string)_\
+Gets and sets the fill color of the isometric path
+
+```javascript
+fillOpacity
+```
+* _(number)_\
+Gets and sets the fill opacity of the isometric path
+
+```javascript
+strokeColor
+```
+* _(string)_\
+Gets and sets the stroke color of the isometric path
+
+```javascript
+strokeOpacity
+```
+* _(string)_\
+Gets and sets the stroke opacity of the isometric path
+
+```javascript
+strokeDasharray
+```
+* _(Array\<number>)_\
+Gets and sets the [SVG stroke dasharray][1] of the isometric path
+
+```javascript
+strokeLinecap
+```
+* _(string)_\
+Gets and sets the [SVG stroke linecap][2] of the isometric path
+
+```javascript
+strokeLinejoin
+```
+* _(string)_\
+Gets and sets the [SVG stroke linejoin][3] of the isometric path
+
+```javascript
+strokeWidth
+```
+* _(number)_\
+Gets and sets the stroke width of the isometric path
 
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
 [2]: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linecap
 [3]: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin
 [4]: https://elchininet.github.io/isometric/#demo3
-
-
-

@@ -12,7 +12,7 @@ const defaultGraphicProps: GraphicProps = {
     strokeWidth: 1
 };
 
-export class Graphic {
+export abstract class Graphic {
 
     public constructor(props: GraphicProps) {
         this.props = {...defaultGraphicProps, ...props};
@@ -20,12 +20,22 @@ export class Graphic {
 
     protected props: GraphicProps;
 
+    // fillColor
+    protected setFillColor(value: string): void {
+        this.props.fillColor = value;
+    }
+
     public get fillColor(): string {
         return this.props.fillColor;
     }
 
     public set fillColor(value: string) {
-        this.props.fillColor = value;
+        this.setFillColor(value);
+    }
+
+    // fillOpacity
+    protected setFillOpacity(value: number): void {
+        this.props.fillOpacity = value;
     }
 
     public get fillOpacity(): number {
@@ -33,7 +43,12 @@ export class Graphic {
     }
 
     public set fillOpacity(value: number) {
-        this.props.fillOpacity = value;
+        this.setFillOpacity(value);
+    }
+
+    // strokeColor
+    protected setStrokeColor(value: string): void {
+        this.props.strokeColor = value;
     }
 
     public get strokeColor(): string {
@@ -41,7 +56,12 @@ export class Graphic {
     }
 
     public set strokeColor(value: string) {
-        this.props.strokeColor = value;
+        this.setStrokeColor(value);
+    }
+
+    // strokeDasharray
+    protected setStrokeDashArray(value: number[]): void {
+        this.props.strokeDasharray = value;
     }
 
     public get strokeDasharray(): number[] {
@@ -49,7 +69,12 @@ export class Graphic {
     }
 
     public set strokeDasharray(value: number[]) {
-        this.props.strokeDasharray = value;
+        this.setStrokeDashArray(value);
+    }
+
+    // strokeLinecap
+    protected setStrokeLinecap(value: StrokeLinecap): void {
+        this.props.strokeLinecap = LineCap[value];
     }
 
     public get strokeLinecap(): StrokeLinecap {
@@ -57,7 +82,12 @@ export class Graphic {
     }
 
     public set strokeLinecap(value: StrokeLinecap) {
-        this.props.strokeLinecap = LineCap[value];
+        this.setStrokeLinecap(value);
+    }
+
+    // strokeLinejoin
+    protected setStrokeLinejoin(value: StrokeLinejoin): void {
+        this.props.strokeLinejoin = LineJoin[value];
     }
 
     public get strokeLinejoin(): StrokeLinejoin {
@@ -65,7 +95,12 @@ export class Graphic {
     }
 
     public set strokeLinejoin(value: StrokeLinejoin) {
-        this.props.strokeLinejoin = LineJoin[value];
+        this.setStrokeLinejoin(value);
+    }
+
+    // strokeOpacity
+    protected setStrokeOpacity(value: number): void {
+        this.props.strokeOpacity = value;
     }
 
     public get strokeOpacity(): number {
@@ -73,7 +108,12 @@ export class Graphic {
     }
 
     public set strokeOpacity(value: number) {
-        this.props.strokeOpacity = value;
+        this.setStrokeOpacity(value);
+    }
+
+    // strokeWidth
+    protected setStrokeWidth(value: number): void {
+        this.props.strokeWidth = value;
     }
 
     public get strokeWidth(): number {
@@ -81,7 +121,7 @@ export class Graphic {
     }
 
     public set strokeWidth(value: number) {
-        this.props.strokeWidth = value;
+        this.setStrokeWidth(value);
     }
 
 }

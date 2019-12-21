@@ -4,7 +4,12 @@ export default ( Isometric, container ) => {
 
     const { IsometricCanvas, IsometricPath } = Isometric;
 
-    const isometric = new IsometricCanvas(container, {scale: 150, width: 500, height: 320});
+    const isometric = new IsometricCanvas(container, {
+        backgroundColor: '#CCC',
+        scale: 120,
+        width: 500,
+        height: 320
+    });
 
     const right = new IsometricPath();
     const top1 = new IsometricPath();

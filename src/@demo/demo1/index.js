@@ -4,16 +4,16 @@ export default ( Isometric, container ) => {
 
     const { IsometricCanvas, IsometricPath } = Isometric;
 
-    const cube = new IsometricCanvas(container, {scale: 150, width: 500, height: 320});
+    const cube = new IsometricCanvas(container, {
+        backgroundColor: '#CCC',
+        scale: 120,
+        width: 500,
+        height: 320
+    });
 
-    const top = new IsometricPath({ fillColor: '#EEE' });
-    const right = new IsometricPath({ fillColor: '#999' });
-    const left = new IsometricPath({ fillColor: '#CCC' });
-
-    cube
-        .addPath(top)
-        .addPath(right)
-        .addPath(left);
+    const top = new IsometricPath();
+    const right = new IsometricPath();
+    const left = new IsometricPath();
 
     top
         .moveTo(0, 0, 1)
@@ -32,5 +32,10 @@ export default ( Isometric, container ) => {
         .lineTo(1, 1, 0)
         .lineTo(0, 1, 0)
         .lineTo(0, 1, 1);
+
+    cube
+        .addPath(top)
+        .addPath(right)
+        .addPath(left);
 
 };

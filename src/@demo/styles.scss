@@ -45,6 +45,10 @@ h5 {
   justify-content: center;
   padding: 1.5em 2em 3em;
 
+  @media screen and (max-width: 768px) {
+    padding: 0 2em;
+  }
+
   article {
     font-size: 13px;
     overflow-x: auto;
@@ -87,6 +91,11 @@ h5 {
 
   & > svg {
     width: 100%;
+
+    @media screen and (max-width: 768px) {
+      height: 280px;
+    }
+
   }
 }
 
