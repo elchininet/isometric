@@ -33,7 +33,7 @@ It is possible to include a compiled version of the package directly in an HTML 
 3. Include it in your HTML file
 
 ```javascript
-<script src="wherever/you/instelled/isometric.web.js" />
+<script src="wherever/you/installed/isometric.web.js" />
 ```
 
 #### Importing using CommonJS
@@ -143,6 +143,16 @@ Removes an isometric path taking into account its index in the paths tree
 clear()
 ```
 * Cleans the isometric canvas (removes all the isometric paths from it)
+
+```javascript
+addEventListener(type, listener, [useCapture])
+```
+* Sets up a function that will be called whenever the specified event is delivered to the `IsometricCanvas` (the SVG element)
+
+```javascript
+removeEventListener(type, listener, [useCapture])
+```
+* Removes from the `IsometricCanvas` (the SVG element) an event listener previously registered with `addEventListener`
 
 **Instance properties:**
 
@@ -261,6 +271,16 @@ draw(commands)
 * Draws a line taking into account a series of drawing commands.
 	* `commands` _(string)_\
     A series of drawing commands. For example, `M0,0,0 L1,1,1`has the same effect as `moveTo(0, 0, 0).lineTo(1, 1, 1)`
+
+```javascript
+addEventListener(type, listener, [useCapture])
+```
+* Sets up a function that will be called whenever the specified event is delivered to the `IsometricPath` (the SVG path element)
+
+```javascript
+removeEventListener(type, listener, [useCapture])
+```
+* Removes from the `IsometricPath` (the SVG path element) an event listener previously registered with `addEventListener`
     
 **Instance properties:**
 

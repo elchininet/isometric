@@ -4,6 +4,10 @@ export default ( Isometric, container ) => {
 
     const { IsometricCanvas, IsometricPath } = Isometric;
 
+    function toggleColor(evt) {
+        this.fillColor = this.fillColor === 'white' ? '#EEE' : 'white';
+    }
+
     const cube = new IsometricCanvas(container, {
         backgroundColor: '#CCC',
         scale: 120,
@@ -19,19 +23,22 @@ export default ( Isometric, container ) => {
         .moveTo(0, 0, 1)
         .lineTo(1, 0, 1)
         .lineTo(1, 1, 1)
-        .lineTo(0, 1, 1);
+        .lineTo(0, 1, 1)
+        .addEventListener('click', toggleColor, true);
 
     right
         .moveTo(1, 0, 1)
         .lineTo(1, 0, 0)
         .lineTo(1, 1, 0)
-        .lineTo(1, 1, 1);
+        .lineTo(1, 1, 1)
+        .addEventListener('click', toggleColor, true);
 
     left
         .moveTo(1, 1, 1)
         .lineTo(1, 1, 0)
         .lineTo(0, 1, 0)
-        .lineTo(0, 1, 1);
+        .lineTo(0, 1, 1)
+        .addEventListener('click', toggleColor, true);
 
     cube
         .addPath(top)

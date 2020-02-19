@@ -1,5 +1,5 @@
 import { Command, CommandPoint } from './types';
-import { LineCap, LineJoin, StrokeLinecap, StrokeLinejoin } from '@types';
+import { StrokeLinecap, StrokeLinejoin } from '@types';
 import { SVG_NAMESPACE, SVG_ELEMENTS } from '@constants';
 import { Graphic, GraphicProps } from '@components/Graphic';
 import { addSVGProperties, getSVGPath } from '@utils';
@@ -121,6 +121,14 @@ export class IsometricPath extends Graphic {
             }
         }
         
+    }
+
+    public addEventListener(event: string, callback: VoidFunction, useCapture = false): void {
+        this.path.addEventListener(event, callback.bind(this), useCapture);
+    }
+
+    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): void {
+        this.path.removeEventListener(event, callback.bind(this), useCapture);
     }
 
 }

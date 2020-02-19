@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.0] - 2020-02-19
+
+- Add two new methods to the IsometricCanvas class to add and remove event listeners
+- Add two new methods to the IsometricPath class to add and remove event listeners
+- Modified the first demo example to show the usage of the new methods
+
 ## [1.3.0] - 2019-12-20
 
 - IsometricCanvas setter properties now change the SVG element
