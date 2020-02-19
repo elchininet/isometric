@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.4.2] - 2020-02-19
+
+- Return the class instance in the methods addEventListener and removeEventListener of the IsometricCanvas and IsometricPath classes
+
 ## [1.4.0] - 2020-02-19
 
 - Add two new methods to the IsometricCanvas class to add and remove event listeners

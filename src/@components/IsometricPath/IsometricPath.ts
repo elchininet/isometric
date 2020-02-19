@@ -123,12 +123,14 @@ export class IsometricPath extends Graphic {
         
     }
 
-    public addEventListener(event: string, callback: VoidFunction, useCapture = false): void {
+    public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricPath {
         this.path.addEventListener(event, callback.bind(this), useCapture);
+        return this;
     }
 
-    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): void {
+    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricPath {
         this.path.removeEventListener(event, callback.bind(this), useCapture);
+        return this;
     }
 
 }

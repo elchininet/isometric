@@ -149,12 +149,14 @@ export class IsometricCanvas {
         return this;
     }
 
-    public addEventListener(event: string, callback: VoidFunction, useCapture = false): void {
+    public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricCanvas {
         this.svg.addEventListener(event, callback, useCapture);
+        return this;
     }
 
-    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): void {
+    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricCanvas {
         this.svg.removeEventListener(event, callback, useCapture);
+        return this;
     }
 
 }
