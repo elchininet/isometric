@@ -2,9 +2,11 @@
     <a href="https://elchininet.github.io/isometric/">
         <img src="./src/@demo/images/logo.png?raw=true" width="400" title="isometric" />
     </a>
+    <br>
+    A lightweight JavaScript library written in TypeScript to create isometric projections using SVGs
 </p>
 
-A lightweight JavaScript library written in TypeScript to create isometric projections using SVGs
+[![Build Status](https://travis-ci.com/elchininet/isometric.svg?branch=master)](https://travis-ci.com/elchininet/isometric)
 
 ## Demo
 
