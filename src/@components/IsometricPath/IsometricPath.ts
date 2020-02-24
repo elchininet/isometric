@@ -7,7 +7,7 @@ import { GlobalData } from '@global';
 
 export class IsometricPath extends Graphic {
 
-    public constructor(props: GraphicProps) {
+    public constructor(props: GraphicProps = {}) {
 
         super(props);
         this.commands = [];
