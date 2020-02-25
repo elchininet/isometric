@@ -2,7 +2,7 @@ import '../../node_modules/google-code-prettify/bin/run_prettify.min';
 import '../../node_modules/google-code-prettify/bin/prettify.min.css';
 import './tomorrow.min.css';
 import './styles.scss';
-import { Isometric } from '../';
+import * as IsometricModule from '../';
 import demo1 from './demo1';
 import demo2 from './demo2';
 import demo3 from './demo3';
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         container.classList.add('demo-container');
         wrapper.classList.add('demo-wrapper');
 
-        module(Isometric, wrapper);
+        module(IsometricModule, wrapper);
         container.appendChild(wrapper);
         demo.appendChild(container);
         demo.appendChild(functioToString(module));

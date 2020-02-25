@@ -1,8 +1,8 @@
 import './styles.scss';
 
-export default ( Isometric, container ) => {
+export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricPath } = Isometric;
+    const { IsometricCanvas, IsometricPath } = IsometricModule;
 
     const isometric = new IsometricCanvas(container, {
         backgroundColor: '#CCC',
@@ -27,6 +27,6 @@ export default ( Isometric, container ) => {
     topR.mt(.75, .25, 1.25).lt(.75, .75, 1).lt(.75, .75, .5).lt(.75, .25, .5);
     topL.mt(.75, .75, 1).lt(.25, .75, 1).lt(.25, .75, .5).lt(.75, .75, .5);
 
-    isometric.addPaths(bottomT, bottomR, bottomL, topT, topR, topL);
+    isometric.addChildren(bottomT, bottomR, bottomL, topT, topR, topL);
 
 };

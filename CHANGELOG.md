@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.0] - 2020-02-25
+
+- IsometricCanvas and IsometricPath are now exposed directly in the module instead of exporting them inside an object
+- Rename some methods of the IsometricCanvas class to make them more extensible:
+    * addPath to addChild
+    * addPaths to addChildren
+    * removePath to removeChild
+    * removePathByIndex to removeChildByIndex
+- Added new methods to the IsometricCanvas class:
+    * getElement: return the native SVG element
+    * removeChildren: remove all the children of the IsometricCanvas
+- Renamed a method of the IsometricPath class:
+    * getPath to getElement
+- Added more tests
+
 ## [1.4.2] - 2020-02-19
 
 - Return the class instance in the methods addEventListener and removeEventListener of the IsometricCanvas and IsometricPath classes

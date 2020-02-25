@@ -30,6 +30,18 @@ export class IsometricPath extends Graphic {
     private path: SVGPathElement;
     private commandsReg = /(M|L)\s*(\d+\.?\d*|\.\d+)\s*,\s*(\d+\.?\d*|\.\d+)\s*,\s*(\d+\.?\d*|\.\d+)/g;
 
+    public getElement(): SVGPathElement {
+        return this.path;
+    }
+
+    public update(): void {
+        if (this.path.parentNode) {
+            addSVGProperties(this.path, {
+                d: getSVGPath(this.commands, GlobalData.centerX, GlobalData.centerY, GlobalData.scale)
+            });
+        }
+    }
+
     protected setFillColor(value: string): void {
         super.setFillColor(value);
         addSVGProperties(this.path, { 'fill': this.fillColor });
@@ -68,18 +80,6 @@ export class IsometricPath extends Graphic {
     protected setStrokeWidth(value: number): void {
         super.setStrokeWidth(value);
         addSVGProperties(this.path, { 'stroke-width': `${this.strokeWidth}` });
-    }
-
-    public update(): void {
-        if (this.path.parentNode) {
-            addSVGProperties(this.path, {
-                d: getSVGPath(this.commands, GlobalData.centerX, GlobalData.centerY, GlobalData.scale)
-            });
-        }
-    }
-
-    public getPath(): SVGPathElement {
-        return this.path;
     }
 
     public moveTo(right: number, left: number, top: number): IsometricPath {

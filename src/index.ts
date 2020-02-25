@@ -1,7 +1,2 @@
-import { IsometricCanvas } from '@components/IsometricCanvas';
-import { IsometricPath } from '@components/IsometricPath';
-
-export const Isometric = {
-    IsometricCanvas,
-    IsometricPath
-};
+export { IsometricCanvas } from '@components/IsometricCanvas';
+export { IsometricPath } from '@components/IsometricPath';
