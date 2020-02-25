@@ -5,10 +5,12 @@ cache:
   directories:
     - node_modules
 script:
-  - npm run lint
-  - npm test
+  - yarn lint
+  - yarn test --coverage
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - rm -rf ./coverage
 before_deploy:
-  - npm run build
+  - yarn build
 deploy:
   edge: true
   provider: npm
