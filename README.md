@@ -129,6 +129,12 @@ getElement()
 Returns the native `SVG` element
 
 ```javascript
+addChild(child)
+```
+* `child` _(IsometricPath)_\
+Adds an isometric paths to the isometric canvas
+
+```javascript
 addChildren(child, child, child...)
 ```
 * `child` _(IsometricPath)_\
