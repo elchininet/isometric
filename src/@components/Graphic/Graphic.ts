@@ -20,6 +20,9 @@ export abstract class Graphic {
 
     protected props: GraphicProps;
 
+    abstract getElement(): SVGElement;
+    abstract update(): void;
+
     // fillColor
     protected setFillColor(value: string): void {
         this.props.fillColor = value;

@@ -1,8 +1,8 @@
 import './styles.scss';
 
-export default ( Isometric, container ) => {
+export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricPath } = Isometric;
+    const { IsometricCanvas, IsometricPath } = IsometricModule;
 
     function toggleColor(evt) {
         this.fillColor = this.fillColor === 'white' ? '#EEE' : 'white';
@@ -20,29 +20,20 @@ export default ( Isometric, container ) => {
     const left = new IsometricPath();
 
     top
-        .moveTo(0, 0, 1)
-        .lineTo(1, 0, 1)
-        .lineTo(1, 1, 1)
-        .lineTo(0, 1, 1)
+        .moveTo(0, 0, 1).lineTo(1, 0, 1).lineTo(1, 1, 1).lineTo(0, 1, 1)
         .addEventListener('click', toggleColor, true);
 
     right
-        .moveTo(1, 0, 1)
-        .lineTo(1, 0, 0)
-        .lineTo(1, 1, 0)
-        .lineTo(1, 1, 1)
+        .moveTo(1, 0, 1).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(1, 1, 1)
         .addEventListener('click', toggleColor, true);
 
     left
-        .moveTo(1, 1, 1)
-        .lineTo(1, 1, 0)
-        .lineTo(0, 1, 0)
-        .lineTo(0, 1, 1)
+        .moveTo(1, 1, 1).lineTo(1, 1, 0).lineTo(0, 1, 0).lineTo(0, 1, 1)
         .addEventListener('click', toggleColor, true);
 
     cube
-        .addPath(top)
-        .addPath(right)
-        .addPath(left);
+        .addChild(top)
+        .addChild(right)
+        .addChild(left);
 
 };

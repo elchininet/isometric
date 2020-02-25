@@ -1,7 +1,7 @@
 import { SVG_NAMESPACE, SVG_ELEMENTS, SVG_PROPERTIES, DEFAULT_WIDTH, DEFAULT_HEIGHT } from '@constants';
 import { Colors } from '@types';
+import { Graphic } from '@components/Graphic';
 import { IsometricCanvasProps } from './types';
-import { IsometricPath } from '@components/IsometricPath';
 import { addSVGProperties } from '@utils';
 import { GlobalData } from '@global';
 
@@ -15,9 +15,9 @@ const defaultProps: IsometricCanvasProps = {
 
 export class IsometricCanvas {
 
-    public constructor(container: Node, props: IsometricCanvasProps = {}) {
+    public constructor(container: HTMLElement, props: IsometricCanvasProps = {}) {
         this.props = { ...defaultProps, ...props };
-        this.paths = [];
+        this.children = [];
         this.svg = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.svg);
 
         GlobalData.setSizes( this.props.width, this.props.height );
@@ -45,21 +45,25 @@ export class IsometricCanvas {
     }
     
     private props: IsometricCanvasProps;
-    private paths: IsometricPath[];
+    private children: Graphic[];
     private svg: SVGElement;
     private background: SVGRectElement;
 
-    private removeSVGChild(path: IsometricPath): void {
-        const svgPath = path.getPath();
-        if (svgPath.parentNode) {
-            this.svg.removeChild(svgPath);
+    private removeSVGChild(child: Graphic): void {
+        const svgChild = child.getElement();
+        if (svgChild.parentNode) {
+            this.svg.removeChild(svgChild);
         }
     }
 
-    private updatePaths(): void {
-        this.paths.forEach((path: IsometricPath): void => {
-            path.update();
+    private updateChildren(): void {
+        this.children.forEach((child: Graphic): void => {
+            child.update();
         });
+    }
+
+    public getElement(): SVGElement {
+        return this.svg;
     }
 
     public get backgroundColor(): string {
@@ -77,7 +81,7 @@ export class IsometricCanvas {
 
     public set scale(value: number) {
         GlobalData.scale = value;
-        this.updatePaths();
+        this.updateChildren();
     }
 
     public get height(): number {
@@ -93,7 +97,7 @@ export class IsometricCanvas {
         addSVGProperties(this.background, {
             height: `${GlobalData.height}px`
         });
-        this.updatePaths();
+        this.updateChildren();
     }
 
     public get width(): number {
@@ -109,42 +113,47 @@ export class IsometricCanvas {
         addSVGProperties(this.background, {
             width: `${GlobalData.width}px`
         });
-        this.updatePaths();
+        this.updateChildren();
     }
 
-    public addPath(path: IsometricPath): IsometricCanvas {
-        this.paths.push(path);
-        this.svg.appendChild(path.getPath());
-        path.update();
+    public addChild(child: Graphic): IsometricCanvas {
+        this.children.push(child);
+        this.svg.appendChild(child.getElement());
+        child.update();
         return this;
     }
 
-    public addPaths(...paths: IsometricPath[]): IsometricCanvas {
-        paths.forEach((p: IsometricPath) => this.addPath(p));
+    public addChildren(...children: Graphic[]): IsometricCanvas {
+        children.forEach((child: Graphic) => this.addChild(child));
         return this;
     }
 
-    public removePath(path: IsometricPath): IsometricCanvas {
-        const index = this.paths.indexOf(path);
+    public removeChild(child: Graphic): IsometricCanvas {
+        const index = this.children.indexOf(child);
         if (index >= 0) {
-            this.paths.splice(index, 1);
-            this.removeSVGChild(path);
+            this.children.splice(index, 1);
+            this.removeSVGChild(child);
         }
         return this;
     }
 
-    public removePathByIndex(index: number): IsometricCanvas {
-        if (index >= 0 && index < this.paths.length) {
-            const [ path ] = this.paths.splice(index, 1);
-            this.removeSVGChild(path);
+    public removeChildren(...children: Graphic[]): IsometricCanvas {
+        children.forEach((child: Graphic) => this.removeChild(child));
+        return this;
+    }
+
+    public removeChildByIndex(index: number): IsometricCanvas {
+        if (index >= 0 && index < this.children.length) {
+            const [ child ] = this.children.splice(index, 1);
+            this.removeSVGChild(child);
         }
         return this;
     }
 
     public clear(): IsometricCanvas {
-        const paths = this.paths.splice(0);
-        paths.forEach((path: IsometricPath): void => {
-            this.removeSVGChild(path);
+        const children = this.children.splice(0);
+        children.forEach((child: Graphic): void => {
+            this.removeSVGChild(child);
         });
         return this;
     }

@@ -1,5 +1,4 @@
-import { Isometric } from '../src';
-const { IsometricCanvas, IsometricPath } = Isometric;
+import { IsometricCanvas, IsometricPath } from '../src';
 
 let container: HTMLDivElement;
 
@@ -32,7 +31,7 @@ describe('Snapshot tests', (): void => {
         top.moveTo(0, 0, 1).lineTo(1, 0, 1).lineTo(1, 1, 1).lineTo(0, 1, 1);
         right.moveTo(1, 0, 1).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(1, 1, 1);
         left.moveTo(1, 1, 1).lineTo(1, 1, 0).lineTo(0, 1, 0).lineTo(0, 1, 1);
-        cube.addPath(top).addPath(right).addPath(left);
+        cube.addChild(top).addChild(right).addChild(left);
 
         expect(container).toMatchSnapshot();
 
@@ -63,7 +62,7 @@ describe('Snapshot tests', (): void => {
         topR.mt(.75, .25, 1.25).lt(.75, .75, 1).lt(.75, .75, .5).lt(.75, .25, .5);
         topL.mt(.75, .75, 1).lt(.25, .75, 1).lt(.25, .75, .5).lt(.75, .75, .5);
 
-        isometric.addPaths(bottomT, bottomR, bottomL, topT, topR, topL);
+        isometric.addChildren(bottomT, bottomR, bottomL, topT, topR, topL);
 
         expect(container).toMatchSnapshot();
 
@@ -92,9 +91,58 @@ describe('Snapshot tests', (): void => {
         left1.draw('M0,0.5,1 L0,0.5,0.5 L0.5,0.5,0.5 L1,0.5,0.25 L1,0.5,1');
         left2.draw('M0,1,0.5 L0.5,1,0.5 L1,1,0.25 L1,1,0 L0,1,0');
 
-        isometric.addPaths(right, top1, top2, top3, left1, left2);
+        isometric.addChildren(right, top1, top2, top3, left1, left2);
 
         expect(container).toMatchSnapshot();
+
+    });
+
+    it('Removing elements', (): void => {
+
+        const cube = new IsometricCanvas(container, {
+            backgroundColor: '#CCC',
+            scale: 120,
+            width: 500,
+            height: 320
+        });
+    
+        const top = new IsometricPath();
+        const right = new IsometricPath();
+        const left = new IsometricPath();
+    
+        top.moveTo(0, 0, 1).lineTo(1, 0, 1).lineTo(1, 1, 1).lineTo(0, 1, 1);
+        right.moveTo(1, 0, 1).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(1, 1, 1);
+        left.moveTo(1, 1, 1).lineTo(1, 1, 0).lineTo(0, 1, 0).lineTo(0, 1, 1);
+        cube.addChildren(top, right, left);
+
+        const svgElement = cube.getElement();
+        const topElement = top.getElement();
+        const rightElement = right.getElement();
+        const leftElement = left.getElement();
+
+        expect(topElement.parentNode).toBe(svgElement);
+        expect(rightElement.parentNode).toBe(svgElement);
+        expect(leftElement.parentNode).toBe(svgElement);
+
+        cube.removeChild(top);
+
+        expect(topElement.parentNode).toBeNull();
+        
+        cube.removeChildByIndex(0);
+
+        expect(rightElement.parentNode).toBeNull();
+
+        cube.clear();
+
+        expect(leftElement.parentNode).toBeNull();
+
+        cube.addChildren(top, right, left);
+
+        cube.removeChildren(top, right, left);
+
+        expect(topElement.parentNode).toBeNull();
+        expect(rightElement.parentNode).toBeNull();
+        expect(leftElement.parentNode).toBeNull();
 
     });
 

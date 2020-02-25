@@ -28,7 +28,7 @@ yarn add @elchininet/isometric
 
 #### In the browser
 
-It is possible to include a compiled version of the package directly in an HTML file. It will create a global `Isometric` object that can be accessed from anywhere in your JavaScript code.
+It is possible to include a compiled version of the package directly in an HTML file. It will create global variables that can be accessed from anywhere in your JavaScript code.
 
 1. Copy the JavaScript file `isometric.web.js`, located in the `dist` folder
 2. Put it in the folder that you prefer in your web server
@@ -41,25 +41,25 @@ It is possible to include a compiled version of the package directly in an HTML 
 #### Importing using CommonJS
 
 ```javascript
-const { Isometric } = require('@elchininet/isometric');
-const { IsometricCanvas, IsometricPath } = Isometric;
+const { IsometricCanvas, IsometricPath } = require('@elchininet/isometric');
 ```
 
 #### Importing using ES6 modules
 
 ```javascript
-import { Isometric } from '@elchininet/isometric';
-const { IsometricCanvas, IsometricPath } = Isometric;
+import { IsometricCanvas, IsometricPath } from '@elchininet/isometric';
 ```
 
 #### Using in the browser
 
 ```javascript
 /* Use it directly in your JavaScript code */
-const { IsometricCanvas, IsometricPath } = Isometric;
+IsometricCanvas;
+IsometricPath;
 
 /* Or access to the global variable if there is a variable with this name in the same scope */
-const { IsometricCanvas, IsometricPath } = window.Isometric;
+window.IsometricCanvas;
+window.IsometricPath;
 ```
 
 ## Scripts
@@ -75,6 +75,12 @@ Transpiles the TypeScript code and creates two bundles in the `dist` folder (`in
 `npm run lint`
 
 Runs eslint in source files.
+
+#### test
+
+`npm run test`
+
+Runs tests.
 
 #### demo
 
@@ -115,28 +121,33 @@ Object to set the properties of the isometric canvas
 
 **Instance methods:**
 
->All the instance methods return the same instance, so they are chainable.
+>All the instance methods (excepting `getElement`) return the same instance, so they are chainable.
 
 ```javascript
-addPath(path)
+getElement()
 ```
-* `path` _(IsometricPath)_\
-Adds an isometric path to the isometric canvas
+Returns the native `SVG` element
 
 ```javascript
-addPaths(path, path, path...)
+addChildren(child, child, child...)
 ```
-* `path` _(IsometricPath)_\
+* `child` _(IsometricPath)_\
 Adds multiple isometric paths to the isometric canvas
 
 ```javascript
-removePath(path)
+removeChild(child)
 ```
-* `path` _(IsometricPath)_\
+* `child` _(IsometricPath)_\
 Removes an isometric path from the isometric canvas
 
 ```javascript
-removePathByIndex(index)
+removeChildren(child, child, child...)
+```
+* `child` _(IsometricPath)_\
+Removes multiple isometric paths from the isometric canvas
+
+```javascript
+removeChildByIndex(index)
 ```
 * `index` _(number)_\
 Removes an isometric path taking into account its index in the paths tree
@@ -223,12 +234,12 @@ Object to set the properties of the isometric path
   
 **Instance methods:**
 
->All the instance methods return the same instance, so they are chainable.
+>All the instance methods (excepting `getElement`) return the same instance, so they are chainable.
 
 ```javascript
-getPath()
+getElement()
 ```
-* Returns the SVG path object
+* Returns the native `SVG` path element
 
 ```javascript
 update()
