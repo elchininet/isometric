@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.5.1] - 2020-02-26
+
+- Create new tests
+- Increase the test coverage
+- During the creation of the new tests, some bugs were detected and fixed:
+    * strokeDasharray property was fixed using the correct name: strokeDashArray
+    * The dash-array property was changed from comma separated numbers to space separated numbers
+    * Fixed a bug in the width get property of the IsometricCanvas class
+    * Fix a bug in the removeEventListener methods that were not removing the events
+
 ## [1.5.0] - 2020-02-25
 
 - IsometricCanvas and IsometricPath are now exposed directly in the module instead of exporting them inside an object
