@@ -23,3 +23,8 @@ export interface Point {
     l?: number;
     t?: number;
 }
+
+export interface Listener {
+    fn: VoidFunction;
+    fnBind: VoidFunction;
+}

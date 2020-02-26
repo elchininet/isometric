@@ -4,7 +4,7 @@ export default ( IsometricModule, container ) => {
 
     const { IsometricCanvas, IsometricPath } = IsometricModule;
 
-    function toggleColor(evt) {
+    function toggleColor() {
         this.fillColor = this.fillColor === 'white' ? '#EEE' : 'white';
     }
 

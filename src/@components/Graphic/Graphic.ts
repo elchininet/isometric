@@ -5,7 +5,7 @@ const defaultGraphicProps: GraphicProps = {
     fillColor: Colors.white,
     fillOpacity: 1,
     strokeColor: Colors.black,
-    strokeDasharray: [],
+    strokeDashArray: [],
     strokeLinecap: LineCap.butt,
     strokeLinejoin: LineJoin.round,
     strokeOpacity: 1,
@@ -62,16 +62,16 @@ export abstract class Graphic {
         this.setStrokeColor(value);
     }
 
-    // strokeDasharray
+    // strokeDashArray
     protected setStrokeDashArray(value: number[]): void {
-        this.props.strokeDasharray = value;
+        this.props.strokeDashArray = value;
     }
 
-    public get strokeDasharray(): number[] {
-        return this.props.strokeDasharray;
+    public get strokeDashArray(): number[] {
+        return this.props.strokeDashArray;
     }
 
-    public set strokeDasharray(value: number[]) {
+    public set strokeDashArray(value: number[]) {
         this.setStrokeDashArray(value);
     }
 

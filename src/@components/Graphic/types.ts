@@ -1,11 +1,11 @@
-import { LineCap, StrokeLinejoin } from '@types';
+import { StrokeLinecap, StrokeLinejoin } from '@types';
 
 export interface GraphicProps {
     fillColor?: string;
     fillOpacity?: number;
     strokeColor?: string;
-    strokeDasharray?: number[];
-    strokeLinecap?: LineCap;
+    strokeDashArray?: number[];
+    strokeLinecap?: StrokeLinecap;
     strokeLinejoin?: StrokeLinejoin;
     strokeOpacity?: number;
     strokeWidth?: number;

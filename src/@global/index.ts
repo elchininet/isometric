@@ -15,13 +15,6 @@ interface Sizes {
 
 export class GlobalData {
 
-    public static get sizes(): Sizes {
-        return {
-            height: store.height,
-            width: store.width
-        };
-    }
-
     public static setSizes(width: number, height: number): void {
         GlobalData.height = height;
         GlobalData.width = width;

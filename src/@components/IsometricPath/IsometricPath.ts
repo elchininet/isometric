@@ -1,8 +1,8 @@
 import { Command, CommandPoint } from './types';
-import { StrokeLinecap, StrokeLinejoin } from '@types';
+import { StrokeLinecap, StrokeLinejoin, Listener } from '@types';
 import { SVG_NAMESPACE, SVG_ELEMENTS } from '@constants';
 import { Graphic, GraphicProps } from '@components/Graphic';
-import { addSVGProperties, getSVGPath } from '@utils';
+import { addSVGProperties, getSVGPath, addEventListenerToElement, removeEventListenerFromElement } from '@utils';
 import { GlobalData } from '@global';
 
 export class IsometricPath extends Graphic {
@@ -12,12 +12,13 @@ export class IsometricPath extends Graphic {
         super(props);
         this.commands = [];
         this.path = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.path);
+        this.listeners = [];
         
         addSVGProperties(this.path, {
             'fill': this.fillColor,
             'fill-opacity': `${this.fillOpacity}`,
             'stroke': this.strokeColor,
-            'stroke-dasharray': this.strokeDasharray.join(','),
+            'stroke-dasharray': this.strokeDashArray.join(' '),
             'stroke-linecap': this.strokeLinecap,
             'stroke-linejoin': this.strokeLinejoin,
             'stroke-opacity': `${this.strokeOpacity}`,
@@ -29,6 +30,7 @@ export class IsometricPath extends Graphic {
     private commands: CommandPoint[];
     private path: SVGPathElement;
     private commandsReg = /(M|L)\s*(\d+\.?\d*|\.\d+)\s*,\s*(\d+\.?\d*|\.\d+)\s*,\s*(\d+\.?\d*|\.\d+)/g;
+    private listeners: Listener[];
 
     public getElement(): SVGPathElement {
         return this.path;
@@ -57,9 +59,9 @@ export class IsometricPath extends Graphic {
         addSVGProperties(this.path, { 'stroke': this.strokeColor });
     }
 
-    protected setStrokeDasharray(value: number[]): void {
+    protected setStrokeDashArray(value: number[]): void {        
         super.setStrokeDashArray(value);
-        addSVGProperties(this.path, { 'stroke-dasharray': this.strokeDasharray.join(',') });
+        addSVGProperties(this.path, { 'stroke-dasharray': this.strokeDashArray.join(' ') });
     }
 
     protected setStrokeLinecap(value: StrokeLinecap): void {
@@ -124,12 +126,12 @@ export class IsometricPath extends Graphic {
     }
 
     public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricPath {
-        this.path.addEventListener(event, callback.bind(this), useCapture);
+        addEventListenerToElement.call(this, this.path, this.listeners, event, callback, useCapture);
         return this;
     }
 
     public removeEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricPath {
-        this.path.removeEventListener(event, callback.bind(this), useCapture);
+        removeEventListenerFromElement(this.path, this.listeners, event, callback, useCapture);
         return this;
     }
 

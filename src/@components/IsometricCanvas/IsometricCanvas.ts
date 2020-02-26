@@ -1,12 +1,11 @@
 import { SVG_NAMESPACE, SVG_ELEMENTS, SVG_PROPERTIES, DEFAULT_WIDTH, DEFAULT_HEIGHT } from '@constants';
-import { Colors } from '@types';
+import { Colors, Listener } from '@types';
 import { Graphic } from '@components/Graphic';
 import { IsometricCanvasProps } from './types';
-import { addSVGProperties } from '@utils';
+import { addSVGProperties, addEventListenerToElement, removeEventListenerFromElement } from '@utils';
 import { GlobalData } from '@global';
 
 const defaultProps: IsometricCanvasProps = {
-    devMode: false,
     backgroundColor: Colors.white,
     scale: 1,
     height: DEFAULT_HEIGHT,
@@ -19,6 +18,7 @@ export class IsometricCanvas {
         this.props = { ...defaultProps, ...props };
         this.children = [];
         this.svg = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.svg);
+        this.listeners = [];
 
         GlobalData.setSizes( this.props.width, this.props.height );
         GlobalData.scale = this.props.scale;
@@ -48,6 +48,7 @@ export class IsometricCanvas {
     private children: Graphic[];
     private svg: SVGElement;
     private background: SVGRectElement;
+    private listeners: Listener[];
 
     private removeSVGChild(child: Graphic): void {
         const svgChild = child.getElement();
@@ -101,7 +102,7 @@ export class IsometricCanvas {
     }
 
     public get width(): number {
-        return this.props.width;
+        return GlobalData.width;
     }
 
     public set width(value: number) {
@@ -159,12 +160,12 @@ export class IsometricCanvas {
     }
 
     public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricCanvas {
-        this.svg.addEventListener(event, callback, useCapture);
+        addEventListenerToElement.call(this, this.svg, this.listeners, event, callback, useCapture);
         return this;
     }
 
     public removeEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricCanvas {
-        this.svg.removeEventListener(event, callback, useCapture);
+        removeEventListenerFromElement(this.svg, this.listeners, event, callback, useCapture);
         return this;
     }
 
