@@ -9,12 +9,7 @@ describe('Wrong drawing commands', (): void => {
         container = document.createElement('div');
         document.body.appendChild(container);
 
-        const cube = new IsometricCanvas(container, {
-            backgroundColor: '#CCC',
-            scale: 120,
-            width: 500,
-            height: 320
-        });
+        const cube = new IsometricCanvas(container);
 
         const top = new IsometricPath();
 
