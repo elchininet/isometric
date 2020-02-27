@@ -54,6 +54,21 @@ describe('Removing methods', (): void => {
         expect(rightElement.parentNode).toBeNull();
         expect(leftElement.parentNode).toBeNull();
 
+        // Removing wrong elements should not throw errors
+        expect(() => {
+            cube.removeChild(top);
+        }).not.toThrowError();
+
+        expect(() => {
+            cube.addChild(top);
+            topElement.parentNode.removeChild(topElement);
+            cube.removeChild(top);
+        }).not.toThrowError();
+
+        expect(() => {
+            cube.removeChildByIndex(10);
+        }).not.toThrowError();
+
     });
 
 });

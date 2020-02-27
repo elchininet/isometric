@@ -55,6 +55,13 @@ describe('Test event listeners', (): void => {
 
         expect(mockCallBack.mock.calls[1]).toBeUndefined();
 
+        cube.addEventListener('click', mockCallBack);
+        cube.removeEventListener('click', mockCallBack);
+
+        svgElement.dispatchEvent(event);
+
+        expect(mockCallBack.mock.calls[1]).toBeUndefined();
+
     });
 
     it('IsometricPath event listeners', (): void => {
@@ -75,7 +82,34 @@ describe('Test event listeners', (): void => {
         topElement.dispatchEvent(event);
 
         expect(mockCallBack.mock.calls[1]).toBeUndefined();
+
+        top.addEventListener('click', mockCallBack);
+        top.removeEventListener('click', mockCallBack);
+
+        topElement.dispatchEvent(event);
+
+        expect(mockCallBack.mock.calls[1]).toBeUndefined();
         
+    });
+
+    it('Remove event listeners that have not been added', (): void => {
+
+        const mockCallBack = jest.fn();
+        const mockCallBackNotAdded = jest.fn();
+
+        cube.addEventListener('click', mockCallBack);
+        top.addEventListener('click', mockCallBack);
+
+        // Remove an event listsner that doesn't exist should not throw an error
+        expect(() => {
+            cube.removeEventListener('click', mockCallBackNotAdded);
+        }).not.toThrowError();
+
+        // Remove an event listsner that doesn't exist should not throw an error
+        expect(() => {
+            top.removeEventListener('click', mockCallBackNotAdded);
+        }).not.toThrowError();
+
     });
 
 });

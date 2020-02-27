@@ -47,7 +47,7 @@ export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: n
     return '';
 };
 
-export function addEventListenerToElement(element: SVGElement, listeners: Listener[], event: string, callback: VoidFunction, useCapture = false): void {
+export function addEventListenerToElement(element: SVGElement, listeners: Listener[], event: string, callback: VoidFunction, useCapture: boolean): void {
     const listener = {
         fn: callback,
         fnBind: callback.bind(this)
@@ -56,7 +56,7 @@ export function addEventListenerToElement(element: SVGElement, listeners: Listen
     element.addEventListener(event, listener.fnBind, useCapture);
 }
 
-export function removeEventListenerFromElement(element: SVGElement, listeners: Listener[], event: string, callback: VoidFunction, useCapture = false): void {
+export function removeEventListenerFromElement(element: SVGElement, listeners: Listener[], event: string, callback: VoidFunction, useCapture: boolean): void {
     let listener: Listener;
     listeners.find((ln: Listener, index: number): boolean => {
         if (ln.fn === callback) {
