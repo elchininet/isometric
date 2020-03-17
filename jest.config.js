@@ -16,11 +16,11 @@ module.exports = {
     roots: ['<rootDir>/tests'],
     moduleNameMapper: aliases,
     transform: {
-        '^.+\\.tsx?$': 'ts-jest',
+        '^.+\\.ts$': 'ts-jest',
     },
-    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+    moduleFileExtensions: ['ts', 'js'],
     collectCoverageFrom: [
-        'src/**/*.{ts,tsx}',
+        'src/**/*.ts',
         '!src/demo/**'
     ]
 };
