@@ -22,4 +22,23 @@ describe('Wrong drawing commands', (): void => {
 
     });
 
+    it('Using wrong curve', (): void => {
+
+        container = document.createElement('div');
+        document.body.appendChild(container);
+
+        const cube = new IsometricCanvas(container);
+
+        const top = new IsometricPath();
+
+        cube.addChild(top);
+
+        top.draw('C 1 1 1 2 2 2');
+
+        const topElement = top.getElement();
+
+        expect(topElement.getAttribute('d')).toBe('');
+
+    });
+
 });

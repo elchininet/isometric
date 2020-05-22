@@ -274,13 +274,27 @@ moveTo(right, left, top)
 ```javascript
 lineTo(right, left, top)
 ```
->Draws a line from the previous isometric point to the designated point.
+>Draws a line from the previous isometric point to the destination point.
 
-| Parameter       | Type       | Description                              |
-| --------------- | ---------- | ---------------------------------------- |
-| right           | number     | Right value in the isometric coordinates |
-| left            | number     | Left value in the isometric coordinates  |
-| top             | number     | Top value in the isometric coordinates   |
+| Parameter       | Type       | Description                                                       |
+| --------------- | ---------- | ----------------------------------------------------------------- |
+| right           | number     | Right value in the isometric coordinates of the destination point |
+| left            | number     | Left value in the isometric coordinates of the destination point  |
+| top             | number     | Top value in the isometric coordinates of the destination point   |
+
+```javascript
+curveTo(controlRight, controlLeft, controlTop, right, left, top)
+```
+>Draws a curve from the previous isometric point to the designated isometric point crossing the control isometric point.
+
+| Parameter       | Type       | Description                                                       |
+| --------------- | ---------- | ----------------------------------------------------------------- |
+| controlRight    | number     | Right value in the isometric coordinates of the control point     |
+| controlLeft     | number     | Left value in the isometric coordinates of the control point      |
+| controlTop      | number     | Top value in the isometric coordinates of the control point       |
+| right           | number     | Right value in the isometric coordinates of the destination point |
+| left            | number     | Left value in the isometric coordinates of the destination point  |
+| top             | number     | Top value in the isometric coordinates of the destination point   |
     
 ```javascript
 mt(right, left, top)
@@ -293,13 +307,18 @@ lt(right, left, top)
 >Alias of `lineTo`.
 
 ```javascript
+ct(controlRight, controlLeft, controlTop, right, left, top)
+```
+>Alias of `curveTo`.
+
+```javascript
 draw(commands)
 ```
 >Draws a line taking into account a series of drawing commands.
 
 | Parameter       | Type       | Description                              |
 | --------------- | ---------- | ---------------------------------------- |
-| commands        | string     | A series of drawing commands. For example, `M0 0 0 L1 1 1`has the same effect as `moveTo(0, 0, 0).lineTo(1, 1, 1)` |
+| commands        | string     | A series of drawing commands. For example, `M0 0 0 L1 1 1 C 2 2 2 3 3 3`has the same effect as `moveTo(0, 0, 0).lineTo(1, 1, 1).curveTo(2, 2, 2, 3, 3, 3)` |
 
 ```javascript
 addEventListener(type, callback, [useCapture])

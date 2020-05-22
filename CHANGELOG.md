@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.0] - 2020-05-22
+
+- Implemented a new method and a path command to draw curves
+- Added a new demo using curves
+- Added more tests to test curves
+
 ## [2.0.0] - 2020-05-22
 
 - Changed the drawing commands to be space-separated instead of comma-separated

@@ -101,12 +101,39 @@ export class IsometricPath extends Graphic {
         return this;
     }
 
+    public curveTo(
+        controlRight: number,
+        controlLeft: number,
+        controlTop: number,
+        right: number,
+        left: number,
+        top: number
+    ): IsometricPath {
+        this.commands.push({
+            command: Command.curve,
+            control: { r: controlRight, l: controlLeft, t: controlTop },
+            point: { r: right, l: left, t: top }
+        });
+        this.update();
+        return this;
+    }
+
     public mt(right: number, left: number, top: number): IsometricPath {
         return this.moveTo(right, left, top);
     }
 
     public lt(right: number, left: number, top: number): IsometricPath {
         return this.lineTo(right, left, top);
+    }
+    public ct(
+        controlRight: number,
+        controlLeft: number,
+        controlTop: number,
+        right: number,
+        left: number,
+        top: number
+    ): IsometricPath {
+        return this.curveTo(controlRight, controlLeft, controlTop, right, left, top);
     }
 
     public draw(commands: string): IsometricPath {
