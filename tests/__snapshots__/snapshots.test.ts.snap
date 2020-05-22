@@ -15,7 +15,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       y="0"
     />
     <path
-      d="M353.923,220 L250,280 L250,250 L301.9615,220 L301.9615,130 L353.923,100z"
+      d="M353.923 220 L250 280 L250 250 L301.9615 220 L301.9615 130 L353.923 100z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -26,7 +26,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
-      d="M353.923,100 L250,40 L198.0385,70 L301.9615,130z"
+      d="M224.01925 85 C224.01925 100,237.009625 122.5,250 130 C262.990375 137.5,275.98075 130,275.98075 115 L327.94225 85 C327.94225 100,314.951875 107.5,301.9615 100 C288.971125 92.5,275.98075 70,275.98075 55 L224.01925 85z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -37,7 +37,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
-      d="M198.0385,130 L250,160 L198.0385,190 L146.077,160z"
+      d="M353.923 100 L327.94225 85 L275.98075 115 L301.9615 130 L353.923 100 M250 40 L275.98075 55 L224.01925 85 L198.0385 70 L250 40z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -48,7 +48,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
-      d="M250,160 L301.9615,220 L250,250 L198.0385,190z"
+      d="M198.0385 130 L250 160 L198.0385 190 L146.077 160z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -59,7 +59,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
-      d="M198.0385,70 L198.0385,130 L250,160 L301.9615,220 L301.9615,130z"
+      d="M250 160 L301.9615 220 L250 250 L198.0385 190z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -70,7 +70,80 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
-      d="M146.077,160 L198.0385,190 L250,250 L250,280 L146.077,220z"
+      d="M198.0385 70 L198.0385 130 L250 160 L301.9615 220 L301.9615 130 L275.98075 115 C275.98075 130,262.990375 137.5,250 130 C237.009625 122.5,224.01925 100,224.01925 85 L198.0385 70z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M146.077 160 L198.0385 190 L250 250 L250 280 L146.077 220z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+  </svg>
+</div>
+`;
+
+exports[`Snapshot tests Draw curves 1`] = `
+<div>
+  <svg
+    height="320px"
+    viewBox="0 0 500 320"
+    width="500px"
+  >
+    <rect
+      fill="#CCC"
+      height="320px"
+      width="500px"
+      x="0"
+      y="0"
+    />
+    <path
+      d="M250 40 M275.98075 55 C275.98075 70,288.971125 92.5,301.9615 100 C314.951875 107.5,327.94225 100,327.94225 85 L353.923 100 L353.923 130 C340.932625 122.5,327.94225 130,327.94225 145 C327.94225 160,340.932625 182.5,353.923 190 L353.923 220 L327.94225 235 C314.951875 227.5,288.971125 227.5,275.98075 235 C262.990375 242.5,262.990375 257.5,275.98075 265 L250 280 L224.01925 265 C237.009625 257.5,237.009625 242.5,224.01925 235 C211.028875 227.5,185.048125 227.5,172.05775 235 L146.077 220 L146.077 190 C159.067375 182.5,172.05775 160,172.05775 145 C172.05775 130,159.067375 122.5,146.077 130 L146.077 100 L172.05775 85 C172.05775 100,185.048125 107.5,198.0385 100 C211.028875 92.5,224.01925 70,224.01925 55 L250 40z"
+      fill="#EEE"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M250 40 L275.98075 55 C262.990375 62.5,262.990375 77.5,275.98075 85 C288.971125 92.5,314.951875 92.5,327.94225 85 L353.923 100 L327.94225 115 C314.951875 107.5,288.971125 107.5,275.98075 115 C262.990375 122.5,262.990375 137.5,275.98075 145 L250 160 L224.01925 145 C237.009625 137.5,237.009625 122.5,224.01925 115 C211.028875 107.5,185.048125 107.5,172.05775 115 L146.077 100 L172.05775 85 C185.048125 92.5,211.028875 92.5,224.01925 85 C237.009625 77.5,237.009625 62.5,224.01925 55 L250 40z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M353.923 100 L353.923 130 C340.932625 137.5,327.94225 160,327.94225 175 C327.94225 190,340.932625 197.5,353.923 190 L353.923 220 L327.94225 235 C327.94225 220,314.951875 212.5,301.9615 220 C288.971125 227.5,275.98075 250,275.98075 265 L250 280 L250 250 C262.990375 242.5,275.98075 220,275.98075 205 C275.98075 190,262.990375 182.5,250 190 L250 160 L275.98075 145 C275.98075 160,288.971125 167.5,301.9615 160 C314.951875 152.5,327.94225 130,327.94225 115 L353.923 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M250 160 L250 190 C237.009625 182.5,224.01925 190,224.01925 205 C224.01925 220,237.009625 242.5,250 250 L250 280 L224.01925 265 C224.01925 250,211.028875 227.5,198.0385 220 C185.048125 212.5,172.05775 220,172.05775 235 L146.077 220 L146.077 190 C159.067375 197.5,172.05775 190,172.05775 175 C172.05775 160,159.067375 137.5,146.077 130 L146.077 100 L172.05775 115 C172.05775 130,185.048125 152.5,198.0385 160 C211.028875 167.5,224.01925 160,224.01925 145 L250 160z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -99,7 +172,7 @@ exports[`Snapshot tests Draw methods 1`] = `
       y="0"
     />
     <path
-      d="M250,40 L353.923,100 L250,160 L146.077,100z"
+      d="M250 40 L353.923 100 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -110,7 +183,7 @@ exports[`Snapshot tests Draw methods 1`] = `
       stroke-width="1"
     />
     <path
-      d="M353.923,100 L353.923,220 L250,280 L250,160z"
+      d="M353.923 100 L353.923 220 L250 280 L250 160z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -121,7 +194,7 @@ exports[`Snapshot tests Draw methods 1`] = `
       stroke-width="1"
     />
     <path
-      d="M250,160 L250,280 L146.077,220 L146.077,100z"
+      d="M250 160 L250 280 L146.077 220 L146.077 100z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -150,7 +223,7 @@ exports[`Snapshot tests Draw methods aliases 1`] = `
       y="0"
     />
     <path
-      d="M250,100 L353.923,160 L250,220 L146.077,160z"
+      d="M250 100 L353.923 160 L250 220 L146.077 160z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -161,7 +234,7 @@ exports[`Snapshot tests Draw methods aliases 1`] = `
       stroke-width="1"
     />
     <path
-      d="M353.923,160 L353.923,220 L250,280 L250,220z"
+      d="M353.923 160 L353.923 220 L250 280 L250 220z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -172,7 +245,7 @@ exports[`Snapshot tests Draw methods aliases 1`] = `
       stroke-width="1"
     />
     <path
-      d="M250,220 L250,280 L146.077,220 L146.077,160z"
+      d="M250 220 L250 280 L146.077 220 L146.077 160z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -183,7 +256,7 @@ exports[`Snapshot tests Draw methods aliases 1`] = `
       stroke-width="1"
     />
     <path
-      d="M250,40 L301.9615,70 L250,130 L198.0385,100z"
+      d="M250 40 L301.9615 70 L250 130 L198.0385 100z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -194,7 +267,7 @@ exports[`Snapshot tests Draw methods aliases 1`] = `
       stroke-width="1"
     />
     <path
-      d="M301.9615,70 L250,130 L250,190 L301.9615,160z"
+      d="M301.9615 70 L250 130 L250 190 L301.9615 160z"
       fill="white"
       fill-opacity="1"
       stroke="black"
@@ -205,7 +278,7 @@ exports[`Snapshot tests Draw methods aliases 1`] = `
       stroke-width="1"
     />
     <path
-      d="M250,130 L198.0385,100 L198.0385,160 L250,190z"
+      d="M250 130 L198.0385 100 L198.0385 160 L250 190z"
       fill="white"
       fill-opacity="1"
       stroke="black"

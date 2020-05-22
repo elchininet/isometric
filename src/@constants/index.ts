@@ -18,5 +18,7 @@ export const DEFAULT_HEIGHT = 480;
 
 const N = '(\\d+(?:\\.\\d+)?|\\.\\d+)'; // Number
 const S = '\\s*'; // Space
-const MOVE_AND_LINE = `${S}${N}${S}${N}${S}${N}${S}`;
-export const COMMANDS_REGEXP = new RegExp(`(M|L)${MOVE_AND_LINE}`, 'g');
+const SS = '\\s+'; // Splicit space
+const POINT = `${N}${SS}${N}${SS}${N}`;
+const CURVE = `${POINT}${SS}${POINT}`;
+export const COMMANDS_REGEXP = new RegExp(`(?:(M|L)${S}${POINT}${S}|(C)${S}${CURVE})${S}`, 'g');
