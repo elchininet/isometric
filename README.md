@@ -175,7 +175,7 @@ removeChildByIndex(index)
 ```javascript
 clear()
 ```
->Cleans the isometric canvas (removes all the isometric paths from it)
+>Cleans the isometric canvas (removes all the isometric paths from it and all the native SVG paths elements from the SVG)
 
 ```javascript
 addEventListener(type, callback, [useCapture])
@@ -319,6 +319,11 @@ draw(commands)
 | Parameter       | Type       | Description                              |
 | --------------- | ---------- | ---------------------------------------- |
 | commands        | string     | A series of drawing commands. For example, `M0 0 0 L1 1 1 C 2 2 2 3 3 3`has the same effect as `moveTo(0, 0, 0).lineTo(1, 1, 1).curveTo(2, 2, 2, 3, 3, 3)` |
+
+```javascript
+clear()
+```
+>Cleans the IsometricPath (removes all the path commands from the native SVG path element)
 
 ```javascript
 addEventListener(type, callback, [useCapture])
