@@ -1,6 +1,6 @@
 import { Point, Listener } from '@types';
-import { SQRT3, DECIMALS } from '@constants';
-import { CommandPoint, Command } from '@components/IsometricPath';
+import { SQRT3, DECIMALS, COMMANDS_REGEXP } from '@constants';
+import { IsometricPath, CommandPoint, Command } from '@components/IsometricPath';
 
 export interface IsometricPoint {
     x: number;
@@ -45,6 +45,21 @@ export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: n
         return `${svgPaths.join(' ')}z`;
     }
     return '';
+};
+
+export const drawCommands = (pathInstance: IsometricPath, commands: string): IsometricPath => {
+    let array;
+    while ((array = COMMANDS_REGEXP.exec(commands)) !== null) {
+        switch(array[1]) {
+            case 'M':
+                pathInstance.moveTo(+array[2], +array[3], +array[4]);
+                break;
+            case 'L':
+                pathInstance.lineTo(+array[2], +array[3], +array[4]);
+                break;
+        }
+    }
+    return pathInstance;
 };
 
 export function addEventListenerToElement(element: SVGElement, listeners: Listener[], event: string, callback: VoidFunction, useCapture: boolean): void {

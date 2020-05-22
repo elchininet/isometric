@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.0] - 2020-05-22
+
+- Changed the drawing commands to be space-separated instead of comma-separated
+- Improved the readability of the regular expression for the commands
+- Fixed a bug in the `draw` that was not returning the `IsometricPath` instance
+
 ## [1.5.1] - 2020-02-26
 
 - Create new tests

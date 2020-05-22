@@ -2,7 +2,7 @@ import { Command, CommandPoint } from './types';
 import { StrokeLinecap, StrokeLinejoin, Listener } from '@types';
 import { SVG_NAMESPACE, SVG_ELEMENTS } from '@constants';
 import { Graphic, GraphicProps } from '@components/Graphic';
-import { addSVGProperties, getSVGPath, addEventListenerToElement, removeEventListenerFromElement } from '@utils';
+import { addSVGProperties, getSVGPath, drawCommands, addEventListenerToElement, removeEventListenerFromElement } from '@utils';
 import { GlobalData } from '@global';
 
 export class IsometricPath extends Graphic {
@@ -29,7 +29,6 @@ export class IsometricPath extends Graphic {
 
     private commands: CommandPoint[];
     private path: SVGPathElement;
-    private commandsReg = /(M|L)\s*(\d+\.?\d*|\.\d+)\s*,\s*(\d+\.?\d*|\.\d+)\s*,\s*(\d+\.?\d*|\.\d+)/g;
     private listeners: Listener[];
 
     public getElement(): SVGPathElement {
@@ -110,19 +109,8 @@ export class IsometricPath extends Graphic {
         return this.lineTo(right, left, top);
     }
 
-    public draw(commands: string): void {
-        let array;
-        while ((array = this.commandsReg.exec(commands)) !== null) {
-            switch(array[1]) {
-                case 'M':
-                    this.moveTo(+array[2], +array[3], +array[4]);
-                    break;
-                case 'L':
-                    this.lineTo(+array[2], +array[3], +array[4]);
-                    break;
-            }
-        }
-        
+    public draw(commands: string): IsometricPath {
+        return drawCommands(this, commands);     
     }
 
     public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricPath {

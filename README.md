@@ -299,7 +299,7 @@ draw(commands)
 
 | Parameter       | Type       | Description                              |
 | --------------- | ---------- | ---------------------------------------- |
-| commands        | string     | A series of drawing commands. For example, `M0,0,0 L1,1,1`has the same effect as `moveTo(0, 0, 0).lineTo(1, 1, 1)` |
+| commands        | string     | A series of drawing commands. For example, `M0 0 0 L1 1 1`has the same effect as `moveTo(0, 0, 0).lineTo(1, 1, 1)` |
 
 ```javascript
 addEventListener(type, callback, [useCapture])
