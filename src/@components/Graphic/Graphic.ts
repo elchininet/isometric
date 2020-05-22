@@ -22,6 +22,7 @@ export abstract class Graphic {
 
     abstract getElement(): SVGElement;
     abstract update(): void;
+    abstract clear(): void;
 
     // fillColor
     protected setFillColor(value: string): void {

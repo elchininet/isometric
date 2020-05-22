@@ -43,6 +43,13 @@ export class IsometricPath extends Graphic {
         }
     }
 
+    public clear(): void {
+        this.commands.splice(0);
+        addSVGProperties(this.path, {
+            d: ''
+        });
+    }
+
     protected setFillColor(value: string): void {
         super.setFillColor(value);
         addSVGProperties(this.path, { 'fill': this.fillColor });

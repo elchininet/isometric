@@ -42,6 +42,7 @@ describe('Removing methods', (): void => {
 
         expect(rightElement.parentNode).toBeNull();
 
+        // Clear IsometricCanvas
         cube.clear();
 
         expect(leftElement.parentNode).toBeNull();
@@ -53,6 +54,10 @@ describe('Removing methods', (): void => {
         expect(topElement.parentNode).toBeNull();
         expect(rightElement.parentNode).toBeNull();
         expect(leftElement.parentNode).toBeNull();
+
+        // Clear IsometricPath
+        left.clear();
+        expect(leftElement.getAttribute('d')).toBe('');
 
         // Removing wrong elements should not throw errors
         expect(() => {
