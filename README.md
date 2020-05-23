@@ -369,6 +369,103 @@ removeEventListener(type, listener, [useCapture])
 
 ---
 
+### Class IsometricRectangle
+
+This is the class to create isometric rectangles that can be added to the isometric canvas.
+
+```javascript
+const path = new IsometricRectangle(properties);
+```
+
+<details><summary>Parameters</summary>
+<p>
+
+`properties`
+>Object to set the properties of the isometric rectangle
+
+| Property        | Type          | Default value        | Description                                                   |
+| --------------- | ------------- | -------------------- | ------------------------------------------------------------- |
+| height          | number        | -                    | Sets the height of the isometric rectangle                    |
+| width           | number        | -                    | Sets the width of the isometric rectangle                     |
+| planeView       | number        | PlaneView (`string`) | Sets the plane view in which the rectangle will be created    |
+| fillColor       | string        | "white"              | Sets the fill color of the isometric rectangle                |
+| fillOpacity     | number        | 1                    | Sets the fill opacity of the isometric rectangle              |
+| strokeColor     | string        | "black"              | Sets the stroke color of the isometric rectangle              |
+| strokeOpacity   | number        | 1                    | Sets stroke opacity of the isometric rectangle                |
+| strokeDashArray | number[]      | []                   | Sets the [SVG stroke dasharray][1] of the isometric rectangle |
+| strokeLinecap   | string        | "butt"               | Sets the [SVG stroke linecap][2] of the isometric rectangle   |
+| strokeLinejoin  | string        | "round"              | Sets the [SVG stroke linejoin][3] of the isometric rectangle  |
+| strokeWidth     | number        | 1                    | Sets the stroke width of the isometric rectangle              |
+
+</p>
+</details>
+
+<details><summary>Instance Methods</summary>
+<p>
+
+>All the instance methods (excepting `getElement`) return the same instance, so they are chainable.
+
+```javascript
+getElement()
+```
+>Returns the native `SVG` path element
+
+```javascript
+update()
+```
+>Forces a re-render of the SVG rectangle
+
+```javascript
+clear()
+```
+>Cleans the IsometricRectangle (removes all the path commands from the native SVG path element)
+
+```javascript
+addEventListener(type, callback, [useCapture])
+```
+>Sets up a function that will be called whenever the specified event is delivered to the `IsometricRectangle` (the SVG path element)
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| type            | string        |
+| callback        | VoidFunction  |
+| callback        | boolean       |
+
+```javascript
+removeEventListener(type, listener, [useCapture])
+```
+>Removes from the `IsometricRectangle` (the SVG path element) an event listener previously registered with `addEventListener`
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| type            | string        |
+| callback        | VoidFunction  |
+| callback        | boolean       |
+
+</p>
+</details>
+
+<details><summary>Instance Properties</summary>
+<p>
+
+| Property        | Type     | Description                                                            |
+| --------------- | -------- | ---------------------------------------------------------------------- |
+| height          | number   | Gets and sets the height of the isometric rectangle                    |
+| width           | number   | Gets and sets the width of the isometric rectangle                     |
+| planeView       | string   | Gets and sets the plane view in which the rectangle is created         |
+| fillColor       | string   | Gets and sets the fill color of the isometric rectangle                |
+| fillOpacity     | number   | Gets and sets the fill opacity of the isometric rectangle              |
+| strokeColor     | string   | Gets and sets the stroke color of the isometric rectangle              |
+| strokeOpacity   | number   | Gets and sets the stroke opacity of the isometric rectangle            |
+| strokeDashArray | number[] | Gets and sets the [SVG stroke dasharray][1] of the isometric rectangle |
+| strokeLinecap   | string   | Gets and sets the [SVG stroke linecap][2] of the isometric rectangle   |
+| strokeLinejoin  | string   | Gets and sets the [SVG stroke linejoin][3] of the isometric rectangle  |
+| strokeWidth     | number   | Gets and sets the stroke width of the isometric rectangle              |
+
+</p>
+</details>
+
+---
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
 [2]: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linecap

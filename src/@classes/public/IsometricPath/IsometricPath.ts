@@ -1,4 +1,4 @@
-import { Command, CommandPoint } from './types';
+import { Command, CommandPoint } from '@types';
 import { GraphicProps } from '@classes/abstract/Graphic';
 import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import { addSVGProperties, getSVGPath, drawCommands } from '@utils';

@@ -1,4 +1,4 @@
-import { IsometricCanvas, IsometricPath } from '../src';
+import { IsometricCanvas, IsometricRectangle, IsometricPath, PlaneView } from '../src';
 
 describe('Snapshot tests', (): void => {
 
@@ -15,7 +15,7 @@ describe('Snapshot tests', (): void => {
         }        
     });
 
-    it('Draw methods', (): void => {
+    it('Draw rectangles', (): void => {
 
         const cube = new IsometricCanvas(container, {
             backgroundColor: '#CCC',
@@ -24,20 +24,22 @@ describe('Snapshot tests', (): void => {
             height: 320
         });
 
-        const top = new IsometricPath();
-        const right = new IsometricPath();
-        const left = new IsometricPath();
+        const commonProps = {height: 1, width: 1};
+        const topPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.TOP});
+        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
 
-        top.moveTo(0, 0, 1).lineTo(1, 0, 1).lineTo(1, 1, 1).lineTo(0, 1, 1);
-        right.moveTo(1, 0, 1).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(1, 1, 1);
-        left.moveTo(1, 1, 1).lineTo(1, 1, 0).lineTo(0, 1, 0).lineTo(0, 1, 1);
-        cube.addChild(top).addChild(right).addChild(left);
+        topPiece.top = 1;
+        rightPiece.right = 1;
+        leftPiece.left = 1;
+
+        cube.addChild(topPiece).addChild(rightPiece).addChild(leftPiece);
 
         expect(container).toMatchSnapshot();
 
     });
 
-    it('Draw methods aliases', (): void => {
+    it('Draw methods', (): void => {
 
         const isometric = new IsometricCanvas(container, {
             backgroundColor: '#CCC',
@@ -54,13 +56,13 @@ describe('Snapshot tests', (): void => {
         const topR = new IsometricPath();
         const topL = new IsometricPath();
 
-        bottomT.mt(0, 0, .5).lt(1, 0, .5).lt(1, 1, .5).lt(0, 1, .5);
-        bottomR.mt(1, 0, .5).lt(1, 0, 0).lt(1, 1, 0).lt(1, 1, .5);
-        bottomL.mt(1, 1, .5).lt(1, 1, 0).lt(0, 1, 0).lt(0, 1, .5);
+        bottomT.moveTo(0, 0, .5).lineTo(1, 0, .5).lineTo(1, 1, .5).lineTo(0, 1, .5);
+        bottomR.moveTo(1, 0, .5).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(1, 1, .5);
+        bottomL.moveTo(1, 1, .5).lineTo(1, 1, 0).lineTo(0, 1, 0).lineTo(0, 1, .5);
 
-        topT.mt(.25, .25, 1.25).lt(.75, .25, 1.25).lt(.75, .75, 1).lt(.25, .75, 1);
-        topR.mt(.75, .25, 1.25).lt(.75, .75, 1).lt(.75, .75, .5).lt(.75, .25, .5);
-        topL.mt(.75, .75, 1).lt(.25, .75, 1).lt(.25, .75, .5).lt(.75, .75, .5);
+        topT.moveTo(.25, .25, 1.25).lineTo(.75, .25, 1.25).lineTo(.75, .75, 1).lineTo(.25, .75, 1);
+        topR.moveTo(.75, .25, 1.25).lineTo(.75, .75, 1).lineTo(.75, .75, .5).lineTo(.75, .25, .5);
+        topL.moveTo(.75, .75, 1).lineTo(.25, .75, 1).lineTo(.25, .75, .5).lineTo(.75, .75, .5);
 
         isometric.addChildren(bottomT, bottomR, bottomL, topT, topR, topL);
 
@@ -99,7 +101,7 @@ describe('Snapshot tests', (): void => {
 
     });
 
-    it('Draw curves', (): void => {
+    it('Draw curves with method aliases', (): void => {
 
         const cube = new IsometricCanvas(container, {
             backgroundColor: '#CCC',

@@ -12,7 +12,7 @@ const WebpackCconfig = require('./webpack.config')[1];
 module.exports = {
     target: 'web',
     devtool: 'eval-source-map',
-    entry: './src/@demo/demo.js',
+    entry: './demo/demo.js',
     module: {
         rules: [
             {
@@ -43,13 +43,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Isometric demo',
             logo: 'images/logo.svg',
-            favicon: './src/@demo/favicon.png',
-            template: 'src/@demo/demo.html'
+            favicon: './demo/favicon.png',
+            template: './demo/demo.html'
         }),
         new MiniCssExtractPlugin({
             filename: 'styles/styles.css'
         }),
-        new CopyWebpackPlugin([{ from: 'src/@demo/images', to: 'images' }])
+        new CopyWebpackPlugin([{ from: './demo/images', to: 'images' }])
     ],
     optimization: {
         minimizer: [

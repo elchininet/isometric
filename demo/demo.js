@@ -1,8 +1,8 @@
-import '../../node_modules/google-code-prettify/bin/run_prettify.min';
-import '../../node_modules/google-code-prettify/bin/prettify.min.css';
+import 'google-code-prettify/bin/run_prettify.min';
+import '../node_modules/google-code-prettify/bin/prettify.min.css';
 import './tomorrow.min.css';
 import './styles.scss';
-import * as IsometricModule from '../';
+import * as IsometricModule from '../src';
 import demo1 from './demo1';
 import demo2 from './demo2';
 import demo3 from './demo3';

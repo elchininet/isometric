@@ -23,9 +23,6 @@ export abstract class IsometricGraphic extends Graphic {
         });
 
     }
-
-    abstract update(): IsometricGraphic;
-    abstract clear(): IsometricGraphic;
     
     protected path: SVGPathElement;
     protected listeners: Listener[];

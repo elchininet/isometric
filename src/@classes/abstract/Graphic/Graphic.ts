@@ -21,8 +21,8 @@ export abstract class Graphic {
     protected props: GraphicProps;
 
     abstract getElement(): SVGElement;
-    abstract update(): void;
-    abstract clear(): void;
+    abstract update(): Graphic;
+    abstract clear(): Graphic;
 
     // fillColor
     protected setFillColor(value: string): void {
