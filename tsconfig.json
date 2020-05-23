@@ -13,7 +13,7 @@
             "@types": ["@types"],
             "@constants": ["@constants"],
             "@utils": ["@utils"],         
-            "@components/*": ["@components/*"]
+            "@classes/*": ["@classes/*"]
         }
     },
     "include": ["src/**/*.ts"],

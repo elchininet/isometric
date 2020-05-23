@@ -1,2 +1,2 @@
-export { IsometricCanvas } from '@components/IsometricCanvas';
-export { IsometricPath } from '@components/IsometricPath';
+export { IsometricCanvas } from '@classes/public/IsometricCanvas';
+export { IsometricPath } from '@classes/public/IsometricPath';
