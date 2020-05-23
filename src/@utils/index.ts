@@ -1,6 +1,6 @@
-import { Point, Listener } from '@types';
+import { Point, Listener, CommandPoint, Command } from '@types';
 import { SQRT3, DECIMALS, COMMANDS_REGEXP } from '@constants';
-import { IsometricPath, CommandPoint, Command } from '@classes/public/IsometricPath';
+import { IsometricPath } from '@classes/public/IsometricPath';
 
 export interface IsometricPoint {
     x: number;
@@ -137,6 +137,20 @@ export const drawCommands = (pathInstance: IsometricPath, commands: string): Iso
         }
     }
     return pathInstance;
+};
+
+export const translateCommandPoints = (commands: CommandPoint[], right: number, left: number, top: number): void => {
+    commands.forEach((command: CommandPoint): void => {
+        command.point.r += right;
+        command.point.l += left;
+        command.point.t += top;
+        // Comment for now because curves are not translated at the moment
+        /*if (command.control) {
+            command.control.r += right;
+            command.control.l += left;
+            command.control.t += top;
+        }*/
+    });
 };
 
 export function addEventListenerToElement(element: SVGElement, listeners: Listener[], event: string, callback: VoidFunction, useCapture: boolean): void {

@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackCconfig = require('./webpack.config')[1];
 /* eslint-enable @typescript-eslint/no-var-requires */
 WebpackCconfig.mode = 'development';
-WebpackCconfig.entry = './src/@demo/demo.js';
+WebpackCconfig.entry = './demo/demo.js';
 WebpackCconfig.output.path = path.resolve(__dirname, 'docs');
 WebpackCconfig.resolve.extensions.push('.js');
 WebpackCconfig.module.rules.push(
@@ -20,9 +20,9 @@ WebpackCconfig.module.rules.push(
 WebpackCconfig.plugins = [
     new HtmlWebpackPlugin({
         title: 'Isometric demo',
-        logo: './src/@demo/images/logo.svg',
-        favicon: './src/@demo/favicon.png',
-        template: 'src/@demo/demo.html'
+        logo: './demo/images/logo.svg',
+        favicon: './demo/favicon.png',
+        template: './demo/demo.html'
     })
 ];
 WebpackCconfig.devServer = {

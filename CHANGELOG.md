@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.3.0] - 2020-05-23
+
+- Create a new IsometricRectangle class to build isometric rectangles
+- Exposed some types
+- Some code refactoring
+
 ## [2.2.1] - 2020-05-23
 
 - Refactored the IsometricPath class to extend from an abstract class
