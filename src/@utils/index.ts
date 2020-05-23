@@ -1,6 +1,6 @@
 import { Point, Listener } from '@types';
 import { SQRT3, DECIMALS, COMMANDS_REGEXP } from '@constants';
-import { IsometricPath, CommandPoint, Command } from '@components/IsometricPath';
+import { IsometricPath, CommandPoint, Command } from '@classes/public/IsometricPath';
 
 export interface IsometricPoint {
     x: number;

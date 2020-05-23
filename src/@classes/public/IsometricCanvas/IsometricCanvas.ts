@@ -1,6 +1,6 @@
 import { SVG_NAMESPACE, SVG_ELEMENTS, SVG_PROPERTIES, DEFAULT_WIDTH, DEFAULT_HEIGHT } from '@constants';
 import { Colors, Listener } from '@types';
-import { Graphic } from '@components/Graphic';
+import { Graphic } from '@classes/abstract/Graphic';
 import { IsometricCanvasProps } from './types';
 import { addSVGProperties, addEventListenerToElement, removeEventListenerFromElement } from '@utils';
 import { GlobalData } from '@global';

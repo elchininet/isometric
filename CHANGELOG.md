@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.2.1] - 2020-05-23
+
+- Refactored the IsometricPath class to extend from an abstract class
+- Fixed a bug that was not returning the IsometricPath class instance for the clear and update methods
+
 ## [2.2.0] - 2020-05-22
 
 - Implemented a clear method in the IsometricCanvas class
