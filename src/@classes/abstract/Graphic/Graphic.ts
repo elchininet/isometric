@@ -1,4 +1,5 @@
 import { Colors, LineCap, LineJoin, StrokeLinecap, StrokeLinejoin } from '@types';
+import { IsometricStore } from '@classes/abstract/IsometricStore';
 import { GraphicProps } from './types';
 
 const defaultGraphicProps: GraphicProps = {
@@ -12,9 +13,10 @@ const defaultGraphicProps: GraphicProps = {
     strokeWidth: 1
 };
 
-export abstract class Graphic {
+export abstract class Graphic extends IsometricStore {
 
     public constructor(props: GraphicProps) {
+        super();
         this.props = {...defaultGraphicProps, ...props};
     }
 

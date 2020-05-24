@@ -9,7 +9,7 @@
         "removeComments": true,
         "baseUrl": "./src",
         "paths": {
-            "@global": ["@global"],
+            "@store": ["@store"],
             "@types": ["@types"],
             "@constants": ["@constants"],
             "@utils": ["@utils"],         

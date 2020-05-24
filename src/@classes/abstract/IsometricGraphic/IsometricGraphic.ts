@@ -7,7 +7,9 @@ export abstract class IsometricGraphic extends Graphic {
 
     public constructor(props: GraphicProps) {
 
-        super(props);
+        // Exclude the next line from the coverage reports
+        // Check https://github.com/microsoft/TypeScript/issues/13029
+        super(props)/* istanbul ignore next */;
         this.path = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.path);
         this.listeners = [];
         

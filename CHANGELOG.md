@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.3.2] - 2020-05-24
+
+- Fix data sharing among multiple class instances due to shared global data
+
 ## [2.3.1] - 2020-05-24
 
 - Improves curves generation using ellipsis arcs instead of bézier curves
