@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.4.0] - 2020-05-25
+
+- Created a new IsometricCircle class to build isometric circles
+
 ## [2.3.2] - 2020-05-24
 
 - Fix data sharing among multiple class instances due to shared global data
@@ -10,7 +14,7 @@
 
 ## [2.3.0] - 2020-05-23
 
-- Create a new IsometricRectangle class to build isometric rectangles
+- Created a new IsometricRectangle class to build isometric rectangles
 - Exposed some types
 - Some code refactoring
 

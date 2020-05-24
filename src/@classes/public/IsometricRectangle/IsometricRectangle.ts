@@ -68,6 +68,21 @@ export class IsometricRectangle extends IsometricShape {
         this.update();
     }
 
+    protected setRight(value: number): void {
+        super.setRight(value);
+        this.update();
+    }
+
+    protected setLeft(value: number): void {
+        super.setLeft(value);
+        this.update();
+    }
+
+    protected setTop(value: number): void {
+        super.setTop(value);
+        this.update();
+    }
+
     public get width(): number {
         return this.rectWidth;
     }
@@ -83,21 +98,6 @@ export class IsometricRectangle extends IsometricShape {
 
     public set height(value: number) {
         this.rectHeight = value;
-        this.update();
-    }
-
-    protected setRight(value: number): void {
-        super.setRight(value);
-        this.update();
-    }
-
-    protected setLeft(value: number): void {
-        super.setLeft(value);
-        this.update();
-    }
-
-    protected setTop(value: number): void {
-        super.setTop(value);
         this.update();
     }
 

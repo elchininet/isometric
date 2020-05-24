@@ -1,4 +1,4 @@
-import { IsometricCanvas, IsometricRectangle, IsometricPath, IsometricPathProps, PlaneView } from '../src';
+import { IsometricCanvas, IsometricRectangle, IsometricCircle, IsometricPath, IsometricPathProps, PlaneView } from '../src';
 
 describe('Test properties', (): void => {
 
@@ -6,9 +6,11 @@ describe('Test properties', (): void => {
     let cube: IsometricCanvas;
     let path: IsometricPath;
     let rectangle: IsometricRectangle;
+    let circle: IsometricCircle;
     let svgElement: SVGElement;
     let pathElement: SVGElement;
     let rectangleElement: SVGElement;
+    let circleElement: SVGElement;
 
     beforeEach((): void => {
 
@@ -42,12 +44,19 @@ describe('Test properties', (): void => {
             ...commonProps
         });
 
+        circle = new IsometricCircle({
+            radius: 0.5,
+            planeView: PlaneView.TOP,
+            ...commonProps
+        });
+
         path.moveTo(0, 0, 0).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(0, 1, 0);
-        cube.addChildren(path, rectangle);
+        cube.addChildren(path, rectangle, circle);
 
         svgElement = cube.getElement();
         pathElement = path.getElement();
         rectangleElement = rectangle.getElement();
+        circleElement = circle.getElement();
 
     });
 
@@ -107,6 +116,19 @@ describe('Test properties', (): void => {
         
     });
 
+    it('Compare IsometricPath vs IsometricCircle', (): void => {
+        
+        expect(path.fillColor).toBe(circle.fillColor);
+        expect(path.fillOpacity).toBe(circle.fillOpacity);
+        expect(path.strokeColor).toBe(circle.strokeColor);
+        expect(path.strokeDashArray).toMatchObject(circle.strokeDashArray);
+        expect(path.strokeLinecap).toBe(circle.strokeLinecap);
+        expect(path.strokeLinejoin).toBe(circle.strokeLinejoin);
+        expect(path.strokeOpacity).toBe(circle.strokeOpacity);
+        expect(path.strokeWidth).toBe(circle.strokeWidth);
+        
+    });
+
     it('IsometricRectangle change position', (): void => {
         
         rectangle.planeView = PlaneView.TOP;
@@ -131,6 +153,31 @@ describe('Test properties', (): void => {
         expect(rectangleElement.getAttribute('d')).toBe('');
         rectangle.update();
         expect(rectangleElement.getAttribute('d')).toBe('M250 160 L457.846 280 L250 400 L42.154 280z');
+        
+    });
+
+    it('IsometricCircle change position', (): void => {
+
+        console.log(circleElement);
+        
+        circle.planeView = PlaneView.TOP;
+        expect(circleElement.getAttribute('d')).toBe('M198.0385 190 A 73.484658 42.426407 0 0 0 301.9615 130 A 73.484658 42.426407 180 0 0 198.0385 190z');
+        
+        circle.planeView = PlaneView.FRONT;
+        expect(circleElement.getAttribute('d')).toBe('M198.0385 190 A 73.484684 42.426392 119.999977 0 0 301.9615 130 A 73.484684 42.426392 -60.000023 0 0 198.0385 190z');
+        
+        circle.planeView = PlaneView.SIDE;
+        expect(circleElement.getAttribute('d')).toBe('M198.0385 130 A 73.484684 42.426392 60.000023 0 0 301.9615 190 A 73.484684 42.426392 -119.999977 0 0 198.0385 130z');
+
+        circle.planeView = PlaneView.TOP;
+        circle.radius = 1;
+        expect(circle.radius).toBe(1);
+        expect(circleElement.getAttribute('d')).toBe('M146.077 220 A 146.969316 84.852814 0 0 0 353.923 100 A 146.969316 84.852814 180 0 0 146.077 220z');
+
+        circle.clear();
+        expect(circleElement.getAttribute('d')).toBe('');
+        circle.update();
+        expect(circleElement.getAttribute('d')).toBe('M146.077 220 A 146.969316 84.852814 0 0 0 353.923 100 A 146.969316 84.852814 180 0 0 146.077 220z');
         
     });
 
