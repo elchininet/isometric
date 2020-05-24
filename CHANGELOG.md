@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.3.1] - 2020-05-24
+
+- Improves curves generation using ellipsis arcs instead of bézier curves
+
 ## [2.3.0] - 2020-05-23
 
 - Create a new IsometricRectangle class to build isometric rectangles

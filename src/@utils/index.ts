@@ -1,5 +1,5 @@
 import { Point, Listener, CommandPoint, Command } from '@types';
-import { SQRT3, DECIMALS, COMMANDS_REGEXP } from '@constants';
+import { HSQRT3, DECIMALS, COMMANDS_REGEXP } from '@constants';
 import { IsometricPath } from '@classes/public/IsometricPath';
 
 export interface IsometricPoint {
@@ -7,7 +7,7 @@ export interface IsometricPoint {
     y: number;
 }
 
-type IsometricControlPoints = [IsometricPoint, IsometricPoint, IsometricPoint, IsometricPoint];
+type EllipsisSpecs = [number, number, number];
 
 export interface SVGProps {
     [key: string]: string;
@@ -18,6 +18,58 @@ const round = (n: number, d: number): number => {
     return Math.round(n * exp) / exp;
 };
 
+const getPointsDiff = (pointA: IsometricPoint, pointB: IsometricPoint): IsometricPoint => ({
+    x: pointA.x - pointB.x,
+    y: pointA.y - pointB.y
+});
+
+const getPointsDistance = (pointA: IsometricPoint, pointB: IsometricPoint): number => {
+    const diff = getPointsDiff(pointA, pointB);
+    return Math.sqrt(
+        Math.pow(diff.x, 2) + Math.pow(diff.y, 2)
+    );
+};
+
+const translatePoint = (point: IsometricPoint, angle: number, distance: number): IsometricPoint => ({
+    x: point.x + Math.cos(angle) * distance,
+    y: point.y + Math.sin(angle) * distance
+});
+
+const rotate = (point: IsometricPoint, center: IsometricPoint, angle: number): IsometricPoint => {
+    const diff = getPointsDiff(point, center);
+    const x = diff.x * Math.cos(angle) - diff.y * Math.sin(angle);
+    const y = diff.x * Math.sin(angle) + diff.y * Math.cos(angle);
+    return {
+        x: center.x + x,
+        y: center.y + y
+    };
+};
+
+const getPointsAngle = (pointA: IsometricPoint, pointB: IsometricPoint): number => {
+    const diff = getPointsDiff(pointB, pointA);
+    return Math.atan2(diff.y, diff.x);
+};
+
+const getOrientation = (p1: IsometricPoint, p2: IsometricPoint, p3: IsometricPoint): number => {
+    const value = (p2.y - p1.y) * (p3.x - p2.x) - (p2.x - p1.x) * (p3.y - p2.y);
+    return value >= 0 ? 0 : 1;
+};
+
+const getEllipsisSpecs = (pointA: IsometricPoint, pointB: IsometricPoint, control: IsometricPoint): EllipsisSpecs => {
+    const diff = getPointsDiff(pointB, pointA);
+    const center = { x: pointA.x + diff.x / 2, y: pointA.y + diff.y / 2 };
+    const P = rotate(pointB, center, Math.PI / 2);
+    const D = { x: P.x + (control.x - P.x) / 2, y: P.y + (control.y - P.y) / 2};
+    const radius = getPointsDistance(D, center);
+    const U = translatePoint(D, getPointsAngle(D, P), radius);
+    const V = translatePoint(D, getPointsAngle(D, control), radius);
+    return [
+        round(getPointsDistance(control, U), DECIMALS),
+        round(getPointsDistance(control, V), DECIMALS),
+        round(getPointsAngle(center, V) * 180 / Math.PI, DECIMALS)
+    ];
+};
+
 const getPointFromIsometricPoint = (
     centerX: number,
     centerY: number,
@@ -25,55 +77,9 @@ const getPointFromIsometricPoint = (
     scale: number
 ): IsometricPoint => {
     return {
-        x: round(centerX + (point.r - point.l) * scale * SQRT3, DECIMALS),
+        x: round(centerX + (point.r - point.l) * scale * HSQRT3, DECIMALS),
         y: round(centerY + ((point.r + point.l) / 2 - point.t) * scale, DECIMALS)
     };
-};
-
-const getControlPointsFromIsometricPoint = (
-    centerX: number,
-    centerY: number,
-    fromPoint: Point,
-    control: Point,
-    toPoint: Point,
-    scale: number
-): IsometricControlPoints => {
-    const corner1 = {
-        r: control.r + (fromPoint.r - toPoint.r) / 2,
-        l: control.l + (fromPoint.l - toPoint.l) / 2,
-        t: control.t + (fromPoint.t - toPoint.t) / 2
-    };
-    const corner2 = {
-        r: control.r - (fromPoint.r - toPoint.r) / 2,
-        l: control.l - (fromPoint.l - toPoint.l) / 2,
-        t: control.t - (fromPoint.t - toPoint.t) / 2
-    };
-    const isometricControlPoint1 = {
-        r: corner1.r - (corner1.r - fromPoint.r) / 2,
-        l: corner1.l - (corner1.l - fromPoint.l) / 2,
-        t: corner1.t - (corner1.t - fromPoint.t) / 2
-    };
-    const isometricControlPoint2 = {
-        r: control.r + (corner1.r - control.r) / 2,
-        l: control.l + (corner1.l - control.l) / 2,
-        t: control.t + (corner1.t - control.t) / 2
-    };
-    const isometricControlPoint3 = {
-        r: control.r + (corner2.r - control.r) / 2,
-        l: control.l + (corner2.l - control.l) / 2,
-        t: control.t + (corner2.t - control.t) / 2
-    };    
-    const isometricControlPoint4 = {
-        r: corner2.r - (corner2.r - toPoint.r) / 2,
-        l: corner2.l - (corner2.l - toPoint.l) / 2,
-        t: corner2.t - (corner2.t - toPoint.t) / 2
-    };
-    return [
-        getPointFromIsometricPoint(centerX, centerY, isometricControlPoint1, scale),
-        getPointFromIsometricPoint(centerX, centerY, isometricControlPoint2, scale),
-        getPointFromIsometricPoint(centerX, centerY, isometricControlPoint3, scale),
-        getPointFromIsometricPoint(centerX, centerY, isometricControlPoint4, scale)
-    ];
 };
 
 export const addSVGProperties = (svg: SVGElement, props: SVGProps): void => {
@@ -83,40 +89,38 @@ export const addSVGProperties = (svg: SVGElement, props: SVGProps): void => {
 };
 
 export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: number, scale: number): string => {
-    const svgPaths = commands.map((c: CommandPoint, index: number) => {
+    const drawCommands = commands.length === 0 || commands[0].command === Command.move
+        ? [...commands]
+        : [
+            {
+                command: Command.move,
+                point: { r: 0, l: 0, t: 0 }
+            },
+            ...commands
+        ];
+    const svgPaths = drawCommands.map((c: CommandPoint, index: number) => {
         const point = getPointFromIsometricPoint(centerX, centerY, c.point, scale);     
         switch (c.command) {
             case Command.move:
                 return `M${point.x} ${point.y}`;
             case Command.line:
                 return `L${point.x} ${point.y}`;
-            case Command.curve:
-                if (index > 0) {
-                    const middle = getPointFromIsometricPoint(centerX, centerY, c.control, scale);
-                    const controls = getControlPointsFromIsometricPoint(
-                        centerX,
-                        centerY,
-                        commands[index - 1].point,
-                        c.control,
-                        c.point,
-                        scale
-                    );
-                    const middlePoint = `${middle.x} ${middle.y}`;
-                    const finalPoint = `${point.x} ${point.y}`;
-                    const control1 = `${controls[0].x} ${controls[0].y}`;
-                    const control2 = `${controls[1].x} ${controls[1].y}`;
-                    const control3 = `${controls[2].x} ${controls[2].y}`;
-                    const control4 = `${controls[3].x} ${controls[3].y}`;
-                    return `C${control1},${control2},${middlePoint} C${control3},${control4},${finalPoint}`;
-                }
-                return '';
+            case Command.curve: {                
+                const start = getPointFromIsometricPoint(
+                    centerX,
+                    centerY,
+                    commands[index - 1].point,
+                    scale
+                );
+                const control = getPointFromIsometricPoint(centerX, centerY, c.control, scale);
+                const ellipsisSpecs = getEllipsisSpecs(start, point, control);
+                const sweepFlag = getOrientation(start, control, point);
+                return `A ${ellipsisSpecs[0]} ${ellipsisSpecs[1]} ${ellipsisSpecs[2]} 0 ${sweepFlag} ${point.x} ${point.y}`;
             }
+        }
     });
     if (svgPaths.length) {
-        const svgPathString = svgPaths.join(' ').trim();
-        if (svgPathString) {
-            return `${svgPathString}z`;
-        }
+        return `${svgPaths.join(' ').trim()}z`;
     }
     return '';
 };

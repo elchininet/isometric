@@ -22,7 +22,26 @@ describe('Wrong drawing commands', (): void => {
 
     });
 
-    it('Using wrong curve', (): void => {
+    it('Start a line without a moving point', (): void => {
+
+        container = document.createElement('div');
+        document.body.appendChild(container);
+
+        const cube = new IsometricCanvas(container);
+
+        const top = new IsometricPath();
+
+        cube.addChild(top);
+
+        top.draw('L 1 1 1');
+
+        const topElement = top.getElement();
+
+        expect(topElement.getAttribute('d')).toBe('M320 240 L320 240z');
+
+    });
+
+    it('Start a curve without a moving point', (): void => {
 
         container = document.createElement('div');
         document.body.appendChild(container);
@@ -37,7 +56,7 @@ describe('Wrong drawing commands', (): void => {
 
         const topElement = top.getElement();
 
-        expect(topElement.getAttribute('d')).toBe('');
+        expect(topElement.getAttribute('d')).toBe('M320 240 A 0 0 0 0 0 320 240z');
 
     });
 
