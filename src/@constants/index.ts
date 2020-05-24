@@ -12,7 +12,8 @@ export enum SVG_PROPERTIES {
 }
 
 export const DECIMALS = 6;
-export const SQRT3: number = +((Math.sqrt(3) / 2).toFixed(DECIMALS));
+export const SQRT3 = +(Math.sqrt(3).toFixed(DECIMALS));
+export const HSQRT3 = +((Math.sqrt(3) / 2).toFixed(DECIMALS));
 export const DEFAULT_WIDTH = 640;
 export const DEFAULT_HEIGHT = 480;
 
