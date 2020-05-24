@@ -148,12 +148,11 @@ export const translateCommandPoints = (commands: CommandPoint[], right: number, 
         command.point.r += right;
         command.point.l += left;
         command.point.t += top;
-        // Comment for now because curves are not translated at the moment
-        /*if (command.control) {
+        if (command.control) {
             command.control.r += right;
             command.control.l += left;
             command.control.t += top;
-        }*/
+        }
     });
 };
 

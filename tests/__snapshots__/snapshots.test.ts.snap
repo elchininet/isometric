@@ -1,5 +1,56 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Snapshot tests Draw circles 1`] = `
+<div>
+  <svg
+    height="320px"
+    viewBox="0 0 500 320"
+    width="500px"
+  >
+    <rect
+      fill="#CCC"
+      height="320px"
+      width="500px"
+      x="0"
+      y="0"
+    />
+    <path
+      d="M198.0385 130 A 73.484658 42.426407 0 0 0 301.9615 70 A 73.484658 42.426407 180 0 0 198.0385 130z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M250 220 A 73.484684 42.426392 119.999977 0 0 353.923 160 A 73.484684 42.426392 -60.000023 0 0 250 220z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M146.077 160 A 73.484684 42.426392 60.000023 0 0 250 220 A 73.484684 42.426392 -119.999977 0 0 146.077 160z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+  </svg>
+</div>
+`;
+
 exports[`Snapshot tests Draw commands 1`] = `
 <div>
   <svg

@@ -1,4 +1,4 @@
-import { IsometricCanvas, IsometricRectangle, IsometricPath, PlaneView } from '../src';
+import { IsometricCanvas, IsometricRectangle, IsometricCircle, IsometricPath, PlaneView } from '../src';
 
 describe('Snapshot tests', (): void => {
 
@@ -31,6 +31,33 @@ describe('Snapshot tests', (): void => {
 
         topPiece.top = 1;
         rightPiece.right = 1;
+        leftPiece.left = 1;
+
+        cube.addChild(topPiece).addChild(rightPiece).addChild(leftPiece);
+
+        expect(container).toMatchSnapshot();
+
+    });
+
+    it('Draw circles', (): void => {
+
+        const cube = new IsometricCanvas(container, {
+            backgroundColor: '#CCC',
+            scale: 120,
+            width: 500,
+            height: 320
+        });
+
+        const commonProps = {radius: 0.5};
+        const topPiece = new IsometricCircle({...commonProps, planeView: PlaneView.TOP});
+        const rightPiece = new IsometricCircle({...commonProps, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricCircle({...commonProps, planeView: PlaneView.SIDE});
+
+        topPiece.right = topPiece.left = 0.5;
+        topPiece.top = 1;
+        rightPiece.left = rightPiece.top = 0.5;
+        rightPiece.right = 1;
+        leftPiece.right = leftPiece.top = 0.5;
         leftPiece.left = 1;
 
         cube.addChild(topPiece).addChild(rightPiece).addChild(leftPiece);
