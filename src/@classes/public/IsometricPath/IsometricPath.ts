@@ -2,7 +2,6 @@ import { Command, CommandPoint } from '@types';
 import { GraphicProps } from '@classes/abstract/Graphic';
 import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import { addSVGProperties, getSVGPath, drawCommands } from '@utils';
-import { GlobalData } from '@global';
 
 export class IsometricPath extends IsometricGraphic {
 
@@ -18,7 +17,7 @@ export class IsometricPath extends IsometricGraphic {
     public update(): IsometricPath {
         if (this.path.parentNode) {
             addSVGProperties(this.path, {
-                d: getSVGPath(this.commands, GlobalData.centerX, GlobalData.centerY, GlobalData.scale)
+                d: getSVGPath(this.commands, this.data.centerX, this.data.centerY, this.data.scale)
             });
         }
         return this;

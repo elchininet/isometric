@@ -1,9 +1,10 @@
 import { SVG_NAMESPACE, SVG_ELEMENTS, SVG_PROPERTIES, DEFAULT_WIDTH, DEFAULT_HEIGHT } from '@constants';
+import { IsometricStore } from '@classes/abstract/IsometricStore';
 import { Colors, Listener } from '@types';
 import { Graphic } from '@classes/abstract/Graphic';
 import { IsometricCanvasProps } from './types';
 import { addSVGProperties, addEventListenerToElement, removeEventListenerFromElement } from '@utils';
-import { GlobalData } from '@global';
+import { Store } from '@store';
 
 const defaultProps: IsometricCanvasProps = {
     backgroundColor: Colors.white,
@@ -12,21 +13,25 @@ const defaultProps: IsometricCanvasProps = {
     width: DEFAULT_WIDTH
 };
 
-export class IsometricCanvas {
+export class IsometricCanvas extends IsometricStore {
 
     public constructor(container: HTMLElement, props: IsometricCanvasProps = {}) {
+        super();
         this.props = { ...defaultProps, ...props };
         this.children = [];
         this.svg = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.svg);
         this.listeners = [];
 
-        GlobalData.setSizes( this.props.width, this.props.height );
-        GlobalData.scale = this.props.scale;
+        this.dataStore = new Store(
+            this.props.width,
+            this.props.height,
+            this.props.scale
+        );
 
         addSVGProperties(this.svg, {
-            [SVG_PROPERTIES.viewBox]: `0 0 ${GlobalData.width} ${GlobalData.height}`,
-            width: `${GlobalData.width}px`,
-            height: `${GlobalData.height}px`
+            [SVG_PROPERTIES.viewBox]: `0 0 ${this.data.width} ${this.data.height}`,
+            width: `${this.data.width}px`,
+            height: `${this.data.height}px`
         });
 
         this.background = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.rect);
@@ -35,8 +40,8 @@ export class IsometricCanvas {
             fill: this.backgroundColor,
             x: '0',
             y: '0',
-            width: `${GlobalData.width}px`,
-            height: `${GlobalData.height}px`
+            width: `${this.data.width}px`,
+            height: `${this.data.height}px`
         });
 
         this.svg.appendChild(this.background);
@@ -77,47 +82,48 @@ export class IsometricCanvas {
     }
 
     public get scale(): number {
-        return GlobalData.scale;
+        return this.data.scale;
     }
 
     public set scale(value: number) {
-        GlobalData.scale = value;
+        this.data.scale = value;
         this.updateChildren();
     }
 
     public get height(): number {
-        return GlobalData.height;
+        return this.data.height;
     }
 
     public set height(value: number) {
-        GlobalData.height = value;
+        this.data.height = value;
         addSVGProperties(this.svg, {
-            [SVG_PROPERTIES.viewBox]: `0 0 ${GlobalData.width} ${GlobalData.height}`,
-            height: `${GlobalData.height}px`
+            [SVG_PROPERTIES.viewBox]: `0 0 ${this.data.width} ${this.data.height}`,
+            height: `${this.data.height}px`
         });
         addSVGProperties(this.background, {
-            height: `${GlobalData.height}px`
+            height: `${this.data.height}px`
         });
         this.updateChildren();
     }
 
     public get width(): number {
-        return GlobalData.width;
+        return this.data.width;
     }
 
     public set width(value: number) {
-        GlobalData.width = value;
+        this.data.width = value;
         addSVGProperties(this.svg, {
-            [SVG_PROPERTIES.viewBox]: `0 0 ${GlobalData.width} ${GlobalData.height}`,
-            width: `${GlobalData.width}px`
+            [SVG_PROPERTIES.viewBox]: `0 0 ${this.data.width} ${this.data.height}`,
+            width: `${this.data.width}px`
         });
         addSVGProperties(this.background, {
-            width: `${GlobalData.width}px`
+            width: `${this.data.width}px`
         });
         this.updateChildren();
     }
 
     public addChild(child: Graphic): IsometricCanvas {
+        child.data = this.data;
         this.children.push(child);
         this.svg.appendChild(child.getElement());
         child.update();

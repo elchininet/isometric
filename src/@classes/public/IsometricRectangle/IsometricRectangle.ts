@@ -1,7 +1,6 @@
 import { Command, LinePoint, PlaneView, IsometricPlaneView } from '@types';
 import { IsometricShape } from '@classes/abstract/IsometricShape';
 import { addSVGProperties, getSVGPath, translateCommandPoints } from '@utils';
-import { GlobalData } from '@global';
 import { IsometricRectangleProps } from './types';
 
 export class IsometricRectangle extends IsometricShape {
@@ -48,9 +47,9 @@ export class IsometricRectangle extends IsometricShape {
             addSVGProperties(this.path, {
                 d: getSVGPath(
                     commands,
-                    GlobalData.centerX,
-                    GlobalData.centerY,
-                    GlobalData.scale
+                    this.data.centerX,
+                    this.data.centerY,
+                    this.data.scale
                 )
             });
         }
