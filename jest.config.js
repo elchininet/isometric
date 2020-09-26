@@ -21,6 +21,7 @@ module.exports = {
     moduleFileExtensions: ['ts', 'js'],
     collectCoverageFrom: [
         'src/**/*.ts',
+        '!src/index.ts',
         '!src/demo/**'
     ]
 };
