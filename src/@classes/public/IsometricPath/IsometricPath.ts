@@ -1,11 +1,10 @@
 import { Command, CommandPoint } from '@types';
-import { GraphicProps } from '@classes/abstract/Graphic';
-import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
+import { IsometricGraphic, IsometricGraphicProps } from '@classes/abstract/IsometricGraphic';
 import { addSVGProperties, getSVGPath, drawCommands } from '@utils';
 
 export class IsometricPath extends IsometricGraphic {
 
-    public constructor(props: GraphicProps = {}) {
+    public constructor(props: IsometricGraphicProps = {}) {
         // Exclude the next line from the coverage reports
         // Check https://github.com/microsoft/TypeScript/issues/13029
         super(props)/* istanbul ignore next */;

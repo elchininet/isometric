@@ -1,15 +1,27 @@
-import { StrokeLinecap, StrokeLinejoin, Listener } from '@types';
+import { Colors, LineCap, LineJoin, StrokeLinecap, StrokeLinejoin, Listener } from '@types';
 import { SVG_NAMESPACE, SVG_ELEMENTS } from '@constants';
-import { Graphic, GraphicProps } from '@classes/abstract/Graphic';
+import { IsometricStore } from '@classes/abstract/IsometricStore';
 import { addSVGProperties, addEventListenerToElement, removeEventListenerFromElement } from '@utils';
+import { IsometricGraphicProps } from './types';
 
-export abstract class IsometricGraphic extends Graphic {
+const defaultGraphicProps: IsometricGraphicProps = {
+    fillColor: Colors.white,
+    fillOpacity: 1,
+    strokeColor: Colors.black,
+    strokeDashArray: [],
+    strokeLinecap: LineCap.butt,
+    strokeLinejoin: LineJoin.round,
+    strokeOpacity: 1,
+    strokeWidth: 1
+};
 
-    public constructor(props: GraphicProps) {
+export abstract class IsometricGraphic extends IsometricStore {
 
-        // Exclude the next line from the coverage reports
-        // Check https://github.com/microsoft/TypeScript/issues/13029
-        super(props)/* istanbul ignore next */;
+    public constructor(props: IsometricGraphicProps) {
+
+        super();
+
+        this.props = {...defaultGraphicProps, ...props};
         this.path = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.path);
         this.listeners = [];
         
@@ -25,51 +37,95 @@ export abstract class IsometricGraphic extends Graphic {
         });
 
     }
-    
+
+    protected props: IsometricGraphicProps;    
     protected path: SVGPathElement;
     protected listeners: Listener[];
+
+    abstract update(): IsometricGraphic;
+    abstract clear(): IsometricGraphic;
 
     public getElement(): SVGPathElement {
         return this.path;
     }
 
-    protected setFillColor(value: string): void {
-        super.setFillColor(value);
+    // fillColor
+    public get fillColor(): string {
+        return this.props.fillColor;
+    }
+
+    public set fillColor(value: string) {
+        this.props.fillColor = value;
         addSVGProperties(this.path, { 'fill': this.fillColor });
     }
 
-    protected setFillOpacity(value: number): void {
-        super.setFillOpacity(value);
+    // fillOpacity
+    public get fillOpacity(): number {
+        return this.props.fillOpacity;
+    }
+
+    public set fillOpacity(value: number) {
+        this.props.fillOpacity = value;
         addSVGProperties(this.path, { 'fill-opacity': `${this.fillOpacity}` });
     }
 
-    protected setStrokeColor(value: string): void {
-        super.setStrokeColor(value);
+    // strokeColor
+    public get strokeColor(): string {
+        return this.props.strokeColor;
+    }
+
+    public set strokeColor(value: string) {
+        this.props.strokeColor = value;
         addSVGProperties(this.path, { 'stroke': this.strokeColor });
     }
 
-    protected setStrokeDashArray(value: number[]): void {        
-        super.setStrokeDashArray(value);
+    // strokeDashArray
+    public get strokeDashArray(): number[] {
+        return this.props.strokeDashArray;
+    }
+
+    public set strokeDashArray(value: number[]) {
+        this.props.strokeDashArray = value;
         addSVGProperties(this.path, { 'stroke-dasharray': this.strokeDashArray.join(' ') });
     }
 
-    protected setStrokeLinecap(value: StrokeLinecap): void {
-        super.setStrokeLinecap(value);
+    // strokeLinecap
+    public get strokeLinecap(): StrokeLinecap {
+        return this.props.strokeLinecap;
+    }
+
+    public set strokeLinecap(value: StrokeLinecap) {
+        this.props.strokeLinecap = LineCap[value];
         addSVGProperties(this.path, { 'stroke-linecap': this.strokeLinecap });
     }
 
-    protected setStrokeLinejoin(value: StrokeLinejoin): void {
-        super.setStrokeLinejoin(value);
+    // strokeLinejoin
+    public get strokeLinejoin(): StrokeLinejoin {
+        return this.props.strokeLinejoin;
+    }
+
+    public set strokeLinejoin(value: StrokeLinejoin) {
+        this.props.strokeLinejoin = LineJoin[value];
         addSVGProperties(this.path, { 'stroke-linejoin': this.strokeLinejoin });
     }
 
-    protected setStrokeOpacity(value: number): void {
-        super.setStrokeOpacity(value);
+    // strokeOpacity
+    public get strokeOpacity(): number {
+        return this.props.strokeOpacity;
+    }
+
+    public set strokeOpacity(value: number) {
+        this.props.strokeOpacity = value;
         addSVGProperties(this.path, { 'stroke-opacity': `${this.strokeOpacity}` });
     }
 
-    protected setStrokeWidth(value: number): void {
-        super.setStrokeWidth(value);
+    // strokeWidth
+    public get strokeWidth(): number {
+        return this.props.strokeWidth;
+    }
+
+    public set strokeWidth(value: number) {
+        this.props.strokeWidth = value;
         addSVGProperties(this.path, { 'stroke-width': `${this.strokeWidth}` });
     }
 
