@@ -31,15 +31,20 @@ h2,
 h3,
 h4,
 h5 {
-  color: #fff;
+  color: #666;
   font-family: Roboto;
   font-weight: 300;
   margin: 2em 2em 1.5em;
   text-align: center;
+
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0;
+  }
+
 }
 
 .demo {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -53,7 +58,7 @@ h5 {
     font-size: 13px;
     overflow-x: auto;
     width: 50%;
-    padding: 2em;
+    padding: 0 2em 2em;
 
     @media screen and (max-width: 768px) {
       font-size: 11px;

@@ -4,7 +4,8 @@ export enum SVG_ELEMENTS {
     svg = 'svg',
     group = 'group',
     path = 'path',
-    rect = 'rect'
+    rect = 'rect',
+    animate = 'animate'
 }
 
 export enum SVG_PROPERTIES {

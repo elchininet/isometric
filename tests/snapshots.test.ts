@@ -1,4 +1,13 @@
-import { IsometricCanvas, IsometricRectangle, IsometricCircle, IsometricPath, PlaneView } from '../src';
+import {
+    IsometricCanvas,
+    IsometricRectangle,
+    IsometricCircle,
+    IsometricPath,
+    PlaneView,
+    SVGPathAnimation,
+    SVGRectangleAnimation,
+    SVGCircleAnimation
+} from '../src';
 
 describe('Snapshot tests', (): void => {
 
@@ -178,6 +187,178 @@ describe('Snapshot tests', (): void => {
 
     });
 
+    it('Draw animations', (): void => {
 
+        const isometric = new IsometricCanvas(container, {
+            backgroundColor: '#CCC',
+            scale: 120,
+            width: 500,
+            height: 320
+        });
+
+        const commonProps = {height: 1, width: 1};
+
+        const duration = 3;
+
+        const colorAnimationProps = {
+            property: 'fillColor',
+            duration,
+            values: ['#FFF', '#DDD', '#FFF']
+        };
+
+        const topPiece = new IsometricPath();
+        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+
+        topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
+        rightPiece.right = 1;
+        leftPiece.left = 1;
+
+        topPiece
+            .addAnimation({
+                property: 'path',
+                duration,
+                values: [
+                    'M0 0 1 L1 0 1 L1 1 1 L0 1 1',
+                    'M0 0 0.5 L1 0 0.5 L1 1 0.5 L0 1 0.5',
+                    'M0 0 1 L1 0 1 L1 1 1 L0 1 1'
+                ]
+            } as SVGPathAnimation)
+            .addAnimation(colorAnimationProps as SVGPathAnimation);        
+
+        rightPiece
+            .addAnimation({
+                property: 'height',
+                duration,
+                from: 1,
+                to: 0.5
+            } as SVGRectangleAnimation)
+            .addAnimation(colorAnimationProps as SVGRectangleAnimation);
+
+        leftPiece
+            .addAnimation({
+                property: 'height',
+                duration,
+                values: 0.5
+            } as SVGRectangleAnimation)
+            .addAnimation(colorAnimationProps as SVGRectangleAnimation);
+
+        isometric.addChildren(topPiece, rightPiece, leftPiece);
+
+        expect(container).toMatchSnapshot();
+
+    });
+
+    it('Remove animations', (): void => {
+
+        const isometric = new IsometricCanvas(container, {
+            backgroundColor: '#CCC',
+            scale: 120,
+            width: 500,
+            height: 320
+        });
+
+        const commonProps = {height: 1, width: 1};
+
+        const colorAnimationProps = {
+            property: 'fillColor',
+            values: ['#FFF', '#DDD', '#FFF']
+        };
+
+        const topPiece = new IsometricPath();
+        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+        const circlePiece = new IsometricCircle({radius: 1, planeView: PlaneView.TOP});
+
+        topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
+        rightPiece.right = 1;
+        leftPiece.left = 1;
+
+        topPiece
+            .addAnimation({
+                property: 'path',
+                values: 'M0 0 1 L1 0 1 L1 1 1 L0 1 1'
+            } as SVGPathAnimation)
+            .addAnimation(colorAnimationProps as SVGPathAnimation);
+
+        rightPiece
+            .addAnimation({
+                property: 'height',
+                from: 1,
+                to: 0.5
+            } as SVGRectangleAnimation)
+            .addAnimation(colorAnimationProps as SVGRectangleAnimation);
+
+        leftPiece
+            .addAnimation({
+                property: 'height',
+                values: [1, 0.5]
+            } as SVGRectangleAnimation)
+            .addAnimation(colorAnimationProps as SVGRectangleAnimation);
+
+        circlePiece
+            .addAnimation({
+                property: 'radius',
+                from: 1,
+                to: 0.5
+            })
+            .addAnimation(colorAnimationProps as SVGCircleAnimation);
+
+        // Remove animation before adding the elements
+        rightPiece.removeAnimations();
+        topPiece.removeAnimationByIndex(1);
+        circlePiece.removeAnimationByIndex(0);
+
+        isometric.addChildren(topPiece, rightPiece, leftPiece, circlePiece);
+
+        // Redraw the elements with animations
+        topPiece.update();
+
+        // Remove animations after adding the elements
+        leftPiece.removeAnimationByIndex(0);
+        leftPiece.removeAnimations();
+        circlePiece.removeAnimations();
+
+        // Remove a wrong index
+        topPiece.removeAnimationByIndex(1);
+        topPiece.removeAnimationByIndex(10);
+
+        // Add another animation
+        topPiece.addAnimation({
+            property: 'path',
+            from: 'M0 0 1 L1 0 1 L1 1 1 L0 1 1',
+            to: 'M0 0 0.5 L1 0 0.5 L1 1 0.5 L0 1 0.5'
+        } as SVGPathAnimation);
+
+        topPiece.removeAnimations();
+
+        circlePiece
+            .addAnimation({
+                property: 'radius',
+                values: [0.5, 1]
+            });
+
+        circlePiece.removeAnimationByIndex(0);
+
+        circlePiece
+            .addAnimation({
+                property: 'radius',
+                values: 1
+            });
+
+        circlePiece.removeAnimations();
+
+        circlePiece
+            .addAnimation({
+                property: 'left',
+                from: 0,
+                to: 1
+            });
+
+        circlePiece.removeAnimations();
+
+        expect(container).toMatchSnapshot();
+
+    });
 
 });

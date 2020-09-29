@@ -178,6 +178,16 @@ clear()
 >Cleans the isometric canvas (removes all the isometric paths from it and all the native SVG paths elements from the SVG)
 
 ```javascript
+pauseAnimations()
+```
+>Pause all the animations (not compatible with Internet Explorer)
+
+```javascript
+resumeAnimations()
+```
+>Resume all the animations (not compatible with Internet Explorer)
+
+```javascript
 addEventListener(type, callback, [useCapture])
 ```
 >Sets up a function that will be called whenever the specified event is delivered to the `IsometricCanvas` (the SVG element)
@@ -211,6 +221,7 @@ removeEventListener(type, callback, [useCapture])
 | scale           | number   | Gets and sets the multiplier scale of the isometric canvas        |
 | height          | number   | Gets and sets the height of the isometric canvas                  |
 | width           | number   | Gets and sets the width of the isometric canvas                   |
+| animated        | boolean  | Gets if the SVG is animations are paused or are running           |
 
 </p>
 </details>
@@ -326,6 +337,39 @@ clear()
 >Cleans the IsometricPath (removes all the path commands from the native SVG path element)
 
 ```javascript
+addAnimation(animation)
+```
+>Adds an animated element to the `IsometricPath` (not compatible with Internet Explorer). These are the properties of the `SVGPathAnimation` object:
+
+| Property        | Type     | Optional  | Default |  Description                                     |
+| --------------- | -------- | --------- | ------- | ------------------------------------------------ |
+| property        | string   | no        | -       | Indicates which property should be animated      |
+| duration        | number   | yes       | 1       | Indicates the number of seconds of the animation |
+| repeat          | number   | yes       | 0       | Number of times that the animation will run. `0` runs indefinitely |
+| from            | string / number | yes | - | Initial value of the animation (if this property is used, `values` property can't be used) |
+| to              | string / number | yes | - | Final value of the animation (if this property is used, `values` property can't be used) |
+| values          | string / number / string[] / number[] | yes | - | All the values of the animation (if this property is used, `from` and `to` properties can't be used) |
+
+These are the properties that can be animated (property `property`)
+
+* fillColor
+* fillOpacity
+* strokeColor
+* strokeOpacity
+* strokeWidth
+* path
+
+```javascript
+removeAnimationByIndex(index)
+```
+>Remove an especific animation element by its index.
+
+```javascript
+removeAnimations()
+```
+>Remove all the animation elements.
+
+```javascript
 addEventListener(type, callback, [useCapture])
 ```
 >Sets up a function that will be called whenever the specified event is delivered to the `IsometricPath` (the SVG path element)
@@ -419,6 +463,43 @@ update()
 clear()
 ```
 >Cleans the IsometricRectangle (removes all the path commands from the native SVG path element)
+
+```javascript
+addAnimation(animation)
+```
+>Adds an animated element to the `IsometricRectangle` (not compatible with Internet Explorer). These are the properties of the `SVGRectangleAnimation` object:
+
+| Property        | Type     | Optional  | Default |  Description                                     |
+| --------------- | -------- | --------- | ------- | ------------------------------------------------ |
+| property        | string   | no        | -       | Indicates which property should be animated      |
+| duration        | number   | yes       | 1       | Indicates the number of seconds of the animation |
+| repeat          | number   | yes       | 0       | Number of times that the animation will run. `0` runs indefinitely |
+| from            | string / number | yes | - | Initial value of the animation (if this property is used, `values` property can't be used) |
+| to              | string / number | yes | - | Final value of the animation (if this property is used, `values` property can't be used) |
+| values          | string / number / string[] / number[] | yes | - | All the values of the animation (if this property is used, `from` and `to` properties can't be used) |
+
+These are the properties that can be animated (property `property`)
+
+* fillColor
+* fillOpacity
+* strokeColor
+* strokeOpacity
+* strokeWidth
+* right
+* left
+* top
+* width
+* height
+
+```javascript
+removeAnimationByIndex(index)
+```
+>Remove an especific animation element by its index.
+
+```javascript
+removeAnimations()
+```
+>Remove all the animation elements.
 
 ```javascript
 addEventListener(type, callback, [useCapture])
@@ -516,6 +597,42 @@ update()
 clear()
 ```
 >Cleans the IsometricCircle (removes all the path commands from the native SVG path element)
+
+```javascript
+addAnimation(animation)
+```
+>Adds an animated element to the `IsometricCircle` (not compatible with Internet Explorer). These are the properties of the `SVGCircleAnimation` object:
+
+| Property        | Type     | Optional  | Default |  Description                                     |
+| --------------- | -------- | --------- | ------- | ------------------------------------------------ |
+| property        | string   | no        | -       | Indicates which property should be animated      |
+| duration        | number   | yes       | 1       | Indicates the number of seconds of the animation |
+| repeat          | number   | yes       | 0       | Number of times that the animation will run. `0` runs indefinitely |
+| from            | string / number | yes | - | Initial value of the animation (if this property is used, `values` property can't be used) |
+| to              | string / number | yes | - | Final value of the animation (if this property is used, `values` property can't be used) |
+| values          | string / number / string[] / number[] | yes | - | All the values of the animation (if this property is used, `from` and `to` properties can't be used) |
+
+These are the properties that can be animated (property `property`)
+
+* fillColor
+* fillOpacity
+* strokeColor
+* strokeOpacity
+* strokeWidth
+* right
+* left
+* top
+* radius
+
+```javascript
+removeAnimationByIndex(index)
+```
+>Remove an especific animation element by its index.
+
+```javascript
+removeAnimations()
+```
+>Remove all the animation elements.
 
 ```javascript
 addEventListener(type, callback, [useCapture])

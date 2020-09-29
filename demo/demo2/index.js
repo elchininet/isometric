@@ -2,31 +2,67 @@ import './styles.scss';
 
 export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricPath } = IsometricModule;
+    const { IsometricCanvas, IsometricPath, IsometricRectangle, PlaneView } = IsometricModule;
 
-    const isometric = new IsometricCanvas(container, {
+    const cube = new IsometricCanvas(container, {
         backgroundColor: '#CCC',
         scale: 120,
         width: 500,
         height: 320
     });
 
-    const bottomT = new IsometricPath();
-    const bottomR = new IsometricPath();
-    const bottomL = new IsometricPath();
-    
-    const topT = new IsometricPath();
-    const topR = new IsometricPath();
-    const topL = new IsometricPath();
+    const commonProps = {height: 1, width: 1};
 
-    bottomT.mt(0, 0, .5).lt(1, 0, .5).lt(1, 1, .5).lt(0, 1, .5);
-    bottomR.mt(1, 0, .5).lt(1, 0, 0).lt(1, 1, 0).lt(1, 1, .5);
-    bottomL.mt(1, 1, .5).lt(1, 1, 0).lt(0, 1, 0).lt(0, 1, .5);
+    const duration = 3;
 
-    topT.mt(.25, .25, 1.25).lt(.75, .25, 1.25).lt(.75, .75, 1).lt(.25, .75, 1);
-    topR.mt(.75, .25, 1.25).lt(.75, .75, 1).lt(.75, .75, .5).lt(.75, .25, .5);
-    topL.mt(.75, .75, 1).lt(.25, .75, 1).lt(.25, .75, .5).lt(.75, .75, .5);
+    const rectangleAnimationProps = {
+        property: 'height',
+        duration,
+        values: [1, 0.5, 1]
+    };
 
-    isometric.addChildren(bottomT, bottomR, bottomL, topT, topR, topL);
+    const colorAnimationProps = {
+        property: 'fillColor',
+        duration,
+        values: ['#FFF', '#DDD', '#FFF']
+    };
+
+    const topPiece = new IsometricPath();
+    const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
+    const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+
+    topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
+    rightPiece.right = 1;
+    leftPiece.left = 1;
+
+    topPiece
+        .addAnimation({
+            property: 'path',
+            duration,
+            values: [
+                'M0 0 1 L1 0 1 L1 1 1 L0 1 1',
+                'M0 0 0.5 L1 0 0.5 L1 1 0.5 L0 1 0.5',
+                'M0 0 1 L1 0 1 L1 1 1 L0 1 1'
+            ]
+        })
+        .addAnimation(colorAnimationProps);        
+
+    rightPiece
+        .addAnimation(rectangleAnimationProps)
+        .addAnimation(colorAnimationProps);
+
+    leftPiece
+        .addAnimation(rectangleAnimationProps)
+        .addAnimation(colorAnimationProps);
+
+    cube.addEventListener('click', function() {
+        if (this.animated) {
+            this.pauseAnimations();
+        } else {
+            this.resumeAnimations();
+        }
+    });
+
+    cube.addChildren(topPiece, rightPiece, leftPiece);
 
 };

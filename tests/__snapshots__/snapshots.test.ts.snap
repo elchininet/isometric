@@ -1,5 +1,96 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Snapshot tests Draw animations 1`] = `
+<div>
+  <svg
+    height="320px"
+    viewBox="0 0 500 320"
+    width="500px"
+  >
+    <rect
+      fill="#CCC"
+      height="320px"
+      width="500px"
+      x="0"
+      y="0"
+    />
+    <path
+      d="M250 40 L353.923 100 L250 160 L146.077 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="d"
+        dur="3s"
+        repeatCount="indefinite"
+        values="M250 40 L353.923 100 L250 160 L146.077 100z;M250 100 L353.923 160 L250 220 L146.077 160z;M250 40 L353.923 100 L250 160 L146.077 100z"
+      />
+      <animate
+        attributeName="fill"
+        dur="3s"
+        repeatCount="indefinite"
+        values="#FFF;#DDD;#FFF"
+      />
+    </path>
+    <path
+      d="M353.923 220 L250 280 L250 160 L353.923 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="d"
+        dur="3s"
+        from="M353.923 220 L250 280 L250 160 L353.923 100z"
+        repeatCount="indefinite"
+        to="M353.923 220 L250 280 L250 220 L353.923 160z"
+      />
+      <animate
+        attributeName="fill"
+        dur="3s"
+        repeatCount="indefinite"
+        values="#FFF;#DDD;#FFF"
+      />
+    </path>
+    <path
+      d="M146.077 220 L250 280 L250 160 L146.077 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="d"
+        dur="3s"
+        repeatCount="indefinite"
+        values="M146.077 220 L250 280 L250 220 L146.077 160z"
+      />
+      <animate
+        attributeName="fill"
+        dur="3s"
+        repeatCount="indefinite"
+        values="#FFF;#DDD;#FFF"
+      />
+    </path>
+  </svg>
+</div>
+`;
+
 exports[`Snapshot tests Draw circles 1`] = `
 <div>
   <svg
@@ -330,6 +421,68 @@ exports[`Snapshot tests Draw rectangles 1`] = `
     />
     <path
       d="M146.077 220 L250 280 L250 160 L146.077 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+  </svg>
+</div>
+`;
+
+exports[`Snapshot tests Remove animations 1`] = `
+<div>
+  <svg
+    height="320px"
+    viewBox="0 0 500 320"
+    width="500px"
+  >
+    <rect
+      fill="#CCC"
+      height="320px"
+      width="500px"
+      x="0"
+      y="0"
+    />
+    <path
+      d="M250 40 L353.923 100 L250 160 L146.077 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M353.923 220 L250 280 L250 160 L353.923 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M146.077 220 L250 280 L250 160 L146.077 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M146.077 220 A 146.969316 84.852814 0 0 0 353.923 100 A 146.969316 84.852814 180 0 0 146.077 220z"
       fill="white"
       fill-opacity="1"
       stroke="black"
