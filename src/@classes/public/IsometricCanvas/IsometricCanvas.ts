@@ -21,8 +21,9 @@ export class IsometricCanvas extends IsometricStore {
         this.children = [];
         this.svg = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.svg);
         this.listeners = [];
+        this.isAnimated = true;
 
-        this.dataStore = new Store(
+        this.data = new Store(
             this.props.width,
             this.props.height,
             this.props.scale
@@ -51,8 +52,9 @@ export class IsometricCanvas extends IsometricStore {
     
     private props: IsometricCanvasProps;
     private children: IsometricGraphic[];
-    private svg: SVGElement;
+    private svg: SVGSVGElement;
     private background: SVGRectElement;
+    private isAnimated: boolean;
     private listeners: Listener[];
 
     private removeSVGChild(child: IsometricGraphic): void {
@@ -68,7 +70,7 @@ export class IsometricCanvas extends IsometricStore {
         });
     }
 
-    public getElement(): SVGElement {
+    public getElement(): SVGSVGElement {
         return this.svg;
     }
 
@@ -122,6 +124,10 @@ export class IsometricCanvas extends IsometricStore {
         this.updateChildren();
     }
 
+    public get animated(): boolean {
+        return this.isAnimated;
+    }
+
     public addChild(child: IsometricGraphic): IsometricCanvas {
         child.data = this.data;
         this.children.push(child);
@@ -155,6 +161,22 @@ export class IsometricCanvas extends IsometricStore {
             this.removeSVGChild(child);
         }
         return this;
+    }
+
+    public pauseAnimations(): void {
+        /* istanbul ignore next */ /* jsdom doesn't have SVGSVGElement methods */
+        if (typeof(this.svg.pauseAnimations) === 'function') {
+            this.svg.pauseAnimations();
+        }
+        this.isAnimated = false;      
+    }
+
+    public resumeAnimations(): void {
+        /* istanbul ignore next */ /* jsdom doesn't have SVGSVGElement methods */
+        if (typeof(this.svg.unpauseAnimations) === 'function') {
+            this.svg.unpauseAnimations();
+        }
+        this.isAnimated = true;
     }
 
     public clear(): IsometricCanvas {

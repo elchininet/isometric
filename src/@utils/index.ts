@@ -1,6 +1,12 @@
-import { Point, Listener, CommandPoint, Command } from '@types';
+import {
+    Point,
+    Listener,
+    CommandPoint,
+    Command,
+    SVGAnimationProperties,
+    SVGNativeProperties
+} from '@types';
 import { HSQRT3, DECIMALS, COMMANDS_REGEXP } from '@constants';
-import { IsometricPath } from '@classes/public/IsometricPath';
 
 export interface IsometricPoint {
     x: number;
@@ -125,22 +131,33 @@ export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: n
     return '';
 };
 
-export const drawCommands = (pathInstance: IsometricPath, commands: string): IsometricPath => {
+export const parseDrawCommands = (commands: string): CommandPoint[] => {
+    const commandsArray: CommandPoint[] = [];
     let array;
     while ((array = COMMANDS_REGEXP.exec(commands)) !== null) {
         const command = array[5] || array[1];
         switch(command) {
             case 'M':
-                pathInstance.moveTo(+array[2], +array[3], +array[4]);
+                commandsArray.push({
+                    command: Command.move,
+                    point: { r: +array[2], l: +array[3], t: +array[4] }
+                });
                 break;
             case 'L':
-                pathInstance.lineTo(+array[2], +array[3], +array[4]);
+                commandsArray.push({
+                    command: Command.line,
+                    point: { r: +array[2], l: +array[3], t: +array[4] }
+                }); 
                 break;
             case 'C':
-                pathInstance.curveTo(+array[6], +array[7], +array[8], +array[9], +array[10], +array[11]);
+                commandsArray.push({
+                    command: Command.curve,
+                    control: { r: +array[6], l: +array[7], t: +array[8] },
+                    point: { r: +array[9], l: +array[10], t: +array[11] }
+                });
         }
     }
-    return pathInstance;
+    return commandsArray;
 };
 
 export const translateCommandPoints = (commands: CommandPoint[], right: number, left: number, top: number): void => {
@@ -154,6 +171,23 @@ export const translateCommandPoints = (commands: CommandPoint[], right: number, 
             command.control.t += top;
         }
     });
+};
+
+export const getSVGProperty = (property: SVGAnimationProperties): SVGNativeProperties => {
+    return {
+        fillColor: 'fill',
+        fillOpacity: 'fill-opacity',
+        strokeColor: 'stroke',
+        strokeOpacity: 'stroke-opacity',
+        strokeWidth: 'stroke-width',
+        path: 'd',
+        left: 'd',
+        right: 'd',
+        top: 'd',
+        width: 'd',
+        height: 'd',
+        radius: 'd'
+    }[property] as SVGNativeProperties;
 };
 
 export function addEventListenerToElement(element: SVGElement, listeners: Listener[], event: string, callback: VoidFunction, useCapture: boolean): void {

@@ -7,7 +7,7 @@ describe('Test properties', (): void => {
     let path: IsometricPath;
     let rectangle: IsometricRectangle;
     let circle: IsometricCircle;
-    let svgElement: SVGElement;
+    let svgElement: SVGSVGElement;
     let pathElement: SVGElement;
     let rectangleElement: SVGElement;
     let circleElement: SVGElement;
@@ -99,6 +99,12 @@ describe('Test properties', (): void => {
         expect(svgElement.getAttribute('height')).toBe('480px');
         expect(svgElement.getAttribute('width')).toBe('640px');
 
+        expect(cube.animated).toBe(true);
+        cube.pauseAnimations();
+        expect(cube.animated).toBe(false);
+        cube.resumeAnimations();
+        expect(cube.animated).toBe(true);
+
     });
 
     it('Compare IsometricPath vs IsometricRectangle', (): void => {
@@ -157,8 +163,6 @@ describe('Test properties', (): void => {
     });
 
     it('IsometricCircle change position', (): void => {
-
-        console.log(circleElement);
         
         circle.planeView = PlaneView.TOP;
         expect(circleElement.getAttribute('d')).toBe('M198.0385 190 A 73.484658 42.426407 0 0 0 301.9615 130 A 73.484658 42.426407 180 0 0 198.0385 190z');

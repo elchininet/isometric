@@ -1,7 +1,21 @@
-import { Colors, LineCap, LineJoin, StrokeLinecap, StrokeLinejoin, Listener } from '@types';
+import {
+    Colors,
+    LineCap,
+    LineJoin,
+    StrokeLinecap, 
+    StrokeLinejoin,
+    Listener,
+    SVGAnimation,
+    SVGAnimationObject
+} from '@types';
 import { SVG_NAMESPACE, SVG_ELEMENTS } from '@constants';
 import { IsometricStore } from '@classes/abstract/IsometricStore';
-import { addSVGProperties, addEventListenerToElement, removeEventListenerFromElement } from '@utils';
+import {
+    addSVGProperties,
+    addEventListenerToElement,
+    removeEventListenerFromElement,
+    getSVGProperty
+} from '@utils';
 import { IsometricGraphicProps } from './types';
 
 const defaultGraphicProps: IsometricGraphicProps = {
@@ -36,14 +50,58 @@ export abstract class IsometricGraphic extends IsometricStore {
             'stroke-width': `${this.strokeWidth}`
         });
 
+        this.animations = [];
+
     }
 
     protected props: IsometricGraphicProps;    
     protected path: SVGPathElement;
+    protected animations: SVGAnimationObject[];
     protected listeners: Listener[];
 
-    abstract update(): IsometricGraphic;
-    abstract clear(): IsometricGraphic;
+    public abstract update(): IsometricGraphic;
+    public abstract clear(): IsometricGraphic;
+    protected abstract privateUpdateAnimations(): void;
+
+    protected updateAnimations(): void {
+
+        this.animations.forEach((animation: SVGAnimationObject): void => {
+
+            if (!animation.element) {
+                animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
+            }
+
+            if (!animation.element.parentNode) {
+                this.path.appendChild(animation.element);
+            }
+
+            addSVGProperties(animation.element, {
+                repeatCount: `${animation.repeat || 'indefinite'}`,
+                attributeName: getSVGProperty(animation.property),
+                dur: `${animation.duration || 1}s`
+            });
+            
+            if (animation.values) {
+                addSVGProperties(
+                    animation.element,
+                    {
+                        values: Array.isArray(animation.values)
+                            ? animation.values.map((value: string | number): string => `${value}`).join(';')
+                            : `${animation.values}`
+                    }
+                );
+            } else {
+                addSVGProperties(animation.element, {
+                    from: `${animation.from}`,
+                    to: `${animation.to}`
+                });
+            }
+
+        });
+
+        this.privateUpdateAnimations();
+
+    }
 
     public getElement(): SVGPathElement {
         return this.path;
@@ -127,6 +185,41 @@ export abstract class IsometricGraphic extends IsometricStore {
     public set strokeWidth(value: number) {
         this.props.strokeWidth = value;
         addSVGProperties(this.path, { 'stroke-width': `${this.strokeWidth}` });
+    }
+
+    public addAnimation(animation: SVGAnimation): IsometricGraphic {
+        this.animations.push({ ...animation });
+        this.update();
+        return this;
+    }
+
+    public removeAnimationByIndex(index: number): IsometricGraphic {
+
+        if (index >= 0 && index < this.animations.length) {
+
+            const animation = this.animations.splice(index, 1)[0];
+            
+            if (animation.element && animation.element.parentNode) {
+                animation.element.parentNode.removeChild(animation.element);
+            }
+
+        }
+
+        return this;
+
+    }
+
+    public removeAnimations(): IsometricGraphic {
+
+        const animations = this.animations.splice(0);
+
+        animations.forEach((animation: SVGAnimationObject): void => {
+            if (animation.element && animation.element.parentNode) {
+                animation.element.parentNode.removeChild(animation.element);
+            }
+        });
+
+        return this;
     }
 
     public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricGraphic {

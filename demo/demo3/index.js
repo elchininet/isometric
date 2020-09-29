@@ -11,25 +11,22 @@ export default ( IsometricModule, container ) => {
         height: 320
     });
 
-    const right = new IsometricPath();
-    const top1 = new IsometricPath();
-    const top2 = new IsometricPath();
-    const top3 = new IsometricPath();
-    const top4 = new IsometricPath();
-    const left1 = new IsometricPath();
-    const left2 = new IsometricPath();
+    const bottomT = new IsometricPath();
+    const bottomR = new IsometricPath();
+    const bottomL = new IsometricPath();
+    
+    const topT = new IsometricPath();
+    const topR = new IsometricPath();
+    const topL = new IsometricPath();
 
-    // M r l t (Move to right left top)
-    // L r l t (Line to right left top)
-    // C cr cl ct r l t (Curve to control-right control-left control-top right left top)
-    right.draw('M1 0 0 L1 1 0 L1 1 0.25 L1 0.5 0.25 L1 0.5 1 L1 0 1');
-    top1.draw('M0.25 0.5 1 C0.5 0.5 0.75 0.75 0.5 1 L0.75 0 1 C0.5 0 0.75 0.25 0 1 L0.25 0.5 1');
-    top2.draw('M1 0 1 L0.75 0 1 L0.75 0.5 1 L1 0.5 1 L1 0 1 M0 0 1 L0.25 0 1 L0.25 0.5 1 L0 0.5 1 L0 0 1');
-    top3.draw('M0 0.5 0.5 L0.5 0.5 0.5 L0.5 1 0.5 L0 1 0.5');
-    top4.draw('M0.5 0.5 0.5 L1 0.5 0.25 L1 1 0.25 L0.5 1 0.5');
-    left1.draw('M0 0.5 1 L0 0.5 0.5 L0.5 0.5 0.5 L1 0.5 0.25 L1 0.5 1 L0.75 0.5 1 C0.5 0.5 0.75 0.25 0.5 1 L0 0.5 1');
-    left2.draw('M0 1 0.5 L0.5 1 0.5 L1 1 0.25 L1 1 0 L0 1 0');
+    bottomT.mt(0, 0, .5).lt(1, 0, .5).lt(1, 1, .5).lt(0, 1, .5);
+    bottomR.mt(1, 0, .5).lt(1, 0, 0).lt(1, 1, 0).lt(1, 1, .5);
+    bottomL.mt(1, 1, .5).lt(1, 1, 0).lt(0, 1, 0).lt(0, 1, .5);
 
-    isometric.addChildren(right, top1, top2, top3, top4, left1, left2);
+    topT.mt(.25, .25, 1.25).lt(.75, .25, 1.25).lt(.75, .75, 1).lt(.25, .75, 1);
+    topR.mt(.75, .25, 1.25).lt(.75, .75, 1).lt(.75, .75, .5).lt(.75, .25, .5);
+    topL.mt(.75, .75, 1).lt(.25, .75, 1).lt(.25, .75, .5).lt(.75, .75, .5);
+
+    isometric.addChildren(bottomT, bottomR, bottomL, topT, topR, topL);
 
 };

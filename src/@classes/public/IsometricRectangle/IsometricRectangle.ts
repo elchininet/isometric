@@ -1,7 +1,15 @@
-import { Command, LinePoint, PlaneView, IsometricPlaneView } from '@types';
+import { Command, LinePoint, PlaneView, IsometricPlaneView, SVGShapeProperties, SVGRectangleProperties, SVGRectangleAnimation, SVGAnimationObject } from '@types';
 import { IsometricShape } from '@classes/abstract/IsometricShape';
 import { addSVGProperties, getSVGPath, translateCommandPoints } from '@utils';
 import { IsometricRectangleProps } from './types';
+
+interface GetRectanglePathArguments {
+    right: number;
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+}
 
 export class IsometricRectangle extends IsometricShape {
 
@@ -17,41 +25,101 @@ export class IsometricRectangle extends IsometricShape {
     private rectWidth: number;
     private rectHeight: number;
 
+    private getRectanglePath(args: GetRectanglePathArguments): string {
+        const { right, left, top, width, height } = args;        
+        const commands: LinePoint[] = [ {command: Command.move, point: {r: 0, l: 0, t: 0}} ];
+        switch(this.planeView) {
+            case PlaneView.FRONT:
+                commands.push(
+                    {command: Command.line, point: {r: 0, l: width, t: 0}},
+                    {command: Command.line, point: {r: 0, l: width, t: height}},
+                    {command: Command.line, point: {r: 0, l: 0, t: height}}
+                );
+                break;
+            case PlaneView.SIDE:
+                commands.push(
+                    {command: Command.line, point: {r: width, l: 0, t: 0}},
+                    {command: Command.line, point: {r: width, l: 0, t: height}},
+                    {command: Command.line, point: {r: 0, l: 0, t: height}}
+                );
+                break;
+            case PlaneView.TOP:
+                commands.push(
+                    {command: Command.line, point: {r: width, l: 0, t: 0}},
+                    {command: Command.line, point: {r: width, l: height, t: 0}},
+                    {command: Command.line, point: {r: 0, l: width, t: 0}}
+                );
+                break;
+        }
+        translateCommandPoints(commands, right, left, top);
+        return getSVGPath(
+            commands,
+            this.data.centerX,
+            this.data.centerY,
+            this.data.scale
+        );
+    }
+
+    protected privateUpdateAnimations(): void {
+
+        this.animations.forEach((animation: SVGAnimationObject): void => {
+
+            const args = {
+                right: this.right,
+                left: this.left,
+                top: this.top,
+                width: this.width,
+                height: this.height
+            };
+
+            if (Object.prototype.hasOwnProperty.call(args, animation.property)) {
+
+                const property = animation.property as SVGShapeProperties | SVGRectangleProperties;
+
+                if (animation.values) {
+
+                    let values: string;
+
+                    if (Array.isArray(animation.values)) {
+                        values = animation.values.map((value: string | number): string => {
+                            const modifiedArgs = { ...args };
+                            modifiedArgs[property] = +value;
+                            return this.getRectanglePath(modifiedArgs);
+                        }).join(';');
+                    } else {
+                        const modifiedArgs = { ...args };
+                        modifiedArgs[property] = +animation.values;
+                        values = this.getRectanglePath(modifiedArgs);
+                    }
+
+                    addSVGProperties(animation.element, { values });
+
+                } else {
+                    const fromArgs = { ...args };
+                    const toArgs = { ...args };
+                    fromArgs[property] = +animation.from;
+                    toArgs[property] = +animation.to;
+                    addSVGProperties(animation.element, {
+                        from: this.getRectanglePath(fromArgs),
+                        to: this.getRectanglePath(toArgs)
+                    });
+                }
+            }
+
+        });
+    }
+
     public update(): IsometricRectangle {
         if (this.path.parentNode) {
-            const commands: LinePoint[] = [ {command: Command.move, point: {r: 0, l: 0, t: 0}} ];
-            switch(this.planeView) {
-                case PlaneView.FRONT:
-                    commands.push(
-                        {command: Command.line, point: {r: 0, l: this.width, t: 0}},
-                        {command: Command.line, point: {r: 0, l: this.width, t: this.height}},
-                        {command: Command.line, point: {r: 0, l: 0, t: this.height}}
-                    );
-                    break;
-                case PlaneView.SIDE:
-                    commands.push(
-                        {command: Command.line, point: {r: this.rectWidth, l: 0, t: 0}},
-                        {command: Command.line, point: {r: this.rectWidth, l: 0, t: this.height}},
-                        {command: Command.line, point: {r: 0, l: 0, t: this.height}}
-                    );
-                    break;
-                case PlaneView.TOP:
-                    commands.push(
-                        {command: Command.line, point: {r: this.width, l: 0, t: 0}},
-                        {command: Command.line, point: {r: this.width, l: this.height, t: 0}},
-                        {command: Command.line, point: {r: 0, l: this.width, t: 0}}
-                    );
-                    break;
-            }
-            translateCommandPoints(commands, this.right, this.left, this.top);
-            addSVGProperties(this.path, {
-                d: getSVGPath(
-                    commands,
-                    this.data.centerX,
-                    this.data.centerY,
-                    this.data.scale
-                )
+            const path = this.getRectanglePath({
+                right: this.right,
+                left: this.left,
+                top: this.top,
+                width: this.width,
+                height: this.height
             });
+            addSVGProperties(this.path, { d: path });
+            this.updateAnimations();
         }
         return this;
     }
@@ -99,6 +167,18 @@ export class IsometricRectangle extends IsometricShape {
     public set height(value: number) {
         this.rectHeight = value;
         this.update();
+    }
+
+    public addAnimation(animation: SVGRectangleAnimation): IsometricRectangle {
+        return super.addAnimation(animation) as IsometricRectangle;
+    }
+
+    public removeAnimationByIndex(index: number): IsometricRectangle {
+        return super.removeAnimationByIndex(index) as IsometricRectangle;
+    }
+
+    public removeAnimations(): IsometricRectangle {
+        return super.removeAnimations() as IsometricRectangle;
     }
 
 }
