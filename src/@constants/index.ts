@@ -18,7 +18,7 @@ export const HSQRT3 = +((Math.sqrt(3) / 2).toFixed(DECIMALS));
 export const DEFAULT_WIDTH = 640;
 export const DEFAULT_HEIGHT = 480;
 
-const N = '(\\d+(?:\\.\\d+)?|\\.\\d+)'; // Number
+const N = '(-?\\d+(?:\\.\\d+)?|-?\\.\\d+)'; // Number
 const S = '\\s*'; // Space
 const SS = '\\s+'; // Splicit space
 const POINT = `${N}${SS}${N}${SS}${N}`;
