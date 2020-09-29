@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.5.1] - 2020-09-29
+
+- Fix a bug that was impeding negative numbers in drawing commands
+
 ## [2.5.0] - 2020-09-29
 
 - Added animation support
