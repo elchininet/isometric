@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.5.2] - 2020-12-17
+
+- Updated packages and solved vulnerabilities
+
 ## [2.5.1] - 2020-09-29
 
 - Fix a bug that was impeding negative numbers in drawing commands
