@@ -15,7 +15,7 @@ const defaultProps: IsometricCanvasProps = {
 
 export class IsometricCanvas extends IsometricStore {
 
-    public constructor(container: HTMLElement, props: IsometricCanvasProps = {}) {
+    public constructor(container: HTMLElement | string, props: IsometricCanvasProps = {}) {
         super();
         this.props = { ...defaultProps, ...props };
         this.children = [];
@@ -46,7 +46,12 @@ export class IsometricCanvas extends IsometricStore {
         });
 
         this.svg.appendChild(this.background);
-        container.appendChild(this.svg);
+
+        const containerElement = typeof container === 'string'
+            ? document.getElementById(container)
+            : container;
+
+        containerElement.appendChild(this.svg);
 
     }
     

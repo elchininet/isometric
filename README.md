@@ -102,7 +102,7 @@ const isometric = new IsometricCanvas(element[, properties]);
 <p>
 
 `element`
->The DOM element in which the isometric will be inserted
+>The DOM element or the element `id` in which the isometric will be inserted
 
 `properties` _(optional)_
 >Object to set the properties of the isometric canvas

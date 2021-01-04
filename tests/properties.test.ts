@@ -2,6 +2,7 @@ import { IsometricCanvas, IsometricRectangle, IsometricCircle, IsometricPath, Is
 
 describe('Test properties', (): void => {
 
+    const containerID = 'container';
     let container: HTMLDivElement;
     let cube: IsometricCanvas;
     let path: IsometricPath;
@@ -15,6 +16,7 @@ describe('Test properties', (): void => {
     beforeEach((): void => {
 
         container = document.createElement('div');
+        container.id = containerID;
         document.body.appendChild(container);
 
         const commonProps: IsometricGraphicProps = {
@@ -28,7 +30,7 @@ describe('Test properties', (): void => {
             strokeWidth: 2
         };
 
-        cube = new IsometricCanvas(container, {
+        cube = new IsometricCanvas(containerID, {
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,

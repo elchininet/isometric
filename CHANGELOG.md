@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.5.3] - 2021-01-04
+
+- The IsometricCanvas element parameter could be a HTMLElement or an id representing the id of the element
+
 ## [2.5.2] - 2020-12-17
 
 - Updated packages and solved vulnerabilities
