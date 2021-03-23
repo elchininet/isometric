@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebpackCconfig = require('./webpack.config')[1];
 /* eslint-enable @typescript-eslint/no-var-requires */
@@ -56,7 +56,7 @@ module.exports = {
     optimization: {
         minimizer: [
             new TerserJSPlugin({}),
-            new OptimizeCSSAssetsPlugin({})
+            new CssMinimizerPlugin()
         ],
     }
 };
