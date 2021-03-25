@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const tsconfig = require('./tsconfig');
-/* eslint-enable @typescript-eslint/no-var-requires */
 
 const { compilerOptions: { baseUrl, paths } } = tsconfig;
 const aliasReg = (str) => str.replace(/^(.*)\/\*$/, '$1');

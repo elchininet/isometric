@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackCconfig = require('./webpack.config')[1];
-/* eslint-enable @typescript-eslint/no-var-requires */
+
 WebpackCconfig.mode = 'development';
 WebpackCconfig.entry = './demo/demo.js';
 WebpackCconfig.output.path = path.resolve(__dirname, 'docs');
