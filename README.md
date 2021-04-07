@@ -35,19 +35,29 @@ It is possible to include a compiled version of the package directly in an HTML 
 3. Include it in your HTML file
 
 ```javascript
-<script src="wherever/you/installed/isometric.web.js" />
+<script src="wherever/you/installed/isometric.web.js"></script>
 ```
 
 #### Importing using CommonJS
 
 ```javascript
-const { IsometricCanvas, IsometricPath } = require('@elchininet/isometric');
+const {
+    IsometricCanvas,
+    IsometricPath,
+    IsometricRectangle,
+    IsometricCircle
+} = require('@elchininet/isometric');
 ```
 
 #### Importing using ES6 modules
 
 ```javascript
-import { IsometricCanvas, IsometricPath } from '@elchininet/isometric';
+import {
+    IsometricCanvas,
+    IsometricPath,
+    IsometricRectangle,
+    IsometricCircle
+} from '@elchininet/isometric';
 ```
 
 #### Using in the browser
@@ -56,10 +66,14 @@ import { IsometricCanvas, IsometricPath } from '@elchininet/isometric';
 /* Use it directly in your JavaScript code */
 IsometricCanvas;
 IsometricPath;
+IsometricRectangle;
+IsometricCircle;
 
 /* Or access to the global variable if there is a variable with this name in the same scope */
 window.IsometricCanvas;
 window.IsometricPath;
+window.IsometricRectangle;
+window.IsometricCircle;
 ```
 
 ## Scripts
@@ -130,43 +144,43 @@ getElement()
 ```javascript
 addChild(child)
 ```
->Adds an isometric paths to the isometric canvas
+>Adds a child to the isometric canvas
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricPath |
+| child           | IsometricPath<br>IsometricRectangle<br>IsometricCircle |
 
 ```javascript
 addChildren(child, child, child...)
 ```
->Adds multiple isometric paths to the isometric canvas
+>Adds multiple children to the isometric canvas
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricPath |
+| child           | IsometricPath<br>IsometricRectangle<br>IsometricCircle |
 
 ```javascript
 removeChild(child)
 ```
->Removes an isometric path from the isometric canvas
+>Removes a child from the isometric canvas
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricPath |
+| child           | IsometricPath<br>IsometricRectangle<br>IsometricCircle |
 
 ```javascript
 removeChildren(child, child, child...)
 ```
->Removes multiple isometric paths from the isometric canvas
+>Removes multiple children from the isometric canvas
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricPath |
+| child           | IsometricPath<br>IsometricRectangle<br>IsometricCircle |
 
 ```javascript
 removeChildByIndex(index)
 ```
->Removes an isometric path taking into account its index in the paths tree
+>Removes a child taking into account its index in the paths tree
 
 | Parameter       | Type          |
 | --------------- | ------------- |
@@ -175,7 +189,7 @@ removeChildByIndex(index)
 ```javascript
 clear()
 ```
->Cleans the isometric canvas (removes all the isometric paths from it and all the native SVG paths elements from the SVG)
+>Cleans the isometric canvas (removes all the children from it and all the native SVG paths elements from the SVG)
 
 ```javascript
 pauseAnimations()
@@ -190,7 +204,7 @@ resumeAnimations()
 ```javascript
 addEventListener(type, callback, [useCapture])
 ```
->Sets up a function that will be called whenever the specified event is delivered to the `IsometricCanvas` (the SVG element)
+>Sets up a function that will be called whenever the specified event is delivered to the isometric canvas (the SVG element)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
@@ -201,7 +215,7 @@ addEventListener(type, callback, [useCapture])
 ```javascript
 removeEventListener(type, callback, [useCapture])
 ```
->Removes from the `IsometricCanvas` (the SVG element) an event listener previously registered with `addEventListener`
+>Removes from the isometric canvas (the SVG element) an event listener previously registered with `addEventListener`
 
 | Parameter       | Type          |
 | --------------- | ------------- |
@@ -230,7 +244,7 @@ removeEventListener(type, callback, [useCapture])
 
 ### Class IsometricPath
 
-This is the class to create isometric paths that can be added to the isometric canvas
+This class is to create isometric paths that can be added to the isometric canvas
 
 ```javascript
 const path = new IsometricPath([properties]);
@@ -334,12 +348,12 @@ draw(commands)
 ```javascript
 clear()
 ```
->Cleans the IsometricPath (removes all the path commands from the native SVG path element)
+>Cleans the isometric path (removes all the path commands from the native SVG path element)
 
 ```javascript
 addAnimation(animation)
 ```
->Adds an animated element to the `IsometricPath` (not compatible with Internet Explorer). These are the properties of the `SVGPathAnimation` object:
+>Adds an animated element to the isometric path (not compatible with Internet Explorer). These are the properties of the `SVGPathAnimation` object:
 
 | Property        | Type     | Optional  | Default |  Description                                     |
 | --------------- | -------- | --------- | ------- | ------------------------------------------------ |
@@ -372,7 +386,7 @@ removeAnimations()
 ```javascript
 addEventListener(type, callback, [useCapture])
 ```
->Sets up a function that will be called whenever the specified event is delivered to the `IsometricPath` (the SVG path element)
+>Sets up a function that will be called whenever the specified event is delivered to the isometric path (the SVG path element)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
@@ -383,7 +397,7 @@ addEventListener(type, callback, [useCapture])
 ```javascript
 removeEventListener(type, listener, [useCapture])
 ```
->Removes from the `IsometricPath` (the SVG path element) an event listener previously registered with `addEventListener`
+>Removes from the isometric path (the SVG path element) an event listener previously registered with `addEventListener`
 
 | Parameter       | Type          |
 | --------------- | ------------- |
@@ -415,7 +429,7 @@ removeEventListener(type, listener, [useCapture])
 
 ### Class IsometricRectangle
 
-This is the class to create isometric rectangles that can be added to the isometric canvas.
+This class is to create isometric rectangles that can be added to the isometric canvas.
 
 ```javascript
 const path = new IsometricRectangle(properties);
@@ -462,12 +476,12 @@ update()
 ```javascript
 clear()
 ```
->Cleans the IsometricRectangle (removes all the path commands from the native SVG path element)
+>Cleans the isometric rectangle (removes all the path commands from the native SVG path element)
 
 ```javascript
 addAnimation(animation)
 ```
->Adds an animated element to the `IsometricRectangle` (not compatible with Internet Explorer). These are the properties of the `SVGRectangleAnimation` object:
+>Adds an animated element to the isometric Rectangle (not compatible with Internet Explorer). These are the properties of the `SVGRectangleAnimation` object:
 
 | Property        | Type     | Optional  | Default |  Description                                     |
 | --------------- | -------- | --------- | ------- | ------------------------------------------------ |
@@ -504,7 +518,7 @@ removeAnimations()
 ```javascript
 addEventListener(type, callback, [useCapture])
 ```
->Sets up a function that will be called whenever the specified event is delivered to the `IsometricRectangle` (the SVG path element)
+>Sets up a function that will be called whenever the specified event is delivered to the isometric rectangle (the SVG path element)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
@@ -515,7 +529,7 @@ addEventListener(type, callback, [useCapture])
 ```javascript
 removeEventListener(type, listener, [useCapture])
 ```
->Removes from the `IsometricRectangle` (the SVG path element) an event listener previously registered with `addEventListener`
+>Removes from the isometric rectangle (the SVG path element) an event listener previously registered with `addEventListener`
 
 | Parameter       | Type          |
 | --------------- | ------------- |
@@ -550,7 +564,7 @@ removeEventListener(type, listener, [useCapture])
 
 ### Class IsometricCircle
 
-This is the class to create isometric circles that can be added to the isometric canvas.
+This class is to create isometric circles that can be added to the isometric canvas.
 
 ```javascript
 const path = new IsometricCircle(properties);
@@ -596,12 +610,12 @@ update()
 ```javascript
 clear()
 ```
->Cleans the IsometricCircle (removes all the path commands from the native SVG path element)
+>Cleans the isometric circle (removes all the path commands from the native SVG path element)
 
 ```javascript
 addAnimation(animation)
 ```
->Adds an animated element to the `IsometricCircle` (not compatible with Internet Explorer). These are the properties of the `SVGCircleAnimation` object:
+>Adds an animated element to the isometric circle (not compatible with Internet Explorer). These are the properties of the `SVGCircleAnimation` object:
 
 | Property        | Type     | Optional  | Default |  Description                                     |
 | --------------- | -------- | --------- | ------- | ------------------------------------------------ |
@@ -637,7 +651,7 @@ removeAnimations()
 ```javascript
 addEventListener(type, callback, [useCapture])
 ```
->Sets up a function that will be called whenever the specified event is delivered to the `IsometricCircle` (the SVG path element)
+>Sets up a function that will be called whenever the specified event is delivered to the isometric circle (the SVG path element)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
@@ -648,7 +662,7 @@ addEventListener(type, callback, [useCapture])
 ```javascript
 removeEventListener(type, listener, [useCapture])
 ```
->Removes from the `IsometricCircle` (the SVG path element) an event listener previously registered with `addEventListener`
+>Removes from the isometric circle (the SVG path element) an event listener previously registered with `addEventListener`
 
 | Parameter       | Type          |
 | --------------- | ------------- |
