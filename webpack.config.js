@@ -29,7 +29,9 @@ const getConfig = (node) => {
 
     if (!pluginsCreated) {
         plugins.push(
-            new CleanWebpackPlugin()
+            new CleanWebpackPlugin({
+                cleanOnceBeforeBuildPatterns: []
+            })
         );
         pluginsCreated = true;
     }
