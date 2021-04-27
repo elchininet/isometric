@@ -35,7 +35,9 @@ module.exports = {
         libraryTarget: 'window'
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: []
+        }),
         new HtmlWebpackPlugin({
             title: 'Isometric demo',
             logo: 'images/logo.svg',
