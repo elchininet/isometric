@@ -36,7 +36,7 @@
     "typescript"
   ],
   "author": "ElChiniNet",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@types/node": "^15.0.0",
