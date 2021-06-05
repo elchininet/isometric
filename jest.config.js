@@ -23,5 +23,6 @@ module.exports = {
         'src/**/*.ts',
         '!src/index.ts',
         '!src/demo/**'
-    ]
+    ],
+    testEnvironment: 'jsdom'
 };
