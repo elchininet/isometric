@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackCconfig = require('./webpack.config')[1];
 
 WebpackCconfig.mode = 'development';
@@ -19,9 +20,12 @@ WebpackCconfig.module.rules.push(
 WebpackCconfig.plugins = [
     new HtmlWebpackPlugin({
         title: 'Isometric demo',
-        logo: './demo/images/logo.svg',
+        logo: 'images/logo.svg',
         favicon: './demo/favicon.png',
         template: './demo/demo.html'
+    }),
+    new CopyWebpackPlugin({
+        patterns: [{ from: 'demo/images', to: 'images' }]            
     })
 ];
 WebpackCconfig.devServer = {
