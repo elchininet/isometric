@@ -8,7 +8,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "webpack && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "build": "webpack && tsconfig-replace-paths -p tsconfig.json -s ./src -o ./dist",
     "demo": "webpack serve --open --config webpack.demo.config.js",
     "docs": "webpack --config webpack.demo.publish.js --mode production",
     "lint": "eslint src/**/*.ts",
@@ -56,7 +56,7 @@
     "style-loader": "^3.0.0",
     "ts-jest": "^27.0.3",
     "ts-loader": "^9.2.3",
-    "tscpaths": "^0.0.9",
+    "tsconfig-replace-paths": "^0.0.5",
     "typescript": "^4.3.5",
     "webpack": "^5.42.0",
     "webpack-cli": "^4.7.2",
