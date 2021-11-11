@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Snapshot tests Default options 1`] = `
+<body>
+  <div />
+  <svg
+    height="480px"
+    viewBox="0 0 640 480"
+    width="640px"
+  >
+    <rect
+      fill="white"
+      height="480px"
+      width="640px"
+      x="0"
+      y="0"
+    />
+  </svg>
+</body>
+`;
+
+exports[`Snapshot tests Default options 2`] = `"<svg viewBox=\\"0 0 640 480\\" width=\\"640px\\" height=\\"480px\\"><rect fill=\\"white\\" x=\\"0\\" y=\\"0\\" width=\\"640px\\" height=\\"480px\\"></rect></svg>"`;
+
 exports[`Snapshot tests Draw animations 1`] = `
 <div>
   <svg

@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
         "outDir": "./dist/",
-        "module": "commonjs",
+        "module": "esnext",
         "target": "es5",
         "moduleResolution": "node",
-        "declaration": true,
+        "esModuleInterop": true,
+        "declaration": false,
         "noImplicitAny": true,
         "removeComments": true,
         "baseUrl": "./src",

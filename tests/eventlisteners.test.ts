@@ -13,7 +13,8 @@ describe('Test event listeners', (): void => {
         container = document.createElement('div');
         document.body.appendChild(container);
 
-        cube = new IsometricCanvas(container, {
+        cube = new IsometricCanvas({
+            container,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,

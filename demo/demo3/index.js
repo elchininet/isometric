@@ -4,7 +4,8 @@ export default ( IsometricModule, container ) => {
 
     const { IsometricCanvas, IsometricPath } = IsometricModule;
 
-    const isometric = new IsometricCanvas(container, {
+    const isometric = new IsometricCanvas({
+        container,
         backgroundColor: '#CCC',
         scale: 120,
         width: 500,

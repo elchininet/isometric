@@ -28,17 +28,27 @@ yarn add @elchininet/isometric
 
 #### In the browser
 
-It is possible to include a compiled version of the package directly in an HTML file. It will create global variables that can be accessed from anywhere in your JavaScript code.
+##### Importing the package as an external script in the HTML code
 
-1. Copy the JavaScript file `isometric.web.js`, located in the `dist` folder
+It is possible to include a compiled version of the package directly in an HTML file. It will create a global `isometric` object that can be accessed from anywhere in your JavaScript code.
+
+1. Copy the JavaScript file `isometric.js`, located in the `dist/browser` folder
 2. Put it in the folder that you prefer in your web server
 3. Include it in your HTML file
 
 ```javascript
-<script src="wherever/you/installed/isometric.web.js"></script>
+<script src="wherever/you/installed/isometric.js"></script>
 ```
 
-#### Importing using CommonJS
+```javascript
+/* There will be a global variable named isometric containing all the classes */
+isometric.IsometricCanvas;
+isometric.IsometricPath;
+isometric.IsometricRectangle;
+isometric.IsometricCircle;
+```
+
+##### Importing the package in your code using CommonJS
 
 ```javascript
 const {
@@ -49,7 +59,7 @@ const {
 } = require('@elchininet/isometric');
 ```
 
-#### Importing using ES6 modules
+##### Importing the package in your code using ES6 modules
 
 ```javascript
 import {
@@ -60,20 +70,30 @@ import {
 } from '@elchininet/isometric';
 ```
 
-#### Using in the browser
+#### In node environments
+
+> To use the package in a Node environment, you need to install [jsdom](https://github.com/jsdom/jsdom) because the package needs it to work properly. 
+
+##### Importing the package in your code using CommonJS
 
 ```javascript
-/* Use it directly in your JavaScript code */
-IsometricCanvas;
-IsometricPath;
-IsometricRectangle;
-IsometricCircle;
+const {
+    IsometricCanvas,
+    IsometricPath,
+    IsometricRectangle,
+    IsometricCircle
+} = require('@elchininet/isometric/node');
+```
 
-/* Or access to the global variable if there is a variable with this name in the same scope */
-window.IsometricCanvas;
-window.IsometricPath;
-window.IsometricRectangle;
-window.IsometricCircle;
+##### Importing the package in your code using ES6 modules
+
+```javascript
+import {
+    IsometricCanvas,
+    IsometricPath,
+    IsometricRectangle,
+    IsometricCircle
+} from '@elchininet/isometric/node';
 ```
 
 ## Scripts
@@ -82,7 +102,15 @@ window.IsometricCircle;
 
 `npm run build`
 
-Transpiles the TypeScript code and creates two bundles in the `dist` folder (`index.js` for Node environments and `isometric.web.js` to use directly in the browser).
+Transpiles the `TypeScript` code and creates the necesary package bundles:
+
+| Bundle path                 | Environment | Module type |
+| --------------------------- | ----------- | ----------- |
+| `dist/browser/isometric.js` | Browser     | IIFE        |
+| `dist/index.js`             | Browser     | CommonJS    |
+| `dist/esm/index.js`         | Browser     | ESM         |
+| `dist/index.node.js`        | Node        | CommonJS    |
+| `dist/esm/index.node.js`    | Node        | ESM         |
 
 #### lint
 
@@ -109,24 +137,22 @@ Opens a development server that provides live reloading using [webpack-dev-serve
 This is the base class, it creates an isometric canvas (an SVG object)
 
 ```javascript
-const isometric = new IsometricCanvas(element[, properties]);
+const isometric = new IsometricCanvas([properties]);
 ```
 
 <details><summary>Parameters</summary>
 <p>
 
-`element`
->The DOM element or the element `id` in which the isometric will be inserted
-
 `properties` _(optional)_
 >Object to set the properties of the isometric canvas
 
-| Property        | Type          | Default value  | Description                                       |
-| --------------- | ------------- | -------------- | ------------------------------------------------- |
-| backgroundColor | string        | "white"        | Sets the background color of the isometric canvas |
-| scale           | number        | 1              | Sets the scale multiplier of each isometric unit  |
-| height          | number        | 480            | Sets the height of the isometric canvas           |
-| width           | number        | 640            | Sets the width of the isometric canvas            |
+| Property        | Type                 | Default value  | Description                                       |
+| --------------- | -------------------- | -------------- | ------------------------------------------------- |
+| container       | HTMLElement or string | "body"        | The DOM element or the query selector of the element in which the isometric will be inserted. This parameter should not be provided in Node environments |
+| backgroundColor | string               | "white"        | Sets the background color of the isometric canvas |
+| scale           | number               | 1              | Sets the scale multiplier of each isometric unit  |
+| height          | number               | 480            | Sets the height of the isometric canvas           |
+| width           | number               | 640            | Sets the width of the isometric canvas            |
 
 </p>
 </details>
@@ -134,12 +160,17 @@ const isometric = new IsometricCanvas(element[, properties]);
 <details><summary>Instance Methods</summary>
 <p>
 
->All the instance methods (excepting `getElement`) return the same instance, so they are chainable.
+>All the instance methods (excepting `getElement` and `getSVGCode`) return the same instance, so they are chainable.
 
 ```javascript
 getElement()
 ```
 >Returns the native `SVG` element
+
+```javascript
+getSVGCode()
+```
+>Returns the HTML code of the `SVG` element
 
 ```javascript
 addChild(child)

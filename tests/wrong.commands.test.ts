@@ -9,7 +9,7 @@ describe('Wrong drawing commands', (): void => {
         container = document.createElement('div');
         document.body.appendChild(container);
 
-        const cube = new IsometricCanvas(container);
+        const cube = new IsometricCanvas({container});
 
         const top = new IsometricPath();
 
@@ -27,7 +27,7 @@ describe('Wrong drawing commands', (): void => {
         container = document.createElement('div');
         document.body.appendChild(container);
 
-        const cube = new IsometricCanvas(container);
+        const cube = new IsometricCanvas({container});
 
         const top = new IsometricPath();
 
@@ -46,7 +46,7 @@ describe('Wrong drawing commands', (): void => {
         container = document.createElement('div');
         document.body.appendChild(container);
 
-        const cube = new IsometricCanvas(container);
+        const cube = new IsometricCanvas({container});
 
         const top = new IsometricPath();
 

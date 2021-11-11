@@ -1,12 +1,23 @@
-import { SVG_NAMESPACE, SVG_ELEMENTS, SVG_PROPERTIES, DEFAULT_WIDTH, DEFAULT_HEIGHT } from '@constants';
+import {
+    SVG_NAMESPACE,
+    SVG_ELEMENTS,
+    SVG_PROPERTIES,
+    DEFAULT_WIDTH,
+    DEFAULT_HEIGHT
+} from '@constants';
 import { IsometricStore } from '@classes/abstract/IsometricStore';
 import { Colors, Listener } from '@types';
 import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import { IsometricCanvasProps } from './types';
-import { addSVGProperties, addEventListenerToElement, removeEventListenerFromElement } from '@utils';
+import {
+    addSVGProperties,
+    addEventListenerToElement,
+    removeEventListenerFromElement
+} from '@utils';
 import { Store } from '@store';
 
 const defaultProps: IsometricCanvasProps = {
+    container: 'body',
     backgroundColor: Colors.white,
     scale: 1,
     height: DEFAULT_HEIGHT,
@@ -15,7 +26,7 @@ const defaultProps: IsometricCanvasProps = {
 
 export class IsometricCanvas extends IsometricStore {
 
-    public constructor(container: HTMLElement | string, props: IsometricCanvasProps = {}) {
+    public constructor(props: IsometricCanvasProps = {}) {
         super();
         this.props = { ...defaultProps, ...props };
         this.children = [];
@@ -47,9 +58,9 @@ export class IsometricCanvas extends IsometricStore {
 
         this.svg.appendChild(this.background);
 
-        const containerElement = typeof container === 'string'
-            ? document.getElementById(container)
-            : container;
+        const containerElement = typeof this.props.container === 'string'
+            ? document.querySelector(this.props.container)
+            : this.props.container;
 
         containerElement.appendChild(this.svg);
 
@@ -77,6 +88,10 @@ export class IsometricCanvas extends IsometricStore {
 
     public getElement(): SVGSVGElement {
         return this.svg;
+    }
+
+    public getSVGCode(): string {
+        return this.svg.outerHTML;
     }
 
     public get backgroundColor(): string {

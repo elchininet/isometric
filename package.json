@@ -3,12 +3,27 @@
   "version": "2.5.3",
   "description": "A JavaScript library written in TypeScript to create isometric projections using SVGs",
   "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/esm/index.js"
+    },
+    "./node": {
+      "require": "./dist/index.node.js",
+      "import": "./dist/esm/index.node.js"
+    }
+  },
   "files": [
     "dist/**/*"
   ],
   "scripts": {
-    "build": "webpack && tsconfig-replace-paths -p tsconfig.json -s ./src -o ./dist",
+    "clean": "rimraf dist",
+    "copy-cjs-package": "cp ./package.esm.json ./dist/esm/package.json",
+    "build-declarations": "tsc --declaration --emitDeclarationOnly",
+    "replace-dts-paths": "tsconfig-replace-paths -p tsconfig.json -s ./src -o ./dist",
+    "build": "yarn clean && rollup --config rollup.config.js && yarn copy-cjs-package && yarn build-declarations && yarn replace-dts-paths",
     "demo": "webpack serve --open --config webpack.demo.config.js",
     "docs": "webpack --config webpack.demo.publish.js --mode production",
     "lint": "eslint src/**/*.ts",
@@ -37,7 +52,11 @@
   ],
   "author": "ElChiniNet",
   "license": "Apache-2.0",
+  "peerDependencies": {
+    "jsdom": "^18.0.1"
+  },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.9.1",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
@@ -52,14 +71,21 @@
     "jest": "^27.0.6",
     "mini-css-extract-plugin": "^2.3.0",
     "node-sass": "^6.0.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.59.0",
+    "rollup-plugin-terser": "^7.0.2",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
     "ts-jest": "^27.0.5",
     "ts-loader": "^9.2.5",
     "tsconfig-replace-paths": "^0.0.5",
+    "tslib": "^2.3.1",
     "typescript": "^4.4.3",
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.1"
+  },
+  "engines": {
+    "node": ">=12.17.0"
   }
 }

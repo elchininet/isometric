@@ -9,7 +9,8 @@ describe('Removing methods', (): void => {
         container = document.createElement('div');
         document.body.appendChild(container);
 
-        const cube = new IsometricCanvas(container, {
+        const cube = new IsometricCanvas({
+            container,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,

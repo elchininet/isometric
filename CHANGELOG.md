@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.0] - 2021-11-10
+
+- Added compatibility with Node environments using `jsdom`
+- The container property of the `IsometricCanvas` class has been moved into the `props` and if it is a string it represents a selector instead of an id
+- Added a new method `getSVGCode` to the `IsometricCanvas` class to return the HTML code of the SVG element
+- Addded bundles for ESM modules
+
 ## [2.5.3] - 2021-01-04
 
 - The IsometricCanvas element parameter could be a HTMLElement or an id representing the id of the element
