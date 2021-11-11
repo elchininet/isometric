@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.6.0] - 2021-11-10
+## [3.0.0] - 2021-11-10
 
 - Added compatibility with Node environments using `jsdom`
 - The container property of the `IsometricCanvas` class has been moved into the `props` and if it is a string it represents a selector instead of an id
