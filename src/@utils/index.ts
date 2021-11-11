@@ -6,7 +6,11 @@ import {
     SVGAnimationProperties,
     SVGNativeProperties
 } from '@types';
-import { HSQRT3, DECIMALS, COMMANDS_REGEXP } from '@constants';
+import {
+    HSQRT3,
+    DECIMALS,
+    COMMANDS_REGEXP
+} from '@constants';
 
 export interface IsometricPoint {
     x: number;

@@ -1,6 +1,15 @@
-import { Command, CommandPoint, SVGPathAnimation, SVGAnimationObject } from '@types';
+import {
+    Command,
+    CommandPoint,
+    SVGPathAnimation,
+    SVGAnimationObject
+} from '@types';
 import { IsometricGraphic, IsometricGraphicProps } from '@classes/abstract/IsometricGraphic';
-import { addSVGProperties, parseDrawCommands, getSVGPath } from '@utils';
+import {
+    addSVGProperties,
+    parseDrawCommands,
+    getSVGPath
+} from '@utils';
 
 export class IsometricPath extends IsometricGraphic {
 

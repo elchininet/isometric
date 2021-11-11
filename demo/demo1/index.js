@@ -8,7 +8,8 @@ export default ( IsometricModule, container ) => {
         this.fillColor = this.fillColor === 'white' ? '#EEE' : 'white';
     }
 
-    const cube = new IsometricCanvas(container, {
+    const cube = new IsometricCanvas({
+        container,
         backgroundColor: '#CCC',
         scale: 120,
         width: 500,

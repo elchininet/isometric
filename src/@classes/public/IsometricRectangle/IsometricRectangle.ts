@@ -1,6 +1,19 @@
-import { Command, LinePoint, PlaneView, IsometricPlaneView, SVGShapeProperties, SVGRectangleProperties, SVGRectangleAnimation, SVGAnimationObject } from '@types';
+import {
+    Command,
+    LinePoint,
+    PlaneView,
+    IsometricPlaneView,
+    SVGShapeProperties,
+    SVGRectangleProperties,
+    SVGRectangleAnimation,
+    SVGAnimationObject
+} from '@types';
 import { IsometricShape } from '@classes/abstract/IsometricShape';
-import { addSVGProperties, getSVGPath, translateCommandPoints } from '@utils';
+import {
+    addSVGProperties,
+    getSVGPath,
+    translateCommandPoints
+} from '@utils';
 import { IsometricRectangleProps } from './types';
 
 interface GetRectanglePathArguments {

@@ -4,7 +4,8 @@ export default ( IsometricModule, container ) => {
 
     const { IsometricCanvas, IsometricPath, IsometricRectangle, PlaneView } = IsometricModule;
 
-    const cube = new IsometricCanvas(container, {
+    const cube = new IsometricCanvas({
+        container,
         backgroundColor: '#CCC',
         scale: 120,
         width: 500,

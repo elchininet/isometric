@@ -24,9 +24,17 @@ describe('Snapshot tests', (): void => {
         }        
     });
 
+    it('Default options', (): void => {
+        const svg = new IsometricCanvas();
+        expect(document.body).toMatchSnapshot();
+        expect(svg.getSVGCode()).toMatchSnapshot();
+        expect(svg.getElement().outerHTML).toBe(svg.getSVGCode());
+    });
+
     it('Draw rectangles', (): void => {
 
-        const cube = new IsometricCanvas(container, {
+        const cube = new IsometricCanvas({
+            container,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -50,7 +58,8 @@ describe('Snapshot tests', (): void => {
 
     it('Draw circles', (): void => {
 
-        const cube = new IsometricCanvas(container, {
+        const cube = new IsometricCanvas({
+            container,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -77,7 +86,8 @@ describe('Snapshot tests', (): void => {
 
     it('Draw methods', (): void => {
 
-        const isometric = new IsometricCanvas(container, {
+        const isometric = new IsometricCanvas({
+            container,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -108,7 +118,8 @@ describe('Snapshot tests', (): void => {
 
     it('Draw commands', (): void => {
 
-        const isometric = new IsometricCanvas(container, {
+        const isometric = new IsometricCanvas({
+            container,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -139,7 +150,8 @@ describe('Snapshot tests', (): void => {
 
     it('Draw curves with method aliases', (): void => {
 
-        const cube = new IsometricCanvas(container, {
+        const cube = new IsometricCanvas({
+            container,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -189,7 +201,8 @@ describe('Snapshot tests', (): void => {
 
     it('Draw animations', (): void => {
 
-        const isometric = new IsometricCanvas(container, {
+        const isometric = new IsometricCanvas({
+            container,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -251,7 +264,8 @@ describe('Snapshot tests', (): void => {
 
     it('Remove animations', (): void => {
 
-        const isometric = new IsometricCanvas(container, {
+        const isometric = new IsometricCanvas({
+            container,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,

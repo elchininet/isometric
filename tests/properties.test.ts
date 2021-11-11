@@ -1,8 +1,16 @@
-import { IsometricCanvas, IsometricRectangle, IsometricCircle, IsometricPath, IsometricGraphicProps, PlaneView } from '../src';
+import {
+    IsometricCanvas,
+    IsometricRectangle,
+    IsometricCircle,
+    IsometricPath,
+    IsometricGraphicProps,
+    PlaneView
+} from '../src';
 
 describe('Test properties', (): void => {
 
     const containerID = 'container';
+    const containerSelector = `#${containerID}`;
     let container: HTMLDivElement;
     let cube: IsometricCanvas;
     let path: IsometricPath;
@@ -30,7 +38,8 @@ describe('Test properties', (): void => {
             strokeWidth: 2
         };
 
-        cube = new IsometricCanvas(containerID, {
+        cube = new IsometricCanvas({
+            container: containerSelector,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
