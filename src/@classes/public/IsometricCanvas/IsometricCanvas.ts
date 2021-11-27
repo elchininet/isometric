@@ -13,7 +13,7 @@ import {
     addSVGProperties,
     addEventListenerToElement,
     removeEventListenerFromElement
-} from '@utils';
+} from '@utils/svg';
 import { Store } from '@store';
 
 const defaultProps: IsometricCanvasProps = {

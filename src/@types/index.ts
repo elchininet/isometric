@@ -57,6 +57,11 @@ export enum PlaneView {
 
 export type IsometricPlaneView = keyof typeof PlaneView;
 
+export type IsometricPoint = {
+    x: number;
+    y: number;
+};
+
 type StringOrNumber = string | number;
 export type SVGProperties = 'fillColor' | 'fillOpacity' | 'strokeColor' | 'strokeOpacity' | 'strokeWidth';
 export type SVGPathProperties = 'path';
@@ -65,6 +70,12 @@ export type SVGRectangleProperties = 'width' | 'height';
 export type SVGCircleProperties = 'radius';
 export type SVGAnimationProperties = SVGProperties | SVGPathProperties | SVGShapeProperties | SVGRectangleProperties | SVGCircleProperties ; 
 export type SVGNativeProperties = 'fill' | 'fill-opacity' | 'stroke' | 'stroke-opacity' | 'stroke-width' | 'd' | 'left' | 'right' | 'top';
+
+export type SVGProps = {
+    [key: string]: string;
+};
+
+export type EllipsisSpecs = [number, number, number];
 
 type SVGAnimationBase = {
     property: SVGAnimationProperties;
