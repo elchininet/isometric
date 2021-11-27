@@ -3,10 +3,11 @@ import {
     SVG_ELEMENTS,
     SVG_PROPERTIES,
     DEFAULT_WIDTH,
-    DEFAULT_HEIGHT
+    DEFAULT_HEIGHT,
+    Colors
 } from '@constants';
 import { IsometricStore } from '@classes/abstract/IsometricStore';
-import { Colors, Listener } from '@types';
+import { Listener } from '@types';
 import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import { IsometricCanvasProps } from './types';
 import {

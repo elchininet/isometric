@@ -1,5 +1,5 @@
+import { Command } from '@constants';
 import {
-    Command,
     CommandPoint,
     SVGPathAnimation,
     SVGAnimationObject

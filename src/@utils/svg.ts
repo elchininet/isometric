@@ -1,12 +1,11 @@
 import {
     Listener,
     CommandPoint,
-    Command,
     SVGAnimationProperties,
     SVGNativeProperties,
     SVGProps
 } from '@types';
-import { COMMANDS_REGEXP } from '@constants';
+import { COMMANDS_REGEXP, Command } from '@constants';
 import {
     getPointFromIsometricPoint,
     getEllipsisSpecs,

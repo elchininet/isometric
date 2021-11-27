@@ -24,3 +24,32 @@ const SS = '\\s+'; // Splicit space
 const POINT = `${N}${SS}${N}${SS}${N}`;
 const CURVE = `${POINT}${SS}${POINT}`;
 export const COMMANDS_REGEXP = new RegExp(`(?:(M|L)${S}${POINT}${S}|(C)${S}${CURVE})${S}`, 'g');
+
+export enum Colors {
+    white = 'white',
+    black = 'black'
+}
+
+export enum LineCap {
+    butt = 'butt',
+    square = 'square',
+    round = 'round'
+}
+
+export enum LineJoin {
+    miter = 'miter',
+    round = 'round',
+    bevel = 'bevel'
+}
+
+export enum Command {
+    move = 'move',
+    line = 'line',
+    curve = 'curve'
+}
+
+export enum PlaneView {
+    FRONT = 'FRONT',
+    SIDE = 'SIDE',
+    TOP = 'TOP'
+}
