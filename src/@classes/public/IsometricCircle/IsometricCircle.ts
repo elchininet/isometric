@@ -1,7 +1,9 @@
 import {
     Command,
+    PlaneView
+} from '@constants';
+import {
     CommandPoint,
-    PlaneView,
     IsometricPlaneView,
     SVGCircleAnimation,
     SVGShapeProperties,

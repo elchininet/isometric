@@ -2,6 +2,8 @@ import {
     Colors,
     LineCap,
     LineJoin,
+} from '@constants';
+import {
     StrokeLinecap, 
     StrokeLinejoin,
     Listener,
