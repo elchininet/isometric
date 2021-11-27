@@ -13,7 +13,7 @@ import {
     addSVGProperties,
     getSVGPath,
     translateCommandPoints
-} from '@utils';
+} from '@utils/svg';
 import { IsometricRectangleProps } from './types';
 
 interface GetRectanglePathArguments {

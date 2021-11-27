@@ -15,7 +15,7 @@ import {
     addEventListenerToElement,
     removeEventListenerFromElement,
     getSVGProperty
-} from '@utils';
+} from '@utils/svg';
 import { IsometricGraphicProps } from './types';
 
 const defaultGraphicProps: IsometricGraphicProps = {

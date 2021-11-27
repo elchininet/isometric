@@ -9,7 +9,7 @@ import {
     addSVGProperties,
     parseDrawCommands,
     getSVGPath
-} from '@utils';
+} from '@utils/svg';
 
 export class IsometricPath extends IsometricGraphic {
 

@@ -9,7 +9,11 @@ import {
     SVGAnimationObject
 } from '@types';
 import { IsometricShape } from '@classes/abstract/IsometricShape';
-import { addSVGProperties, getSVGPath, translateCommandPoints } from '@utils';
+import {
+    addSVGProperties,
+    getSVGPath,
+    translateCommandPoints
+} from '@utils/svg';
 import { IsometricCircleProps } from './types';
 
 interface GetCirclePathArguments {
