@@ -8,7 +8,8 @@ import { IsometricGraphic, IsometricGraphicProps } from '@classes/abstract/Isome
 import {
     addSVGProperties,
     parseDrawCommands,
-    getSVGPath
+    getSVGPath,
+    getTextureCorner
 } from '@utils/svg';
 
 export class IsometricPath extends IsometricGraphic {
@@ -56,9 +57,16 @@ export class IsometricPath extends IsometricGraphic {
 
     public update(): IsometricPath {
         if (this.path.parentNode) {
+            const corner = getTextureCorner(
+                this.commands,
+                this.data.centerX,
+                this.data.centerY,
+                this.data.scale
+            );
             addSVGProperties(this.path, {
                 d: getSVGPath(this.commands, this.data.centerX, this.data.centerY, this.data.scale)
             });
+            this.updatePatternTransform(corner);
             this.updateAnimations();        
         }
         return this;

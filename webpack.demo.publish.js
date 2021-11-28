@@ -12,7 +12,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'docs'),
         filename: 'scripts/bundle.js',
-        libraryTarget: 'window'
+        libraryTarget: 'window',
+        assetModuleFilename: 'images/[name][ext]'
     },
     module: {
         rules: [
@@ -27,6 +28,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
+            },
+            {
+                test: /\.(jp|pn)g$/,
+                type: 'asset/resource'
             }
         ]
     },

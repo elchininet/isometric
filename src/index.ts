@@ -1,7 +1,8 @@
 export {
     LineCap,
     LineJoin,
-    PlaneView
+    PlaneView,
+    Axis
 } from '@constants';
 export {
     SVGPathAnimation,

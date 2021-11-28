@@ -76,6 +76,10 @@ export class IsometricCanvas extends IsometricStore {
 
     private removeSVGChild(child: IsometricGraphic): void {
         const svgChild = child.getElement();
+        const svgPatternChild = child.getPattern();
+        if (svgPatternChild && svgPatternChild.parentNode) {
+            this.svg.removeChild(svgPatternChild);
+        }
         if (svgChild.parentNode) {
             this.svg.removeChild(svgChild);
         }
@@ -85,6 +89,12 @@ export class IsometricCanvas extends IsometricStore {
         this.children.forEach((child: IsometricGraphic): void => {
             child.update();
         });
+    }
+
+    private insertPattern(pattern?: SVGPatternElement) {
+        if (pattern) {
+            this.svg.insertBefore(pattern, this.svg.firstChild);
+        }
     }
 
     public getElement(): SVGSVGElement {
@@ -152,6 +162,7 @@ export class IsometricCanvas extends IsometricStore {
     public addChild(child: IsometricGraphic): IsometricCanvas {
         child.data = this.data;
         this.children.push(child);
+        this.insertPattern(child.getPattern());
         this.svg.appendChild(child.getElement());
         child.update();
         return this;

@@ -160,7 +160,7 @@ describe('Test properties', (): void => {
         rectangle.planeView = PlaneView.TOP;
         rectangle.width = 2;
         expect(rectangle.width).toBe(2);
-        expect(rectangleElement.getAttribute('d')).toBe('M250 160 L457.846 280 L353.923 340 L42.154 280z');
+        expect(rectangleElement.getAttribute('d')).toBe('M250 160 L457.846 280 L353.923 340 L146.077 220z');
 
         rectangle.height = 2;
         expect(rectangle.height).toBe(2);

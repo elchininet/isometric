@@ -1,4 +1,8 @@
-import { StrokeLinecap, StrokeLinejoin } from '@types';
+import {
+    StrokeLinecap,
+    StrokeLinejoin,
+    Texture
+} from '@types';
 
 export interface IsometricGraphicProps {
     fillColor?: string;
@@ -9,4 +13,5 @@ export interface IsometricGraphicProps {
     strokeLinejoin?: StrokeLinejoin;
     strokeOpacity?: number;
     strokeWidth?: number;
+    texture?: Texture;
 }

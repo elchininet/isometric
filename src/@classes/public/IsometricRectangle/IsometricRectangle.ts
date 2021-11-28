@@ -13,6 +13,7 @@ import {
 import { IsometricShape } from '@classes/abstract/IsometricShape';
 import {
     addSVGProperties,
+    getTextureCorner,
     getSVGPath,
     translateCommandPoints
 } from '@utils/svg';
@@ -40,8 +41,8 @@ export class IsometricRectangle extends IsometricShape {
     private rectWidth: number;
     private rectHeight: number;
 
-    private getRectanglePath(args: GetRectanglePathArguments): string {
-        const { right, left, top, width, height } = args;        
+    private getCommands(args: GetRectanglePathArguments): LinePoint[] {
+        const { right, left, top, width, height } = args;
         const commands: LinePoint[] = [ {command: Command.move, point: {r: 0, l: 0, t: 0}} ];
         switch(this.planeView) {
             case PlaneView.FRONT:
@@ -62,11 +63,16 @@ export class IsometricRectangle extends IsometricShape {
                 commands.push(
                     {command: Command.line, point: {r: width, l: 0, t: 0}},
                     {command: Command.line, point: {r: width, l: height, t: 0}},
-                    {command: Command.line, point: {r: 0, l: width, t: 0}}
+                    {command: Command.line, point: {r: 0, l: height, t: 0}}
                 );
                 break;
         }
         translateCommandPoints(commands, right, left, top);
+        return commands;
+    }
+
+    private getRectanglePath(args: GetRectanglePathArguments): string {
+        const commands = this.getCommands(args);
         return getSVGPath(
             commands,
             this.data.centerX,
@@ -126,14 +132,31 @@ export class IsometricRectangle extends IsometricShape {
 
     public update(): IsometricRectangle {
         if (this.path.parentNode) {
-            const path = this.getRectanglePath({
+            const commands = this.getCommands({
                 right: this.right,
                 left: this.left,
                 top: this.top,
                 width: this.width,
                 height: this.height
             });
-            addSVGProperties(this.path, { d: path });
+            const corner = getTextureCorner(
+                commands,
+                this.data.centerX,
+                this.data.centerY,
+                this.data.scale
+            );
+            addSVGProperties(
+                this.path,
+                {
+                    d: getSVGPath(
+                        commands,
+                        this.data.centerX,
+                        this.data.centerY,
+                        this.data.scale
+                    )
+                }
+            );
+            this.updatePatternTransform(corner, this.planeView);
             this.updateAnimations();
         }
         return this;
