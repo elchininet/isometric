@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.1.0] - 2021-11-29
+
+- Added support for textures
+- Solve a bug in the IsometricRectangle drawing commands
+
 ## [3.0.0] - 2021-11-10
 
 - Added compatibility with Node environments using `jsdom`

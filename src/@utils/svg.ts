@@ -1,16 +1,26 @@
 import {
     Listener,
+    IsometricPoint,
     CommandPoint,
+    IsometricPlaneView,
+    Rotation,
     SVGAnimationProperties,
     SVGNativeProperties,
     SVGProps
 } from '@types';
-import { COMMANDS_REGEXP, Command } from '@constants';
+import {
+    COMMANDS_REGEXP,
+    Command,
+    DECIMALS,
+    SCALE
+} from '@constants';
 import {
     getPointFromIsometricPoint,
     getEllipsisSpecs,
-    getOrientation
+    getOrientation,
+    round
 } from '@utils/math';
+import { getViewMatrix } from '@utils/matrix';
 
 export const addSVGProperties = (svg: SVGElement, props: SVGProps): void => {
     Object.keys(props).forEach((prop: string): void => {
@@ -18,8 +28,8 @@ export const addSVGProperties = (svg: SVGElement, props: SVGProps): void => {
     });
 };
 
-export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: number, scale: number): string => {
-    const drawCommands = commands.length === 0 || commands[0].command === Command.move
+const getCommandsWithStart = (commands: CommandPoint[]): CommandPoint[] => {
+    return commands.length === 0 || commands[0].command === Command.move
         ? [...commands]
         : [
             {
@@ -28,6 +38,10 @@ export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: n
             },
             ...commands
         ];
+};
+
+export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: number, scale: number): string => {
+    const drawCommands = getCommandsWithStart(commands);
     const svgPaths = drawCommands.map((c: CommandPoint, index: number) => {
         const point = getPointFromIsometricPoint(centerX, centerY, c.point, scale);     
         switch (c.command) {
@@ -97,6 +111,38 @@ export const translateCommandPoints = (commands: CommandPoint[], right: number, 
     });
 };
 
+export const getTextureCorner = (
+    commands: CommandPoint[],
+    centerX: number,
+    centerY: number,
+    scale: number
+): IsometricPoint => {
+    const corner = {
+        x: Number.MAX_SAFE_INTEGER,
+        y: Number.MAX_SAFE_INTEGER
+    };
+    getCommandsWithStart(commands)
+        .forEach((c: CommandPoint) => {
+            const point = getPointFromIsometricPoint(
+                centerX,
+                centerY,
+                c.point,
+                scale
+            );
+            if (
+                point.x < corner.x ||
+                (
+                    point.x === corner.x &&
+                    point.y < corner.y
+                )
+            ) {
+                corner.x = point.x;
+                corner.y = point.y;
+            }
+        });
+    return corner;
+};
+
 export const getSVGProperty = (property: SVGAnimationProperties): SVGNativeProperties => {
     return {
         fillColor: 'fill',
@@ -135,3 +181,24 @@ export function removeEventListenerFromElement(element: SVGElement, listeners: L
         element.removeEventListener(event, listener.fnBind, useCapture);
     }
 }
+
+export const getPatternTransform = (
+    corner: IsometricPoint,
+    planeView?: IsometricPlaneView,
+    scale?: number,    
+    rotation?: Rotation 
+): string => {
+    const matrix = getViewMatrix(planeView, rotation);
+    let transform = `translate(${corner.x} ${corner.y})`;
+    if (matrix) {
+        const m1 = round(matrix[0][0], DECIMALS);
+        const m2 = round(matrix[1][0], DECIMALS);
+        const m3 = round(matrix[0][1], DECIMALS);
+        const m4 = round(matrix[1][1], DECIMALS);
+        transform += ` matrix(${m1},${m2},${m3},${m4},0,0)`;
+        transform += ` scale(${round(SCALE * (scale || 1), DECIMALS)})`;
+    } else if (scale) {
+        transform += ` scale(${round(scale, DECIMALS)})`;
+    }
+    return transform;
+};

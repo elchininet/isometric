@@ -1,5 +1,3 @@
-import './styles.scss';
-
 export default ( IsometricModule, container ) => {
 
     const { IsometricCanvas, IsometricPath } = IsometricModule;

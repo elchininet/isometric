@@ -10,6 +10,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'docs'),
         filename: 'scripts/bundle.js',
+        assetModuleFilename: 'images/[name][ext]'
     },
     module: {
         rules: [
@@ -24,6 +25,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.(jp|pn)g$/,
+                type: 'asset/resource'
             }
         ]
     },

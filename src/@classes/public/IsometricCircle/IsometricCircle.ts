@@ -14,6 +14,7 @@ import { IsometricShape } from '@classes/abstract/IsometricShape';
 import {
     addSVGProperties,
     getSVGPath,
+    getTextureCorner,
     translateCommandPoints
 } from '@utils/svg';
 import { IsometricCircleProps } from './types';
@@ -37,7 +38,7 @@ export class IsometricCircle extends IsometricShape {
 
     private circleRadius: number;
 
-    private getCirclePath(args: GetCirclePathArguments): string {
+    private getCommands(args: GetCirclePathArguments): CommandPoint[] {
         const { right, left, top, radius } = args;        
         const commands: CommandPoint[] = [];
         switch(this.planeView) {
@@ -97,6 +98,11 @@ export class IsometricCircle extends IsometricShape {
                 break;
         }
         translateCommandPoints(commands, right, left, top);
+        return commands;
+    }
+
+    private getCirclePath(args: GetCirclePathArguments): string {
+        const commands = this.getCommands(args);
         return getSVGPath(
             commands,
             this.data.centerX,
@@ -156,13 +162,30 @@ export class IsometricCircle extends IsometricShape {
 
     public update(): IsometricCircle {
         if (this.path.parentNode) {
-            const path = this.getCirclePath({
+            const commands = this.getCommands({
                 right: this.right,
                 left: this.left,
                 top: this.top,
                 radius: this.radius
             });
-            addSVGProperties(this.path, { d: path });
+            const corner = getTextureCorner(
+                commands,
+                this.data.centerX,
+                this.data.centerY,
+                this.data.scale
+            );
+            addSVGProperties(
+                this.path,
+                {
+                    d: getSVGPath(
+                        commands,
+                        this.data.centerX,
+                        this.data.centerY,
+                        this.data.scale
+                    )
+                }
+            );
+            this.updatePatternTransform(corner, this.planeView);
             this.updateAnimations();
         }
         return this;

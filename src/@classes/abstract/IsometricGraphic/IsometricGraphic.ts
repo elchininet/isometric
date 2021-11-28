@@ -2,13 +2,17 @@ import {
     Colors,
     LineCap,
     LineJoin,
+    DECIMALS
 } from '@constants';
 import {
+    IsometricPoint,
+    IsometricPlaneView,
     StrokeLinecap, 
     StrokeLinejoin,
     Listener,
     SVGAnimation,
-    SVGAnimationObject
+    SVGAnimationObject,
+    Texture
 } from '@types';
 import { SVG_NAMESPACE, SVG_ELEMENTS } from '@constants';
 import { IsometricStore } from '@classes/abstract/IsometricStore';
@@ -16,8 +20,10 @@ import {
     addSVGProperties,
     addEventListenerToElement,
     removeEventListenerFromElement,
-    getSVGProperty
+    getSVGProperty,
+    getPatternTransform
 } from '@utils/svg';
+import { uuid, round, getPointFromIsometricPoint } from '@utils/math';
 import { IsometricGraphicProps } from './types';
 
 const defaultGraphicProps: IsometricGraphicProps = {
@@ -40,9 +46,15 @@ export abstract class IsometricGraphic extends IsometricStore {
         this.props = {...defaultGraphicProps, ...props};
         this.path = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.path);
         this.listeners = [];
+
+        if (this.props.texture) {
+            this.createTexture(this.props.texture);
+        }
         
         addSVGProperties(this.path, {
-            'fill': this.fillColor,
+            'fill': this.props.texture
+                ? `url(#${this.patternId}) ${this.fillColor}`
+                : this.fillColor,
             'fill-opacity': `${this.fillOpacity}`,
             'stroke': this.strokeColor,
             'stroke-dasharray': this.strokeDashArray.join(' '),
@@ -56,8 +68,59 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     }
 
+    private createTexture(texture: Texture) {
+
+        this.patternId = uuid();
+
+        this.pattern = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.pattern);
+
+        addSVGProperties(this.pattern, {
+            'id': this.patternId,
+            'preserveAspectRatio': 'none',
+            'patternUnits': 'userSpaceOnUse'
+        });
+
+        const image = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.image);
+
+        addSVGProperties(image, {
+            'href': texture.url,
+            'x': '0',
+            'y': '0',
+            'preserveAspectRatio': 'none'
+        });
+
+        if (texture.pixelated) {
+            addSVGProperties(image, {
+                'style': 'image-rendering: pixelated'
+            });
+        }
+        this.pattern.appendChild(image);
+    }
+
+    private _updateTexture() {
+        const image = this.pattern.firstChild as SVGImageElement;
+        if (
+            this.props.texture.url &&
+            image.getAttribute('href') !== this.props.texture.url
+        ) {
+            addSVGProperties(image, {
+                'href': this.props.texture.url
+            });
+        }
+        if (this.props.texture.pixelated) {
+            addSVGProperties(image, {
+                'style': 'image-rendering: pixelated'
+            });
+        } else {
+            image.removeAttribute('style');
+        }
+        this.update();
+    }
+
     protected props: IsometricGraphicProps;    
     protected path: SVGPathElement;
+    protected patternId: string;
+    protected pattern: SVGPatternElement;
     protected animations: SVGAnimationObject[];
     protected listeners: Listener[];
 
@@ -105,8 +168,52 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     }
 
-    public getElement(): SVGPathElement {
-        return this.path;
+    protected updatePatternTransform(
+        corner: IsometricPoint,
+        planeView?: IsometricPlaneView
+    ) {
+        if (this.props.texture) {
+            const height = this.props.texture.height
+                ? `${this.props.texture.height * this.data.scale}`
+                : '100%';
+            const width = this.props.texture.width
+                ? `${this.props.texture.width * this.data.scale}`
+                : '100%';
+            const shift = getPointFromIsometricPoint(
+                0,
+                0,
+                {
+                    r: this.props.texture.shift?.right || 0,
+                    l: this.props.texture.shift?.left || 0,
+                    t: this.props.texture.shift?.top || 0
+                },
+                this.data.scale
+            );
+            const transform = getPatternTransform(
+                {
+                    x: round(corner.x + shift.x, DECIMALS),
+                    y: round(corner.y + shift.y, DECIMALS)
+                },
+                this.props.texture.planeView || planeView,
+                this.props.texture.scale,                
+                this.props.texture.rotation
+            );
+            addSVGProperties(
+                this.pattern,
+                {
+                    'patternTransform': transform,
+                    'height': height,
+                    'width': width
+                }
+            );
+            addSVGProperties(
+                this.pattern.firstChild as SVGImageElement,
+                {
+                    'height': height,
+                    'width': width
+                }
+            );
+        }
     }
 
     // fillColor
@@ -116,7 +223,11 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     public set fillColor(value: string) {
         this.props.fillColor = value;
-        addSVGProperties(this.path, { 'fill': this.fillColor });
+        addSVGProperties(this.path, {
+            'fill': this.props.texture
+                ? `url(#${this.patternId}) ${this.fillColor}`
+                : this.fillColor
+        });
     }
 
     // fillOpacity
@@ -127,6 +238,22 @@ export abstract class IsometricGraphic extends IsometricStore {
     public set fillOpacity(value: number) {
         this.props.fillOpacity = value;
         addSVGProperties(this.path, { 'fill-opacity': `${this.fillOpacity}` });
+    }
+
+    // texture
+    public set texture(value: Texture) {
+        const hasTexture = !!this.props.texture;
+        this.props.texture = value;
+        if (hasTexture) {            
+            this._updateTexture();
+        } else {
+            this.createTexture(this.props.texture);
+            this.update();
+        } 
+    }
+
+    public get texture(): Texture | undefined {
+        return this.props.texture;
     }
 
     // strokeColor
@@ -187,6 +314,42 @@ export abstract class IsometricGraphic extends IsometricStore {
     public set strokeWidth(value: number) {
         this.props.strokeWidth = value;
         addSVGProperties(this.path, { 'stroke-width': `${this.strokeWidth}` });
+    }
+
+    public getElement(): SVGPathElement {
+        return this.path;
+    }
+
+    public getPattern(): SVGPatternElement | undefined {
+        return this.pattern;
+    }
+
+    public updateTexture(value: Partial<Texture>) {
+        const hasTexture = !!this.props.texture;
+        if (hasTexture || value.url) {            
+            const { shift, rotation, ...newProps } = value;
+            this.props.texture = hasTexture
+                ? {
+                    ...this.props.texture,
+                    ...newProps
+                }
+                : { ...newProps } as Texture 
+            if (shift) {                
+                this.props.texture.shift = {
+                    ...(this.props.texture.shift || {}),
+                    ...shift
+                };
+            }
+            if (rotation) {
+                this.props.texture.rotation = rotation;
+            }
+            if (hasTexture) {
+                this._updateTexture();
+            } else {
+                this.createTexture(this.props.texture);
+                this.update();
+            }
+        }
     }
 
     public addAnimation(animation: SVGAnimation): IsometricGraphic {

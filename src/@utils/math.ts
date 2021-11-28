@@ -1,10 +1,22 @@
-import { Point, IsometricPoint, EllipsisSpecs } from '@types';
+import {
+    Point,
+    IsometricPoint,
+    EllipsisSpecs,
+    SinCos
+} from '@types';
 import { HSQRT3, DECIMALS } from '@constants';
 
-const round = (n: number, d: number): number => {
+export const round = (n: number, d: number): number => {
     const exp = Math.pow(10, d);
     return Math.round(n * exp) / exp;
 };
+
+export const radian = (a: number): number => a * Math.PI / 180;
+
+export const sincos = (r: number): SinCos => ({
+    sin: round(Math.sin(r), DECIMALS),
+    cos: round(Math.cos(r), DECIMALS)
+});
 
 const getPointsDiff = (pointA: IsometricPoint, pointB: IsometricPoint): IsometricPoint => ({
     x: pointA.x - pointB.x,
@@ -69,3 +81,7 @@ export const getEllipsisSpecs = (pointA: IsometricPoint, pointB: IsometricPoint,
         round(getPointsAngle(center, V) * 180 / Math.PI, DECIMALS)
     ];
 };
+
+const randomId = () => Math.random().toString(16).slice(2);
+
+export const uuid = (): string => Array.from(Array(3)).map(() => randomId()).join('-');

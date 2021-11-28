@@ -5,6 +5,8 @@ export enum SVG_ELEMENTS {
     group = 'group',
     path = 'path',
     rect = 'rect',
+    pattern = 'pattern',
+    image = 'image',
     animate = 'animate'
 }
 
@@ -24,6 +26,11 @@ const SS = '\\s+'; // Splicit space
 const POINT = `${N}${SS}${N}${SS}${N}`;
 const CURVE = `${POINT}${SS}${POINT}`;
 export const COMMANDS_REGEXP = new RegExp(`(?:(M|L)${S}${POINT}${S}|(C)${S}${CURVE})${S}`, 'g');
+
+export const SCALE = Math.sqrt(3 / 2);
+export const ROT_60 = Math.PI / 3;
+export const ROT_45 = Math.PI / 4;
+export const ROT_CMA = Math.atan(Math.SQRT2);
 
 export enum Colors {
     white = 'white',
@@ -51,5 +58,11 @@ export enum Command {
 export enum PlaneView {
     FRONT = 'FRONT',
     SIDE = 'SIDE',
+    TOP = 'TOP'
+}
+
+export enum Axis {
+    RIGHT = 'RIGHT',
+    LEFT = 'LEFT',
     TOP = 'TOP'
 }
