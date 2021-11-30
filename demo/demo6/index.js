@@ -20,12 +20,12 @@ export default ( IsometricModule, container ) => {
     };
 
     const textureSides = {
-        url: '/images/block_side.png',
+        url: 'images/block_side.png',
         ...commonTextureProps
     };
 
     const textureTop = {
-        url: '/images/block_top.png',
+        url: 'images/block_top.png',
         planeView: PlaneView.TOP,
         rotation: {
             axis: Axis.LEFT,
