@@ -6,7 +6,7 @@
     A lightweight JavaScript library written in TypeScript to create isometric projections using SVGs
 </p>
 
-[![Build Status](https://travis-ci.com/elchininet/isometric.svg?branch=master)](https://travis-ci.com/elchininet/isometric) &nbsp; [![Coverage Status](https://coveralls.io/repos/github/elchininet/isometric/badge.svg?branch=master)](https://coveralls.io/github/elchininet/isometric?branch=master) &nbsp; [![npm version](https://badge.fury.io/js/%40elchininet%2Fisometric.svg)](https://badge.fury.io/js/%40elchininet%2Fisometric)
+[![Build Status](https://travis-ci.com/elchininet/isometric.svg?branch=master)](https://app.travis-ci.com/elchininet/isometric) &nbsp; [![Coverage Status](https://coveralls.io/repos/github/elchininet/isometric/badge.svg?branch=master)](https://coveralls.io/github/elchininet/isometric?branch=master) &nbsp; [![npm version](https://badge.fury.io/js/%40elchininet%2Fisometric.svg)](https://badge.fury.io/js/%40elchininet%2Fisometric)
 
 ## Demo
 
