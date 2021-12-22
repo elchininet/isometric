@@ -1,6 +1,6 @@
 # Changelog
 
-## [3.1.0] - 2021-12-22
+## [3.1.1] - 2021-12-22
 
 - Removed comments from the bundles
 
