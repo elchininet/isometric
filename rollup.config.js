@@ -11,7 +11,11 @@ export default [
     {
         plugins: [
             typescript(),
-            terser()
+            terser({
+                output: {
+                    comments: false
+                }
+            })
         ],
         input: 'src/index.ts',
         output: [
@@ -27,7 +31,11 @@ export default [
     {
         plugins: [
             typescript(),
-            terser()
+            terser({
+                output: {
+                    comments: false
+                }
+            })
         ],
         input: 'src/index.ts',
         output: [

@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.1.0] - 2021-12-22
+
+- Removed comments from the bundles
+
 ## [3.1.0] - 2021-11-29
 
 - Added support for textures
