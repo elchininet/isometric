@@ -107,7 +107,8 @@ export class IsometricCircle extends IsometricShape {
             commands,
             this.data.centerX,
             this.data.centerY,
-            this.data.scale
+            this.data.scale,
+            true
         );
     }
 
@@ -181,7 +182,8 @@ export class IsometricCircle extends IsometricShape {
                         commands,
                         this.data.centerX,
                         this.data.centerY,
-                        this.data.scale
+                        this.data.scale,
+                        true
                     )
                 }
             );

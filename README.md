@@ -725,6 +725,7 @@ const path = new IsometricPath([properties]);
 | strokeLinejoin  | string             | "round"        | Sets the [SVG stroke linejoin][3] of the isometric path  |
 | strokeWidth     | number             | 1              | Sets the stroke width of the isometric path              |
 | texture         | Texture (`object`) | -              | Sets the texture of the isometric path                   |
+| autoclose       | boolean            | true           | Sets if the path should close automatically or not       |
 
 `texture properties`
 >Object to set the texture of the isometric path
@@ -956,6 +957,7 @@ removeEventListener(type, listener, [useCapture])
 | strokeLinejoin  | string             | Gets and sets the [SVG stroke linejoin][3] of the isometric path  |
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric path              |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric path                   |
+| autoclose       | boolean            | Gets and sets the autoclose property of the isometric path        |
 
 </p>
 </details>

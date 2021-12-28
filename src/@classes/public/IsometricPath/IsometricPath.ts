@@ -4,26 +4,37 @@ import {
     SVGPathAnimation,
     SVGAnimationObject
 } from '@types';
-import { IsometricGraphic, IsometricGraphicProps } from '@classes/abstract/IsometricGraphic';
+import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import {
     addSVGProperties,
     parseDrawCommands,
     getSVGPath,
     getTextureCorner
 } from '@utils/svg';
+import { IsometricPathProps } from './types';
 
 export class IsometricPath extends IsometricGraphic {
 
-    public constructor(props: IsometricGraphicProps = {}) {
+    public constructor(props: IsometricPathProps = {}) {
         // Exclude the next line from the coverage reports
         // Check https://github.com/microsoft/TypeScript/issues/13029
         super(props)/* istanbul ignore next */;
         this.commands = [];
+        this._autoclose = 'autoclose' in this.props
+            ? (this.props as IsometricPathProps).autoclose
+            : true;
     }
 
     private commands: CommandPoint[];
+    private _autoclose: boolean;
 
-    private getPathFromCommands = (commands: string): string => getSVGPath(parseDrawCommands(commands), this.data.centerX, this.data.centerY, this.data.scale);
+    private getPathFromCommands = (commands: string): string => getSVGPath(
+        parseDrawCommands(commands),
+        this.data.centerX,
+        this.data.centerY,
+        this.data.scale,
+        this._autoclose
+    );
 
     protected privateUpdateAnimations(): void {
         
@@ -55,6 +66,15 @@ export class IsometricPath extends IsometricGraphic {
 
     }
 
+    public get autoclose(): boolean {
+        return this._autoclose;
+    }
+
+    public set autoclose(value: boolean) {
+        this._autoclose = value;
+        this.update();
+    }
+
     public update(): IsometricPath {
         if (this.path.parentNode) {
             const corner = getTextureCorner(
@@ -64,7 +84,13 @@ export class IsometricPath extends IsometricGraphic {
                 this.data.scale
             );
             addSVGProperties(this.path, {
-                d: getSVGPath(this.commands, this.data.centerX, this.data.centerY, this.data.scale)
+                d: getSVGPath(
+                    this.commands,
+                    this.data.centerX,
+                    this.data.centerY,
+                    this.data.scale,
+                    this._autoclose
+                )
             });
             this.updatePatternTransform(corner);
             this.updateAnimations();        
