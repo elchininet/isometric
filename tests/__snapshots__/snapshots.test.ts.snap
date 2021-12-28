@@ -455,6 +455,46 @@ exports[`Snapshot tests Draw rectangles 1`] = `
 </div>
 `;
 
+exports[`Snapshot tests Paths without autoclose 1`] = `
+<div>
+  <svg
+    height="320px"
+    viewBox="0 0 500 320"
+    width="500px"
+  >
+    <rect
+      fill="#CCC"
+      height="320px"
+      width="500px"
+      x="0"
+      y="0"
+    />
+    <path
+      d="M250 160 L353.923 220 L250 280 L146.077 220z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M250 160 L353.923 220 L250 280 L146.077 220"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+  </svg>
+</div>
+`;
+
 exports[`Snapshot tests Remove animations 1`] = `
 <div>
   <svg

@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.2.0] - 2021-12-28
+
+- Added a property to close automatically or not the `IsometricPath`
+
 ## [3.1.1] - 2021-12-22
 
 - Removed comments from the bundles

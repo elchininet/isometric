@@ -206,6 +206,7 @@ describe('Test properties', (): void => {
         expect(path.strokeLinejoin).toBe('miter');
         expect(path.strokeOpacity).toBe(0.25);
         expect(path.strokeWidth).toBe(2);
+        expect(path.autoclose).toBeTruthy();
         
         expect(pathElement.getAttribute('fill')).toBe('#FFF');
         expect(pathElement.getAttribute('fill-opacity')).toBe('0.5');
@@ -215,6 +216,7 @@ describe('Test properties', (): void => {
         expect(pathElement.getAttribute('stroke-linejoin')).toBe('miter');
         expect(pathElement.getAttribute('stroke-opacity')).toBe('0.25');
         expect(pathElement.getAttribute('stroke-width')).toBe('2');
+        expect(pathElement.getAttribute('d').endsWith('z')).toBeTruthy();
 
         path.fillColor = '#000';
         path.fillOpacity = 1;
@@ -224,6 +226,7 @@ describe('Test properties', (): void => {
         path.strokeLinejoin = 'bevel';
         path.strokeOpacity = 0.75;
         path.strokeWidth = 1;
+        path.autoclose = false;
 
         expect(path.fillColor).toBe('#000');
         expect(path.fillOpacity).toBe(1);
@@ -233,6 +236,7 @@ describe('Test properties', (): void => {
         expect(path.strokeLinejoin).toBe('bevel');
         expect(path.strokeOpacity).toBe(0.75);
         expect(path.strokeWidth).toBe(1);
+        expect(path.autoclose).toBeFalsy();
         
         expect(pathElement.getAttribute('fill')).toBe('#000');
         expect(pathElement.getAttribute('fill-opacity')).toBe('1');
@@ -242,6 +246,7 @@ describe('Test properties', (): void => {
         expect(pathElement.getAttribute('stroke-linejoin')).toBe('bevel');
         expect(pathElement.getAttribute('stroke-opacity')).toBe('0.75');
         expect(pathElement.getAttribute('stroke-width')).toBe('1');
+        expect(pathElement.getAttribute('d').endsWith('z')).toBeFalsy();
         
     });
 

@@ -148,6 +148,29 @@ describe('Snapshot tests', (): void => {
 
     });
 
+    it('Paths without autoclose', (): void => {
+
+        const isometric = new IsometricCanvas({
+            container,
+            backgroundColor: '#CCC',
+            scale: 120,
+            width: 500,
+            height: 320
+        });
+
+        const pathA = new IsometricPath();
+        const pathB = new IsometricPath({ autoclose: false });
+        const commands = 'M0 0 0 L1 0 0 L1 1 0 L0 1 0';
+        
+        pathA.draw(commands);
+        pathB.draw(commands);
+
+        isometric.addChildren(pathA, pathB);
+
+        expect(container).toMatchSnapshot();
+
+    });
+
     it('Draw curves with method aliases', (): void => {
 
         const cube = new IsometricCanvas({

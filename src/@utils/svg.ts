@@ -40,7 +40,13 @@ const getCommandsWithStart = (commands: CommandPoint[]): CommandPoint[] => {
         ];
 };
 
-export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: number, scale: number): string => {
+export const getSVGPath = (
+    commands: CommandPoint[],
+    centerX: number,
+    centerY: number,
+    scale: number,
+    autoclose: boolean
+): string => {
     const drawCommands = getCommandsWithStart(commands);
     const svgPaths = drawCommands.map((c: CommandPoint, index: number) => {
         const point = getPointFromIsometricPoint(centerX, centerY, c.point, scale);     
@@ -64,7 +70,8 @@ export const getSVGPath = (commands: CommandPoint[], centerX: number, centerY: n
         }
     });
     if (svgPaths.length) {
-        return `${svgPaths.join(' ').trim()}z`;
+        const pathEnd = autoclose ? 'z' : '';
+        return `${svgPaths.join(' ').trim()}${pathEnd}`;
     }
     return '';
 };
@@ -98,7 +105,12 @@ export const parseDrawCommands = (commands: string): CommandPoint[] => {
     return commandsArray;
 };
 
-export const translateCommandPoints = (commands: CommandPoint[], right: number, left: number, top: number): void => {
+export const translateCommandPoints = (
+    commands: CommandPoint[],
+    right: number,
+    left: number,
+    top: number
+): void => {
     commands.forEach((command: CommandPoint): void => {
         command.point.r += right;
         command.point.l += left;
@@ -160,7 +172,13 @@ export const getSVGProperty = (property: SVGAnimationProperties): SVGNativePrope
     }[property] as SVGNativeProperties;
 };
 
-export function addEventListenerToElement(element: SVGElement, listeners: Listener[], event: string, callback: VoidFunction, useCapture: boolean): void {
+export function addEventListenerToElement(
+    element: SVGElement,
+    listeners: Listener[],
+    event: string,
+    callback: VoidFunction,
+    useCapture: boolean
+): void {
     const listener = {
         fn: callback,
         fnBind: callback.bind(this)
@@ -169,7 +187,13 @@ export function addEventListenerToElement(element: SVGElement, listeners: Listen
     element.addEventListener(event, listener.fnBind, useCapture);
 }
 
-export function removeEventListenerFromElement(element: SVGElement, listeners: Listener[], event: string, callback: VoidFunction, useCapture: boolean): void {
+export function removeEventListenerFromElement(
+    element: SVGElement, 
+    listeners: Listener[], 
+    event: string,
+    callback: VoidFunction,
+    useCapture: boolean
+): void {
     let listener: Listener;
     listeners.find((ln: Listener, index: number): boolean => {
         if (ln.fn === callback) {
