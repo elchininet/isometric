@@ -32,7 +32,8 @@ export class IsometricCircle extends IsometricShape {
         const { radius, ...rest } = props;
         // Exclude the next line from the coverage reports
         // Check https://github.com/microsoft/TypeScript/issues/13029
-        super(rest)/* istanbul ignore next */;
+        /* istanbul ignore next */
+        super(rest);
         this.circleRadius = radius;
     }
 
