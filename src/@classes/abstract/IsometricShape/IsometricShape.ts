@@ -8,7 +8,8 @@ export abstract class IsometricShape extends IsometricGraphic {
         const { planeView, ...rest } = props;
         // Exclude the next line from the coverage reports
         // Check https://github.com/microsoft/TypeScript/issues/13029
-        super(rest)/* istanbul ignore next */;
+        /* istanbul ignore next */
+        super(rest);
         this.shapeView = planeView;
         this.posRight = 0;
         this.posLeft = 0;

@@ -14,11 +14,11 @@ import {
 import { IsometricPathProps } from './types';
 
 export class IsometricPath extends IsometricGraphic {
-
+    // Exclude the next constructor from the coverage reports
+    // Check https://github.com/microsoft/TypeScript/issues/13029
+    /* istanbul ignore next */
     public constructor(props: IsometricPathProps = {}) {
-        // Exclude the next line from the coverage reports
-        // Check https://github.com/microsoft/TypeScript/issues/13029
-        super(props)/* istanbul ignore next */;
+        super(props);
         this.commands = [];
         this._autoclose = 'autoclose' in this.props
             ? (this.props as IsometricPathProps).autoclose
