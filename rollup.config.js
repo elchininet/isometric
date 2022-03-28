@@ -1,5 +1,5 @@
 import pkg from './package.json';
-import typescript from '@rollup/plugin-typescript';
+import ts from 'rollup-plugin-ts';
 import { terser } from "rollup-plugin-terser";
 
 const banner = `
@@ -7,20 +7,22 @@ var dom = new jsdom.JSDOM('<!DOCTYPE html><html><body></body></html>');
 var document = dom.window.document;
 `;
 
+const getPlugins = () => [
+    ts(),
+    terser({
+        output: {
+            comments: false
+        }
+    })
+];
+
 export default [
     {
-        plugins: [
-            typescript(),
-            terser({
-                output: {
-                    comments: false
-                }
-            })
-        ],
+        plugins: getPlugins(),
         input: 'src/index.ts',
         output: [
             {
-                file: 'dist/browser/isometric.js',
+                file: 'web/isometric.js',
                 format: 'iife',
                 name: 'isometric'
             },
@@ -29,14 +31,7 @@ export default [
         ]
     },
     {
-        plugins: [
-            typescript(),
-            terser({
-                output: {
-                    comments: false
-                }
-            })
-        ],
+        plugins: getPlugins(),
         input: 'src/index.ts',
         output: [
             {
@@ -55,7 +50,6 @@ export default [
                 ${banner}
                 `
             }
-        ],
-        external: ['jsdom']
+        ]
     }
 ]; 
