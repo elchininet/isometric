@@ -32,7 +32,7 @@ yarn add @elchininet/isometric
 
 It is possible to include a compiled version of the package directly in an HTML file. It will create a global `isometric` object that can be accessed from anywhere in your JavaScript code.
 
-1. Copy the JavaScript file `isometric.js`, located in the `dist/browser` folder
+1. Copy the JavaScript file `isometric.js`, located in the `dist/web` folder
 2. Put it in the folder that you prefer in your web server
 3. Include it in your HTML file
 

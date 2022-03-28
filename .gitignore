@@ -1,6 +1,10 @@
 node_modules
 .DS_Store
 **/.DS_Store
-dist/*
-!dist/browser/
 coverage
+esm/
+web/
+index.d.ts
+node.d.ts
+index.node.js
+index.js
