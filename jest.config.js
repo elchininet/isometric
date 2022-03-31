@@ -1,20 +1,14 @@
-const { compilerOptions: { baseUrl, paths } } = require('./tsconfig');
-const reg = /(.*)\/\*/;
-const aliases = Object.keys(paths).reduce(
-    (obj, a) => {
-        if (reg.test(a)) {
-            obj[`^${a.replace(reg, '$1')}/(.*)$`] = `<rootDir>/src/${paths[a][0].replace(reg, '$1')}/$1`;
-        } else {
-            obj[`^${a}$`] = `<rootDir>/src/${paths[a][0]}`;
-        }
-        return obj;
-    },
-    {}
-);
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const tsconfig = require('./tsconfig');
 
 module.exports = {
     roots: ['<rootDir>/tests'],
-    moduleNameMapper: aliases,
+    moduleNameMapper: pathsToModuleNameMapper(
+        tsconfig.compilerOptions.paths,
+        {
+            prefix: '<rootDir>/src'
+        }
+    ),
     transform: {
         '^.+\\.ts$': 'ts-jest',
     },
