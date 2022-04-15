@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.2.1] - 2022-04-15
+
+- Bundle the types of the package in a single file
+- Add a triple-slash reference directive at the beginning of the bundles to enable types in Deno
+
 ## [3.2.0] - 2021-12-28
 
 - Added a property to close automatically or not the `IsometricPath`
