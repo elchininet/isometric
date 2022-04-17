@@ -96,6 +96,19 @@ import {
 } from '@elchininet/isometric/node';
 ```
 
+#### In Deno
+
+To import the package in [Deno](https://deno.land/), use the main esm version using any content delivery as [UNPKG](https://unpkg.com/) or [JSDELIVR](https://www.jsdelivr.com/). The package contains a reference directive to the `d.ts` file so you can get type checking importing it without doing anything special.
+
+```javascript
+import {
+    IsometricCanvas,
+    IsometricRectangle,
+    IsometricCircle,
+    IsometricPath
+} from 'https://cdn.jsdelivr.net/npm/@elchininet/isometric/esm/index.js';
+```
+
 ## Scripts
 
 #### build
