@@ -117,13 +117,13 @@ import {
 
 Transpiles the `TypeScript` code and creates the necesary package bundles:
 
-| Bundle path                 | Environment | Module type |
-| --------------------------- | ----------- | ----------- |
-| `dist/browser/isometric.js` | Browser     | IIFE        |
-| `dist/index.js`             | Browser     | CommonJS    |
-| `dist/esm/index.js`         | Browser     | ESM         |
-| `dist/index.node.js`        | Node        | CommonJS    |
-| `dist/esm/index.node.js`    | Node        | ESM         |
+| Bundle path        | Environment | Module type |
+| ------------------ | ----------- | ----------- |
+| `web/isometric.js` | Browser     | IIFE        |
+| `index.js`         | Browser     | CommonJS    |
+| `esm/index.js`     | Browser     | ESM         |
+| `index.node.js`    | Node        | CommonJS    |
+| `esm/index.node.js`| Node        | ESM         |
 
 #### lint
 
