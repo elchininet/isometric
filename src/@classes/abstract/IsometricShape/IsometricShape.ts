@@ -1,15 +1,16 @@
 import { IsometricPlaneView } from '@types';
-import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
+import { SVG_ELEMENTS } from '@constants';
+import { IsometricElement } from '@classes/abstract/IsometricElement';
 import { IsometricShapeProps } from './types';
 
-export abstract class IsometricShape extends IsometricGraphic {
+export abstract class IsometricShape extends IsometricElement {
 
     public constructor(props: IsometricShapeProps) {
         const { planeView, ...rest } = props;
         // Exclude the next line from the coverage reports
         // Check https://github.com/microsoft/TypeScript/issues/13029
         /* istanbul ignore next */
-        super(rest);
+        super(rest, SVG_ELEMENTS.path);
         this.shapeView = planeView;
         this.posRight = 0;
         this.posLeft = 0;

@@ -1,6 +1,6 @@
 import { IsometricPlaneView } from '@types';
-import { IsometricGraphicProps } from '@classes/abstract/IsometricGraphic';
+import { IsometricElementProps } from '@classes/abstract/IsometricElement';
 
-export interface IsometricShapeProps extends IsometricGraphicProps {
+export interface IsometricShapeProps extends IsometricElementProps {
     planeView: IsometricPlaneView;
 }

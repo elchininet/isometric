@@ -1,5 +1,5 @@
-import { IsometricGraphicProps } from '@classes/abstract/IsometricGraphic';
+import { IsometricElementProps } from '@classes/abstract/IsometricElement';
 
-export interface IsometricPathProps extends IsometricGraphicProps {
+export interface IsometricPathProps extends IsometricElementProps {
     autoclose?: boolean;
 }

@@ -133,7 +133,7 @@ export class IsometricRectangle extends IsometricShape {
     }
 
     public update(): IsometricRectangle {
-        if (this.path.parentNode) {
+        if (this.element.parentNode) {
             const commands = this.getCommands({
                 right: this.right,
                 left: this.left,
@@ -148,7 +148,7 @@ export class IsometricRectangle extends IsometricShape {
                 this.data.scale
             );
             addSVGProperties(
-                this.path,
+                this.element,
                 {
                     d: getSVGPath(
                         commands,
@@ -166,7 +166,7 @@ export class IsometricRectangle extends IsometricShape {
     }
 
     public clear(): IsometricRectangle {
-        addSVGProperties(this.path, {
+        addSVGProperties(this.element, {
             d: ''
         });
         return this;

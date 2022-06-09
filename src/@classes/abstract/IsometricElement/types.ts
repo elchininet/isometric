@@ -4,7 +4,7 @@ import {
     Texture
 } from '@types';
 
-export interface IsometricGraphicProps {
+export interface IsometricElementProps {
     fillColor?: string;
     fillOpacity?: number;
     strokeColor?: string;

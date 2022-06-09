@@ -8,7 +8,7 @@ import {
 } from '@constants';
 import { IsometricStore } from '@classes/abstract/IsometricStore';
 import { Listener } from '@types';
-import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
+import { IsometricElement } from '@classes/abstract/IsometricElement';
 import { IsometricCanvasProps } from './types';
 import {
     addSVGProperties,
@@ -68,13 +68,13 @@ export class IsometricCanvas extends IsometricStore {
     }
     
     private props: IsometricCanvasProps;
-    private children: IsometricGraphic[];
+    private children: IsometricElement[];
     private svg: SVGSVGElement;
     private background: SVGRectElement;
     private isAnimated: boolean;
     private listeners: Listener[];
 
-    private removeSVGChild(child: IsometricGraphic): void {
+    private removeSVGChild(child: IsometricElement): void {
         const svgChild = child.getElement();
         const svgPatternChild = child.getPattern();
         if (svgPatternChild && svgPatternChild.parentNode) {
@@ -86,7 +86,7 @@ export class IsometricCanvas extends IsometricStore {
     }
 
     private updateChildren(): void {
-        this.children.forEach((child: IsometricGraphic): void => {
+        this.children.forEach((child: IsometricElement): void => {
             child.update();
         });
     }
@@ -159,7 +159,7 @@ export class IsometricCanvas extends IsometricStore {
         return this.isAnimated;
     }
 
-    public addChild(child: IsometricGraphic): IsometricCanvas {
+    public addChild(child: IsometricElement): IsometricCanvas {
         child.data = this.data;
         this.children.push(child);
         this.insertPattern(child.getPattern());
@@ -168,12 +168,12 @@ export class IsometricCanvas extends IsometricStore {
         return this;
     }
 
-    public addChildren(...children: IsometricGraphic[]): IsometricCanvas {
-        children.forEach((child: IsometricGraphic) => this.addChild(child));
+    public addChildren(...children: IsometricElement[]): IsometricCanvas {
+        children.forEach((child: IsometricElement) => this.addChild(child));
         return this;
     }
 
-    public removeChild(child: IsometricGraphic): IsometricCanvas {
+    public removeChild(child: IsometricElement): IsometricCanvas {
         const index = this.children.indexOf(child);
         if (index >= 0) {
             this.children.splice(index, 1);
@@ -182,8 +182,8 @@ export class IsometricCanvas extends IsometricStore {
         return this;
     }
 
-    public removeChildren(...children: IsometricGraphic[]): IsometricCanvas {
-        children.forEach((child: IsometricGraphic) => this.removeChild(child));
+    public removeChildren(...children: IsometricElement[]): IsometricCanvas {
+        children.forEach((child: IsometricElement) => this.removeChild(child));
         return this;
     }
 
@@ -213,7 +213,7 @@ export class IsometricCanvas extends IsometricStore {
 
     public clear(): IsometricCanvas {
         const children = this.children.splice(0);
-        children.forEach((child: IsometricGraphic): void => {
+        children.forEach((child: IsometricElement): void => {
             this.removeSVGChild(child);
         });
         return this;
