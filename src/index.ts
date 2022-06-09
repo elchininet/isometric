@@ -9,7 +9,7 @@ export {
     SVGRectangleAnimation,
     SVGCircleAnimation
 } from '@types';
-export { IsometricGraphicProps } from '@classes/abstract/IsometricGraphic';
+export { IsometricElementProps } from '@classes/abstract/IsometricElement';
 export { IsometricCanvas, IsometricCanvasProps } from '@classes/public/IsometricCanvas';
 export { IsometricRectangle, IsometricRectangleProps } from '@classes/public/IsometricRectangle';
 export { IsometricCircle, IsometricCircleProps } from '@classes/public/IsometricCircle';

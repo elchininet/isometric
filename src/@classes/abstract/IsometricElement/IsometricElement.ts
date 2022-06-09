@@ -24,9 +24,9 @@ import {
     getPatternTransform
 } from '@utils/svg';
 import { uuid, round, getPointFromIsometricPoint } from '@utils/math';
-import { IsometricGraphicProps } from './types';
+import { IsometricElementProps } from './types';
 
-const defaultGraphicProps: IsometricGraphicProps = {
+const defaultGraphicProps: IsometricElementProps = {
     fillColor: Colors.white,
     fillOpacity: 1,
     strokeColor: Colors.black,
@@ -37,21 +37,22 @@ const defaultGraphicProps: IsometricGraphicProps = {
     strokeWidth: 1
 };
 
-export abstract class IsometricGraphic extends IsometricStore {
+export abstract class IsometricElement extends IsometricStore {
 
-    public constructor(props: IsometricGraphicProps) {
+    public constructor(props: IsometricElementProps, svgElement: SVG_ELEMENTS) {
 
         super();
 
         this.props = {...defaultGraphicProps, ...props};
-        this.path = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.path);
+        this.element = document.createElementNS(SVG_NAMESPACE, svgElement);
         this.listeners = [];
+        this.animations = [];
 
         if (this.props.texture) {
             this.createTexture(this.props.texture);
         }
         
-        addSVGProperties(this.path, {
+        addSVGProperties(this.element, {
             'fill': this.props.texture
                 ? `url(#${this.patternId}) ${this.fillColor}`
                 : this.fillColor,
@@ -63,8 +64,6 @@ export abstract class IsometricGraphic extends IsometricStore {
             'stroke-opacity': `${this.strokeOpacity}`,
             'stroke-width': `${this.strokeWidth}`
         });
-
-        this.animations = [];
 
     }
 
@@ -117,15 +116,15 @@ export abstract class IsometricGraphic extends IsometricStore {
         this.update();
     }
 
-    protected props: IsometricGraphicProps;    
-    protected path: SVGPathElement;
+    protected props: IsometricElementProps;    
+    protected element: SVGElement;
     protected patternId: string;
     protected pattern: SVGPatternElement;
     protected animations: SVGAnimationObject[];
     protected listeners: Listener[];
 
-    public abstract update(): IsometricGraphic;
-    public abstract clear(): IsometricGraphic;
+    public abstract update(): IsometricElement;
+    public abstract clear(): IsometricElement;
     protected abstract privateUpdateAnimations(): void;
 
     protected updateAnimations(): void {
@@ -137,7 +136,7 @@ export abstract class IsometricGraphic extends IsometricStore {
             }
 
             if (!animation.element.parentNode) {
-                this.path.appendChild(animation.element);
+                this.element.appendChild(animation.element);
             }
 
             addSVGProperties(animation.element, {
@@ -223,7 +222,7 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     public set fillColor(value: string) {
         this.props.fillColor = value;
-        addSVGProperties(this.path, {
+        addSVGProperties(this.element, {
             'fill': this.props.texture
                 ? `url(#${this.patternId}) ${this.fillColor}`
                 : this.fillColor
@@ -237,7 +236,7 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     public set fillOpacity(value: number) {
         this.props.fillOpacity = value;
-        addSVGProperties(this.path, { 'fill-opacity': `${this.fillOpacity}` });
+        addSVGProperties(this.element, { 'fill-opacity': `${this.fillOpacity}` });
     }
 
     // texture
@@ -263,7 +262,7 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     public set strokeColor(value: string) {
         this.props.strokeColor = value;
-        addSVGProperties(this.path, { 'stroke': this.strokeColor });
+        addSVGProperties(this.element, { 'stroke': this.strokeColor });
     }
 
     // strokeDashArray
@@ -273,7 +272,7 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     public set strokeDashArray(value: number[]) {
         this.props.strokeDashArray = value;
-        addSVGProperties(this.path, { 'stroke-dasharray': this.strokeDashArray.join(' ') });
+        addSVGProperties(this.element, { 'stroke-dasharray': this.strokeDashArray.join(' ') });
     }
 
     // strokeLinecap
@@ -283,7 +282,7 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     public set strokeLinecap(value: StrokeLinecap) {
         this.props.strokeLinecap = LineCap[value];
-        addSVGProperties(this.path, { 'stroke-linecap': this.strokeLinecap });
+        addSVGProperties(this.element, { 'stroke-linecap': this.strokeLinecap });
     }
 
     // strokeLinejoin
@@ -293,7 +292,7 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     public set strokeLinejoin(value: StrokeLinejoin) {
         this.props.strokeLinejoin = LineJoin[value];
-        addSVGProperties(this.path, { 'stroke-linejoin': this.strokeLinejoin });
+        addSVGProperties(this.element, { 'stroke-linejoin': this.strokeLinejoin });
     }
 
     // strokeOpacity
@@ -303,7 +302,7 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     public set strokeOpacity(value: number) {
         this.props.strokeOpacity = value;
-        addSVGProperties(this.path, { 'stroke-opacity': `${this.strokeOpacity}` });
+        addSVGProperties(this.element, { 'stroke-opacity': `${this.strokeOpacity}` });
     }
 
     // strokeWidth
@@ -313,11 +312,11 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     public set strokeWidth(value: number) {
         this.props.strokeWidth = value;
-        addSVGProperties(this.path, { 'stroke-width': `${this.strokeWidth}` });
+        addSVGProperties(this.element, { 'stroke-width': `${this.strokeWidth}` });
     }
 
-    public getElement(): SVGPathElement {
-        return this.path;
+    public getElement(): SVGElement {
+        return this.element;
     }
 
     public getPattern(): SVGPatternElement | undefined {
@@ -352,13 +351,13 @@ export abstract class IsometricGraphic extends IsometricStore {
         }
     }
 
-    public addAnimation(animation: SVGAnimation): IsometricGraphic {
+    public addAnimation(animation: SVGAnimation): IsometricElement {
         this.animations.push({ ...animation });
         this.update();
         return this;
     }
 
-    public removeAnimationByIndex(index: number): IsometricGraphic {
+    public removeAnimationByIndex(index: number): IsometricElement {
 
         if (index >= 0 && index < this.animations.length) {
 
@@ -374,7 +373,7 @@ export abstract class IsometricGraphic extends IsometricStore {
 
     }
 
-    public removeAnimations(): IsometricGraphic {
+    public removeAnimations(): IsometricElement {
 
         const animations = this.animations.splice(0);
 
@@ -387,13 +386,13 @@ export abstract class IsometricGraphic extends IsometricStore {
         return this;
     }
 
-    public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricGraphic {
-        addEventListenerToElement.call(this, this.path, this.listeners, event, callback, useCapture);
+    public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricElement {
+        addEventListenerToElement.call(this, this.element, this.listeners, event, callback, useCapture);
         return this;
     }
 
-    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricGraphic {
-        removeEventListenerFromElement(this.path, this.listeners, event, callback, useCapture);
+    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricElement {
+        removeEventListenerFromElement(this.element, this.listeners, event, callback, useCapture);
         return this;
     }
 

@@ -1,10 +1,13 @@
-import { Command } from '@constants';
+import {
+    Command,
+    SVG_ELEMENTS
+} from '@constants';
 import {
     CommandPoint,
     SVGPathAnimation,
     SVGAnimationObject
 } from '@types';
-import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
+import { IsometricElement } from '@classes/abstract/IsometricElement';
 import {
     addSVGProperties,
     parseDrawCommands,
@@ -13,15 +16,15 @@ import {
 } from '@utils/svg';
 import { IsometricPathProps } from './types';
 
-export class IsometricPath extends IsometricGraphic {
+export class IsometricPath extends IsometricElement {
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
     /* istanbul ignore next */
     public constructor(props: IsometricPathProps = {}) {
-        super(props);
+        super(props, SVG_ELEMENTS.path);
         this.commands = [];
-        this._autoclose = 'autoclose' in this.props
-            ? (this.props as IsometricPathProps).autoclose
+        this._autoclose = 'autoclose' in props
+            ? props.autoclose
             : true;
     }
 
@@ -76,14 +79,14 @@ export class IsometricPath extends IsometricGraphic {
     }
 
     public update(): IsometricPath {
-        if (this.path.parentNode) {
+        if (this.element.parentNode) {
             const corner = getTextureCorner(
                 this.commands,
                 this.data.centerX,
                 this.data.centerY,
                 this.data.scale
             );
-            addSVGProperties(this.path, {
+            addSVGProperties(this.element, {
                 d: getSVGPath(
                     this.commands,
                     this.data.centerX,
@@ -100,7 +103,7 @@ export class IsometricPath extends IsometricGraphic {
 
     public clear(): IsometricPath {
         this.commands.splice(0);
-        addSVGProperties(this.path, {
+        addSVGProperties(this.element, {
             d: ''
         });
         return this;

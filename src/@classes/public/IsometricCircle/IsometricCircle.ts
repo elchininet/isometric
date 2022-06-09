@@ -163,7 +163,7 @@ export class IsometricCircle extends IsometricShape {
     }
 
     public update(): IsometricCircle {
-        if (this.path.parentNode) {
+        if (this.element.parentNode) {
             const commands = this.getCommands({
                 right: this.right,
                 left: this.left,
@@ -177,7 +177,7 @@ export class IsometricCircle extends IsometricShape {
                 this.data.scale
             );
             addSVGProperties(
-                this.path,
+                this.element,
                 {
                     d: getSVGPath(
                         commands,
@@ -195,7 +195,7 @@ export class IsometricCircle extends IsometricShape {
     }
 
     public clear(): IsometricCircle {
-        addSVGProperties(this.path, {
+        addSVGProperties(this.element, {
             d: ''
         });
         return this;
