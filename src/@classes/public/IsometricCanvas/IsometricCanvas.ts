@@ -6,15 +6,9 @@ import {
     DEFAULT_HEIGHT,
     Colors
 } from '@constants';
-import { IsometricStore } from '@classes/abstract/IsometricStore';
-import { Listener } from '@types';
-import { IsometricElement } from '@classes/abstract/IsometricElement';
+import { IsometricContainer } from '@classes/abstract/IsometricContainer';
 import { IsometricCanvasProps } from './types';
-import {
-    addSVGProperties,
-    addEventListenerToElement,
-    removeEventListenerFromElement
-} from '@utils/svg';
+import { addSVGProperties } from '@utils/svg';
 import { Store } from '@store';
 
 const defaultProps: IsometricCanvasProps = {
@@ -25,14 +19,11 @@ const defaultProps: IsometricCanvasProps = {
     width: DEFAULT_WIDTH
 };
 
-export class IsometricCanvas extends IsometricStore {
+export class IsometricCanvas extends IsometricContainer {
 
     public constructor(props: IsometricCanvasProps = {}) {
-        super();
+        super(SVG_ELEMENTS.svg);
         this.props = { ...defaultProps, ...props };
-        this.children = [];
-        this.svg = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.svg);
-        this.listeners = [];
         this.isAnimated = true;
 
         this.data = new Store(
@@ -41,7 +32,7 @@ export class IsometricCanvas extends IsometricStore {
             this.props.scale
         );
 
-        addSVGProperties(this.svg, {
+        addSVGProperties(this.container, {
             [SVG_PROPERTIES.viewBox]: `0 0 ${this.data.width} ${this.data.height}`,
             width: `${this.data.width}px`,
             height: `${this.data.height}px`
@@ -57,52 +48,22 @@ export class IsometricCanvas extends IsometricStore {
             height: `${this.data.height}px`
         });
 
-        this.svg.appendChild(this.background);
+        this.container.appendChild(this.background);
 
         const containerElement = typeof this.props.container === 'string'
             ? document.querySelector(this.props.container)
             : this.props.container;
 
-        containerElement.appendChild(this.svg);
+        containerElement.appendChild(this.container);
 
     }
     
     private props: IsometricCanvasProps;
-    private children: IsometricElement[];
-    private svg: SVGSVGElement;
     private background: SVGRectElement;
     private isAnimated: boolean;
-    private listeners: Listener[];
-
-    private removeSVGChild(child: IsometricElement): void {
-        const svgChild = child.getElement();
-        const svgPatternChild = child.getPattern();
-        if (svgPatternChild && svgPatternChild.parentNode) {
-            this.svg.removeChild(svgPatternChild);
-        }
-        if (svgChild.parentNode) {
-            this.svg.removeChild(svgChild);
-        }
-    }
-
-    private updateChildren(): void {
-        this.children.forEach((child: IsometricElement): void => {
-            child.update();
-        });
-    }
-
-    private insertPattern(pattern?: SVGPatternElement) {
-        if (pattern) {
-            this.svg.insertBefore(pattern, this.svg.firstChild);
-        }
-    }
-
-    public getElement(): SVGSVGElement {
-        return this.svg;
-    }
 
     public getSVGCode(): string {
-        return this.svg.outerHTML;
+        return this.container.outerHTML;
     }
 
     public get backgroundColor(): string {
@@ -129,7 +90,7 @@ export class IsometricCanvas extends IsometricStore {
 
     public set height(value: number) {
         this.data.height = value;
-        addSVGProperties(this.svg, {
+        addSVGProperties(this.container, {
             [SVG_PROPERTIES.viewBox]: `0 0 ${this.data.width} ${this.data.height}`,
             height: `${this.data.height}px`
         });
@@ -145,7 +106,7 @@ export class IsometricCanvas extends IsometricStore {
 
     public set width(value: number) {
         this.data.width = value;
-        addSVGProperties(this.svg, {
+        addSVGProperties(this.container, {
             [SVG_PROPERTIES.viewBox]: `0 0 ${this.data.width} ${this.data.height}`,
             width: `${this.data.width}px`
         });
@@ -159,74 +120,22 @@ export class IsometricCanvas extends IsometricStore {
         return this.isAnimated;
     }
 
-    public addChild(child: IsometricElement): IsometricCanvas {
-        child.data = this.data;
-        this.children.push(child);
-        this.insertPattern(child.getPattern());
-        this.svg.appendChild(child.getElement());
-        child.update();
-        return this;
-    }
-
-    public addChildren(...children: IsometricElement[]): IsometricCanvas {
-        children.forEach((child: IsometricElement) => this.addChild(child));
-        return this;
-    }
-
-    public removeChild(child: IsometricElement): IsometricCanvas {
-        const index = this.children.indexOf(child);
-        if (index >= 0) {
-            this.children.splice(index, 1);
-            this.removeSVGChild(child);
-        }
-        return this;
-    }
-
-    public removeChildren(...children: IsometricElement[]): IsometricCanvas {
-        children.forEach((child: IsometricElement) => this.removeChild(child));
-        return this;
-    }
-
-    public removeChildByIndex(index: number): IsometricCanvas {
-        if (index >= 0 && index < this.children.length) {
-            const [ child ] = this.children.splice(index, 1);
-            this.removeSVGChild(child);
-        }
-        return this;
-    }
-
     public pauseAnimations(): void {
+        const svg = this.container as SVGSVGElement;
         /* istanbul ignore next */ /* jsdom doesn't have SVGSVGElement methods */
-        if (typeof(this.svg.pauseAnimations) === 'function') {
-            this.svg.pauseAnimations();
+        if (typeof svg.pauseAnimations === 'function') {
+            svg.pauseAnimations();
         }
         this.isAnimated = false;      
     }
 
     public resumeAnimations(): void {
+        const svg = this.container as SVGSVGElement;
         /* istanbul ignore next */ /* jsdom doesn't have SVGSVGElement methods */
-        if (typeof(this.svg.unpauseAnimations) === 'function') {
-            this.svg.unpauseAnimations();
+        if (typeof svg.unpauseAnimations === 'function') {
+            svg.unpauseAnimations();
         }
         this.isAnimated = true;
-    }
-
-    public clear(): IsometricCanvas {
-        const children = this.children.splice(0);
-        children.forEach((child: IsometricElement): void => {
-            this.removeSVGChild(child);
-        });
-        return this;
-    }
-
-    public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricCanvas {
-        addEventListenerToElement.call(this, this.svg, this.listeners, event, callback, useCapture);
-        return this;
-    }
-
-    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricCanvas {
-        removeEventListenerFromElement(this.svg, this.listeners, event, callback, useCapture);
-        return this;
     }
 
 }
