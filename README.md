@@ -179,7 +179,7 @@ const isometric = new IsometricCanvas([properties]);
 <details><summary>Instance Methods</summary>
 <p>
 
->All the instance methods (excepting `getElement`, `getSVGCode`) return the same instance, so they are chainable.
+>All the instance methods (excepting `getElement` and `getSVGCode`) return the same instance, so they are chainable.
 
 ```javascript
 getElement()
