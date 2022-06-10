@@ -12,7 +12,8 @@ import {
     addSVGProperties,
     parseDrawCommands,
     getSVGPath,
-    getTextureCorner
+    getTextureCorner,
+    elementHasSVGParent
 } from '@utils/svg';
 import { IsometricPathProps } from './types';
 
@@ -79,7 +80,7 @@ export class IsometricPath extends IsometricElement {
     }
 
     public update(): IsometricPath {
-        if (this.element.parentNode) {
+        if (elementHasSVGParent(this.element)) {
             const corner = getTextureCorner(
                 this.commands,
                 this.data.centerX,

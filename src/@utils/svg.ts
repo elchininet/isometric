@@ -226,3 +226,13 @@ export const getPatternTransform = (
     }
     return transform;
 };
+
+export const elementHasSVGParent = (element: Node): boolean => {
+    if (element.parentNode) {
+        if (element.parentNode instanceof SVGSVGElement) {
+            return true;
+        }
+        return elementHasSVGParent(element.parentNode);
+    }
+    return false;
+};

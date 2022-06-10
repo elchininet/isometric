@@ -21,6 +21,9 @@ const defaultProps: IsometricCanvasProps = {
 
 export class IsometricCanvas extends IsometricContainer {
 
+    // Exclude the next constructor from the coverage reports
+    // Check https://github.com/microsoft/TypeScript/issues/13029
+    /* istanbul ignore next */
     public constructor(props: IsometricCanvasProps = {}) {
         super(SVG_ELEMENTS.svg);
         this.props = { ...defaultProps, ...props };
@@ -32,7 +35,7 @@ export class IsometricCanvas extends IsometricContainer {
             this.props.scale
         );
 
-        addSVGProperties(this.container, {
+        addSVGProperties(this.element, {
             [SVG_PROPERTIES.viewBox]: `0 0 ${this.data.width} ${this.data.height}`,
             width: `${this.data.width}px`,
             height: `${this.data.height}px`
@@ -48,13 +51,13 @@ export class IsometricCanvas extends IsometricContainer {
             height: `${this.data.height}px`
         });
 
-        this.container.appendChild(this.background);
+        this.element.appendChild(this.background);
 
         const containerElement = typeof this.props.container === 'string'
             ? document.querySelector(this.props.container)
             : this.props.container;
 
-        containerElement.appendChild(this.container);
+        containerElement.appendChild(this.element);
 
     }
     
@@ -63,7 +66,7 @@ export class IsometricCanvas extends IsometricContainer {
     private isAnimated: boolean;
 
     public getSVGCode(): string {
-        return this.container.outerHTML;
+        return this.element.outerHTML;
     }
 
     public get backgroundColor(): string {
@@ -90,7 +93,7 @@ export class IsometricCanvas extends IsometricContainer {
 
     public set height(value: number) {
         this.data.height = value;
-        addSVGProperties(this.container, {
+        addSVGProperties(this.element, {
             [SVG_PROPERTIES.viewBox]: `0 0 ${this.data.width} ${this.data.height}`,
             height: `${this.data.height}px`
         });
@@ -106,7 +109,7 @@ export class IsometricCanvas extends IsometricContainer {
 
     public set width(value: number) {
         this.data.width = value;
-        addSVGProperties(this.container, {
+        addSVGProperties(this.element, {
             [SVG_PROPERTIES.viewBox]: `0 0 ${this.data.width} ${this.data.height}`,
             width: `${this.data.width}px`
         });
@@ -120,22 +123,24 @@ export class IsometricCanvas extends IsometricContainer {
         return this.isAnimated;
     }
 
-    public pauseAnimations(): void {
-        const svg = this.container as SVGSVGElement;
+    public pauseAnimations(): IsometricCanvas {
+        const svg = this.element as SVGSVGElement;
         /* istanbul ignore next */ /* jsdom doesn't have SVGSVGElement methods */
         if (typeof svg.pauseAnimations === 'function') {
             svg.pauseAnimations();
         }
-        this.isAnimated = false;      
+        this.isAnimated = false;
+        return this;     
     }
 
-    public resumeAnimations(): void {
-        const svg = this.container as SVGSVGElement;
+    public resumeAnimations(): IsometricCanvas {
+        const svg = this.element as SVGSVGElement;
         /* istanbul ignore next */ /* jsdom doesn't have SVGSVGElement methods */
         if (typeof svg.unpauseAnimations === 'function') {
             svg.unpauseAnimations();
         }
         this.isAnimated = true;
+        return this;
     }
 
 }

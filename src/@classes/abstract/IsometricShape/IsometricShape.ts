@@ -6,15 +6,15 @@ import { IsometricShapeProps } from './types';
 export abstract class IsometricShape extends IsometricElement {
 
     public constructor(props: IsometricShapeProps) {
-        const { planeView, ...rest } = props;
+        const { planeView, right = 0, left = 0, top = 0, ...rest } = props;
         // Exclude the next line from the coverage reports
         // Check https://github.com/microsoft/TypeScript/issues/13029
         /* istanbul ignore next */
         super(rest, SVG_ELEMENTS.path);
         this.shapeView = planeView;
-        this.posRight = 0;
-        this.posLeft = 0;
-        this.posTop = 0;
+        this.posRight = right;
+        this.posLeft = left;
+        this.posTop = top;
     }
     
     protected shapeView: IsometricPlaneView;
