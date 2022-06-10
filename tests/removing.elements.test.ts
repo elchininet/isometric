@@ -1,4 +1,4 @@
-import { IsometricCanvas, IsometricPath } from '../src';
+import { IsometricCanvas, IsometricGroup, IsometricPath } from '../src';
 
 describe('Removing methods', (): void => {
 
@@ -20,35 +20,48 @@ describe('Removing methods', (): void => {
         const top = new IsometricPath();
         const right = new IsometricPath();
         const left = new IsometricPath();
+        const group = new IsometricGroup();
     
         top.moveTo(0, 0, 1).lineTo(1, 0, 1).lineTo(1, 1, 1).lineTo(0, 1, 1);
         right.moveTo(1, 0, 1).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(1, 1, 1);
         left.moveTo(1, 1, 1).lineTo(1, 1, 0).lineTo(0, 1, 0).lineTo(0, 1, 1);
-        cube.addChildren(top, right, left);
+        group.addChildren(top, right, left);
+        cube.addChildren(group);
 
         const svgElement = cube.getElement();
         const topElement = top.getElement();
         const rightElement = right.getElement();
         const leftElement = left.getElement();
+        const groupElement = group.getElement();
 
-        expect(topElement.parentNode).toBe(svgElement);
-        expect(rightElement.parentNode).toBe(svgElement);
-        expect(leftElement.parentNode).toBe(svgElement);
+        expect(topElement.parentNode).toBe(groupElement);
+        expect(rightElement.parentNode).toBe(groupElement);
+        expect(leftElement.parentNode).toBe(groupElement);
+        expect(groupElement.parentNode).toBe(svgElement);
 
-        cube.removeChild(top);
+        group.removeChild(top);
 
         expect(topElement.parentNode).toBeNull();
         
-        cube.removeChildByIndex(0);
+        group.removeChildByIndex(0);
 
         expect(rightElement.parentNode).toBeNull();
 
         // Clear IsometricCanvas
-        cube.clear();
+        group.clear();
 
         expect(leftElement.parentNode).toBeNull();
+        expect(groupElement.parentNode).toBe(svgElement);
+
+        cube.clear();
+
+        expect(groupElement.parentNode).toBeNull();
 
         cube.addChildren(top, right, left);
+
+        expect(topElement.parentNode).toBe(svgElement);
+        expect(rightElement.parentNode).toBe(svgElement);
+        expect(leftElement.parentNode).toBe(svgElement);
 
         cube.removeChildren(top, right, left);
 

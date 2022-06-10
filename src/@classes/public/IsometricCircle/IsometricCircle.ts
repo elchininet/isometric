@@ -15,7 +15,8 @@ import {
     addSVGProperties,
     getSVGPath,
     getTextureCorner,
-    translateCommandPoints
+    translateCommandPoints,
+    elementHasSVGParent
 } from '@utils/svg';
 import { IsometricCircleProps } from './types';
 
@@ -163,7 +164,7 @@ export class IsometricCircle extends IsometricShape {
     }
 
     public update(): IsometricCircle {
-        if (this.element.parentNode) {
+        if (elementHasSVGParent(this.element)) {
             const commands = this.getCommands({
                 right: this.right,
                 left: this.left,

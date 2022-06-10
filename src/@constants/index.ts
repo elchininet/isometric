@@ -2,7 +2,7 @@ export const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
 export enum SVG_ELEMENTS {
     svg = 'svg',
-    group = 'group',
+    group = 'g',
     path = 'path',
     rect = 'rect',
     pattern = 'pattern',

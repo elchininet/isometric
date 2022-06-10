@@ -43,6 +43,7 @@ It is possible to include a compiled version of the package directly in an HTML 
 ```javascript
 /* There will be a global variable named isometric containing all the classes */
 isometric.IsometricCanvas;
+isometric.IsometricGroup;
 isometric.IsometricRectangle;
 isometric.IsometricCircle;
 isometric.IsometricPath;
@@ -53,6 +54,7 @@ isometric.IsometricPath;
 ```javascript
 const {
     IsometricCanvas,
+    IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
     IsometricPath
@@ -64,6 +66,7 @@ const {
 ```javascript
 import {
     IsometricCanvas,
+    IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
     IsometricPath
@@ -79,6 +82,7 @@ import {
 ```javascript
 const {
     IsometricCanvas,
+    IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
     IsometricPath
@@ -90,6 +94,7 @@ const {
 ```javascript
 import {
     IsometricCanvas,
+    IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
     IsometricPath
@@ -103,6 +108,7 @@ To import the package in [Deno](https://deno.land/), use the main esm version us
 ```javascript
 import {
     IsometricCanvas,
+    IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
     IsometricPath
@@ -173,7 +179,7 @@ const isometric = new IsometricCanvas([properties]);
 <details><summary>Instance Methods</summary>
 <p>
 
->All the instance methods (excepting `getElement` and `getSVGCode`) return the same instance, so they are chainable.
+>All the instance methods (excepting `getElement`, `getSVGCode`) return the same instance, so they are chainable.
 
 ```javascript
 getElement()
@@ -192,7 +198,7 @@ addChild(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
 
 ```javascript
 addChildren(child, child, child...)
@@ -201,7 +207,7 @@ addChildren(child, child, child...)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
 
 ```javascript
 removeChild(child)
@@ -210,7 +216,7 @@ removeChild(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
 
 ```javascript
 removeChildren(child, child, child...)
@@ -219,21 +225,26 @@ removeChildren(child, child, child...)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
 
 ```javascript
 removeChildByIndex(index)
 ```
->Removes a child taking into account its index in the paths tree
+>Removes a child taking into account its index in the elements tree
 
 | Parameter       | Type          |
 | --------------- | ------------- |
 | index           | number        |
 
 ```javascript
+update()
+```
+>Updates the entire isometric canvas and its children
+
+```javascript
 clear()
 ```
->Cleans the isometric canvas (removes all the children from it and all the native SVG paths elements from the SVG)
+>Cleans the isometric canvas (removes all the children from it and all the native SVG elements from the SVG)
 
 ```javascript
 pauseAnimations()
@@ -286,9 +297,136 @@ removeEventListener(type, callback, [useCapture])
 
 ---
 
+### Class IsometricGroup
+
+This class can be used to group multiple isometric elements and translate them together.
+
+```javascript
+const isometric = new IsometricGroup([properties]);
+```
+
+<details><summary>Parameters</summary>
+<p>
+
+`properties` _(optional)_
+>Object to set the properties of the isometric canvas
+
+| Property        | Type                 | Default value  | Description                                                  |
+| --------------- | -------------------- | -------------- | ------------------------------------------------------------ |
+| right           | number               | 0              | Sets the right isometric coordinates of the isometric group  |
+| left            | number               | 0              | Sets the left isometric coordinates of the isometric group   |
+| top             | number               | 0              | Sets the top isometric coordinates of the isometric group    |
+
+</p>
+</details>
+
+<details><summary>Instance Methods</summary>
+<p>
+
+>All the instance methods (excepting `getElement`) return the same instance, so they are chainable.
+
+```javascript
+getElement()
+```
+>Returns the native `g` element
+
+```javascript
+addChild(child)
+```
+>Adds a child to the isometric group
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+addChildren(child, child, child...)
+```
+>Adds multiple children to the isometric group
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+removeChild(child)
+```
+>Removes a child from the isometric group
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+removeChildren(child, child, child...)
+```
+>Removes multiple children from the isometric group
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+removeChildByIndex(index)
+```
+>Removes a child taking into account its index in the elements tree
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| index           | number        |
+
+```javascript
+update()
+```
+>Updates the entire isometric group and its children
+
+```javascript
+clear()
+```
+>Cleans the isometric group (removes all the children from it and all the native SVG elements from the `g` element)
+
+```javascript
+addEventListener(type, callback, [useCapture])
+```
+>Sets up a function that will be called whenever the specified event is delivered to the isometric group (the `g` element)
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| type            | string        |
+| callback        | VoidFunction  |
+| callback        | boolean       |
+
+```javascript
+removeEventListener(type, callback, [useCapture])
+```
+>Removes from the isometric group (the `g` element) an event listener previously registered with `addEventListener`
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| type            | string        |
+| callback        | VoidFunction  |
+| callback        | boolean       |
+
+</p>
+</details>
+
+<details><summary>Instance Properties</summary>
+<p>
+
+| Property        | Type     | Description                                                          |
+| --------------- | -------- | -------------------------------------------------------------------- |
+| right           | number   | Gets and sets the right isometric ccordinates of the isometric group |
+| left            | number   | Gets and sets the left isometric ccordinates of the isometric group  |
+| top             | number   | Gets and sets the top isometric ccordinates of the isometric group   |
+
+</p>
+</details>
+
+---
+
 ### Class IsometricRectangle
 
-This class is to create isometric rectangles that can be added to the isometric canvas.
+This class is to create isometric rectangles that can be added to the isometric canvas or to isometric groups.
 
 ```javascript
 const path = new IsometricRectangle(properties);
@@ -304,6 +442,9 @@ const path = new IsometricRectangle(properties);
 | --------------- | -------------------- | ------------- | -------------------------------------------------------------------- |
 | height          | number               | -             | Sets the height of the isometric rectangle                           |
 | width           | number               | -             | Sets the width of the isometric rectangle                            |
+| right           | number               | 0             | Sets the right isometric ccordinates of the isometric rectangle      |
+| left            | number               | 0             | Sets the left isometric ccordinates of the isometric rectangle       |
+| top             | number               | 0             | Sets the top isometric ccordinates of the isometric rectangle        |
 | planeView       | PlaneView (`string`) | -             | Sets the plane view in which the isometric rectangle will be created |
 | fillColor       | string               | "white"       | Sets the fill color of the isometric rectangle                       |
 | fillOpacity     | number               | 1             | Sets the fill opacity of the isometric rectangle                     |
@@ -485,6 +626,9 @@ removeEventListener(type, listener, [useCapture])
 | --------------- | ------------------ | ------------------------------------------------------------------------ |
 | height          | number             | Gets and sets the height of the isometric rectangle                      |
 | width           | number             | Gets and sets the width of the isometric rectangle                       |
+| right           | number             | Sets the right isometric ccordinates of the isometric rectangle          |
+| left            | number             | Sets the left isometric ccordinates of the isometric rectangle           |
+| top             | number             | Sets the top isometric ccordinates of the isometric rectangle            |
 | planeView       | string             | Gets and sets the plane view in which the isometric rectangle is created |
 | fillColor       | string             | Gets and sets the fill color of the isometric rectangle                  |
 | fillOpacity     | number             | Gets and sets the fill opacity of the isometric rectangle                |
@@ -518,6 +662,9 @@ const path = new IsometricCircle(properties);
 | Property        | Type                 | Default value        | Description                                                       |
 | --------------- | -------------------- | -------------------- | ----------------------------------------------------------------- |
 | radius          | number               | -                    | Sets the radius of the isometric circle                           |
+| right           | number               | 0                    | Sets the right isometric ccordinates of the isometric circle      |
+| left            | number               | 0                    | Sets the left isometric ccordinates of the isometric circle       |
+| top             | number               | 0                    | Sets the top isometric ccordinates of the isometric circle        |
 | planeView       | PlaneView (`string`) | -                    | Sets the plane view in which the isometric circle will be created |
 | fillColor       | string               | "white"              | Sets the fill color of the isometric circle                       |
 | fillOpacity     | number               | 1                    | Sets the fill opacity of the isometric circle                     |
@@ -697,6 +844,9 @@ removeEventListener(type, listener, [useCapture])
 | Property        | Type               | Description                                                           |
 | --------------- | ------------------ | --------------------------------------------------------------------- |
 | radius          | number             | Gets and sets the radius of the isometric circle                      |
+| right           | number             | Sets the right isometric ccordinates of the isometric circle          |
+| left            | number             | Sets the left isometric ccordinates of the isometric circle           |
+| top             | number             | Sets the top isometric ccordinates of the isometric circle            |
 | planeView       | string             | Gets and sets the plane view in which the isometric circle is created |
 | fillColor       | string             | Gets and sets the fill color of the isometric circle                  |
 | fillOpacity     | number             | Gets and sets the fill opacity of the isometric circle                |

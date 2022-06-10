@@ -323,7 +323,7 @@ export abstract class IsometricElement extends IsometricStore {
         return this.pattern;
     }
 
-    public updateTexture(value: Partial<Texture>) {
+    public updateTexture(value: Partial<Texture>): IsometricElement {
         const hasTexture = !!this.props.texture;
         if (hasTexture || value.url) {            
             const { shift, rotation, ...newProps } = value;
@@ -349,6 +349,7 @@ export abstract class IsometricElement extends IsometricStore {
                 this.update();
             }
         }
+        return this;
     }
 
     public addAnimation(animation: SVGAnimation): IsometricElement {

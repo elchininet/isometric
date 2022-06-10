@@ -15,7 +15,8 @@ import {
     addSVGProperties,
     getTextureCorner,
     getSVGPath,
-    translateCommandPoints
+    translateCommandPoints,
+    elementHasSVGParent
 } from '@utils/svg';
 import { IsometricRectangleProps } from './types';
 
@@ -133,7 +134,7 @@ export class IsometricRectangle extends IsometricShape {
     }
 
     public update(): IsometricRectangle {
-        if (this.element.parentNode) {
+        if (elementHasSVGParent(this.element)) {
             const commands = this.getCommands({
                 right: this.right,
                 left: this.left,

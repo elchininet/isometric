@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.3.0] - 2022-06-10
+
+- Create a new class to group elements and move them together (`IsometricGroup`)
+- The abstract class `IsometricGraphic` has been renamed to `IsometricElement`
+- A new abstract class has been created (`IsometricContainer`). At the moment, `IsometricCanvas` and `IsometricGroup` extend from it
+
 ## [3.2.1] - 2022-04-15
 
 - Bundle the types of the package in a single file

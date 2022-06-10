@@ -1,6 +1,6 @@
 export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricPath } = IsometricModule;
+    const { IsometricCanvas, IsometricGroup, IsometricPath } = IsometricModule;
 
     const isometric = new IsometricCanvas({
         container,
@@ -22,10 +22,28 @@ export default ( IsometricModule, container ) => {
     bottomR.mt(1, 0, .5).lt(1, 0, 0).lt(1, 1, 0).lt(1, 1, .5);
     bottomL.mt(1, 1, .5).lt(1, 1, 0).lt(0, 1, 0).lt(0, 1, .5);
 
-    topT.mt(.25, .25, 1.25).lt(.75, .25, 1.25).lt(.75, .75, 1).lt(.25, .75, 1);
-    topR.mt(.75, .25, 1.25).lt(.75, .75, 1).lt(.75, .75, .5).lt(.75, .25, .5);
-    topL.mt(.75, .75, 1).lt(.25, .75, 1).lt(.25, .75, .5).lt(.75, .75, .5);
+    topT.mt(.25, .25, 1).lt(.75, .25, 1).lt(.75, .75, .75).lt(.25, .75, .75);
+    topR.mt(.75, .25, 1).lt(.75, .75, .75).lt(.75, .75, .25).lt(.75, .25, .25);
+    topL.mt(.75, .75, .75).lt(.25, .75, .75).lt(.25, .75, .25).lt(.75, .75, .25);
 
-    isometric.addChildren(bottomT, bottomR, bottomL, topT, topR, topL);
+    const bottomPiece = new IsometricGroup();
+    const topPiece = new IsometricGroup();
+    topPiece.top = .25;
+
+    bottomPiece.addChildren(bottomT, bottomR, bottomL);
+    topPiece.addChildren(topT, topR, topL);
+
+    let flip = true;
+
+    topPiece.addEventListener('click', function() {
+        if (this.right) {
+            this.right = 0;
+            return;
+        }
+        this.right = flip ? 0.25 : -0.25;
+        flip = !flip;     
+    });
+
+    isometric.addChildren(bottomPiece, topPiece);
 
 };
