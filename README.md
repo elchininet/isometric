@@ -237,6 +237,52 @@ removeChildByIndex(index)
 | index           | number        |
 
 ```javascript
+setChildIndex(child, index)
+```
+>Change the index of a child of the isometric canvas. This method also changes the index of the native elements inside the SVG.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| index           | number        |
+
+```javascript
+bringChildToFront(child)
+```
+>Change the index of a child of the isometric canvas bringing it to the front of the rest of the children. This method also changes the index of the native elements inside the SVG.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+sendChildToBack(child)
+```
+>Change the index of a child of the isometric canvas sending it to the back of the rest of the children. This method also changes the index of the native elements inside the SVG.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+bringChildForward(child)
+```
+>Change the index of a child of the isometric canvas bringing it to the front of the child above it. This method also changes the index of the native elements inside the SVG.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+sendChildBackward(child)
+```
+>Change the index of a child of the isometric canvas sending it to the back of the child below it. This method also changes the index of the native elements inside the SVG.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
 update()
 ```
 >Updates the entire isometric canvas and its children
@@ -290,6 +336,7 @@ removeEventListener(type, callback, [useCapture])
 | scale           | number   | Gets and sets the multiplier scale of the isometric canvas        |
 | height          | number   | Gets and sets the height of the isometric canvas                  |
 | width           | number   | Gets and sets the width of the isometric canvas                   |
+| children        | array    | Gets an array of the isometric canvas children elements           |
 | animated        | boolean  | Gets if the SVG is animations are paused or are running           |
 
 </p>
@@ -376,6 +423,52 @@ removeChildByIndex(index)
 | index           | number        |
 
 ```javascript
+setChildIndex(child, index)
+```
+>Change the index of a child of the isometric group. This method also changes the index of the native elements inside the `g` element.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| index           | number        |
+
+```javascript
+bringChildToFront(child)
+```
+>Change the index of a child of the isometric group bringing it to the front of the rest of the children. This method also changes the index of the native elements inside the `g` element.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+sendChildToBack(child)
+```
+>Change the index of a child of the isometric group sending it to the back of the rest of the children. This method also changes the index of the native elements inside the `g` element.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+bringChildForward(child)
+```
+>Change the index of a child of the isometric group bringing it to the front of the child above it. This method also changes the index of the native elements inside the `g` element.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
+sendChildBackward(child)
+```
+>Change the index of a child of the isometric group sending it to the back of the child below it. This method also changes the index of the native elements inside the `g` element.
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+
+```javascript
 update()
 ```
 >Updates the entire isometric group and its children
@@ -418,6 +511,7 @@ removeEventListener(type, callback, [useCapture])
 | right           | number   | Gets and sets the right isometric ccordinates of the isometric group |
 | left            | number   | Gets and sets the left isometric ccordinates of the isometric group  |
 | top             | number   | Gets and sets the top isometric ccordinates of the isometric group   |
+| children        | array    | Gets an array of the isometric group children elements               |
 
 </p>
 </details>

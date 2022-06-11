@@ -11,7 +11,7 @@ import {
 import { IsometricStore } from '@classes/abstract/IsometricStore';
 import { IsometricElement } from '@classes/abstract/IsometricElement';
 
-type IsometricChildren = IsometricElement | IsometricContainer;
+type IsometricChild = IsometricElement | IsometricContainer;
 
 export class IsometricContainer extends IsometricStore {
 
@@ -23,10 +23,18 @@ export class IsometricContainer extends IsometricStore {
     }
 
     protected element: SVGElement;
-    protected _children: IsometricChildren[];
+    protected _children: IsometricChild[];
     protected listeners: Listener[];
 
-    protected removeSVGChild(child: IsometricChildren): void {
+    private getChildIndex(child: IsometricChild): number {
+        return this._children.indexOf(child);
+    }
+
+    private throwChildError() {
+        throw new Error('You cannot provide a child that is not a children of the container');
+    }
+
+    protected removeSVGChild(child: IsometricChild): void {
         const svgChild = child.getElement();
         if (child instanceof IsometricElement) {
             const svgPatternChild = child.getPattern();
@@ -47,14 +55,14 @@ export class IsometricContainer extends IsometricStore {
 
     protected updateChildren(): void {
         if (elementHasSVGParent(this.element)) {
-            this._children.forEach((child: IsometricChildren): void => {
+            this._children.forEach((child: IsometricChild): void => {
                 child.data = this.data;
                 child.update();
             });
         }
     }
 
-    public get children(): IsometricChildren[] {
+    public get children(): IsometricChild[] {
         return this._children;
     }
 
@@ -67,7 +75,7 @@ export class IsometricContainer extends IsometricStore {
         return this;
     }
 
-    public addChild(child: IsometricChildren): IsometricContainer {
+    public addChild(child: IsometricChild): IsometricContainer {
         child.data = this.data;
         this._children.push(child);
         if (child instanceof IsometricElement) {
@@ -78,22 +86,29 @@ export class IsometricContainer extends IsometricStore {
         return this;
     }
 
-    public addChildren(...children: IsometricChildren[]): IsometricContainer {
-        children.forEach((child: IsometricChildren) => this.addChild(child));
+    public addChildren(...children: IsometricChild[]): IsometricContainer {
+        children.forEach((child: IsometricChild) => this.addChild(child));
         return this;
     }
 
-    public removeChild(child: IsometricChildren): IsometricContainer {
-        const index = this._children.indexOf(child);
-        if (index >= 0) {
-            this._children.splice(index, 1);
+    public removeChild(child: IsometricChild): IsometricContainer {
+        const childIndex = this.getChildIndex(child);
+        if (childIndex > -1) {
+            this._children.splice(childIndex, 1);
             this.removeSVGChild(child);
+            return this;
         }
-        return this;
+        this.throwChildError();
     }
 
-    public removeChildren(...children: IsometricChildren[]): IsometricContainer {
-        children.forEach((child: IsometricChildren) => this.removeChild(child));
+    public removeChildren(...children: IsometricChild[]): IsometricContainer {
+        children.forEach((child: IsometricChild) => {
+            const childIndex = this.getChildIndex(child);
+            if (childIndex === -1) {
+                this.throwChildError();
+            }
+            this.removeChild(child);
+        });
         return this;
     }
 
@@ -105,9 +120,73 @@ export class IsometricContainer extends IsometricStore {
         return this;
     }
 
+    public setChildIndex(child: IsometricChild, index: number): IsometricContainer {
+        const childIndex = this.getChildIndex(child);
+        if (childIndex > -1) {
+            index = Math.min(Math.max(0, index), this._children.length - 1);
+            const movedElement = child.getElement();
+            const replacedElement = this._children[index].getElement();
+            if (this._children[index] !== child) {
+                this._children.splice(childIndex, 1);
+                this._children.splice(index, 0, child);
+                if (childIndex > index) {
+                    this.element.insertBefore(movedElement, replacedElement);
+                } else {
+                    if (replacedElement.nextSibling) {
+                        this.element.insertBefore(movedElement, replacedElement.nextSibling);
+                    } else {
+                        this.element.appendChild(movedElement);
+                    }
+                }
+            }
+            return this;
+        }        
+        this.throwChildError();        
+    }
+
+    public bringChildToFront(child: IsometricChild): IsometricContainer {
+        const childIndex = this.getChildIndex(child);
+        if (childIndex > -1) {
+            this.setChildIndex(child, this._children.length - 1);
+            return this;
+        }
+        this.throwChildError();
+    }
+
+    public bringChildForward(child: IsometricChild): IsometricContainer {
+        const childIndex = this.getChildIndex(child);
+        if (childIndex > -1) {
+            if (childIndex < this._children.length - 1) {
+                this.setChildIndex(child, childIndex + 1);
+            }
+            return this;
+        }
+        this.throwChildError();
+    }
+
+    public sendChildToBack(child: IsometricChild): IsometricContainer {
+        const childIndex = this.getChildIndex(child);
+        if (childIndex > -1) {
+            this.setChildIndex(child, 0);
+            return this;
+        }
+        this.throwChildError();
+    }
+
+    public sendChildBackward(child: IsometricChild): IsometricContainer {
+        const childIndex = this.getChildIndex(child);
+        if (childIndex > -1) {
+            if (childIndex > 0) {
+                this.setChildIndex(child, childIndex - 1);
+            }
+            return this;
+        }
+        this.throwChildError();
+    }
+
     public clear(): IsometricContainer {
         const children = this._children.splice(0);
-        children.forEach((child: IsometricChildren): void => {
+        children.forEach((child: IsometricChild): void => {
             this.removeSVGChild(child);
         });
         return this;
