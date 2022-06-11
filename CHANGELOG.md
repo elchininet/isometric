@@ -1,6 +1,6 @@
 # Changelog
 
-## [3.3.1] - 2022-06-11
+## [3.4.0] - 2022-06-11
 
 - Add new methods to the `IsometricContainer` class to modify children indexes
 - `removeChild` and `removeChildren` methods of the `IsometricContainer` class now throws an error if a child that is not a container‘s child is provided
