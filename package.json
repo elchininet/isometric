@@ -1,6 +1,6 @@
 {
   "name": "@elchininet/isometric",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "A JavaScript library written in TypeScript to create isometric projections using SVGs",
   "main": "index.js",
   "module": "esm/index.js",
