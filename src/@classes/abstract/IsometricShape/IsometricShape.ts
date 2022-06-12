@@ -1,9 +1,9 @@
 import { IsometricPlaneView } from '@types';
 import { SVG_ELEMENTS } from '@constants';
-import { IsometricElement } from '@classes/abstract/IsometricElement';
+import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import { IsometricShapeProps } from './types';
 
-export abstract class IsometricShape extends IsometricElement {
+export abstract class IsometricShape extends IsometricGraphic {
 
     public constructor(props: IsometricShapeProps) {
         const { planeView, right = 0, left = 0, top = 0, ...rest } = props;
