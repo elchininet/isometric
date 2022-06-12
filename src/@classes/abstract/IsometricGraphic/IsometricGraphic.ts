@@ -315,7 +315,7 @@ export abstract class IsometricGraphic extends IsometricElement {
         return this.pattern;
     }
 
-    public updateTexture(value: Partial<Texture>): IsometricGraphic {
+    public updateTexture(value: Partial<Texture>): this {
         const hasTexture = !!this.props.texture;
         if (hasTexture || value.url) {            
             const { shift, rotation, ...newProps } = value;
@@ -344,13 +344,13 @@ export abstract class IsometricGraphic extends IsometricElement {
         return this;
     }
 
-    public addAnimation(animation: SVGAnimation): IsometricGraphic {
+    public addAnimation(animation: SVGAnimation): this {
         this.animations.push({ ...animation });
         this.update();
         return this;
     }
 
-    public removeAnimationByIndex(index: number): IsometricGraphic {
+    public removeAnimationByIndex(index: number): this {
 
         if (index >= 0 && index < this.animations.length) {
 
@@ -366,7 +366,7 @@ export abstract class IsometricGraphic extends IsometricElement {
 
     }
 
-    public removeAnimations(): IsometricGraphic {
+    public removeAnimations(): this {
 
         const animations = this.animations.splice(0);
 

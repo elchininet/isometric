@@ -133,7 +133,7 @@ export class IsometricRectangle extends IsometricShape {
         });
     }
 
-    public update(): IsometricRectangle {
+    public update(): this {
         if (elementHasSVGParent(this.element)) {
             const commands = this.getCommands({
                 right: this.right,
@@ -166,7 +166,7 @@ export class IsometricRectangle extends IsometricShape {
         return this;
     }
 
-    public clear(): IsometricRectangle {
+    public clear(): this {
         addSVGProperties(this.element, {
             d: ''
         });
@@ -211,16 +211,8 @@ export class IsometricRectangle extends IsometricShape {
         this.update();
     }
 
-    public addAnimation(animation: SVGRectangleAnimation): IsometricRectangle {
-        return super.addAnimation(animation) as IsometricRectangle;
-    }
-
-    public removeAnimationByIndex(index: number): IsometricRectangle {
-        return super.removeAnimationByIndex(index) as IsometricRectangle;
-    }
-
-    public removeAnimations(): IsometricRectangle {
-        return super.removeAnimations() as IsometricRectangle;
+    public addAnimation(animation: SVGRectangleAnimation): this {
+        return super.addAnimation(animation);
     }
 
 }

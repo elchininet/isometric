@@ -23,19 +23,19 @@ export abstract class IsometricElement extends IsometricStore {
     protected element: SVGElement;
     protected listeners: Listener[];
 
-    public abstract update(): IsometricElement;
-    public abstract clear(): IsometricElement;
+    public abstract update(): this;
+    public abstract clear(): this;
 
     public getElement(): SVGElement {
         return this.element;
     }
 
-    public addEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricElement {
+    public addEventListener(event: string, callback: VoidFunction, useCapture = false): this {
         addEventListenerToElement.call(this, this.element, this.listeners, event, callback, useCapture);
         return this;
     }
 
-    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): IsometricElement {
+    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): this {
         removeEventListenerFromElement(this.element, this.listeners, event, callback, useCapture);
         return this;
     }

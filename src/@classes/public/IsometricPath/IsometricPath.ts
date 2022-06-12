@@ -79,7 +79,7 @@ export class IsometricPath extends IsometricGraphic {
         this.update();
     }
 
-    public update(): IsometricPath {
+    public update(): this {
         if (elementHasSVGParent(this.element)) {
             const corner = getTextureCorner(
                 this.commands,
@@ -102,7 +102,7 @@ export class IsometricPath extends IsometricGraphic {
         return this;
     }
 
-    public clear(): IsometricPath {
+    public clear(): this {
         this.commands.splice(0);
         addSVGProperties(this.element, {
             d: ''
@@ -169,16 +169,8 @@ export class IsometricPath extends IsometricGraphic {
         return this;  
     }
 
-    public addAnimation(animation: SVGPathAnimation): IsometricPath {
-        return super.addAnimation(animation) as IsometricPath;
-    }
-
-    public removeAnimationByIndex(index: number): IsometricPath {
-        return super.removeAnimationByIndex(index) as IsometricPath;
-    }
-
-    public removeAnimations(): IsometricPath {
-        return super.removeAnimations() as IsometricPath;
+    public addAnimation(animation: SVGPathAnimation): this {
+        return super.addAnimation(animation);
     }
 
 }
