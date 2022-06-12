@@ -163,7 +163,7 @@ export class IsometricCircle extends IsometricShape {
 
     }
 
-    public update(): IsometricCircle {
+    public update(): this {
         if (elementHasSVGParent(this.element)) {
             const commands = this.getCommands({
                 right: this.right,
@@ -195,7 +195,7 @@ export class IsometricCircle extends IsometricShape {
         return this;
     }
 
-    public clear(): IsometricCircle {
+    public clear(): this {
         addSVGProperties(this.element, {
             d: ''
         });
@@ -231,16 +231,8 @@ export class IsometricCircle extends IsometricShape {
         this.update();
     }
 
-    public addAnimation(animation: SVGCircleAnimation): IsometricCircle {
-        return super.addAnimation(animation) as IsometricCircle;
-    }
-
-    public removeAnimationByIndex(index: number): IsometricCircle {
-        return super.removeAnimationByIndex(index) as IsometricCircle;
-    }
-
-    public removeAnimations(): IsometricCircle {
-        return super.removeAnimations() as IsometricCircle;
+    public addAnimation(animation: SVGCircleAnimation): this {
+        return super.addAnimation(animation);
     }
 
 }

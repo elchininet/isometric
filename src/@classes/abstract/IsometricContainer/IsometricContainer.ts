@@ -55,12 +55,12 @@ export class IsometricContainer extends IsometricElement {
         return this._children;
     }
 
-    public update(): IsometricContainer {
+    public update(): this {
         this.updateChildren();
         return this;
     }
 
-    public clear(): IsometricContainer {
+    public clear(): this {
         const children = this._children.splice(0);
         children.forEach((child: IsometricElement): void => {
             this.removeSVGChild(child);
@@ -68,7 +68,7 @@ export class IsometricContainer extends IsometricElement {
         return this;
     }
 
-    public addChild(child: IsometricElement): IsometricContainer {
+    public addChild(child: IsometricElement): this {
         child.data = this.data;
         this._children.push(child);
         if (child instanceof IsometricGraphic) {
@@ -79,12 +79,12 @@ export class IsometricContainer extends IsometricElement {
         return this;
     }
 
-    public addChildren(...children: IsometricElement[]): IsometricContainer {
+    public addChildren(...children: IsometricElement[]): this {
         children.forEach((child: IsometricElement) => this.addChild(child));
         return this;
     }
 
-    public removeChild(child: IsometricElement): IsometricContainer {
+    public removeChild(child: IsometricElement): this {
         const childIndex = this.getChildIndex(child);
         if (childIndex > -1) {
             this._children.splice(childIndex, 1);
@@ -94,7 +94,7 @@ export class IsometricContainer extends IsometricElement {
         this.throwChildError();
     }
 
-    public removeChildren(...children: IsometricElement[]): IsometricContainer {
+    public removeChildren(...children: IsometricElement[]): this {
         children.forEach((child: IsometricElement) => {
             const childIndex = this.getChildIndex(child);
             if (childIndex === -1) {
@@ -105,7 +105,7 @@ export class IsometricContainer extends IsometricElement {
         return this;
     }
 
-    public removeChildByIndex(index: number): IsometricContainer {
+    public removeChildByIndex(index: number): this {
         if (index >= 0 && index < this._children.length) {
             const [ child ] = this._children.splice(index, 1);
             this.removeSVGChild(child);
@@ -113,7 +113,7 @@ export class IsometricContainer extends IsometricElement {
         return this;
     }
 
-    public setChildIndex(child: IsometricElement, index: number): IsometricContainer {
+    public setChildIndex(child: IsometricElement, index: number): this {
         const childIndex = this.getChildIndex(child);
         if (childIndex > -1) {
             index = Math.min(Math.max(0, index), this._children.length - 1);
@@ -137,7 +137,7 @@ export class IsometricContainer extends IsometricElement {
         this.throwChildError();        
     }
 
-    public bringChildToFront(child: IsometricElement): IsometricContainer {
+    public bringChildToFront(child: IsometricElement): this {
         const childIndex = this.getChildIndex(child);
         if (childIndex > -1) {
             this.setChildIndex(child, this._children.length - 1);
@@ -146,7 +146,7 @@ export class IsometricContainer extends IsometricElement {
         this.throwChildError();
     }
 
-    public bringChildForward(child: IsometricElement): IsometricContainer {
+    public bringChildForward(child: IsometricElement): this {
         const childIndex = this.getChildIndex(child);
         if (childIndex > -1) {
             if (childIndex < this._children.length - 1) {
@@ -157,7 +157,7 @@ export class IsometricContainer extends IsometricElement {
         this.throwChildError();
     }
 
-    public sendChildToBack(child: IsometricElement): IsometricContainer {
+    public sendChildToBack(child: IsometricElement): this {
         const childIndex = this.getChildIndex(child);
         if (childIndex > -1) {
             this.setChildIndex(child, 0);
@@ -166,7 +166,7 @@ export class IsometricContainer extends IsometricElement {
         this.throwChildError();
     }
 
-    public sendChildBackward(child: IsometricElement): IsometricContainer {
+    public sendChildBackward(child: IsometricElement): this {
         const childIndex = this.getChildIndex(child);
         if (childIndex > -1) {
             if (childIndex > 0) {
