@@ -7,7 +7,7 @@ import {
     SVGPathAnimation,
     SVGAnimationObject
 } from '@types';
-import { IsometricElement } from '@classes/abstract/IsometricElement';
+import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import {
     addSVGProperties,
     parseDrawCommands,
@@ -17,7 +17,7 @@ import {
 } from '@utils/svg';
 import { IsometricPathProps } from './types';
 
-export class IsometricPath extends IsometricElement {
+export class IsometricPath extends IsometricGraphic {
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
     /* istanbul ignore next */

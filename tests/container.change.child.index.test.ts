@@ -4,7 +4,7 @@ import {
     IsometricRectangle,
     IsometricCircle,
     IsometricPath,
-    IsometricElementProps,
+    IsometricGraphicProps,
     PlaneView
 } from '../src';
 
@@ -34,7 +34,7 @@ describe('Test changing container‘s child index', (): void => {
         container = document.createElement('div');
         document.body.appendChild(container);
 
-        const commonProps: IsometricElementProps = {
+        const commonProps: IsometricGraphicProps = {
             fillColor: '#FFF',
             fillOpacity: 0.5,
             strokeColor: '#000',
