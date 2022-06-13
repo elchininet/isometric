@@ -1,77 +1,82 @@
 import { IsometricPlaneView } from '@types';
-import { SVG_ELEMENTS } from '@constants';
+import {
+    SVG_ELEMENTS,
+    Typeof
+} from '@constants';
+import { addSVGProperties } from '@utils/svg';
 import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import { IsometricShapeProps } from './types';
 
 export abstract class IsometricShape extends IsometricGraphic {
 
+    // Exclude the next constructor from the coverage reports
+    // Check https://github.com/microsoft/TypeScript/issues/13029
+    /* istanbul ignore next */
     public constructor(props: IsometricShapeProps) {
-        const { planeView, right = 0, left = 0, top = 0, ...rest } = props;
-        // Exclude the next line from the coverage reports
-        // Check https://github.com/microsoft/TypeScript/issues/13029
-        /* istanbul ignore next */
-        super(rest, SVG_ELEMENTS.path);
-        this.shapeView = planeView;
-        this.posRight = right;
-        this.posLeft = left;
-        this.posTop = top;
+        super(props, SVG_ELEMENTS.path);
+        if (typeof this.props.right === Typeof.UNDEFINED) {
+            this.props.right = 0;
+        }
+        if (typeof this.props.left === Typeof.UNDEFINED) {
+            this.props.left = 0;
+        }
+        if (typeof this.props.top === Typeof.UNDEFINED) {
+            this.props.top = 0;
+        }
     }
     
-    protected shapeView: IsometricPlaneView;
-    protected posRight: number;
-    protected posLeft: number;
-    protected posTop: number;
+    protected override props: IsometricShapeProps;
 
-    // position
-    protected setPlaneView(value: IsometricPlaneView): void {
-        this.shapeView = value;
+    public update(): this {
+        this.updateGraphic(this.planeView);
+        return this;
     }
 
+    public clear(): this {
+        addSVGProperties(this.element, {
+            d: ''
+        });
+        return this;
+    }
+
+    // planeView
     public get planeView(): IsometricPlaneView {
-        return this.shapeView;
+        return this.props.planeView;
     }
 
     public set planeView(value: IsometricPlaneView) {
-        this.setPlaneView(value);
+        this.props.planeView = value;
+        this.update();
     }
 
     // right
-    protected setRight(value: number): void {
-        this.posRight = value;
-    }
-
     public get right(): number {
-        return this.posRight;
+        return this.props.right;
     }
 
     public set right(value: number) {
-        this.setRight(value);
+        this.props.right = value;
+        this.update();
     }
 
     // left
-    protected setLeft(value: number): void {
-        this.posLeft = value;
-    }
-
     public get left(): number {
-        return this.posLeft;
+        return this.props.left;
     }
 
     public set left(value: number) {
-        this.setLeft(value);
+        this.props.left = value;
+        this.update();
     }
 
     // top
-    protected setTop(value: number): void {
-        this.posTop = value;
-    }
-
     public get top(): number {
-        return this.posTop;
+        return this.props.top;
     }
 
     public set top(value: number) {
-        this.setTop(value);
+        this.props.top = value;
+        this.update();
     }
 
 }

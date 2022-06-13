@@ -6,10 +6,10 @@ import {
     DEFAULT_HEIGHT,
     Colors
 } from '@constants';
-import { IsometricContainer } from '@classes/abstract/IsometricContainer';
-import { IsometricCanvasProps } from './types';
 import { addSVGProperties } from '@utils/svg';
 import { Store } from '@store';
+import { IsometricContainer } from '@classes/abstract/IsometricContainer';
+import { IsometricCanvasProps } from './types';
 
 const defaultProps: IsometricCanvasProps = {
     container: 'body',
@@ -84,7 +84,7 @@ export class IsometricCanvas extends IsometricContainer {
 
     public set scale(value: number) {
         this.data.scale = value;
-        this.updateChildren();
+        this.update();
     }
 
     public get height(): number {
@@ -100,7 +100,7 @@ export class IsometricCanvas extends IsometricContainer {
         addSVGProperties(this.background, {
             height: `${this.data.height}px`
         });
-        this.updateChildren();
+        this.update();
     }
 
     public get width(): number {
@@ -116,7 +116,7 @@ export class IsometricCanvas extends IsometricContainer {
         addSVGProperties(this.background, {
             width: `${this.data.width}px`
         });
-        this.updateChildren();
+        this.update();
     }
 
     public get animated(): boolean {

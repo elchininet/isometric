@@ -66,3 +66,7 @@ export enum Axis {
     LEFT = 'LEFT',
     TOP = 'TOP'
 }
+
+export enum Typeof {
+    UNDEFINED = 'undefined'
+}

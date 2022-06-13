@@ -42,21 +42,17 @@ export class IsometricContainer extends IsometricElement {
         }
     }
 
-    protected updateChildren(): void {
+    public get children(): IsometricElement[] {
+        return this._children;
+    }
+
+    public update(): this {
         if (elementHasSVGParent(this.element)) {
             this._children.forEach((child: IsometricElement): void => {
                 child.data = this.data;
                 child.update();
             });
         }
-    }
-
-    public get children(): IsometricElement[] {
-        return this._children;
-    }
-
-    public update(): this {
-        this.updateChildren();
         return this;
     }
 

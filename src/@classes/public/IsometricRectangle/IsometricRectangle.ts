@@ -4,29 +4,22 @@ import {
 } from '@constants';
 import {
     LinePoint,
-    IsometricPlaneView,
+    CommandPoint,
     SVGShapeProperties,
     SVGRectangleProperties,
     SVGRectangleAnimation,
     SVGAnimationObject
 } from '@types';
-import { IsometricShape } from '@classes/abstract/IsometricShape';
 import {
     addSVGProperties,
-    getTextureCorner,
     getSVGPath,
-    translateCommandPoints,
-    elementHasSVGParent
+    translateCommandPoints
 } from '@utils/svg';
-import { IsometricRectangleProps } from './types';
-
-interface GetRectanglePathArguments {
-    right: number;
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-}
+import { IsometricShape } from '@classes/abstract/IsometricShape';
+import {
+    IsometricRectangleProps,
+    GetRectanglePathArguments
+} from './types';
 
 export class IsometricRectangle extends IsometricShape {
 
@@ -36,15 +29,19 @@ export class IsometricRectangle extends IsometricShape {
         // Check https://github.com/microsoft/TypeScript/issues/13029
         /* istanbul ignore next */
         super(rest);
-        this.rectWidth = width;
-        this.rectHeight = height;
+        this._width = width;
+        this._height = height;
     }
 
-    private rectWidth: number;
-    private rectHeight: number;
+    private _width: number;
+    private _height: number;
 
-    private getCommands(args: GetRectanglePathArguments): LinePoint[] {
-        const { right, left, top, width, height } = args;
+    protected getCommands(args?: GetRectanglePathArguments): CommandPoint[] {
+        const right = args?.right || this.right;
+        const left = args?.left || this.left;
+        const top = args?.top || this.top;
+        const width = args?.width || this.width;
+        const height = args?.height || this.height;
         const commands: LinePoint[] = [ {command: Command.move, point: {r: 0, l: 0, t: 0}} ];
         switch(this.planeView) {
             case PlaneView.FRONT:
@@ -133,81 +130,21 @@ export class IsometricRectangle extends IsometricShape {
         });
     }
 
-    public update(): this {
-        if (elementHasSVGParent(this.element)) {
-            const commands = this.getCommands({
-                right: this.right,
-                left: this.left,
-                top: this.top,
-                width: this.width,
-                height: this.height
-            });
-            const corner = getTextureCorner(
-                commands,
-                this.data.centerX,
-                this.data.centerY,
-                this.data.scale
-            );
-            addSVGProperties(
-                this.element,
-                {
-                    d: getSVGPath(
-                        commands,
-                        this.data.centerX,
-                        this.data.centerY,
-                        this.data.scale,
-                        true
-                    )
-                }
-            );
-            this.updatePatternTransform(corner, this.planeView);
-            this.updateAnimations();
-        }
-        return this;
-    }
-
-    public clear(): this {
-        addSVGProperties(this.element, {
-            d: ''
-        });
-        return this;
-    }
-
-    protected setPlaneView(value: IsometricPlaneView): void {
-        super.setPlaneView(value);
-        this.update();
-    }
-
-    protected setRight(value: number): void {
-        super.setRight(value);
-        this.update();
-    }
-
-    protected setLeft(value: number): void {
-        super.setLeft(value);
-        this.update();
-    }
-
-    protected setTop(value: number): void {
-        super.setTop(value);
-        this.update();
-    }
-
     public get width(): number {
-        return this.rectWidth;
+        return this._width;
     }
 
     public set width(value: number) {
-        this.rectWidth = value;
+        this._width = value;
         this.update();
     }
 
     public get height(): number {
-        return this.rectHeight;
+        return this._height;
     }
 
     public set height(value: number) {
-        this.rectHeight = value;
+        this._height = value;
         this.update();
     }
 

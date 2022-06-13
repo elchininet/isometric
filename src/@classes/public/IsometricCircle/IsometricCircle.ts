@@ -4,28 +4,21 @@ import {
 } from '@constants';
 import {
     CommandPoint,
-    IsometricPlaneView,
     SVGCircleAnimation,
     SVGShapeProperties,
     SVGCircleProperties,
     SVGAnimationObject
 } from '@types';
-import { IsometricShape } from '@classes/abstract/IsometricShape';
 import {
     addSVGProperties,
     getSVGPath,
-    getTextureCorner,
-    translateCommandPoints,
-    elementHasSVGParent
+    translateCommandPoints
 } from '@utils/svg';
-import { IsometricCircleProps } from './types';
-
-interface GetCirclePathArguments {
-    right: number;
-    left: number;
-    top: number;
-    radius: number;
-}
+import { IsometricShape } from '@classes/abstract/IsometricShape';
+import {
+    IsometricCircleProps,
+    GetCirclePathArguments
+} from './types';
 
 export class IsometricCircle extends IsometricShape {
 
@@ -35,13 +28,16 @@ export class IsometricCircle extends IsometricShape {
         // Check https://github.com/microsoft/TypeScript/issues/13029
         /* istanbul ignore next */
         super(rest);
-        this.circleRadius = radius;
+        this._radius = radius;
     }
 
-    private circleRadius: number;
+    private _radius: number;
 
-    private getCommands(args: GetCirclePathArguments): CommandPoint[] {
-        const { right, left, top, radius } = args;        
+    protected getCommands(args?: GetCirclePathArguments): CommandPoint[] {
+        const right = args?.right || this.right;
+        const left = args?.left || this.left;
+        const top = args?.top || this.top;
+        const radius = args?.radius || this.radius;
         const commands: CommandPoint[] = [];
         switch(this.planeView) {
             case PlaneView.FRONT:
@@ -162,72 +158,13 @@ export class IsometricCircle extends IsometricShape {
         });
 
     }
-
-    public update(): this {
-        if (elementHasSVGParent(this.element)) {
-            const commands = this.getCommands({
-                right: this.right,
-                left: this.left,
-                top: this.top,
-                radius: this.radius
-            });
-            const corner = getTextureCorner(
-                commands,
-                this.data.centerX,
-                this.data.centerY,
-                this.data.scale
-            );
-            addSVGProperties(
-                this.element,
-                {
-                    d: getSVGPath(
-                        commands,
-                        this.data.centerX,
-                        this.data.centerY,
-                        this.data.scale,
-                        true
-                    )
-                }
-            );
-            this.updatePatternTransform(corner, this.planeView);
-            this.updateAnimations();
-        }
-        return this;
-    }
-
-    public clear(): this {
-        addSVGProperties(this.element, {
-            d: ''
-        });
-        return this;
-    }
-
-    protected setPlaneView(value: IsometricPlaneView): void {
-        super.setPlaneView(value);
-        this.update();
-    }
-
-    protected setRight(value: number): void {
-        super.setRight(value);
-        this.update();
-    }
-
-    protected setLeft(value: number): void {
-        super.setLeft(value);
-        this.update();
-    }
-
-    protected setTop(value: number): void {
-        super.setTop(value);
-        this.update();
-    }
-
+    
     public get radius(): number {
-        return this.circleRadius;
+        return this._radius;
     }
 
     public set radius(value: number) {
-        this.circleRadius = value;
+        this._radius = value;
         this.update();
     }
 

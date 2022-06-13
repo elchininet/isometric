@@ -1,10 +1,10 @@
 import { SVG_ELEMENTS } from '@constants';
-import { IsometricContainer } from '@classes/abstract/IsometricContainer';
 import { getPointFromIsometricPoint } from '@utils/math';
 import {
     addSVGProperties,
     elementHasSVGParent
 } from '@utils/svg';
+import { IsometricContainer } from '@classes/abstract/IsometricContainer';
 import { IsometricGroupProps } from './types';
 
 const defaultProps: IsometricGroupProps = {
@@ -27,8 +27,7 @@ export class IsometricGroup extends IsometricContainer {
 
     protected props: IsometricGroupProps;
 
-    protected override updateChildren() {
-        super.updateChildren();
+    public override update(): this {
         if (elementHasSVGParent(this.element)) {            
             const point = getPointFromIsometricPoint(
                 0,
@@ -46,7 +45,8 @@ export class IsometricGroup extends IsometricContainer {
                     transform: `translate(${point.x}, ${point.y})`
                 }
             );
-        }        
+        }
+        return super.update();
     }
 
     // right
@@ -56,7 +56,7 @@ export class IsometricGroup extends IsometricContainer {
 
     public set right(value: number) {
         this.props.right = value;
-        this.updateChildren();
+        this.update();
     }
 
     // left
@@ -66,7 +66,7 @@ export class IsometricGroup extends IsometricContainer {
 
     public set left(value: number) {
        this.props.left = value;
-       this.updateChildren();
+       this.update();
     }
 
     // top
@@ -76,7 +76,7 @@ export class IsometricGroup extends IsometricContainer {
 
     public set top(value: number) {
         this.props.top = value;
-        this.updateChildren();
+        this.update();
     }
 
 }

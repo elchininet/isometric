@@ -2,9 +2,12 @@ import {
     Colors,
     LineCap,
     LineJoin,
-    DECIMALS
+    DECIMALS,
+    SVG_NAMESPACE,
+    SVG_ELEMENTS
 } from '@constants';
 import {
+    CommandPoint,
     IsometricPoint,
     IsometricPlaneView,
     StrokeLinecap, 
@@ -14,13 +17,12 @@ import {
     Texture
 } from '@types';
 import {
-    SVG_NAMESPACE,
-    SVG_ELEMENTS
-} from '@constants';
-import {
     addSVGProperties,
     getSVGProperty,
-    getPatternTransform
+    getPatternTransform,
+    getSVGPath,
+    getTextureCorner,
+    elementHasSVGParent
 } from '@utils/svg';
 import { uuid, round, getPointFromIsometricPoint } from '@utils/math';
 import { IsometricElement } from "../IsometricElement";
@@ -122,6 +124,33 @@ export abstract class IsometricGraphic extends IsometricElement {
     protected pattern: SVGPatternElement;
     protected animations: SVGAnimationObject[];
     protected abstract privateUpdateAnimations(): void;
+    protected abstract getCommands(args?: unknown): CommandPoint[];
+
+    protected updateGraphic(planeView?: IsometricPlaneView, autoclose = true) {
+        if (elementHasSVGParent(this.element)) {
+            const commands = this.getCommands();
+            const corner = getTextureCorner(
+                commands,
+                this.data.centerX,
+                this.data.centerY,
+                this.data.scale
+            );
+            addSVGProperties(
+                this.element,
+                {
+                    d: getSVGPath(
+                        commands,
+                        this.data.centerX,
+                        this.data.centerY,
+                        this.data.scale,
+                        autoclose
+                    )
+                }
+            );
+            this.updatePatternTransform(corner, planeView);
+            this.updateAnimations();
+        }
+    }
 
     protected updateAnimations(): void {
 
