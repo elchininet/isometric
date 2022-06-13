@@ -120,7 +120,7 @@ const rotationToRotationMatrix = (view: IsometricPlaneView, rotation: Rotation):
 };
 
 export const getViewMatrix = (
-    planeView: IsometricPlaneView,
+    planeView?: IsometricPlaneView,
     rotation?: Rotation
 ): Matrix | null => {
     

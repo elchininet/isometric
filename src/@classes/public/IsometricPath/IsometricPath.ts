@@ -7,14 +7,12 @@ import {
     SVGPathAnimation,
     SVGAnimationObject
 } from '@types';
-import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import {
     addSVGProperties,
     parseDrawCommands,
-    getSVGPath,
-    getTextureCorner,
-    elementHasSVGParent
+    getSVGPath
 } from '@utils/svg';
+import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import { IsometricPathProps } from './types';
 
 export class IsometricPath extends IsometricGraphic {
@@ -70,6 +68,10 @@ export class IsometricPath extends IsometricGraphic {
 
     }
 
+    protected getCommands(): CommandPoint[] {
+        return this.commands;
+    }
+
     public get autoclose(): boolean {
         return this._autoclose;
     }
@@ -80,25 +82,7 @@ export class IsometricPath extends IsometricGraphic {
     }
 
     public update(): this {
-        if (elementHasSVGParent(this.element)) {
-            const corner = getTextureCorner(
-                this.commands,
-                this.data.centerX,
-                this.data.centerY,
-                this.data.scale
-            );
-            addSVGProperties(this.element, {
-                d: getSVGPath(
-                    this.commands,
-                    this.data.centerX,
-                    this.data.centerY,
-                    this.data.scale,
-                    this._autoclose
-                )
-            });
-            this.updatePatternTransform(corner);
-            this.updateAnimations();        
-        }
+        this.updateGraphic(undefined, this.autoclose);
         return this;
     }
 
