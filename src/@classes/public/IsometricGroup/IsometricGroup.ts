@@ -2,8 +2,15 @@ import { SVG_ELEMENTS } from '@constants';
 import { getPointFromIsometricPoint } from '@utils/math';
 import {
     addSVGProperties,
-    elementHasSVGParent
+    elementHasSVGParent,
+    getDraggableMethods
 } from '@utils/svg';
+import { Positionable } from '@interfaces/Positionable';
+import {
+    Draggable,
+    Drag,
+    DragLimit
+} from '@interfaces/Draggable';
 import { IsometricContainer } from '@classes/abstract/IsometricContainer';
 import { IsometricGroupProps } from './types';
 
@@ -13,7 +20,7 @@ const defaultProps: IsometricGroupProps = {
     top: 0
 };
 
-export class IsometricGroup extends IsometricContainer {
+export class IsometricGroup extends IsometricContainer implements Positionable, Draggable {
 
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
@@ -22,10 +29,18 @@ export class IsometricGroup extends IsometricContainer {
 
         super(SVG_ELEMENTS.group);
         this.props = { ...defaultProps, ...props };
-
+        this._dragMethods = getDraggableMethods(
+            this.element,
+            this
+        );
+        this._drag = false;
+        this._dragLimit = false;
     }
 
     protected props: IsometricGroupProps;
+    private _drag: Drag;
+    private _dragMethods: ReturnType<typeof getDraggableMethods>;
+    private _dragLimit: DragLimit;
 
     public override update(): this {
         if (elementHasSVGParent(this.element)) {            
@@ -55,8 +70,10 @@ export class IsometricGroup extends IsometricContainer {
     }
 
     public set right(value: number) {
-        this.props.right = value;
-        this.update();
+        if (this.props.right !== value) {
+            this.props.right = value;
+            this.update();
+        }        
     }
 
     // left
@@ -65,8 +82,10 @@ export class IsometricGroup extends IsometricContainer {
     }
 
     public set left(value: number) {
-       this.props.left = value;
-       this.update();
+        if (this.props.left !== value) {
+            this.props.left = value;
+            this.update();
+        }
     }
 
     // top
@@ -75,8 +94,32 @@ export class IsometricGroup extends IsometricContainer {
     }
 
     public set top(value: number) {
-        this.props.top = value;
-        this.update();
+        if (this.props.top !== value) {
+            this.props.top = value;
+            this.update();
+        }        
+    }
+
+    public get drag(): Drag {
+        return this._drag;
+    }
+
+    public set drag(value: Drag) {
+        this._drag = value;
+        this._dragMethods.stopDrag();
+        if (this._drag) {
+            this._dragMethods.updateDrag(this._drag);
+            this._dragMethods.beginDrag();
+        }
+    }
+
+    public get dragLimit(): DragLimit {
+        return this._dragLimit;
+    }
+
+    public set dragLimit(value: DragLimit) {
+        this._dragLimit = value;
+        this._dragMethods.updateDragLimit(this._dragLimit);
     }
 
 }

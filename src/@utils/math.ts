@@ -1,10 +1,14 @@
 import {
     Point,
+    Position,
     IsometricPoint,
     EllipsisSpecs,
     SinCos
 } from '@types';
-import { HSQRT3, DECIMALS } from '@constants';
+import {
+    HSQRT3,
+    DECIMALS
+} from '@constants';
 
 export const round = (n: number, d: number): number => {
     const exp = Math.pow(10, d);
@@ -64,6 +68,34 @@ export const getPointFromIsometricPoint = (
     return {
         x: round(centerX + (point.r - point.l) * scale * HSQRT3, DECIMALS),
         y: round(centerY + ((point.r + point.l) / 2 - point.t) * scale, DECIMALS)
+    };
+};
+
+export const getTopPlanePointFromCoordinates = (x: number, y: number): Omit<Position, 'top'> => {
+    const XHSQRT3 = x / HSQRT3;
+    const right = (y * 2 + XHSQRT3) / 2;
+    const left = right - XHSQRT3;
+    return {
+        right,
+        left
+    };
+};
+
+export const getFrontPlanePointFromCoordinates = (x: number, y: number): Omit<Position, 'right'> => {
+    const left = - x / HSQRT3;
+    const top = left / 2 - y;
+    return {
+        left,
+        top
+    };
+};
+
+export const getSidePlanePointFromCoordinates = (x: number, y: number): Omit<Position, 'left'> => {
+    const right = x / HSQRT3;
+    const top = right / 2 - y;
+    return {
+        right,
+        top
     };
 };
 

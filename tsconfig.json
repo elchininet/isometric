@@ -14,7 +14,8 @@
             "@types": ["@types"],
             "@constants": ["@constants"],
             "@utils/*": ["@utils/*"],
-            "@classes/*": ["@classes/*"]
+            "@classes/*": ["@classes/*"],
+            "@interfaces/*": ["@interfaces/*"]
         }
     },
     "include": ["src/**/*.ts"],
