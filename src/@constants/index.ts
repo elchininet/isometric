@@ -68,5 +68,6 @@ export enum Axis {
 }
 
 export enum Typeof {
-    UNDEFINED = 'undefined'
+    UNDEFINED = 'undefined',
+    NUMBER = 'number'
 }

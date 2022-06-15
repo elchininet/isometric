@@ -54,3 +54,9 @@ export interface Texture {
     rotation?: Rotation;
     pixelated?: boolean;
 }
+
+export interface Position {
+    right: number;
+    left: number;
+    top: number;
+};

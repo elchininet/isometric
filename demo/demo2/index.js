@@ -27,12 +27,14 @@ export default ( IsometricModule, container ) => {
     };
 
     const topPiece = new IsometricPath();
-    const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
-    const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+    const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT, right: 1});
+    const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE, left: 1});
 
-    topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
-    rightPiece.right = 1;
-    leftPiece.left = 1;
+    topPiece
+        .moveTo(0, 0, 1)
+        .lineTo(1, 0, 1)
+        .lineTo(1, 1, 1)
+        .lineTo(0, 1, 1);
 
     topPiece
         .addAnimation({

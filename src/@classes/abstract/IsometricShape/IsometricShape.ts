@@ -3,11 +3,20 @@ import {
     SVG_ELEMENTS,
     Typeof
 } from '@constants';
-import { addSVGProperties } from '@utils/svg';
+import {
+    addSVGProperties,
+    getDraggableMethods
+} from '@utils/svg';
+import { Positionable } from '@interfaces/Positionable';
+import {
+    Draggable,
+    Drag,
+    DragLimit
+} from '@interfaces/Draggable';
 import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
 import { IsometricShapeProps } from './types';
 
-export abstract class IsometricShape extends IsometricGraphic {
+export abstract class IsometricShape extends IsometricGraphic implements Positionable, Draggable {
 
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
@@ -23,9 +32,18 @@ export abstract class IsometricShape extends IsometricGraphic {
         if (typeof this.props.top === Typeof.UNDEFINED) {
             this.props.top = 0;
         }
+        this._dragMethods = getDraggableMethods(
+            this.element,
+            this
+        );
+        this._drag = false;
+        this._dragLimit = false;
     }
     
     protected override props: IsometricShapeProps;
+    private _drag: Drag;
+    private _dragMethods: ReturnType<typeof getDraggableMethods>;
+    private _dragLimit: DragLimit;
 
     public update(): this {
         this.updateGraphic(this.planeView);
@@ -55,8 +73,10 @@ export abstract class IsometricShape extends IsometricGraphic {
     }
 
     public set right(value: number) {
-        this.props.right = value;
-        this.update();
+        if (this.props.right !== value) {
+            this.props.right = value;
+            this.update();
+        }        
     }
 
     // left
@@ -65,8 +85,10 @@ export abstract class IsometricShape extends IsometricGraphic {
     }
 
     public set left(value: number) {
-        this.props.left = value;
-        this.update();
+        if (this.props.left !== value) {
+            this.props.left = value;
+            this.update();
+        }
     }
 
     // top
@@ -75,8 +97,32 @@ export abstract class IsometricShape extends IsometricGraphic {
     }
 
     public set top(value: number) {
-        this.props.top = value;
-        this.update();
+        if (this.props.top !== value) {
+            this.props.top = value;
+            this.update();
+        }        
+    }
+
+    public get drag(): Drag {
+        return this._drag;
+    }
+
+    public set drag(value: Drag) {
+        this._drag = value;
+        this._dragMethods.stopDrag();
+        if (this._drag) {
+            this._dragMethods.updateDrag(this._drag);
+            this._dragMethods.beginDrag();
+        }
+    }
+
+    public get dragLimit(): DragLimit {
+        return this._dragLimit;
+    }
+
+    public set dragLimit(value: DragLimit) {
+        this._dragLimit = value;
+        this._dragMethods.updateDragLimit(this._dragLimit);
     }
 
 }
