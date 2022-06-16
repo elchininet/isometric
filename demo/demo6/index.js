@@ -33,9 +33,9 @@ export default ( IsometricModule, container ) => {
 
     const cube = new IsometricGroup();
 
-    const limit = [0, 5];
+    const bounds = [0, 5];
     cube.drag = 'TOP';
-    cube.dragLimit = { top: limit, right: limit, left: limit };
+    cube.bounds = { top: bounds, right: bounds, left: bounds };
 
     planeTop.addEventListener('click', changePlane, true);
     planeRight.addEventListener('click', changePlane, true);

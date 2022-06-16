@@ -321,25 +321,10 @@ describe('Test properties', (): void => {
 
     it('IsometricGroup properties', (): void => {
         
-        expect(group.right).toBe(1);
-        expect(group.left).toBe(2);
-        expect(group.top).toBe(0.5);
-
         expect(groupElement.tagName).toBe('g');
         expect(svgElement.contains(groupElement)).toBeTruthy();
-        expect(groupElement.getAttribute('transform')).toBe('translate(-103.923, 120)');
         expect(groupElement.contains(rectangleElement)).toBeTruthy();
         expect(groupElement.contains(circleElement)).toBeTruthy();
-
-        group.right = 2;
-        group.left = 1;
-        group.top = 1.5;
-
-        expect(group.right).toBe(2);
-        expect(group.left).toBe(1);
-        expect(group.top).toBe(1.5);
-
-        expect(groupElement.getAttribute('transform')).toBe('translate(103.923, 0)');
 
         expect(group.children).toMatchObject([rectangle, circle]);
 

@@ -71,3 +71,12 @@ export enum Typeof {
     UNDEFINED = 'undefined',
     NUMBER = 'number'
 }
+
+export enum EVENTS {
+    MOUSE_MOVE = 'mousemove',
+    MOUSE_DOWN = 'mousedown',
+    MOUSE_UP = 'mouseup',
+    TOUCH_START = 'touchstart',
+    TOUCH_MOVE = 'touchmove',
+    TOUCH_END = 'touchend'
+}

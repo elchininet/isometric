@@ -29,6 +29,12 @@ module.exports = {
             rules: {
                 '@typescript-eslint/no-var-requires': 'off'
             }
+        },
+        {
+            files: ['other.ts'],
+            rules: {
+                '@typescript-eslint/no-explicit-any': 'off'
+            }
         }
     ]
 };
