@@ -4,7 +4,6 @@ import {
     CommandPoint,
     IsometricPlaneView,
     Rotation,
-    Position,
     SVGAnimationProperties,
     SVGNativeProperties,
     SVGProps,
@@ -13,22 +12,15 @@ import {
     COMMANDS_REGEXP,
     Command,
     DECIMALS,
-    SCALE,
-    PlaneView,
-    Typeof
+    SCALE
 } from '@constants';
 import {
     getPointFromIsometricPoint,
     getEllipsisSpecs,
     getOrientation,
-    getTopPlanePointFromCoordinates,
-    getFrontPlanePointFromCoordinates,
-    getSidePlanePointFromCoordinates,
     round
 } from '@utils/math';
 import { getViewMatrix } from '@utils/matrix';
-import { Positionable } from '@interfaces/Positionable';
-import { DragLimit } from '@interfaces/Draggable';
 
 export const addSVGProperties = (svg: SVGElement, props: SVGProps): void => {
     Object.keys(props).forEach((prop: string): void => {
@@ -213,134 +205,6 @@ export function removeEventListenerFromElement(
         element.removeEventListener(event, listener.fnBind, useCapture);
     }
 }
-
-export const getDraggableMethods = (
-    element: SVGElement,
-    instance: Positionable,
-) => {
-
-    const requestAnimationFrame = window.requestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.msRequestAnimationFrame;
-
-    const NO_LIMITS = [
-        Number.MIN_SAFE_INTEGER,
-        Number.MAX_SAFE_INTEGER
-    ] as const;
-
-    enum EVENTS {
-        MOUSE_MOVE = 'mousemove',
-        MOUSE_DOWN = 'mousedown',
-        MOUSE_UP = 'mouseup'
-    }
-
-    const store = {
-        right: 0,
-        left: 0,
-        top: 0,
-        x: 0,
-        y: 0
-    };
-
-    let _drag: IsometricPlaneView = PlaneView.TOP;
-    let _limit: DragLimit = false;
-    let _coords: Partial<Position> = {};
-    let _update = false;
-    
-    const betweenBounds = (value: number, bounds: readonly [number, number]): number => {
-        const orderedBounds = [...bounds].sort();
-        return round(
-            Math.min(
-                Math.max(value, orderedBounds[0]),
-                orderedBounds[1]
-            ),
-            DECIMALS
-        );
-    };
-    const getRight = (right: number): number => {
-        const bounds = _limit && _limit.right || NO_LIMITS;
-        return betweenBounds(
-            store.right + right / instance.data.scale,
-            bounds
-        );
-    };
-    const getLeft = (left: number): number => {
-        const bounds = _limit && _limit.left || NO_LIMITS;
-        return betweenBounds(
-            store.left + left / instance.data.scale,
-            bounds,
-        );
-    };
-    const getTop = (top: number): number => {
-        const bounds = _limit && _limit.top || NO_LIMITS;
-        return betweenBounds(
-            store.top + top / instance.data.scale,
-            bounds
-        );
-    };
-    const animate = () => {
-        if (_update) {
-            if (typeof _coords.right === Typeof.NUMBER) {
-                instance.right = getRight(_coords.right);
-            }
-            if (typeof _coords.left === Typeof.NUMBER) {
-                instance.left = getLeft(_coords.left);
-            }
-            if (typeof _coords.top === Typeof.NUMBER) {
-                instance.top = getTop(_coords.top);
-            }
-            requestAnimationFrame(animate);
-        }
-    };
-    const dropElement = (): void => {
-        _update = false;
-        document.removeEventListener(EVENTS.MOUSE_MOVE, moveElement, true);
-        document.removeEventListener(EVENTS.MOUSE_UP, dropElement, true);
-    };
-    const moveElement = (event: MouseEvent): void => {
-        const diffX = event.pageX - store.x;
-        const diffY = event.pageY - store.y;
-        if (_drag === PlaneView.TOP) {
-            _coords = getTopPlanePointFromCoordinates(diffX, diffY);
-        } else if (_drag === PlaneView.FRONT) {
-            _coords = getFrontPlanePointFromCoordinates(diffX, diffY);
-        } else {
-            _coords = getSidePlanePointFromCoordinates(diffX, diffY);
-        }       
-    };
-    const startDrag = (event: MouseEvent): void => {
-        store.x = event.pageX;
-        store.y = event.pageY;
-        store.right = instance.right;
-        store.left = instance.left;
-        store.top = instance.top;
-        _update = true;
-        document.addEventListener(EVENTS.MOUSE_MOVE, moveElement, true);
-        document.addEventListener(EVENTS.MOUSE_UP, dropElement, true);
-        requestAnimationFrame(animate);
-    };
-    const beginDrag = (): void => {
-        element.addEventListener(EVENTS.MOUSE_DOWN, startDrag, true);
-    };
-    const stopDrag = (): void => {
-        element.removeEventListener(EVENTS.MOUSE_DOWN, startDrag, true);
-        document.removeEventListener(EVENTS.MOUSE_MOVE, moveElement, true);
-        document.removeEventListener(EVENTS.MOUSE_UP, dropElement, true);
-    };
-    const updateDrag = (drag: IsometricPlaneView): void => {
-        _drag = drag;
-    };
-    const updateDragLimit = (limit: DragLimit): void => {
-        _limit = limit;
-    };
-    return {
-        beginDrag,
-        stopDrag,
-        updateDrag,
-        updateDragLimit
-    };
-};
 
 export const getPatternTransform = (
     corner: IsometricPoint,

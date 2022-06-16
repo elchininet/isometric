@@ -1,9 +1,7 @@
 import { IsometricPlaneView } from '@types';
 import { IsometricGraphicProps } from '@classes/abstract/IsometricGraphic';
+import { IsometricDraggableProps } from '@classes/abstract/IsometricDraggable';
 
-export interface IsometricShapeProps extends IsometricGraphicProps {
+export interface IsometricShapeProps extends IsometricGraphicProps, IsometricDraggableProps {
     planeView: IsometricPlaneView;
-    right?: number;
-    left?: number;
-    top?: number;
 }

@@ -1,5 +1,3 @@
-export interface IsometricGroupProps {
-    right?: number;
-    left?: number;
-    top?: number;
-}
+import { IsometricDraggableProps } from '@classes/abstract/IsometricDraggable';
+
+export type IsometricGroupProps = IsometricDraggableProps;
