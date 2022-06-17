@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.5.0] - 2022-06-17
+
+- Implement automatic dragging functionality in `IsometricShape` (therefore in `IsometricRectangle` and `IsometricCircle`) and `IsometricGroup` classes
+- Refactor the project to implement position functionality using mixins, removing code duplication
+
 ## [3.4.0] - 2022-06-11
 
 - Add new methods to the `IsometricContainer` class to modify children indexes

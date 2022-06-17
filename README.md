@@ -512,6 +512,20 @@ removeEventListener(type, callback, [useCapture])
 | left            | number   | Gets and sets the left isometric ccordinates of the isometric group  |
 | top             | number   | Gets and sets the top isometric ccordinates of the isometric group   |
 | children        | array    | Gets an array of the isometric group children elements               |
+| drag            | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric group   |
+| bounds          | object / false | Gets an sets the boundaries of the isometric group position          |
+
+`planeView values`
+>"TOP" | "FRONT" | "SIDE" | false
+
+`bounds properties`
+>Object to set the boundaries of the isometric group position. If it is set as false the isometric group will not have boundaries.
+
+| Property  | Type             | Default value | Description                                             |
+| --------- | ---------------- | ------------- | ------------------------------------------------------- |
+| right     | [number, number] | -             | Minimum and maximum boundaries of the right coordinates |
+| left      | [number, number] | -             | Minimum and maximum boundaries of the left coordinates  |
+| top       | [number, number] | -             | Minimum and maximum boundaries of the top coordinates   |
 
 </p>
 </details>
@@ -733,6 +747,20 @@ removeEventListener(type, listener, [useCapture])
 | strokeLinejoin  | string             | Gets and sets the [SVG stroke linejoin][3] of the isometric rectangle    |
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric rectangle                |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric rectangle                     |
+| drag            | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric rectangle     |
+| bounds          | object / false | Gets an sets the boundaries of the isometric rectangle position              |
+
+`planeView values`
+>"TOP" | "FRONT" | "SIDE" | false
+
+`bounds properties`
+>Object to set the boundaries of the isometric rectangle position. If it is set as false the isometric rectangle will not have boundaries.
+
+| Property  | Type             | Default value | Description                                             |
+| --------- | ---------------- | ------------- | ------------------------------------------------------- |
+| right     | [number, number] | -             | Minimum and maximum boundaries of the right coordinates |
+| left      | [number, number] | -             | Minimum and maximum boundaries of the left coordinates  |
+| top       | [number, number] | -             | Minimum and maximum boundaries of the top coordinates   |
 
 </p>
 </details>
@@ -951,6 +979,20 @@ removeEventListener(type, listener, [useCapture])
 | strokeLinejoin  | string             | Gets and sets the [SVG stroke linejoin][3] of the isometric circle    |
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric circle                |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric circle                     |
+| drag            | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric circle     |
+| bounds          | object / false | Gets an sets the boundaries of the isometric circle position              |
+
+`planeView values`
+>"TOP" | "FRONT" | "SIDE" | false
+
+`bounds properties`
+>Object to set the boundaries of the isometric circle position. If it is set as false the isometric circle will not have boundaries.
+
+| Property  | Type             | Default value | Description                                             |
+| --------- | ---------------- | ------------- | ------------------------------------------------------- |
+| right     | [number, number] | -             | Minimum and maximum boundaries of the right coordinates |
+| left      | [number, number] | -             | Minimum and maximum boundaries of the left coordinates  |
+| top       | [number, number] | -             | Minimum and maximum boundaries of the top coordinates   |
 
 </p>
 </details>
