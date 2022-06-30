@@ -41,17 +41,20 @@ const _dragStoreDefault = {
 };
 
 const isMouseEvent = (event: MouseEvent | TouchEvent): event is MouseEvent => 'clientX' in event;
-const getClientCoords = (event: MouseEvent | TouchEvent): ClientCoords => {
-    if (isMouseEvent(event)) {
+const getClientCoords = (event: MouseEvent | TouchEvent | ClientCoords): ClientCoords => {
+    if (event instanceof Event) {
+        if (isMouseEvent(event)) {
+            return {
+                clientX: event.clientX,
+                clientY: event.clientY
+            };
+        }
         return {
-            clientX: event.clientX,
-            clientY: event.clientY
+            clientX: event.touches[0].clientX,
+            clientY: event.touches[0].clientY
         };
     }
-    return {
-        clientX: event.touches[0].clientX,
-        clientY: event.touches[0].clientY
-    };
+    return event;
 };
 
 export abstract class IsometricDraggable extends IsometricElement {
@@ -160,9 +163,7 @@ export abstract class IsometricDraggable extends IsometricElement {
             event.preventDefault();
         }        
 
-        const { clientX, clientY } = event instanceof Event
-            ? getClientCoords(event)
-            : event;
+        const { clientX, clientY } = getClientCoords(event);
         const diffX = clientX - this._dragStore.x;
         const diffY = clientY - this._dragStore.y;
         if (this._drag === PlaneView.TOP) {
