@@ -28,7 +28,7 @@
     "finish": "./scripts/finish.sh",
     "build": "yarn clean && rollup --config rollup.config.js && yarn finish",
     "demo": "webpack serve --open --config webpack.demo.config.js",
-    "docs": "webpack --config webpack.demo.publish.js --mode production && yarn clean",
+    "docs": "webpack --config webpack.demo.publish.js --mode production",
     "lint": "eslint src/**/*.ts",
     "test": "jest --verbose",
     "prepare": "npm run build",
