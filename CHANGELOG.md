@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.5.1] - 2022-07-02
+
+- Restore the `dist/web/isometric.js` file that was ignored in gitignore by a mistake
+- Restore the `demo7` index file that was ignored in gitignore by a mistake
+
 ## [3.5.0] - 2022-06-17
 
 - Implement automatic dragging functionality in `IsometricShape` (therefore in `IsometricRectangle` and `IsometricCircle`) and `IsometricGroup` classes
