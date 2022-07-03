@@ -7,6 +7,7 @@ import {
     SVGAnimationProperties,
     SVGNativeProperties,
     SVGProps,
+    AddEventListenerCallback
 } from '@types';
 import {
     COMMANDS_REGEXP,
@@ -176,7 +177,7 @@ export function addEventListenerToElement(
     element: SVGElement,
     listeners: Listener[],
     event: string,
-    callback: VoidFunction,
+    callback: AddEventListenerCallback,
     useCapture: boolean
 ): void {
     const listener = {
@@ -191,7 +192,7 @@ export function removeEventListenerFromElement(
     element: SVGElement, 
     listeners: Listener[], 
     event: string,
-    callback: VoidFunction,
+    callback: AddEventListenerCallback,
     useCapture: boolean
 ): void {
     let listener: Listener;

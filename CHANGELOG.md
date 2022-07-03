@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.6.0] - 2022-07-03
+
+- Capture drag events and possibility of preventing the the drag event modifies the coordinates of the element using `preventDefault` on `drag` event
+
 ## [3.5.1] - 2022-07-02
 
 - Restore the `dist/web/isometric.js` file that was ignored in gitignore by a mistake

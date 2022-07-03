@@ -12,7 +12,10 @@ import {
     round
 } from '@utils/math';
 import { IsometricElement } from '@classes/abstract/IsometricElement';
-import { NO_LIMITS } from './constants';
+import {
+    NO_LIMITS,
+    DRAG_EVENT
+} from './constants';
 import {
     IsometricDraggableProps,
     Drag,
@@ -66,6 +69,8 @@ export abstract class IsometricDraggable extends IsometricElement {
     private _dragStore: typeof _dragStoreDefault;
     private _coords: Partial<Position>;
     private _update: boolean;
+    private _dragging: boolean;
+    private _prevented: boolean;
 
     private setup() {
 
@@ -121,16 +126,51 @@ export abstract class IsometricDraggable extends IsometricElement {
         );
     };
 
+    private getFixedCoordinates(coords: Partial<Position>): Partial<Position> {
+        return Object.entries(coords).reduce((acc: Partial<Position>, entry: [string, number]): Partial<Position> => {
+            const fixedCoords = { ...acc };
+            switch(entry[0]) {
+                case 'right':
+                    fixedCoords.right = this.getRight(entry[1]);
+                    break;
+                case 'left':
+                    fixedCoords.left = this.getLeft(entry[1]);
+                    break;
+                default:
+                    fixedCoords.top = this.getTop(entry[1]);
+            }
+            return fixedCoords;
+        }, {});
+    }
+
+    private dispatchEvent(eventType: DRAG_EVENT): CustomEvent {
+        const dragEvent = new CustomEvent(
+            eventType,
+            {
+                cancelable: eventType === DRAG_EVENT.DRAG,
+                detail: {
+                    right: this._coords.right || this.right,
+                    left: this._coords.left || this.left,
+                    top: this._coords.top || this.top
+                }
+            }
+        );
+        this.element.dispatchEvent(dragEvent);
+        return dragEvent;
+    }
+
     private animate() {
-        if (this._update) {
-            if (typeof this._coords.right === Typeof.NUMBER) {
-                this.right = this.getRight(this._coords.right);
-            }
-            if (typeof this._coords.left === Typeof.NUMBER) {
-                this.left = this.getLeft(this._coords.left);
-            }
-            if (typeof this._coords.top === Typeof.NUMBER) {
-                this.top = this.getTop(this._coords.top);
+        if (this._update) {   
+            if (!this._prevented) {
+                if (typeof this._coords.right === Typeof.NUMBER) {
+                    this.right = this._coords.right;
+                }
+                if (typeof this._coords.left === Typeof.NUMBER) {
+                    this.left = this._coords.left;
+                }
+                if (typeof this._coords.top === Typeof.NUMBER) {
+                    this.top = this._coords.top;
+                }
             }
             _requestAnimationFrame(this.animate);
         }
@@ -159,28 +199,55 @@ export abstract class IsometricDraggable extends IsometricElement {
 
     private moveElement(event: MouseEvent | TouchEvent | ClientCoords) {
 
-        if (event instanceof Event) {
-            event.preventDefault();
-        }        
-
         const { clientX, clientY } = getClientCoords(event);
         const diffX = clientX - this._dragStore.x;
         const diffY = clientY - this._dragStore.y;
+
         if (this._drag === PlaneView.TOP) {
-            this._coords = getTopPlanePointFromCoordinates(diffX, diffY);
+            this._coords = this.getFixedCoordinates(
+                getTopPlanePointFromCoordinates(diffX, diffY)
+            );
         } else if (this._drag === PlaneView.FRONT) {
-            this._coords = getFrontPlanePointFromCoordinates(diffX, diffY);
+            this._coords = this.getFixedCoordinates(
+                getFrontPlanePointFromCoordinates(diffX, diffY)
+            );
         } else {
-            this._coords = getSidePlanePointFromCoordinates(diffX, diffY);
-        } 
+            this._coords = this.getFixedCoordinates(
+                getSidePlanePointFromCoordinates(diffX, diffY)
+            );
+        }
+
+        let dragEvent: CustomEvent;
+
+        if (event instanceof Event) {
+
+            event.preventDefault();
+
+            if (!this._dragging) {
+                this.dispatchEvent(DRAG_EVENT.DRAG_START);
+            }
+
+            this._dragging = true;
+
+            dragEvent = this.dispatchEvent(DRAG_EVENT.DRAG);
+
+        }
+
+        this._prevented = !!(dragEvent && dragEvent.defaultPrevented);
+
     }
 
     private dropElement() {
         this._update = false;
+        this._dragging = false;
+
         this.element.removeEventListener(EVENTS.TOUCH_MOVE, this.moveElement, true);
         this.element.removeEventListener(EVENTS.TOUCH_END, this.dropElement, true);
         document.removeEventListener(EVENTS.MOUSE_MOVE, this.moveElement, true);
         document.removeEventListener(EVENTS.MOUSE_UP, this.dropElement, true);
+
+        this.dispatchEvent(DRAG_EVENT.DRAG_END);
+
     }
 
     private beginDrag() {
@@ -188,8 +255,7 @@ export abstract class IsometricDraggable extends IsometricElement {
         this.element.addEventListener(EVENTS.MOUSE_DOWN, this.startDrag, true);
     };
 
-    private stopDrag() {
-        
+    private stopDrag() {        
         this.element.removeEventListener(EVENTS.TOUCH_START, this.startDrag, true);
         this.element.removeEventListener(EVENTS.TOUCH_MOVE, this.moveElement, true);
         this.element.removeEventListener(EVENTS.TOUCH_END, this.dropElement, true);
