@@ -515,7 +515,7 @@ removeEventListener(type, callback, [useCapture])
 | drag *          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric group |
 | bounds          | object / false | Gets an sets the boundaries of the isometric group position          |
 
-> * When dragging an isometric group, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric group will receive.
+>\* When dragging an isometric group, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric group will receive.
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE" | false
@@ -752,7 +752,7 @@ removeEventListener(type, listener, [useCapture])
 | drag *          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric rectangle     |
 | bounds          | object / false | Gets an sets the boundaries of the isometric rectangle position              |
 
-> * When dragging an isometric rectangle, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric rectangle will receive.
+>\* When dragging an isometric rectangle, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric rectangle will receive.
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE" | false
@@ -986,7 +986,7 @@ removeEventListener(type, listener, [useCapture])
 | drag *          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric circle     |
 | bounds          | object / false | Gets an sets the boundaries of the isometric circle position              |
 
-> * When dragging an isometric circle, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric circle will receive.
+>\* When dragging an isometric circle, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric circle will receive.
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE" | false
