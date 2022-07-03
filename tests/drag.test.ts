@@ -60,7 +60,7 @@ const dragElementWithTouchEvents = async (element: SVGElement, x: number, y: num
 
 };
 
-describe('Test properties', (): void => {
+describe('Test dragging', (): void => {
 
     let spy: jest.SpyInstance<number, [callback: FrameRequestCallback]>;
     let container: HTMLDivElement;
@@ -336,6 +336,84 @@ describe('Test properties', (): void => {
         expect(group.left).toBe(0);
         expect(group.top).toBe(-3.811957);
         expect(groupElement.getAttribute('transform')).toBe('translate(799.999999, 500)');
+
+    });
+
+    it('Capturing drag events', async (): Promise<void> => {
+        
+        const mockDragstart = jest.fn();
+        const mockDrag = jest.fn();
+        const mockEnd = jest.fn();
+        
+        group.drag = PlaneView.TOP;
+
+        group.addEventListener('dragstart', mockDragstart);
+        group.addEventListener('drag', mockDrag);
+        group.addEventListener('dragend', mockEnd);
+
+        await dragElement(groupElement, 200, 300);
+
+        expect(mockDragstart).toBeCalledTimes(1);
+        expect(mockDragstart.mock.calls[0][0].detail.right).toBe(41.547011);
+        expect(mockDragstart.mock.calls[0][0].detail.left).toBe(18.452989);
+        expect(mockDragstart.mock.calls[0][0].detail.top).toBe(0);
+
+        expect(mockDrag).toBeCalledTimes(1);
+        expect(mockDrag.mock.calls[0][0].detail.right).toBe(41.547011);
+        expect(mockDrag.mock.calls[0][0].detail.left).toBe(18.452989);
+        expect(mockDrag.mock.calls[0][0].detail.top).toBe(0);
+
+        expect(mockEnd).toBeCalledTimes(1);
+        expect(mockEnd.mock.calls[0][0].detail.right).toBe(41.547011);
+        expect(mockEnd.mock.calls[0][0].detail.left).toBe(18.452989);
+        expect(mockEnd.mock.calls[0][0].detail.top).toBe(0);
+
+        group.removeEventListener('dragstart', mockDragstart);
+        group.removeEventListener('drag', mockDrag);
+        group.removeEventListener('dragend', mockEnd);
+
+        await dragElement(groupElement, 300, 200);
+
+        expect(mockDragstart).toBeCalledTimes(1);
+        expect(mockDrag).toBeCalledTimes(1);
+        expect(mockEnd).toBeCalledTimes(1);
+
+    });
+
+    it('Preventing dragging', async (): Promise<void> => {
+        
+        const mockDragstart = jest.fn();
+        const mockDrag = jest.fn((event: CustomEvent) => {
+            event.preventDefault();
+        });
+        const mockEnd = jest.fn();
+        
+        group.drag = PlaneView.TOP;
+
+        group.addEventListener('dragstart', mockDragstart);
+        group.addEventListener('drag', mockDrag);
+        group.addEventListener('dragend', mockEnd);
+
+        await dragElement(groupElement, 200, 300);
+
+        expect(mockDragstart).toBeCalledTimes(1);
+        expect(mockDragstart.mock.calls[0][0].detail.right).toBe(41.547011);
+        expect(mockDragstart.mock.calls[0][0].detail.left).toBe(18.452989);
+        expect(mockDragstart.mock.calls[0][0].detail.top).toBe(0);
+
+        expect(mockDrag).toBeCalledTimes(1);
+        expect(mockDrag.mock.calls[0][0].detail.right).toBe(41.547011);
+        expect(mockDrag.mock.calls[0][0].detail.left).toBe(18.452989);
+        expect(mockDrag.mock.calls[0][0].detail.top).toBe(0);
+
+        expect(mockEnd).toBeCalledTimes(1);
+        expect(mockEnd.mock.calls[0][0].detail.right).toBe(41.547011);
+        expect(mockEnd.mock.calls[0][0].detail.left).toBe(18.452989);
+        expect(mockEnd.mock.calls[0][0].detail.top).toBe(0);
+
+        expect(group.right).toBe(0);
+        expect(group.left).toBe(0);
+        expect(group.top).toBe(0);
 
     });
 

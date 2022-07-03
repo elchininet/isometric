@@ -1,4 +1,7 @@
-import { Listener } from '@types';
+import {
+    Listener,
+    AddEventListenerCallback
+} from '@types';
 import {
     SVG_NAMESPACE,
     SVG_ELEMENTS
@@ -30,12 +33,12 @@ export abstract class IsometricElement extends IsometricStore {
         return this.element;
     }
 
-    public addEventListener(event: string, callback: VoidFunction, useCapture = false): this {
+    public addEventListener(event: string, callback: AddEventListenerCallback, useCapture = false): this {
         addEventListenerToElement.call(this, this.element, this.listeners, event, callback, useCapture);
         return this;
     }
 
-    public removeEventListener(event: string, callback: VoidFunction, useCapture = false): this {
+    public removeEventListener(event: string, callback: AddEventListenerCallback, useCapture = false): this {
         removeEventListenerFromElement(this.element, this.listeners, event, callback, useCapture);
         return this;
     }

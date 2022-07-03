@@ -1,5 +1,7 @@
 export type StringOrNumber = string | number;
 
+export type AddEventListenerCallback = (event?: Event) => void;
+
 type RequestAnimationFrame = typeof window.requestAnimationFrame;
 
 declare global {
@@ -8,4 +10,4 @@ declare global {
         webkitRequestAnimationFrame: RequestAnimationFrame;
         msRequestAnimationFrame: RequestAnimationFrame;
     }
-  }
+}
