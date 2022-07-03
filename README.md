@@ -512,8 +512,10 @@ removeEventListener(type, callback, [useCapture])
 | left            | number   | Gets and sets the left isometric ccordinates of the isometric group  |
 | top             | number   | Gets and sets the top isometric ccordinates of the isometric group   |
 | children        | array    | Gets an array of the isometric group children elements               |
-| drag            | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric group   |
+| drag *          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric group |
 | bounds          | object / false | Gets an sets the boundaries of the isometric group position          |
+
+> * When dragging an isometric group, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric group will receive.
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE" | false
@@ -747,8 +749,10 @@ removeEventListener(type, listener, [useCapture])
 | strokeLinejoin  | string             | Gets and sets the [SVG stroke linejoin][3] of the isometric rectangle    |
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric rectangle                |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric rectangle                     |
-| drag            | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric rectangle     |
+| drag *          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric rectangle     |
 | bounds          | object / false | Gets an sets the boundaries of the isometric rectangle position              |
+
+> * When dragging an isometric rectangle, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric rectangle will receive.
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE" | false
@@ -979,8 +983,10 @@ removeEventListener(type, listener, [useCapture])
 | strokeLinejoin  | string             | Gets and sets the [SVG stroke linejoin][3] of the isometric circle    |
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric circle                |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric circle                     |
-| drag            | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric circle     |
+| drag *          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric circle     |
 | bounds          | object / false | Gets an sets the boundaries of the isometric circle position              |
+
+> * When dragging an isometric circle, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric circle will receive.
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE" | false
