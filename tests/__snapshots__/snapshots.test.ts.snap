@@ -19,7 +19,7 @@ exports[`Snapshot tests Default options 1`] = `
 </body>
 `;
 
-exports[`Snapshot tests Default options 2`] = `"<svg viewBox=\\"0 0 640 480\\" width=\\"640px\\" height=\\"480px\\"><rect fill=\\"white\\" x=\\"0\\" y=\\"0\\" width=\\"640px\\" height=\\"480px\\"></rect></svg>"`;
+exports[`Snapshot tests Default options 2`] = `"<svg viewBox="0 0 640 480" width="640px" height="480px"><rect fill="white" x="0" y="0" width="640px" height="480px"></rect></svg>"`;
 
 exports[`Snapshot tests Draw animations 1`] = `
 <div>
