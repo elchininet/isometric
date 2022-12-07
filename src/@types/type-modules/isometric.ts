@@ -59,4 +59,4 @@ export interface Position {
     right: number;
     left: number;
     top: number;
-};
+}

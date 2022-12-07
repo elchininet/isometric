@@ -5,8 +5,8 @@ import {
     addSVGProperties
 } from '@utils/svg';
 import { applyMixins } from '@utils/other';
-import { IsometricContainer } from '@classes/abstract/IsometricContainer';
-import { IsometricDraggable } from '@classes/abstract/IsometricDraggable';
+import { IsometricContainerAbstract } from '@classes/abstract/IsometricContainerAbstract';
+import { IsometricDraggableAbstract } from '@classes/abstract/IsometricDraggableAbstract';
 import { IsometricGroupProps } from './types';
 
 const defaultProps = {
@@ -15,7 +15,7 @@ const defaultProps = {
     top: 0,
 };
 
-export class IsometricGroup extends IsometricContainer {
+export class IsometricGroup extends IsometricContainerAbstract {
 
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
@@ -28,7 +28,7 @@ export class IsometricGroup extends IsometricContainer {
     protected props: IsometricGroupProps;
 
     public override update(): this {
-        if (elementHasSVGParent(this.element)) {            
+        if (elementHasSVGParent(this.element)) {
             const point = getPointFromIsometricPoint(
                 0,
                 0,
@@ -51,6 +51,6 @@ export class IsometricGroup extends IsometricContainer {
 
 }
 
-export interface IsometricGroup extends IsometricDraggable {}
+export interface IsometricGroup extends IsometricDraggableAbstract {}
 
-applyMixins(IsometricGroup, IsometricDraggable);
+applyMixins(IsometricGroup, IsometricDraggableAbstract);

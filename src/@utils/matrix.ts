@@ -94,7 +94,7 @@ const rotationToRotationMatrix = (view: IsometricPlaneView, rotation: Rotation):
             switch(rotation.axis) {
                 case Axis.TOP:
                     return rotateY(value);
-                case Axis.LEFT:                    
+                case Axis.LEFT:
                     return rotateX(value);
                 case Axis.RIGHT:
                     return rotateZ(value);
@@ -123,15 +123,15 @@ export const getViewMatrix = (
     planeView?: IsometricPlaneView,
     rotation?: Rotation
 ): Matrix | null => {
-    
+
     const rotationMatrices: Matrix[]  = [];
 
     const rotationMatrix = rotation
         ? rotationToRotationMatrix(planeView, rotation)
         : null;
-        
-    if (rotationMatrix) rotationMatrices.push(rotationMatrix);    
-    
+
+    if (rotationMatrix) rotationMatrices.push(rotationMatrix);
+
     switch(planeView) {
         case PlaneView.TOP: {
             return multiplyMatrices(topMatrix, ...rotationMatrices);

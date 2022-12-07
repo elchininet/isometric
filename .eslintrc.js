@@ -21,7 +21,9 @@ module.exports = {
     plugins: ['@typescript-eslint'],
     rules: {
         quotes: ['error', 'single', { 'avoidEscape': true, 'allowTemplateLiterals': true }],
-        semi: ['error', 'always']
+        semi: ['error', 'always'],
+        '@typescript-eslint/no-empty-interface': ['error', { allowSingleExtends: true }],
+        'no-trailing-spaces': ['error']
     },
     overrides: [
         {

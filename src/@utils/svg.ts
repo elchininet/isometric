@@ -50,13 +50,13 @@ export const getSVGPath = (
 ): string => {
     const drawCommands = getCommandsWithStart(commands);
     const svgPaths = drawCommands.map((c: CommandPoint, index: number) => {
-        const point = getPointFromIsometricPoint(centerX, centerY, c.point, scale);     
+        const point = getPointFromIsometricPoint(centerX, centerY, c.point, scale);
         switch (c.command) {
             case Command.move:
                 return `M${point.x} ${point.y}`;
             case Command.line:
                 return `L${point.x} ${point.y}`;
-            case Command.curve: {                
+            case Command.curve: {
                 const start = getPointFromIsometricPoint(
                     centerX,
                     centerY,
@@ -93,7 +93,7 @@ export const parseDrawCommands = (commands: string): CommandPoint[] => {
                 commandsArray.push({
                     command: Command.line,
                     point: { r: +array[2], l: +array[3], t: +array[4] }
-                }); 
+                });
                 break;
             case 'C':
                 commandsArray.push({
@@ -189,8 +189,8 @@ export function addEventListenerToElement(
 }
 
 export function removeEventListenerFromElement(
-    element: SVGElement, 
-    listeners: Listener[], 
+    element: SVGElement,
+    listeners: Listener[],
     event: string,
     callback: AddEventListenerCallback,
     useCapture: boolean
@@ -210,8 +210,8 @@ export function removeEventListenerFromElement(
 export const getPatternTransform = (
     corner: IsometricPoint,
     planeView?: IsometricPlaneView,
-    scale?: number,    
-    rotation?: Rotation 
+    scale?: number,
+    rotation?: Rotation
 ): string => {
     const matrix = getViewMatrix(planeView, rotation);
     let transform = `translate(${corner.x} ${corner.y})`;

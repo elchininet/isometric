@@ -7,10 +7,9 @@ import {
     SVG_ELEMENTS
 } from '@constants';
 import {
-    CommandPoint,
     IsometricPoint,
     IsometricPlaneView,
-    StrokeLinecap, 
+    StrokeLinecap,
     StrokeLinejoin,
     SVGAnimation,
     SVGAnimationObject,
@@ -19,16 +18,13 @@ import {
 import {
     addSVGProperties,
     getSVGProperty,
-    getPatternTransform,
-    getSVGPath,
-    getTextureCorner,
-    elementHasSVGParent
+    getPatternTransform
 } from '@utils/svg';
 import { uuid, round, getPointFromIsometricPoint } from '@utils/math';
-import { IsometricElement } from "../IsometricElement";
+import { IsometricElementAbstract } from '../IsometricElementAbstract';
 import { IsometricGraphicProps } from './types';
 
-const defaultGraphicProps: IsometricGraphicProps = {
+const defaultObjectProps: IsometricGraphicProps = {
     fillColor: Colors.white,
     fillOpacity: 1,
     strokeColor: Colors.black,
@@ -39,7 +35,7 @@ const defaultGraphicProps: IsometricGraphicProps = {
     strokeWidth: 1
 };
 
-export abstract class IsometricGraphic extends IsometricElement {
+export abstract class IsometricGraphicAbstract extends IsometricElementAbstract {
 
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
@@ -48,13 +44,13 @@ export abstract class IsometricGraphic extends IsometricElement {
 
         super(svgElement);
 
-        this.props = {...defaultGraphicProps, ...props};
+        this.props = {...defaultObjectProps, ...props};
         this.animations = [];
 
         if (this.props.texture) {
             this.createTexture(this.props.texture);
         }
-        
+
         addSVGProperties(this.element, {
             'fill': this.props.texture
                 ? `url(#${this.patternId}) ${this.fillColor}`
@@ -120,37 +116,11 @@ export abstract class IsometricGraphic extends IsometricElement {
     }
 
     protected props: IsometricGraphicProps;
+
     protected patternId: string;
     protected pattern: SVGPatternElement;
     protected animations: SVGAnimationObject[];
     protected abstract privateUpdateAnimations(): void;
-    protected abstract getCommands(args?: unknown): CommandPoint[];
-
-    protected updateGraphic(planeView?: IsometricPlaneView, autoclose = true) {
-        if (elementHasSVGParent(this.element)) {
-            const commands = this.getCommands();
-            const corner = getTextureCorner(
-                commands,
-                this.data.centerX,
-                this.data.centerY,
-                this.data.scale
-            );
-            addSVGProperties(
-                this.element,
-                {
-                    d: getSVGPath(
-                        commands,
-                        this.data.centerX,
-                        this.data.centerY,
-                        this.data.scale,
-                        autoclose
-                    )
-                }
-            );
-            this.updatePatternTransform(corner, planeView);
-            this.updateAnimations();
-        }
-    }
 
     protected updateAnimations(): void {
 
@@ -169,7 +139,7 @@ export abstract class IsometricGraphic extends IsometricElement {
                 attributeName: getSVGProperty(animation.property),
                 dur: `${animation.duration || 1}s`
             });
-            
+
             if (animation.values) {
                 addSVGProperties(
                     animation.element,
@@ -219,7 +189,7 @@ export abstract class IsometricGraphic extends IsometricElement {
                     y: round(corner.y + shift.y, DECIMALS)
                 },
                 this.props.texture.planeView || planeView,
-                this.props.texture.scale,                
+                this.props.texture.scale,
                 this.props.texture.rotation
             );
             addSVGProperties(
@@ -268,12 +238,12 @@ export abstract class IsometricGraphic extends IsometricElement {
     public set texture(value: Texture) {
         const hasTexture = !!this.props.texture;
         this.props.texture = value;
-        if (hasTexture) {            
+        if (hasTexture) {
             this._updateTexture();
         } else {
             this.createTexture(this.props.texture);
             this.update();
-        } 
+        }
     }
 
     public get texture(): Texture | undefined {
@@ -346,15 +316,15 @@ export abstract class IsometricGraphic extends IsometricElement {
 
     public updateTexture(value: Partial<Texture>): this {
         const hasTexture = !!this.props.texture;
-        if (hasTexture || value.url) {            
+        if (hasTexture || value.url) {
             const { shift, rotation, ...newProps } = value;
             this.props.texture = hasTexture
                 ? {
                     ...this.props.texture,
                     ...newProps
                 }
-                : { ...newProps } as Texture 
-            if (shift) {                
+                : { ...newProps } as Texture;
+            if (shift) {
                 this.props.texture.shift = {
                     ...(this.props.texture.shift || {}),
                     ...shift
@@ -384,7 +354,7 @@ export abstract class IsometricGraphic extends IsometricElement {
         if (index >= 0 && index < this.animations.length) {
 
             const animation = this.animations.splice(index, 1)[0];
-            
+
             if (animation.element && animation.element.parentNode) {
                 animation.element.parentNode.removeChild(animation.element);
             }

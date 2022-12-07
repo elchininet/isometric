@@ -1,4 +1,4 @@
-import { IsometricShapeProps } from '@classes/abstract/IsometricShape';
+import { IsometricShapeProps } from '@classes/abstract/IsometricShapeAbstract';
 
 export interface IsometricRectangleProps extends IsometricShapeProps {
     height: number;

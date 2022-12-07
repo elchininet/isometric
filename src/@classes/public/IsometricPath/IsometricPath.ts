@@ -12,10 +12,10 @@ import {
     parseDrawCommands,
     getSVGPath
 } from '@utils/svg';
-import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
+import { IsometricPathAbstract } from '@classes/abstract/IsometricPathAbstract';
 import { IsometricPathProps } from './types';
 
-export class IsometricPath extends IsometricGraphic {
+export class IsometricPath extends IsometricPathAbstract {
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
     /* istanbul ignore next */
@@ -39,7 +39,7 @@ export class IsometricPath extends IsometricGraphic {
     );
 
     protected privateUpdateAnimations(): void {
-        
+
         this.animations.forEach((animation: SVGAnimationObject): void => {
 
             if (animation.property === 'path') {
@@ -98,7 +98,7 @@ export class IsometricPath extends IsometricGraphic {
         this.commands.push({
             command: Command.move,
             point: { r: right, l: left, t: top }
-        });        
+        });
         this.update();
         return this;
     }
@@ -107,7 +107,7 @@ export class IsometricPath extends IsometricGraphic {
         this.commands.push({
             command: Command.line,
             point: { r: right, l: left, t: top }
-        });       
+        });
         this.update();
         return this;
     }
@@ -150,7 +150,7 @@ export class IsometricPath extends IsometricGraphic {
     public draw(commands: string): IsometricPath {
         this.commands = parseDrawCommands(commands);
         this.update();
-        return this;  
+        return this;
     }
 
     public addAnimation(animation: SVGPathAnimation): this {

@@ -2,8 +2,8 @@ import { IsometricPlaneView } from '@types';
 import { SVG_ELEMENTS } from '@constants';
 import { addSVGProperties } from '@utils/svg';
 import { applyMixins } from '@utils/other';
-import { IsometricGraphic } from '@classes/abstract/IsometricGraphic';
-import { IsometricDraggable } from '@classes/abstract/IsometricDraggable';
+import { IsometricPathAbstract } from '@classes/abstract/IsometricPathAbstract';
+import { IsometricDraggableAbstract } from '@classes/abstract/IsometricDraggableAbstract';
 import { IsometricShapeProps } from './types';
 
 const defaultProps = {
@@ -12,7 +12,7 @@ const defaultProps = {
     top: 0,
 };
 
-export abstract class IsometricShape extends IsometricGraphic {
+export abstract class IsometricShapeAbstract extends IsometricPathAbstract {
 
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
@@ -20,7 +20,7 @@ export abstract class IsometricShape extends IsometricGraphic {
     public constructor(props: IsometricShapeProps) {
         super({...defaultProps, ...props}, SVG_ELEMENTS.path);
     }
-    
+
     protected override props: IsometricShapeProps;
 
     public update(): this {
@@ -47,6 +47,6 @@ export abstract class IsometricShape extends IsometricGraphic {
 
 }
 
-export interface IsometricShape extends IsometricDraggable {}
+export interface IsometricShapeAbstract extends IsometricDraggableAbstract {}
 
-applyMixins(IsometricShape, IsometricDraggable);
+applyMixins(IsometricShapeAbstract, IsometricDraggableAbstract);

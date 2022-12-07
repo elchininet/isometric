@@ -12,17 +12,17 @@ import {
     removeEventListenerFromElement
 } from '@utils/svg';
 
-export abstract class IsometricElement extends IsometricStore {
+export abstract class IsometricElementAbstract extends IsometricStore {
 
     public constructor(svgElement: SVG_ELEMENTS) {
 
         super();
-        
+
         this.listeners = [];
         this.element = document.createElementNS(SVG_NAMESPACE, svgElement);
 
     }
-       
+
     protected element: SVGElement;
     protected listeners: Listener[];
 
