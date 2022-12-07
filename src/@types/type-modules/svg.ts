@@ -9,7 +9,7 @@ export type SVGPathProperties = 'path';
 export type SVGShapeProperties = 'left' | 'right' | 'top';
 export type SVGRectangleProperties = 'width' | 'height';
 export type SVGCircleProperties = 'radius';
-export type SVGAnimationProperties = SVGProperties | SVGPathProperties | SVGShapeProperties | SVGRectangleProperties | SVGCircleProperties ; 
+export type SVGAnimationProperties = SVGProperties | SVGPathProperties | SVGShapeProperties | SVGRectangleProperties | SVGCircleProperties;
 export type SVGNativeProperties = 'fill' | 'fill-opacity' | 'stroke' | 'stroke-opacity' | 'stroke-width' | 'd' | 'left' | 'right' | 'top';
 
 export type SVGProps = {

@@ -11,7 +11,7 @@ import {
     getSidePlanePointFromCoordinates,
     round
 } from '@utils/math';
-import { IsometricElement } from '@classes/abstract/IsometricElement';
+import { IsometricElementAbstract } from '@classes/abstract/IsometricElementAbstract';
 import {
     NO_LIMITS,
     DRAG_EVENT
@@ -60,12 +60,12 @@ const getClientCoords = (event: MouseEvent | TouchEvent | ClientCoords): ClientC
     return event;
 };
 
-export abstract class IsometricDraggable extends IsometricElement {
+export abstract class IsometricDraggableAbstract extends IsometricElementAbstract {
 
     protected props: IsometricDraggableProps;
 
     private _drag: Drag;
-    private _bounds: Boundaries;    
+    private _bounds: Boundaries;
     private _dragStore: typeof _dragStoreDefault;
     private _coords: Partial<Position>;
     private _update: boolean;
@@ -100,7 +100,7 @@ export abstract class IsometricDraggable extends IsometricElement {
             ),
             DECIMALS
         );
-    };
+    }
 
     private getRight(value: number): number {
         const bounds = this._bounds && this._bounds.right || NO_LIMITS;
@@ -108,7 +108,7 @@ export abstract class IsometricDraggable extends IsometricElement {
             this._dragStore.right + value / this.data.scale,
             bounds
         );
-    };
+    }
 
     private getLeft(value: number): number {
         const bounds = this._bounds && this._bounds.left || NO_LIMITS;
@@ -116,7 +116,7 @@ export abstract class IsometricDraggable extends IsometricElement {
             this._dragStore.left + value / this.data.scale,
             bounds,
         );
-    };
+    }
 
     private getTop(value: number): number {
         const bounds = this._bounds && this._bounds.top || NO_LIMITS;
@@ -124,7 +124,7 @@ export abstract class IsometricDraggable extends IsometricElement {
             this._dragStore.top + value / this.data.scale,
             bounds
         );
-    };
+    }
 
     private getFixedCoordinates(coords: Partial<Position>): Partial<Position> {
         return Object.entries(coords).reduce((acc: Partial<Position>, entry: [string, number]): Partial<Position> => {
@@ -160,7 +160,7 @@ export abstract class IsometricDraggable extends IsometricElement {
     }
 
     private animate() {
-        if (this._update) {   
+        if (this._update) {
             if (!this._prevented) {
                 if (typeof this._coords.right === Typeof.NUMBER) {
                     this.right = this._coords.right;
@@ -253,9 +253,9 @@ export abstract class IsometricDraggable extends IsometricElement {
     private beginDrag() {
         this.element.addEventListener(EVENTS.TOUCH_START, this.startDrag, true);
         this.element.addEventListener(EVENTS.MOUSE_DOWN, this.startDrag, true);
-    };
+    }
 
-    private stopDrag() {        
+    private stopDrag() {
         this.element.removeEventListener(EVENTS.TOUCH_START, this.startDrag, true);
         this.element.removeEventListener(EVENTS.TOUCH_MOVE, this.moveElement, true);
         this.element.removeEventListener(EVENTS.TOUCH_END, this.dropElement, true);
@@ -309,7 +309,7 @@ export abstract class IsometricDraggable extends IsometricElement {
         if (_isBrowser) {
             this.stopDrag();
             this.beginDrag();
-        }        
+        }
     }
 
     public get bounds(): Boundaries {

@@ -19,7 +19,7 @@ export class Store {
     }
 
     private sizes: Sizes;
- 
+
     public get width(): number {
         return this.sizes.width;
     }

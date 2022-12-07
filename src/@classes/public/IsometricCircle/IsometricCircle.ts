@@ -14,13 +14,13 @@ import {
     getSVGPath,
     translateCommandPoints
 } from '@utils/svg';
-import { IsometricShape } from '@classes/abstract/IsometricShape';
+import { IsometricShapeAbstract } from '@classes/abstract/IsometricShapeAbstract';
 import {
     IsometricCircleProps,
     GetCirclePathArguments
 } from './types';
 
-export class IsometricCircle extends IsometricShape {
+export class IsometricCircle extends IsometricShapeAbstract {
 
     public constructor(props: IsometricCircleProps) {
         const { radius, ...rest } = props;
@@ -111,7 +111,7 @@ export class IsometricCircle extends IsometricShape {
     }
 
     protected privateUpdateAnimations(): void {
-        
+
         this.animations.forEach((animation: SVGAnimationObject): void => {
 
             const args = {
@@ -158,7 +158,7 @@ export class IsometricCircle extends IsometricShape {
         });
 
     }
-    
+
     public get radius(): number {
         return this._radius;
     }

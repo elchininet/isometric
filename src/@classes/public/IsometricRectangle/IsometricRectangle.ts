@@ -15,13 +15,13 @@ import {
     getSVGPath,
     translateCommandPoints
 } from '@utils/svg';
-import { IsometricShape } from '@classes/abstract/IsometricShape';
+import { IsometricShapeAbstract } from '@classes/abstract/IsometricShapeAbstract';
 import {
     IsometricRectangleProps,
     GetRectanglePathArguments
 } from './types';
 
-export class IsometricRectangle extends IsometricShape {
+export class IsometricRectangle extends IsometricShapeAbstract {
 
     public constructor(props: IsometricRectangleProps) {
         const { height, width, ...rest } = props;

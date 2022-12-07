@@ -8,7 +8,7 @@ import {
 } from '@constants';
 import { addSVGProperties } from '@utils/svg';
 import { Store } from '@store';
-import { IsometricContainer } from '@classes/abstract/IsometricContainer';
+import { IsometricContainerAbstract } from '@classes/abstract/IsometricContainerAbstract';
 import { IsometricCanvasProps } from './types';
 
 const defaultProps: IsometricCanvasProps = {
@@ -19,7 +19,7 @@ const defaultProps: IsometricCanvasProps = {
     width: DEFAULT_WIDTH
 };
 
-export class IsometricCanvas extends IsometricContainer {
+export class IsometricCanvas extends IsometricContainerAbstract {
 
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
@@ -60,7 +60,7 @@ export class IsometricCanvas extends IsometricContainer {
         containerElement.appendChild(this.element);
 
     }
-    
+
     private props: IsometricCanvasProps;
     private background: SVGRectElement;
     private isAnimated: boolean;
@@ -130,7 +130,7 @@ export class IsometricCanvas extends IsometricContainer {
             svg.pauseAnimations();
         }
         this.isAnimated = false;
-        return this;     
+        return this;
     }
 
     public resumeAnimations(): IsometricCanvas {

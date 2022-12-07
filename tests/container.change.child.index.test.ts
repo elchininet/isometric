@@ -9,7 +9,9 @@ import {
 } from '../src';
 
 const childIndex = (child: SVGElement): number => {
-    return Array.from(child.parentNode.children).indexOf(child);
+    return child.parentNode
+        ? Array.from(child.parentNode.children).indexOf(child)
+        : 0;
 };
 
 describe('Test changing container‘s child index', (): void => {

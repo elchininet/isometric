@@ -1,0 +1,1 @@
+export { IsometricElementAbstract } from './IsometricElementAbstract';
