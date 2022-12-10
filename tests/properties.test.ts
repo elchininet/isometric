@@ -74,7 +74,7 @@ describe('Test properties', (): void => {
             left: 2,
             top: 0.5
         });
-        
+
         group.addChildren(rectangle, circle);
 
         cube.addChildren(path, group);
@@ -90,7 +90,7 @@ describe('Test properties', (): void => {
     afterEach((): void => {
         if (container.parentNode && container.parentNode === document.body) {
             document.body.removeChild(container);
-        }        
+        }
     });
 
     it('IsometricCanvas properties', (): void => {
@@ -135,7 +135,7 @@ describe('Test properties', (): void => {
     });
 
     it('Compare IsometricPath vs IsometricRectangle', (): void => {
-        
+
         expect(path.fillColor).toBe(rectangle.fillColor);
         expect(path.fillOpacity).toBe(rectangle.fillOpacity);
         expect(path.strokeColor).toBe(rectangle.strokeColor);
@@ -146,11 +146,11 @@ describe('Test properties', (): void => {
         expect(path.strokeWidth).toBe(rectangle.strokeWidth);
 
         expect(pathElement.getAttribute('d')).toBe(rectangleElement.getAttribute('d'));
-        
+
     });
 
     it('Compare IsometricPath vs IsometricCircle', (): void => {
-        
+
         expect(path.fillColor).toBe(circle.fillColor);
         expect(path.fillOpacity).toBe(circle.fillOpacity);
         expect(path.strokeColor).toBe(circle.strokeColor);
@@ -159,17 +159,17 @@ describe('Test properties', (): void => {
         expect(path.strokeLinejoin).toBe(circle.strokeLinejoin);
         expect(path.strokeOpacity).toBe(circle.strokeOpacity);
         expect(path.strokeWidth).toBe(circle.strokeWidth);
-        
+
     });
 
     it('IsometricRectangle change position', (): void => {
-        
+
         rectangle.planeView = PlaneView.TOP;
         expect(rectangleElement.getAttribute('d')).toBe('M250 160 L353.923 220 L250 280 L146.077 220z');
-        
+
         rectangle.planeView = PlaneView.FRONT;
         expect(rectangleElement.getAttribute('d')).toBe('M250 160 L146.077 220 L146.077 100 L250 40z');
-        
+
         rectangle.planeView = PlaneView.SIDE;
         expect(rectangleElement.getAttribute('d')).toBe('M250 160 L353.923 220 L353.923 100 L250 40z');
 
@@ -186,7 +186,7 @@ describe('Test properties', (): void => {
         expect(rectangleElement.getAttribute('d')).toBe('');
         rectangle.update();
         expect(rectangleElement.getAttribute('d')).toBe('M250 160 L457.846 280 L250 400 L42.154 280z');
-        
+
     });
 
     it('IsometricCircle change position', (): void => {
@@ -197,10 +197,10 @@ describe('Test properties', (): void => {
 
         circle.planeView = PlaneView.TOP;
         expect(circleElement.getAttribute('d')).toBe('M94.1155 310 A 73.484658 42.426407 0 0 0 198.0385 250 A 73.484658 42.426407 180 0 0 94.1155 310z');
-        
+
         circle.planeView = PlaneView.FRONT;
         expect(circleElement.getAttribute('d')).toBe('M94.1155 310 A 73.484684 42.426392 119.999977 0 0 198.0385 250 A 73.484684 42.426392 -60.000023 0 0 94.1155 310z');
-        
+
         circle.planeView = PlaneView.SIDE;
         expect(circleElement.getAttribute('d')).toBe('M94.1155 250 A 73.484684 42.426392 60.000023 0 0 198.0385 310 A 73.484684 42.426392 -119.999977 0 0 94.1155 250z');
 
@@ -213,11 +213,11 @@ describe('Test properties', (): void => {
         expect(circleElement.getAttribute('d')).toBe('');
         circle.update();
         expect(circleElement.getAttribute('d')).toBe('M42.154 340 A 146.969316 84.852814 0 0 0 250 220 A 146.969316 84.852814 180 0 0 42.154 340z');
-        
+
     });
 
     it('IsometricPath properties', (): void => {
-        
+
         expect(path.fillColor).toBe('#FFF');
         expect(path.fillOpacity).toBe(0.5);
         expect(path.strokeColor).toBe('#000');
@@ -227,7 +227,7 @@ describe('Test properties', (): void => {
         expect(path.strokeOpacity).toBe(0.25);
         expect(path.strokeWidth).toBe(2);
         expect(path.autoclose).toBeTruthy();
-        
+
         expect(pathElement.getAttribute('fill')).toBe('#FFF');
         expect(pathElement.getAttribute('fill-opacity')).toBe('0.5');
         expect(pathElement.getAttribute('stroke')).toBe('#000');
@@ -236,7 +236,7 @@ describe('Test properties', (): void => {
         expect(pathElement.getAttribute('stroke-linejoin')).toBe('miter');
         expect(pathElement.getAttribute('stroke-opacity')).toBe('0.25');
         expect(pathElement.getAttribute('stroke-width')).toBe('2');
-        expect(pathElement.getAttribute('d').endsWith('z')).toBeTruthy();
+        expect(pathElement.getAttribute('d')?.endsWith('z')).toBeTruthy();
 
         path.fillColor = '#000';
         path.fillOpacity = 1;
@@ -257,7 +257,7 @@ describe('Test properties', (): void => {
         expect(path.strokeOpacity).toBe(0.75);
         expect(path.strokeWidth).toBe(1);
         expect(path.autoclose).toBeFalsy();
-        
+
         expect(pathElement.getAttribute('fill')).toBe('#000');
         expect(pathElement.getAttribute('fill-opacity')).toBe('1');
         expect(pathElement.getAttribute('stroke')).toBe('#FFF');
@@ -266,12 +266,12 @@ describe('Test properties', (): void => {
         expect(pathElement.getAttribute('stroke-linejoin')).toBe('bevel');
         expect(pathElement.getAttribute('stroke-opacity')).toBe('0.75');
         expect(pathElement.getAttribute('stroke-width')).toBe('1');
-        expect(pathElement.getAttribute('d').endsWith('z')).toBeFalsy();
-        
+        expect(pathElement.getAttribute('d')?.endsWith('z')).toBeFalsy();
+
     });
 
     it('IsometricRectangle properties', (): void => {
-        
+
         expect(rectangle.fillColor).toBe('#FFF');
         expect(rectangle.fillOpacity).toBe(0.5);
         expect(rectangle.strokeColor).toBe('#000');
@@ -280,7 +280,7 @@ describe('Test properties', (): void => {
         expect(rectangle.strokeLinejoin).toBe('miter');
         expect(rectangle.strokeOpacity).toBe(0.25);
         expect(rectangle.strokeWidth).toBe(2);
-        
+
         expect(rectangleElement.getAttribute('fill')).toBe('#FFF');
         expect(rectangleElement.getAttribute('fill-opacity')).toBe('0.5');
         expect(rectangleElement.getAttribute('stroke')).toBe('#000');
@@ -307,7 +307,7 @@ describe('Test properties', (): void => {
         expect(rectangle.strokeLinejoin).toBe('bevel');
         expect(rectangle.strokeOpacity).toBe(0.75);
         expect(rectangle.strokeWidth).toBe(1);
-        
+
         expect(rectangleElement.getAttribute('fill')).toBe('#000');
         expect(rectangleElement.getAttribute('fill-opacity')).toBe('1');
         expect(rectangleElement.getAttribute('stroke')).toBe('#FFF');
@@ -316,11 +316,11 @@ describe('Test properties', (): void => {
         expect(rectangleElement.getAttribute('stroke-linejoin')).toBe('bevel');
         expect(rectangleElement.getAttribute('stroke-opacity')).toBe('0.75');
         expect(rectangleElement.getAttribute('stroke-width')).toBe('1');
-        
+
     });
 
     it('IsometricGroup properties', (): void => {
-        
+
         expect(groupElement.tagName).toBe('g');
         expect(svgElement.contains(groupElement)).toBeTruthy();
         expect(groupElement.contains(rectangleElement)).toBeTruthy();
@@ -334,7 +334,7 @@ describe('Test properties', (): void => {
 
         expect(groupElement.contains(circleElement)).toBeFalsy();
         expect(svgElement.contains(circleElement)).toBeFalsy();
-        
+
     });
 
 });

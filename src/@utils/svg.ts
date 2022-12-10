@@ -4,7 +4,7 @@ import {
     CommandPoint,
     IsometricPlaneView,
     Rotation,
-    SVGAnimationProperties,
+    SVGProperties,
     SVGNativeProperties,
     SVGProps,
     AddEventListenerCallback
@@ -156,20 +156,23 @@ export const getTextureCorner = (
     return corner;
 };
 
-export const getSVGProperty = (property: SVGAnimationProperties): SVGNativeProperties => {
+export const isSVGProperty = (property: string): property is SVGProperties => {
+    return [
+        'fillColor',
+        'fillOpacity',
+        'strokeColor',
+        'strokeOpacity',
+        'strokeWidth'
+    ].includes(property);
+};
+
+export const getSVGProperty = (property: string): SVGNativeProperties => {
     return {
         fillColor: 'fill',
         fillOpacity: 'fill-opacity',
         strokeColor: 'stroke',
         strokeOpacity: 'stroke-opacity',
-        strokeWidth: 'stroke-width',
-        path: 'd',
-        left: 'd',
-        right: 'd',
-        top: 'd',
-        width: 'd',
-        height: 'd',
-        radius: 'd'
+        strokeWidth: 'stroke-width'
     }[property] as SVGNativeProperties;
 };
 

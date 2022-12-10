@@ -6,10 +6,10 @@ export type StrokeLinejoin = keyof typeof LineJoin;
 
 export type SVGProperties = 'fillColor' | 'fillOpacity' | 'strokeColor' | 'strokeOpacity' | 'strokeWidth';
 export type SVGPathProperties = 'path';
-export type SVGShapeProperties = 'left' | 'right' | 'top';
+export type SVGPositionableProperties = 'left' | 'right' | 'top';
 export type SVGRectangleProperties = 'width' | 'height';
 export type SVGCircleProperties = 'radius';
-export type SVGAnimationProperties = SVGProperties | SVGPathProperties | SVGShapeProperties | SVGRectangleProperties | SVGCircleProperties;
+export type SVGAnimationProperties = SVGProperties | SVGPathProperties | SVGPositionableProperties | SVGRectangleProperties | SVGCircleProperties;
 export type SVGNativeProperties = 'fill' | 'fill-opacity' | 'stroke' | 'stroke-opacity' | 'stroke-width' | 'd';
 
 export type SVGProps = {
@@ -39,11 +39,11 @@ export type SVGPathAnimation = SVGAnimation & {
 };
 
 export type SVGRectangleAnimation = SVGAnimation & {
-    property: SVGProperties | SVGShapeProperties | SVGRectangleProperties;
+    property: SVGProperties | SVGPositionableProperties | SVGRectangleProperties;
 }
 
 export type SVGCircleAnimation = SVGAnimation & {
-    property: SVGProperties | SVGShapeProperties | SVGCircleProperties;
+    property: SVGProperties | SVGPositionableProperties | SVGCircleProperties;
 }
 
 export type SVGAnimationObject = SVGAnimation &  {

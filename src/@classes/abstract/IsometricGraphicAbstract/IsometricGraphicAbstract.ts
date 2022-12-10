@@ -18,7 +18,8 @@ import {
 import {
     addSVGProperties,
     getSVGProperty,
-    getPatternTransform
+    getPatternTransform,
+    isSVGProperty
 } from '@utils/svg';
 import { uuid, round, getPointFromIsometricPoint } from '@utils/math';
 import { IsometricElementAbstract } from '../IsometricElementAbstract';
@@ -120,7 +121,8 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
     protected patternId: string;
     protected pattern: SVGPatternElement;
     protected animations: SVGAnimationObject[];
-    protected abstract privateUpdateAnimations(): void;
+    protected abstract getSVGProperty(property: string): string;
+    protected abstract getAnimationProps(animation: SVGAnimationObject): Record<string, string>;
 
     protected updateAnimations(): void {
 
@@ -134,31 +136,40 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
                 this.element.appendChild(animation.element);
             }
 
+            const isNativeSVGProperty = isSVGProperty(animation.property);
+
+            const property = isNativeSVGProperty
+                ? getSVGProperty(animation.property)
+                : this.getSVGProperty(animation.property);
+
             addSVGProperties(animation.element, {
                 repeatCount: `${animation.repeat || 'indefinite'}`,
-                attributeName: getSVGProperty(animation.property),
+                attributeName: property,
                 dur: `${animation.duration || 1}s`
             });
 
-            if (animation.values) {
-                addSVGProperties(
-                    animation.element,
-                    {
-                        values: Array.isArray(animation.values)
-                            ? animation.values.map((value: string | number): string => `${value}`).join(';')
-                            : `${animation.values}`
-                    }
-                );
+            if (isNativeSVGProperty) {
+                if (animation.values) {
+                    addSVGProperties(
+                        animation.element,
+                        {
+                            values: Array.isArray(animation.values)
+                                ? animation.values.map((value: string | number): string => `${value}`).join(';')
+                                : `${animation.values}`
+                        }
+                    );
+                } else {
+                    addSVGProperties(
+                        animation.element, {
+                            from: `${animation.from}`,
+                            to: `${animation.to}`
+                        }
+                    );
+                }
             } else {
-                addSVGProperties(animation.element, {
-                    from: `${animation.from}`,
-                    to: `${animation.to}`
-                });
+                addSVGProperties(animation.element, this.getAnimationProps(animation));
             }
-
         });
-
-        this.privateUpdateAnimations();
 
     }
 

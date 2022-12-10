@@ -103,11 +103,11 @@ describe('Test dragging', (): void => {
         });
 
         group = new IsometricGroup();
-        
+
         group.addChildren(rectangle, circle);
 
         canvas.addChildren(group);
-        
+
         groupElement = group.getElement();
         rectangleElement = rectangle.getElement();
         circleElement = circle.getElement();
@@ -115,7 +115,7 @@ describe('Test dragging', (): void => {
         spy = jest.spyOn(window, 'requestAnimationFrame').mockImplementation((callback: FrameRequestCallback): number => {
             window.setTimeout(() => {
                 callback(0);
-            }, 10);            
+            }, 10);
             return 0;
         });
 
@@ -125,7 +125,7 @@ describe('Test dragging', (): void => {
         if (container.parentNode && container.parentNode === document.body) {
             document.body.removeChild(container);
         }
-        spy.mockRestore();   
+        spy.mockRestore();
     });
 
     it('Initial coordinates and initial paths', (): void => {
@@ -181,13 +181,13 @@ describe('Test dragging', (): void => {
     it('Drag group', async (): Promise<void> => {
 
         expect(group.drag).toBeFalsy();
-        
+
         // Drag top
         group.drag = PlaneView.TOP;
         expect(group.drag).toBe(PlaneView.TOP);
 
         await dragElement(groupElement, 200, 300);
-        
+
         expect(group.right).toBe(41.547011);
         expect(group.left).toBe(18.452989);
         expect(group.top).toBe(0);
@@ -245,7 +245,7 @@ describe('Test dragging', (): void => {
         expect(group.drag).toBe(PlaneView.TOP);
 
         await dragElement(groupElement, 200, 300);
-        
+
         expect(group.right).toBe(10);
         expect(group.left).toBe(18.452989);
         expect(group.top).toBe(0);
@@ -298,12 +298,12 @@ describe('Test dragging', (): void => {
     it('Drag with touchevents', async (): Promise<void> => {
 
         expect(group.drag).toBeFalsy();
-        
+
         // Drag top
         group.drag = PlaneView.TOP;
 
         await dragElementWithTouchEvents(groupElement, 200, 300);
-        
+
         expect(group.right).toBe(41.547011);
         expect(group.left).toBe(18.452989);
         expect(group.top).toBe(0);
@@ -315,7 +315,7 @@ describe('Test dragging', (): void => {
         // Drag front
         group.drag = PlaneView.FRONT;
         expect(group.drag).toBe(PlaneView.FRONT);
-        
+
         await dragElementWithTouchEvents(groupElement, 300, 400);
 
         expect(group.right).toBe(0);
@@ -329,7 +329,7 @@ describe('Test dragging', (): void => {
         // Drag side
         group.drag = PlaneView.SIDE;
         expect(group.drag).toBe(PlaneView.SIDE);
-        
+
         await dragElementWithTouchEvents(groupElement, 800, 500);
 
         expect(group.right).toBe(92.376086);
@@ -340,11 +340,11 @@ describe('Test dragging', (): void => {
     });
 
     it('Capturing drag events', async (): Promise<void> => {
-        
+
         const mockDragstart = jest.fn();
         const mockDrag = jest.fn();
         const mockEnd = jest.fn();
-        
+
         group.drag = PlaneView.TOP;
 
         group.addEventListener('dragstart', mockDragstart);
@@ -381,13 +381,13 @@ describe('Test dragging', (): void => {
     });
 
     it('Preventing dragging', async (): Promise<void> => {
-        
+
         const mockDragstart = jest.fn();
         const mockDrag = jest.fn((event: CustomEvent) => {
             event.preventDefault();
         });
         const mockEnd = jest.fn();
-        
+
         group.drag = PlaneView.TOP;
 
         group.addEventListener('dragstart', mockDragstart);

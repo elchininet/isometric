@@ -73,7 +73,7 @@ describe('Test changing container‘s child index', (): void => {
         group.addChildren(top, right, left);
 
         canvas.addChildren(group, circle, path);
-        
+
         groupElement = group.getElement();
         topElement = top.getElement();
         rightElement = right.getElement();
@@ -86,7 +86,7 @@ describe('Test changing container‘s child index', (): void => {
     afterEach((): void => {
         if (container.parentNode && container.parentNode === document.body) {
             document.body.removeChild(container);
-        }        
+        }
     });
 
     it('Check initial children order', (): void => {
@@ -115,7 +115,7 @@ describe('Test changing container‘s child index', (): void => {
         expect(childIndex(groupElement)).toBe(3);
 
         canvas.setChildIndex(path, 0);
-        
+
         expect(canvas.children).toMatchObject([path, circle, group]);
 
         expect(childIndex(pathElement)).toBe(1);
@@ -164,7 +164,7 @@ describe('Test changing container‘s child index', (): void => {
 
         expect(childIndex(topElement)).toBe(0);
         expect(childIndex(leftElement)).toBe(1);
-        expect(childIndex(rightElement)).toBe(2);        
+        expect(childIndex(rightElement)).toBe(2);
 
     });
 

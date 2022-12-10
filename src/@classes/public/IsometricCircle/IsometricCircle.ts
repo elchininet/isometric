@@ -5,15 +5,11 @@ import {
 import {
     CommandPoint,
     SVGCircleAnimation,
-    SVGShapeProperties,
+    SVGPositionableProperties,
     SVGCircleProperties,
     SVGAnimationObject
 } from '@types';
-import {
-    addSVGProperties,
-    getSVGPath,
-    translateCommandPoints
-} from '@utils/svg';
+import { getSVGPath, translateCommandPoints } from '@utils/svg';
 import { IsometricShapeAbstract } from '@classes/abstract/IsometricShapeAbstract';
 import {
     IsometricCircleProps,
@@ -110,52 +106,55 @@ export class IsometricCircle extends IsometricShapeAbstract {
         );
     }
 
-    protected privateUpdateAnimations(): void {
+    protected getSVGProperty(): string {
+        return 'd';
+    }
 
-        this.animations.forEach((animation: SVGAnimationObject): void => {
+    protected getAnimationProps(animation: SVGAnimationObject): Record<string, string> {
 
-            const args = {
-                right: this.right,
-                left: this.left,
-                top: this.top,
-                radius: this.radius
-            };
+        const props = {
+            right: this.right,
+            left: this.left,
+            top: this.top,
+            radius: this.radius
+        };
 
-            if (Object.prototype.hasOwnProperty.call(args, animation.property)) {
+        if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
 
-                const property = animation.property as SVGShapeProperties | SVGCircleProperties;
+            const property = animation.property as SVGPositionableProperties | SVGCircleProperties;
 
-                if (animation.values) {
+            if (animation.values) {
 
-                    let values: string;
-
-                    if (Array.isArray(animation.values)) {
-                        values = animation.values.map((value: string | number): string => {
-                            const modifiedArgs = { ...args };
+                if (Array.isArray(animation.values)) {
+                    return {
+                        values: animation.values.map((value: string | number): string => {
+                            const modifiedArgs = { ...props };
                             modifiedArgs[property] = +value;
                             return this.getCirclePath(modifiedArgs);
-                        }).join(';');
-                    } else {
-                        const modifiedArgs = { ...args };
-                        modifiedArgs[property] = +animation.values;
-                        values = this.getCirclePath(modifiedArgs);
-                    }
-
-                    addSVGProperties(animation.element, { values });
-
+                        }).join(';')
+                    };
                 } else {
-                    const fromArgs = { ...args };
-                    const toArgs = { ...args };
-                    fromArgs[property] = +animation.from;
-                    toArgs[property] = +animation.to;
-                    addSVGProperties(animation.element, {
-                        from: this.getCirclePath(fromArgs),
-                        to: this.getCirclePath(toArgs)
-                    });
+                    const modifiedArgs = { ...props };
+                    modifiedArgs[property] = +animation.values;
+                    return {
+                        values: this.getCirclePath(modifiedArgs)
+                    };
                 }
+
+            } else {
+                const fromArgs = { ...props };
+                const toArgs = { ...props };
+                fromArgs[property] = +animation.from;
+                toArgs[property] = +animation.to;
+                return {
+                    from: this.getCirclePath(fromArgs),
+                    to: this.getCirclePath(toArgs)
+                };
             }
 
-        });
+        }
+
+        throw new TypeError(`The property ${animation.property} is not an allowed animation property for the IsometricCircle class`);
 
     }
 
