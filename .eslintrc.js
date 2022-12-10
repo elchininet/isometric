@@ -27,7 +27,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: ['webpack*.js'],
+            files: ['webpack*.js', 'jest.config.js', 'aliases.js'],
             rules: {
                 '@typescript-eslint/no-var-requires': 'off'
             }

@@ -688,11 +688,13 @@ These are the properties that can be animated (property `property`)
 * strokeColor
 * strokeOpacity
 * strokeWidth
-* right
-* left
-* top
-* width
-* height
+* right*
+* left*
+* top*
+* width*
+* height*
+
+>* At the moment, it is not possible to animate more than one of these properties at the same time. If you do it, only the last one will be applied.
 
 ```javascript
 removeAnimationByIndex(index)
@@ -924,10 +926,12 @@ These are the properties that can be animated (property `property`)
 * strokeColor
 * strokeOpacity
 * strokeWidth
-* right
-* left
-* top
-* radius
+* right*
+* left*
+* top*
+* radius*
+
+>* At the moment, it is not possible to animate more than one of these properties at the same time. If you do it, only the last one will be applied.
 
 ```javascript
 removeAnimationByIndex(index)

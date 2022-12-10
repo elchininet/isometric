@@ -46,7 +46,7 @@ export default ( IsometricModule, container ) => {
                 'M0 0 1 L1 0 1 L1 1 1 L0 1 1'
             ]
         })
-        .addAnimation(colorAnimationProps);        
+        .addAnimation(colorAnimationProps);
 
     rightPiece
         .addAnimation(rectangleAnimationProps)

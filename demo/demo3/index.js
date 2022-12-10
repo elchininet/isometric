@@ -13,7 +13,7 @@ export default ( IsometricModule, container ) => {
     const bottomT = new IsometricPath();
     const bottomR = new IsometricPath();
     const bottomL = new IsometricPath();
-    
+
     const topT = new IsometricPath();
     const topR = new IsometricPath();
     const topL = new IsometricPath();
@@ -41,7 +41,7 @@ export default ( IsometricModule, container ) => {
             return;
         }
         this.right = flip ? 0.25 : -0.25;
-        flip = !flip;     
+        flip = !flip;
     });
 
     isometric.addChildren(bottomPiece, topPiece);
