@@ -50,7 +50,7 @@ export default ( IsometricModule, container ) => {
 
     const chop = new IsometricPath({
         texture: textureTop
-    })
+    });
 
     side.draw('M1 1 0 L1 1 0.5 L0 1 1 L0 1 0');
     chop.draw('M1 1 0.5 L0 1 1 L0 0 1 L1 0 0.5');
