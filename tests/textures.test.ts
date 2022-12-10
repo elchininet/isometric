@@ -51,7 +51,7 @@ describe('Test textures', (): void => {
     afterEach((): void => {
         if (container.parentNode && container.parentNode === document.body) {
             document.body.removeChild(container);
-        }        
+        }
     });
 
     it('Check pattern', () => {
@@ -107,7 +107,7 @@ describe('Test textures', (): void => {
 
         expect(pathPattern.firstChild).toBeTruthy();
         expect(pathPattern.childNodes.length).toBe(1);
-        expect(pathPattern.firstChild.nodeName).toBe('image');
+        expect(pathPattern.firstChild?.nodeName).toBe('image');
 
         let image = pathPattern.firstChild as SVGImageElement;
 
@@ -168,7 +168,7 @@ describe('Test textures', (): void => {
         });
 
         path.draw(PATH_COMMANDS);
-    
+
         isometric.addChild(path);
 
         pathElement = path.getElement();
@@ -188,7 +188,7 @@ describe('Test textures', (): void => {
         path = new IsometricPath({
             texture
         });
-    
+
         isometric.addChild(path);
 
         pathPattern = path.getPattern();
@@ -285,7 +285,7 @@ describe('Test textures', (): void => {
             });
 
             path.draw(PATH_COMMANDS);
-    
+
             isometric.addChild(path);
 
             pathPattern = path.getPattern();
@@ -399,11 +399,11 @@ describe('Test textures', (): void => {
                     }
                 }
             });
-        
+
             isometric.addChild(rectangle);
-            
-            let rectanglePattern = rectangle.getPattern();
-    
+
+            const rectanglePattern = rectangle.getPattern();
+
             expect(rectanglePattern.getAttribute('patternTransform')).toBe(test.expect);
 
         });
@@ -509,7 +509,7 @@ describe('Test textures', (): void => {
 
         isometric.removeChild(circle);
 
-    }); 
+    });
 
     it('Check pattern removal', () => {
 
@@ -518,7 +518,7 @@ describe('Test textures', (): void => {
         });
 
         path.draw(PATH_COMMANDS);
-    
+
         isometric.addChildren(path);
 
         pathPattern = path.getPattern();
@@ -528,13 +528,13 @@ describe('Test textures', (): void => {
         expect(isometricElement.contains(pathPattern)).toBeFalsy();
 
     });
-    
+
     it('Check texture property', () => {
 
         path = new IsometricPath();
 
         path.draw(PATH_COMMANDS);
-    
+
         isometric.addChildren(path);
 
         pathPattern = path.getPattern();
@@ -573,7 +573,7 @@ describe('Test textures', (): void => {
         path = new IsometricPath();
 
         path.draw(PATH_COMMANDS);
-    
+
         isometric.addChildren(path);
 
         path.updateTexture({
@@ -597,10 +597,10 @@ describe('Test textures', (): void => {
         });
 
         path.draw(PATH_COMMANDS);
-    
+
         isometric.addChildren(path);
 
-        let cloneTexture = {
+        const cloneTexture = {
             ...texture,
             planeView: PlaneView.TOP,
             shift: { left: 1 },
@@ -619,7 +619,7 @@ describe('Test textures', (): void => {
         expect(path.texture).toMatchObject({
             ...cloneTexture,
             shift: { left: 1 }
-        });       
+        });
 
         expect(image.getAttribute('href')).toBe(cloneTexture.url);
         expect(image.style.imageRendering).toBe('pixelated');
@@ -637,7 +637,7 @@ describe('Test textures', (): void => {
             shift: { left: 1 }
         });
         expect(image.getAttribute('href')).toBe(newUrl);
-        
+
         path.updateTexture({
             url: texture.url,
             pixelated: false
@@ -655,7 +655,7 @@ describe('Test textures', (): void => {
         path = new IsometricPath();
 
         path.draw(PATH_COMMANDS);
-    
+
         isometric.addChildren(path);
 
         path.updateTexture({
@@ -666,7 +666,7 @@ describe('Test textures', (): void => {
 
         expect(pathPattern).toBeFalsy();
 
-        isometric.removeChild(path);       
+        isometric.removeChild(path);
 
     });
 

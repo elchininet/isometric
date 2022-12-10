@@ -5,16 +5,12 @@ import {
 import {
     LinePoint,
     CommandPoint,
-    SVGShapeProperties,
+    SVGPositionableProperties,
     SVGRectangleProperties,
     SVGRectangleAnimation,
     SVGAnimationObject
 } from '@types';
-import {
-    addSVGProperties,
-    getSVGPath,
-    translateCommandPoints
-} from '@utils/svg';
+import { getSVGPath, translateCommandPoints } from '@utils/svg';
 import { IsometricShapeAbstract } from '@classes/abstract/IsometricShapeAbstract';
 import {
     IsometricRectangleProps,
@@ -81,53 +77,57 @@ export class IsometricRectangle extends IsometricShapeAbstract {
         );
     }
 
-    protected privateUpdateAnimations(): void {
+    protected getSVGProperty(): string {
+        return 'd';
+    }
 
-        this.animations.forEach((animation: SVGAnimationObject): void => {
+    protected getAnimationProps(animation: SVGAnimationObject): Record<string, string> {
 
-            const args = {
-                right: this.right,
-                left: this.left,
-                top: this.top,
-                width: this.width,
-                height: this.height
-            };
+        const props = {
+            right: this.right,
+            left: this.left,
+            top: this.top,
+            width: this.width,
+            height: this.height
+        };
 
-            if (Object.prototype.hasOwnProperty.call(args, animation.property)) {
+        if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
 
-                const property = animation.property as SVGShapeProperties | SVGRectangleProperties;
+            const property = animation.property as SVGPositionableProperties | SVGRectangleProperties;
 
-                if (animation.values) {
+            if (animation.values) {
 
-                    let values: string;
-
-                    if (Array.isArray(animation.values)) {
-                        values = animation.values.map((value: string | number): string => {
-                            const modifiedArgs = { ...args };
+                if (Array.isArray(animation.values)) {
+                    return {
+                        values: animation.values.map((value: string | number): string => {
+                            const modifiedArgs = { ...props };
                             modifiedArgs[property] = +value;
                             return this.getRectanglePath(modifiedArgs);
-                        }).join(';');
-                    } else {
-                        const modifiedArgs = { ...args };
-                        modifiedArgs[property] = +animation.values;
-                        values = this.getRectanglePath(modifiedArgs);
-                    }
-
-                    addSVGProperties(animation.element, { values });
-
+                        }).join(';')
+                    };
                 } else {
-                    const fromArgs = { ...args };
-                    const toArgs = { ...args };
-                    fromArgs[property] = +animation.from;
-                    toArgs[property] = +animation.to;
-                    addSVGProperties(animation.element, {
-                        from: this.getRectanglePath(fromArgs),
-                        to: this.getRectanglePath(toArgs)
-                    });
+                    const modifiedArgs = { ...props };
+                    modifiedArgs[property] = +animation.values;
+                    return {
+                        values: this.getRectanglePath(modifiedArgs)
+                    };
                 }
+
+            } else {
+                const fromArgs = { ...props };
+                const toArgs = { ...props };
+                fromArgs[property] = +animation.from;
+                toArgs[property] = +animation.to;
+                return {
+                    from: this.getRectanglePath(fromArgs),
+                    to: this.getRectanglePath(toArgs)
+                };
             }
 
-        });
+        }
+
+        throw new TypeError(`The property ${animation.property} is not an allowed animation property for the IsometricRectangle class`);
+
     }
 
     public get width(): number {

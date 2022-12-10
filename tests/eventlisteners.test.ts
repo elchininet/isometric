@@ -34,7 +34,7 @@ describe('Test event listeners', (): void => {
     afterEach((): void => {
         if (container.parentNode && container.parentNode === document.body) {
             document.body.removeChild(container);
-        }        
+        }
     });
 
     it('IsometricCanvas event listeners', (): void => {
@@ -66,7 +66,7 @@ describe('Test event listeners', (): void => {
     });
 
     it('IsometricPath event listeners', (): void => {
-        
+
         const mockCallBack = jest.fn();
 
         top.addEventListener('click', mockCallBack, true);
@@ -90,7 +90,7 @@ describe('Test event listeners', (): void => {
         topElement.dispatchEvent(event);
 
         expect(mockCallBack.mock.calls[1]).toBeUndefined();
-        
+
     });
 
     it('Remove event listeners that have not been added', (): void => {

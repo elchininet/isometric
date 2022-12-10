@@ -29,7 +29,7 @@
     "build": "yarn clean && rollup --config rollup.config.js && yarn finish",
     "demo": "webpack serve --open --config webpack.demo.config.js",
     "docs": "webpack --config webpack.demo.publish.js --mode production",
-    "lint": "eslint src/**/* --ext .ts",
+    "lint": "eslint src/**/* tests/*.ts demo/**/*.js --ext .ts,.js",
     "test": "jest --verbose",
     "prepare": "npm run build",
     "prepublishOnly": "npm run lint && npm run test",

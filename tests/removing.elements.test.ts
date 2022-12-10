@@ -16,12 +16,12 @@ describe('Removing methods', (): void => {
             width: 500,
             height: 320
         });
-    
+
         const top = new IsometricPath();
         const right = new IsometricPath();
         const left = new IsometricPath();
         const group = new IsometricGroup();
-    
+
         top.moveTo(0, 0, 1).lineTo(1, 0, 1).lineTo(1, 1, 1).lineTo(0, 1, 1);
         right.moveTo(1, 0, 1).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(1, 1, 1);
         left.moveTo(1, 1, 1).lineTo(1, 1, 0).lineTo(0, 1, 0).lineTo(0, 1, 1);
@@ -42,7 +42,7 @@ describe('Removing methods', (): void => {
         group.removeChild(top);
 
         expect(topElement.parentNode).toBeNull();
-        
+
         group.removeChildByIndex(0);
 
         expect(rightElement.parentNode).toBeNull();

@@ -38,33 +38,32 @@ export class IsometricPath extends IsometricPathAbstract {
         this._autoclose
     );
 
-    protected privateUpdateAnimations(): void {
+    protected getSVGProperty(): string {
+        return 'd';
+    }
 
-        this.animations.forEach((animation: SVGAnimationObject): void => {
+    protected getAnimationProps(animation: SVGAnimationObject): Record<string, string> {
 
-            if (animation.property === 'path') {
+        if (animation.property === 'path') {
 
-                if (animation.values) {
-                    addSVGProperties(
-                        animation.element,
-                        {
-                            values: Array.isArray(animation.values)
-                                ? animation.values.map((value: string | number): string => {
-                                    return this.getPathFromCommands(`${value}`);
-                                }).join(';')
-                                : this.getPathFromCommands(`${animation.values}`)
-                        }
-                    );
-                } else {
-                    addSVGProperties(animation.element, {
-                        from: this.getPathFromCommands(`${animation.from}`),
-                        to: this.getPathFromCommands(`${animation.to}`)
-                    });
-                }
-
+            if (animation.values) {
+                return {
+                    values: Array.isArray(animation.values)
+                        ? animation.values.map((value: string | number): string => {
+                            return this.getPathFromCommands(`${value}`);
+                          }).join(';')
+                        : this.getPathFromCommands(`${animation.values}`)
+                };
+            } else {
+                return {
+                    from: this.getPathFromCommands(`${animation.from}`),
+                    to: this.getPathFromCommands(`${animation.to}`)
+                };
             }
 
-        });
+        }
+
+        throw new TypeError(`The property ${animation.property} is not an allowed animation property for the IsometricPath class`);
 
     }
 
