@@ -1,6 +1,7 @@
 import {
     Command,
-    PlaneView
+    PlaneView,
+    SVG_ELEMENTS
 } from '@constants';
 import {
     CommandPoint,
@@ -104,6 +105,10 @@ export class IsometricCircle extends IsometricShapeAbstract {
             this.data.scale,
             true
         );
+    }
+
+    protected getSVGAnimationElement(): SVG_ELEMENTS {
+        return SVG_ELEMENTS.animate;
     }
 
     protected getSVGProperty(): string {

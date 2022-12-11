@@ -3,61 +3,40 @@ import '../images/block_top.png';
 
 export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricPath, IsometricRectangle, PlaneView, Axis } = IsometricModule;
+    const { IsometricCanvas, IsometricRectangle, IsometricText, PlaneView } = IsometricModule;
 
-    const isometric = new IsometricCanvas({
+    const cube = new IsometricCanvas({
         container,
-        backgroundColor: '#8AAA3F',
+        backgroundColor: '#CCC',
         scale: 120,
         width: 500,
         height: 320
     });
 
-    const commonTextureProps = {
-        height: 1,
-        width: 1,
-        pixelated: true
-    };
+    const rectangleCommonProps = {height: 1, width: 1};
+    const textCommonProps = { fontFamily: 'Arial', fontSize: 15, fillColor: '#666', strokeWidth: 0 };
+    const topPiece = new IsometricRectangle({...rectangleCommonProps, planeView: PlaneView.TOP});
+    const rightPiece = new IsometricRectangle({...rectangleCommonProps, planeView: PlaneView.FRONT});
+    const leftPiece = new IsometricRectangle({...rectangleCommonProps, planeView: PlaneView.SIDE});
 
-    const textureSides = {
-        url: 'images/block_side.png',
-        ...commonTextureProps
-    };
+    const topText = new IsometricText({...textCommonProps, planeView: PlaneView.TOP, right: 0.5, left: 0.5, top: 1});
+    const rightText = new IsometricText({...textCommonProps, planeView: PlaneView.FRONT, right: 1, left: 0.5, top: 0.5});
+    const leftText = new IsometricText({...textCommonProps, planeView: PlaneView.SIDE, right: 0.5, left: 1, top: 0.5});
 
-    const textureTop = {
-        url: 'images/block_top.png',
-        planeView: PlaneView.TOP,
-        rotation: {
-            axis: Axis.LEFT,
-            value: 26.5650
-        },
-        ...commonTextureProps
-    };
+    topPiece.top = 1;
+    rightPiece.right = 1;
+    leftPiece.left = 1;
 
-    const side = new IsometricPath({
-        texture: {
-            planeView: PlaneView.SIDE,
-            ...textureSides
-        }
-    });
+    topText.text = 'TOP FACE';
+    rightText.text = 'RIGHT FACE';
+    leftText.text = 'LEFT FACE';
 
-    const front = new IsometricRectangle({
-        planeView: PlaneView.FRONT,
-        height: 0.5,
-        width: 1,
-        texture: textureSides
-    });
-
-    const chop = new IsometricPath({
-        texture: textureTop
-    });
-
-    side.draw('M1 1 0 L1 1 0.5 L0 1 1 L0 1 0');
-    chop.draw('M1 1 0.5 L0 1 1 L0 0 1 L1 0 0.5');
-
-    side.left = 1;
-    front.right = 1;
-
-    isometric.addChildren(side, front, chop);
+    cube
+        .addChild(topPiece)
+        .addChild(rightPiece)
+        .addChild(leftPiece)
+        .addChild(topText)
+        .addChild(rightText)
+        .addChild(leftText);
 
 };

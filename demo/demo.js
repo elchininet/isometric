@@ -10,6 +10,7 @@ import demo4 from './demo4';
 import demo5 from './demo5';
 import demo6 from './demo6';
 import demo7 from './demo7';
+import demo8 from './demo8';
 
 const functioToString = (fn) => {
     const article = document.createElement('article');
@@ -29,6 +30,7 @@ const demos = new Map([
     ['demo5', demo5],
     ['demo6', demo6],
     ['demo7', demo7],
+    ['demo8', demo8],
 ]);
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -37,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const demo = document.getElementById(div);
         const container = document.createElement('div');
         const wrapper = document.createElement('div');
-        
+
         container.classList.add('demo-container');
         wrapper.classList.add('demo-wrapper');
 
