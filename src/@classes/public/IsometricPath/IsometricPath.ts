@@ -38,6 +38,10 @@ export class IsometricPath extends IsometricPathAbstract {
         this._autoclose
     );
 
+    protected getSVGAnimationElement(): SVG_ELEMENTS {
+        return SVG_ELEMENTS.animate;
+    }
+
     protected getSVGProperty(): string {
         return 'd';
     }

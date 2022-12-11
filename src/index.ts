@@ -15,3 +15,4 @@ export { IsometricGroup, IsometricGroupProps } from '@classes/public/IsometricGr
 export { IsometricRectangle, IsometricRectangleProps } from '@classes/public/IsometricRectangle';
 export { IsometricCircle, IsometricCircleProps } from '@classes/public/IsometricCircle';
 export { IsometricPath, IsometricPathProps } from '@classes/public/IsometricPath';
+export { IsometricText, IsometricTextProps } from '@classes/public/IsometricText';

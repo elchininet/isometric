@@ -1,6 +1,7 @@
 import {
     Command,
     PlaneView,
+    SVG_ELEMENTS,
 } from '@constants';
 import {
     LinePoint,
@@ -75,6 +76,10 @@ export class IsometricRectangle extends IsometricShapeAbstract {
             this.data.scale,
             true
         );
+    }
+
+    protected getSVGAnimationElement(): SVG_ELEMENTS {
+        return SVG_ELEMENTS.animate;
     }
 
     protected getSVGProperty(): string {

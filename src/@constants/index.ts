@@ -5,9 +5,11 @@ export enum SVG_ELEMENTS {
     group = 'g',
     path = 'path',
     rect = 'rect',
+    text = 'text',
     pattern = 'pattern',
     image = 'image',
-    animate = 'animate'
+    animate = 'animate',
+    animateTransform = 'animateTransform'
 }
 
 export enum SVG_PROPERTIES {
@@ -79,4 +81,19 @@ export enum EVENTS {
     TOUCH_START = 'touchstart',
     TOUCH_MOVE = 'touchmove',
     TOUCH_END = 'touchend'
+}
+
+export enum ORIGIN {
+    CENTER = 'center',
+    LEFT = 'left',
+    RIGHT = 'right',
+    TOP = 'top',
+    BOTTOM = 'bottom'
+}
+
+export enum FONT_WEIGHT {
+    NORMAL = 'normal',
+    BOLD = 'bold',
+    BOLDER = 'bolder',
+    LIGHTER = 'lighter'
 }
