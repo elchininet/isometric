@@ -107,6 +107,52 @@ exports[`Snapshot tests Draw animations with a single value 1`] = `
         values="M146.077 220 L250 280 L250 220 L146.077 160z"
       />
     </path>
+    <g
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <text
+        style="-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;pointer-events: none"
+        transform="translate(250 160) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745) rotate(0)"
+      >
+        <tspan
+          alignment-baseline="middle"
+          font-family="Arial"
+          font-size="12px"
+          font-style="normal"
+          font-weight="normal"
+          text-anchor="middle"
+        />
+        <animatetransform
+          additive="sum"
+          attributeName="transform"
+          attributeType="XML"
+          begin="indefinite"
+          dur="3s"
+          fill="freeze"
+          repeatCount="indefinite"
+          type="rotate"
+          values="180"
+        />
+      </text>
+      <animatetransform
+        additive="sum"
+        attributeName="transform"
+        attributeType="XML"
+        begin="indefinite"
+        dur="3s"
+        fill="freeze"
+        repeatCount="indefinite"
+        type="translate"
+        values="103.923,60"
+      />
+    </g>
   </svg>
 </div>
 `;
@@ -202,6 +248,54 @@ exports[`Snapshot tests Draw animations with from and to 1`] = `
         values="M146.077 220 L250 280 L250 220 L146.077 160z"
       />
     </path>
+    <g
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <text
+        style="-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;pointer-events: none"
+        transform="translate(250 160) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745) rotate(0)"
+      >
+        <tspan
+          alignment-baseline="middle"
+          font-family="Arial"
+          font-size="12px"
+          font-style="normal"
+          font-weight="normal"
+          text-anchor="middle"
+        />
+        <animatetransform
+          additive="sum"
+          attributeName="transform"
+          attributeType="XML"
+          begin="indefinite"
+          dur="3s"
+          fill="freeze"
+          from="0"
+          repeatCount="indefinite"
+          to="180"
+          type="rotate"
+        />
+      </text>
+      <animatetransform
+        additive="sum"
+        attributeName="transform"
+        attributeType="XML"
+        begin="indefinite"
+        dur="3s"
+        fill="freeze"
+        from="0,0"
+        repeatCount="indefinite"
+        to="103.923,60"
+        type="translate"
+      />
+    </g>
   </svg>
 </div>
 `;
@@ -293,6 +387,54 @@ exports[`Snapshot tests Draw animations with values 1`] = `
         values="M146.077 220 L250 280 L250 220 L146.077 160z"
       />
     </path>
+    <g
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <text
+        style="-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;pointer-events: none"
+        transform="translate(250 160) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745) rotate(0)"
+      >
+        <tspan
+          alignment-baseline="middle"
+          font-family="Arial"
+          font-size="12px"
+          font-style="normal"
+          font-weight="normal"
+          text-anchor="middle"
+        >
+          TEST
+        </tspan>
+        <animatetransform
+          additive="sum"
+          attributeName="transform"
+          attributeType="XML"
+          begin="indefinite"
+          dur="3s"
+          fill="freeze"
+          repeatCount="indefinite"
+          type="rotate"
+          values="0;180;360"
+        />
+      </text>
+      <animatetransform
+        additive="sum"
+        attributeName="transform"
+        attributeType="XML"
+        begin="indefinite"
+        dur="3s"
+        fill="freeze"
+        repeatCount="indefinite"
+        type="translate"
+        values="0,0;103.923,60;0,0"
+      />
+    </g>
   </svg>
 </div>
 `;

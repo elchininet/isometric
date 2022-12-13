@@ -4,6 +4,7 @@ import {
     IsometricRectangle,
     IsometricCircle,
     IsometricPath,
+    IsometricText,
     IsometricGraphicProps,
     PlaneView
 } from '../src';
@@ -18,11 +19,15 @@ describe('Test properties', (): void => {
     let path: IsometricPath;
     let rectangle: IsometricRectangle;
     let circle: IsometricCircle;
+    let text: IsometricText;
     let svgElement: SVGElement;
     let groupElement: SVGElement;
     let pathElement: SVGElement;
     let rectangleElement: SVGElement;
     let circleElement: SVGElement;
+    let textGroupElement: SVGElement;
+    let textElement: SVGElement;
+    let textSpanElement: SVGElement;
 
     beforeEach((): void => {
 
@@ -69,6 +74,21 @@ describe('Test properties', (): void => {
 
         path.moveTo(0, 0, 0).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(0, 1, 0);
 
+        text = new IsometricText({
+            planeView: PlaneView.TOP,
+            fontFamily: 'sans-serif',
+            fontSize: 15,
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+            right: 1,
+            left: 0.5,
+            top: 1.5,
+            rotation: 45,
+            origin: ['left', 'bottom'],
+            text: 'TEST',
+            ...commonProps
+        });
+
         group = new IsometricGroup({
             right: 1,
             left: 2,
@@ -77,13 +97,16 @@ describe('Test properties', (): void => {
 
         group.addChildren(rectangle, circle);
 
-        cube.addChildren(path, group);
+        cube.addChildren(path, group, text);
 
         svgElement = cube.getElement();
         groupElement = group.getElement();
         pathElement = path.getElement();
         rectangleElement = rectangle.getElement();
         circleElement = circle.getElement();
+        textGroupElement = text.getElement();
+        textElement = textGroupElement.querySelector('text') as SVGElement;
+        textSpanElement = textElement.querySelector('tspan') as SVGElement;
 
     });
 
@@ -316,6 +339,112 @@ describe('Test properties', (): void => {
         expect(rectangleElement.getAttribute('stroke-linejoin')).toBe('bevel');
         expect(rectangleElement.getAttribute('stroke-opacity')).toBe('0.75');
         expect(rectangleElement.getAttribute('stroke-width')).toBe('1');
+
+    });
+
+    it('IsometricText properties', (): void => {
+
+        expect(text.fillColor).toBe('#FFF');
+        expect(text.fillOpacity).toBe(0.5);
+        expect(text.strokeColor).toBe('#000');
+        expect(text.strokeDashArray).toMatchObject([1, 2, 3]);
+        expect(text.strokeLinecap).toBe('round');
+        expect(text.strokeLinejoin).toBe('miter');
+        expect(text.strokeOpacity).toBe(0.25);
+        expect(text.strokeWidth).toBe(2);
+        expect(text.text).toBe('TEST');
+        expect(text.planeView).toBe(PlaneView.TOP);
+        expect(text.fontFamily).toBe('sans-serif');
+        expect(text.fontSize).toBe(15);
+        expect(text.fontWeight).toBe('bold');
+        expect(text.fontStyle).toBe('italic');
+        expect(text.right).toBe(1);
+        expect(text.left).toBe(0.5);
+        expect(text.top).toBe(1.5);
+        expect(text.rotation).toBe(45);
+        expect(text.origin).toMatchObject(['left', 'bottom']);
+
+        expect(textGroupElement.getAttribute('fill')).toBe('#FFF');
+        expect(textGroupElement.getAttribute('fill-opacity')).toBe('0.5');
+        expect(textGroupElement.getAttribute('stroke')).toBe('#000');
+        expect(textGroupElement.getAttribute('stroke-dasharray')).toBe('1 2 3');
+        expect(textGroupElement.getAttribute('stroke-linecap')).toBe('round');
+        expect(textGroupElement.getAttribute('stroke-linejoin')).toBe('miter');
+        expect(textGroupElement.getAttribute('stroke-opacity')).toBe('0.25');
+        expect(textGroupElement.getAttribute('stroke-width')).toBe('2');
+
+        expect(textElement.style.userSelect).toBe('none');
+        expect(textElement.style.pointerEvents).toBe('none');
+        expect(textElement.getAttribute('transform')).toBe('translate(301.9615 70) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745) rotate(45)');
+
+        expect(textSpanElement.getAttribute('font-family')).toBe('sans-serif');
+        expect(textSpanElement.getAttribute('font-size')).toBe('15px');
+        expect(textSpanElement.getAttribute('font-style')).toBe('italic');
+        expect(textSpanElement.getAttribute('font-weight')).toBe('bold');
+        expect(textSpanElement.getAttribute('text-anchor')).toBe('start');
+        expect(textSpanElement.getAttribute('alignment-baseline')).toBe('baseline');
+
+        text.fillColor = '#000';
+        text.fillOpacity = 1;
+        text.strokeColor = '#FFF';
+        text.strokeDashArray = [3, 2, 1];
+        text.strokeLinecap = 'butt';
+        text.strokeLinejoin = 'bevel';
+        text.strokeOpacity = 0.75;
+        text.strokeWidth = 1;
+        text.text = 'CHANGE';
+        text.planeView = PlaneView.FRONT;
+        text.fontFamily = 'Helvetica';
+        text.fontSize = 20;
+        text.fontWeight = 'normal';
+        text.fontStyle = 'oblique';
+        text.right = 1.5;
+        text.left = 1;
+        text.top = 0.5;
+        text.rotation = 90;
+        text.origin = ['right', 'top'];
+
+        expect(text.fillColor).toBe('#000');
+        expect(text.fillOpacity).toBe(1);
+        expect(text.strokeColor).toBe('#FFF');
+        expect(text.strokeDashArray).toMatchObject([3, 2, 1]);
+        expect(text.strokeLinecap).toBe('butt');
+        expect(text.strokeLinejoin).toBe('bevel');
+        expect(text.strokeOpacity).toBe(0.75);
+        expect(text.strokeWidth).toBe(1);
+        expect(text.text).toBe('CHANGE');
+        expect(text.planeView).toBe(PlaneView.FRONT);
+        expect(text.fontFamily).toBe('Helvetica');
+        expect(text.fontSize).toBe(20);
+        expect(text.fontWeight).toBe('normal');
+        expect(text.fontStyle).toBe('oblique');
+        expect(text.right).toBe(1.5);
+        expect(text.left).toBe(1);
+        expect(text.top).toBe(0.5);
+        expect(text.rotation).toBe(90);
+        expect(text.origin).toMatchObject(['right', 'top']);
+
+        expect(textGroupElement.getAttribute('fill')).toBe('#000');
+        expect(textGroupElement.getAttribute('fill-opacity')).toBe('1');
+        expect(textGroupElement.getAttribute('stroke')).toBe('#FFF');
+        expect(textGroupElement.getAttribute('stroke-dasharray')).toBe('3 2 1');
+        expect(textGroupElement.getAttribute('stroke-linecap')).toBe('butt');
+        expect(textGroupElement.getAttribute('stroke-linejoin')).toBe('bevel');
+        expect(textGroupElement.getAttribute('stroke-opacity')).toBe('0.75');
+        expect(textGroupElement.getAttribute('stroke-width')).toBe('1');
+
+        expect(textElement.getAttribute('transform')).toBe('translate(301.9615 250) matrix(0.707107,-0.408248,0,0.816496,0,0) scale(1.224745) rotate(90)');
+
+        expect(textSpanElement.getAttribute('font-family')).toBe('Helvetica');
+        expect(textSpanElement.getAttribute('font-size')).toBe('20px');
+        expect(textSpanElement.getAttribute('font-style')).toBe('oblique');
+        expect(textSpanElement.getAttribute('font-weight')).toBe('normal');
+        expect(textSpanElement.getAttribute('text-anchor')).toBe('end');
+        expect(textSpanElement.getAttribute('alignment-baseline')).toBe('hanging');
+
+        text.clear();
+
+        expect(text.text).toBe('');
 
     });
 

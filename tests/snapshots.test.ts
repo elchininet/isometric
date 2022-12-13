@@ -3,6 +3,7 @@ import {
     IsometricRectangle,
     IsometricCircle,
     IsometricPath,
+    IsometricText,
     PlaneView,
     SVGPathAnimation,
     SVGRectangleAnimation,
@@ -12,6 +13,7 @@ import {
 describe('Snapshot tests', (): void => {
 
     let container: HTMLDivElement;
+    //let spySVGAnimateBeginElement: jest.SpyInstance<typeof SVGAnimateTransformElement>;
 
     beforeEach((): void => {
         container = document.createElement('div');
@@ -245,10 +247,12 @@ describe('Snapshot tests', (): void => {
         const topPiece = new IsometricPath();
         const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
         const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+        const label = new IsometricText({ planeView: PlaneView.TOP });
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
         rightPiece.right = 1;
         leftPiece.left = 1;
+        label.text = 'TEST';
 
         topPiece
             .addAnimation({
@@ -279,9 +283,22 @@ describe('Snapshot tests', (): void => {
             } as SVGRectangleAnimation)
             .addAnimation(colorAnimationProps as SVGRectangleAnimation);
 
-        isometric.addChildren(topPiece, rightPiece, leftPiece);
+        label.
+            addAnimation({
+                property: 'right',
+                duration,
+                values: [0, 1, 0]
+            })
+            .addAnimation({
+                property: 'rotation',
+                duration,
+                values: [0, 180, 360]
+            });
+
+        isometric.addChildren(topPiece, rightPiece, leftPiece, label);
 
         expect(container).toMatchSnapshot();
+        //expect(spySVGAnimateBeginElement).toHaveBeenCalledTimes(2);
 
     });
 
@@ -308,6 +325,7 @@ describe('Snapshot tests', (): void => {
         const topPiece = new IsometricPath();
         const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
         const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+        const label = new IsometricText({ planeView: PlaneView.TOP });
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
         rightPiece.right = 1;
@@ -337,7 +355,19 @@ describe('Snapshot tests', (): void => {
             } as SVGRectangleAnimation)
             .addAnimation(colorAnimationProps as SVGRectangleAnimation);
 
-        isometric.addChildren(topPiece, rightPiece, leftPiece);
+        label.
+            addAnimation({
+                property: 'right',
+                duration,
+                values: 1
+            })
+            .addAnimation({
+                property: 'rotation',
+                duration,
+                values: 180
+            });
+
+        isometric.addChildren(topPiece, rightPiece, leftPiece, label);
 
         expect(container).toMatchSnapshot();
 
@@ -367,6 +397,7 @@ describe('Snapshot tests', (): void => {
         const topPiece = new IsometricPath();
         const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
         const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+        const label = new IsometricText({ planeView: PlaneView.TOP });
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
         rightPiece.right = 1;
@@ -398,7 +429,21 @@ describe('Snapshot tests', (): void => {
             } as SVGRectangleAnimation)
             .addAnimation(colorAnimationProps as SVGRectangleAnimation);
 
-        isometric.addChildren(topPiece, rightPiece, leftPiece);
+        label.
+            addAnimation({
+                property: 'right',
+                duration,
+                from: 0,
+                to: 1
+            })
+            .addAnimation({
+                property: 'rotation',
+                duration,
+                from: 0,
+                to: 180
+            });
+
+        isometric.addChildren(topPiece, rightPiece, leftPiece, label);
 
         expect(container).toMatchSnapshot();
 

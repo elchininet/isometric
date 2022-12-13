@@ -8,7 +8,8 @@ export interface IsometricTextProps extends IsometricGraphicProps, IsometricDrag
     text?: string;
     fontFamily?: string;
     fontSize?: number;
-    fontWeight: `${FONT_WEIGHT}` | number;
+    fontStyle?: 'normal' | 'italic' | 'oblique';
+    fontWeight?: `${FONT_WEIGHT}` | number;
     rotation?: number;
     origin?: [
         `${Extract<ORIGIN.LEFT | ORIGIN.CENTER | ORIGIN.RIGHT, ORIGIN>}`,
