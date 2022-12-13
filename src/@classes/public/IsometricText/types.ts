@@ -1,5 +1,5 @@
 import { IsometricPlaneView } from '@types';
-import { ORIGIN, FONT_WEIGHT } from '@constants';
+import { ORIGIN } from '@constants';
 import { IsometricGraphicProps } from '@classes/abstract/IsometricGraphicAbstract';
 import { IsometricDraggableProps } from '@classes/abstract/IsometricDraggableAbstract';
 
@@ -9,8 +9,9 @@ export interface IsometricTextProps extends IsometricGraphicProps, IsometricDrag
     fontFamily?: string;
     fontSize?: number;
     fontStyle?: 'normal' | 'italic' | 'oblique';
-    fontWeight?: `${FONT_WEIGHT}` | number;
+    fontWeight?: 'normal' | 'bold' | 'bolder' | 'lighter' | number;
     rotation?: number;
+    selectable?: boolean;
     origin?: [
         `${Extract<ORIGIN.LEFT | ORIGIN.CENTER | ORIGIN.RIGHT, ORIGIN>}`,
         `${Extract<ORIGIN.TOP | ORIGIN.CENTER | ORIGIN.BOTTOM, ORIGIN>}`

@@ -508,9 +508,9 @@ removeEventListener(type, callback, [useCapture])
 
 | Property        | Type     | Description                                                          |
 | --------------- | -------- | -------------------------------------------------------------------- |
-| right           | number   | Gets and sets the right isometric ccordinates of the isometric group |
-| left            | number   | Gets and sets the left isometric ccordinates of the isometric group  |
-| top             | number   | Gets and sets the top isometric ccordinates of the isometric group   |
+| right           | number   | Gets and sets the right isometric coordinates of the isometric group |
+| left            | number   | Gets and sets the left isometric coordinates of the isometric group  |
+| top             | number   | Gets and sets the top isometric coordinates of the isometric group   |
 | children        | array    | Gets an array of the isometric group children elements               |
 | drag *          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric group |
 | bounds          | object / false | Gets an sets the boundaries of the isometric group position          |
@@ -552,9 +552,9 @@ const path = new IsometricRectangle(properties);
 | --------------- | -------------------- | ------------- | -------------------------------------------------------------------- |
 | height          | number               | -             | Sets the height of the isometric rectangle                           |
 | width           | number               | -             | Sets the width of the isometric rectangle                            |
-| right           | number               | 0             | Sets the right isometric ccordinates of the isometric rectangle      |
-| left            | number               | 0             | Sets the left isometric ccordinates of the isometric rectangle       |
-| top             | number               | 0             | Sets the top isometric ccordinates of the isometric rectangle        |
+| right           | number               | 0             | Sets the right isometric coordinates of the isometric rectangle      |
+| left            | number               | 0             | Sets the left isometric coordinates of the isometric rectangle       |
+| top             | number               | 0             | Sets the top isometric coordinates of the isometric rectangle        |
 | planeView       | PlaneView (`string`) | -             | Sets the plane view in which the isometric rectangle will be created |
 | fillColor       | string               | "white"       | Sets the fill color of the isometric rectangle                       |
 | fillOpacity     | number               | 1             | Sets the fill opacity of the isometric rectangle                     |
@@ -738,9 +738,9 @@ removeEventListener(type, listener, [useCapture])
 | --------------- | ------------------ | ------------------------------------------------------------------------ |
 | height          | number             | Gets and sets the height of the isometric rectangle                      |
 | width           | number             | Gets and sets the width of the isometric rectangle                       |
-| right           | number             | Sets the right isometric ccordinates of the isometric rectangle          |
-| left            | number             | Sets the left isometric ccordinates of the isometric rectangle           |
-| top             | number             | Sets the top isometric ccordinates of the isometric rectangle            |
+| right           | number             | Gets and sets the right isometric coordinates of the isometric rectangle |
+| left            | number             | Gets and sets the left isometric coordinates of the isometric rectangle  |
+| top             | number             | Gets and sets the top isometric coordinates of the isometric rectangle   |
 | planeView       | string             | Gets and sets the plane view in which the isometric rectangle is created |
 | fillColor       | string             | Gets and sets the fill color of the isometric rectangle                  |
 | fillOpacity     | number             | Gets and sets the fill opacity of the isometric rectangle                |
@@ -790,9 +790,9 @@ const path = new IsometricCircle(properties);
 | Property        | Type                 | Default value        | Description                                                       |
 | --------------- | -------------------- | -------------------- | ----------------------------------------------------------------- |
 | radius          | number               | -                    | Sets the radius of the isometric circle                           |
-| right           | number               | 0                    | Sets the right isometric ccordinates of the isometric circle      |
-| left            | number               | 0                    | Sets the left isometric ccordinates of the isometric circle       |
-| top             | number               | 0                    | Sets the top isometric ccordinates of the isometric circle        |
+| right           | number               | 0                    | Sets the right isometric coordinates of the isometric circle      |
+| left            | number               | 0                    | Sets the left isometric coordinates of the isometric circle       |
+| top             | number               | 0                    | Sets the top isometric coordinates of the isometric circle        |
 | planeView       | PlaneView (`string`) | -                    | Sets the plane view in which the isometric circle will be created |
 | fillColor       | string               | "white"              | Sets the fill color of the isometric circle                       |
 | fillOpacity     | number               | 1                    | Sets the fill opacity of the isometric circle                     |
@@ -974,9 +974,9 @@ removeEventListener(type, listener, [useCapture])
 | Property        | Type               | Description                                                           |
 | --------------- | ------------------ | --------------------------------------------------------------------- |
 | radius          | number             | Gets and sets the radius of the isometric circle                      |
-| right           | number             | Sets the right isometric ccordinates of the isometric circle          |
-| left            | number             | Sets the left isometric ccordinates of the isometric circle           |
-| top             | number             | Sets the top isometric ccordinates of the isometric circle            |
+| right           | number             | Gets and sets the right isometric coordinates of the isometric circle |
+| left            | number             | Gets and sets the left isometric coordinates of the isometric circle  |
+| top             | number             | Gets and sets the top isometric coordinates of the isometric circle   |
 | planeView       | string             | Gets and sets the plane view in which the isometric circle is created |
 | fillColor       | string             | Gets and sets the fill color of the isometric circle                  |
 | fillOpacity     | number             | Gets and sets the fill opacity of the isometric circle                |
@@ -1267,6 +1267,294 @@ removeEventListener(type, listener, [useCapture])
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric path              |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric path                   |
 | autoclose       | boolean            | Gets and sets the autoclose property of the isometric path        |
+
+</p>
+</details>
+
+---
+
+### Class IsometricText
+
+This class is to create isometric texts that can be added to the isometric canvas.
+
+```javascript
+const path = new IsometricText(properties);
+```
+
+<details><summary>Parameters</summary>
+<p>
+
+`properties`
+>Object to set the properties of the isometric text
+
+| Property        | Type                 | Default value        | Description                                                       |
+| --------------- | -------------------- | -------------------- | ----------------------------------------------------------------- |
+| planeView       | PlaneView (`string`) | -                    | Sets the plane view in which the isometric text will be created   |
+| text            | string               | ''                   | Sets the text content of the isometric text                       |
+| right           | number               | 0                    | Sets the right isometric coordinates of the isometric text        |
+| left            | number               | 0                    | Sets the left isometric coordinates of the isometric text         |
+| top             | number               | 0                    | Sets the top isometric coordinates of the isometric text          |
+| fontFamily      | string               | 'Arial'              | Sets the font-family of the isometric text                        |
+| fontSize        | string               | 12                   | Sets the font-size of the isometric text                          |
+| fontStyle       | string literal       | 'normal              | Sets the font-style of the isometric text                         |
+| fontWeight      | number | string literal | 'normal'          | Sets the font-weight of the isometric text                        |
+| rotation        | number               | 0                    | Sets the rotation of the isometric text                           |
+| origin          | string literal tuple | ['center', 'center'] | Sets the origin of the isometric text position and transformations| 
+| selectable      | boolean              | true                 | Indicates if the isometric text should be selectable or not       | 
+| fillColor       | string               | "white"              | Sets the fill color of the isometric text                         |
+| fillOpacity     | number               | 1                    | Sets the fill opacity of the isometric text                       |
+| strokeColor     | string               | "black"              | Sets the stroke color of the isometric text                       |
+| strokeOpacity   | number               | 1                    | Sets stroke opacity of the isometric text                         |
+| strokeDashArray | number[]             | []                   | Sets the [SVG stroke dasharray][1] of the isometric text          |
+| strokeLinecap   | string               | "butt"               | Sets the [SVG stroke linecap][2] of the isometric text            |
+| strokeLinejoin  | string               | "round"              | Sets the [SVG stroke linejoin][3] of the isometric text           |
+| strokeWidth     | number               | 1                    | Sets the stroke width of the isometric text                       |
+| texture         | Texture (`object`)   | -                    | Sets the texture of the isometric text                            |
+
+`planeView values`
+>"TOP" | "FRONT" | "SIDE"
+
+`fontStyle values`
+>"normal" | "italic" | "oblique"
+
+`fontWeight values`
+>number | "normal" | "bold" | "bolder" | "lighter"
+
+`origin values`
+>["left" | "center" | "right", "top" | "center", "bottom"]
+
+`texture properties`
+>Object to set the texture of the isometric text
+
+| Property        | Type                 | Default value    | Description                                                          |
+| --------------- | -------------------- | ---------------- | -------------------------------------------------------------------- |
+| url             | string               | -                | URL of the image texture                                             |
+| planeView       | PlaneView (`string`) | parent planeView | Sets the texture plane view. By default it takes the isometric text plane view |
+| height          | number               | -                | Sets the texture height                                              |
+| width           | number               | -                | Sets the texture width                                               |
+| scale           | number               | -                | Sets the scale of the texture                                        |
+| pixelated       | boolean              | -                | Sets the image rendering of the texture                              |
+| shift           | Point (`object`)     | -                | Shifts the background position                                       |
+| rotation        | Rotation (`object`)  | -                | Set the rotation of the texture                                      |
+
+`shift properties`
+>Object to shift the background position
+
+| Property | Type   | Default value | Description             |
+| -------- | ------ | --------------| ----------------------- |
+| right    | number | -             | Right coordinates       |
+| left     | number | -             | Left coordinates        |
+| top      | number | -             | Top coordinates         |
+
+`rotation properties`
+>Object to set the background rotation
+
+| Property | Type            | Default value | Description             |
+| -------- | --------------- | --------------| ----------------------- |
+| axis     | Axis (`string`) | -             | Rotation axis           |
+| value    | number          | -             | Rotation value          |
+
+`axis values`
+>"RIGHT" | "LEFT" | "TOP"
+
+</p>
+</details>
+
+<details><summary>Instance Methods</summary>
+<p>
+
+>All the instance methods (except `getElement` and `getPattern`) return the same instance, so they are chainable.
+
+```javascript
+getElement()
+```
+>Returns the native `SVG` `g` element*
+
+>* The `IsometricText` class, due to its complexity, it is conformed by a group of SVG elements, a `g` element with a `text` element inside and inside this last one a `tspan` element.
+
+```javascript
+getPattern()
+```
+>Returns the native `SVGPatternElement` responsible for the texture
+
+```javascript
+update()
+```
+>Forces a re-render of the SVG text
+
+```javascript
+updateTexture(texture)
+```
+>Adds or override the texture properties
+
+| Property  | Type                 | Optional  | Description                                     |
+| --------- | -------------------- | --------- | ----------------------------------------------- |
+| url       | string               | yes       | URL of the image texture                        |
+| planeView | PlaneView (`string`) | yes       | Texture plane view                              |
+| height    | number               | yes       | Texture height                                  |
+| width     | number               | yes       | Texture width                                   |
+| scale     | number               | yes       | Texture scale                                   |
+| pixelated | boolean              | yes       | Image rendering of the texture                  |
+| shift     | Point (`object`)     | yes       | Shifts the background position                  |
+| rotation  | Rotation (`object`)  | yes       | Rotation of the texture                         |
+
+`shift properties`
+>Object to shift the background position
+
+| Property | Type   | Default value | Description             |
+| -------- | ------ | --------------| ----------------------- |
+| right    | number | -             | Right coordinates       |
+| left     | number | -             | Left coordinates        |
+| top      | number | -             | Top coordinates         |
+
+`rotation properties`
+>Object to set the background rotation
+
+| Property | Type            | Default value | Description             |
+| -------- | --------------- | --------------| ----------------------- |
+| axis     | Axis (`string`) | -             | Rotation axis           |
+| value    | number          | -             | Rotation value          |
+
+`axis values`
+>"RIGHT" | "LEFT" | "TOP"
+
+```javascript
+clear()
+```
+>Cleans the isometric text (set an empty string in the native SVG text element)
+
+```javascript
+addAnimation(animation)
+```
+>Adds an animated tranform element to the isometric text (not compatible with Internet Explorer). These are the properties of the `SVGTextAnimation` object:
+
+| Property        | Type     | Optional  | Default |  Description                                     |
+| --------------- | -------- | --------- | ------- | ------------------------------------------------ |
+| property        | string   | no        | -       | Indicates which property should be animated      |
+| duration        | number   | yes       | 1       | Indicates the number of seconds of the animation |
+| repeat          | number   | yes       | 0       | Number of times that the animation will run. `0` runs indefinitely |
+| from            | string / number | yes | - | Initial value of the animation (if this property is used, `values` property can't be used) |
+| to              | string / number | yes | - | Final value of the animation (if this property is used, `values` property can't be used) |
+| values          | string / number / string[] / number[] | yes | - | All the values of the animation (if this property is used, `from` and `to` properties can't be used) |
+
+These are the properties that can be animated (property `property`)
+
+* fillColor
+* fillOpacity
+* strokeColor
+* strokeOpacity
+* strokeWidth
+* right
+* left
+* top
+* rotation
+
+```javascript
+removeAnimationByIndex(index)
+```
+>Remove an especific animation element by its index.
+
+```javascript
+removeAnimations()
+```
+>Remove all the animation elements.
+
+```javascript
+addEventListener(type, callback, [useCapture])
+```
+>Sets up a function that will be called whenever the specified event is delivered to the isometric text (the SVG text element)
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| type            | string        |
+| callback        | VoidFunction  |
+| callback        | boolean       |
+
+```javascript
+removeEventListener(type, listener, [useCapture])
+```
+>Removes from the isometric text (the SVG text element) an event listener previously registered with `addEventListener`
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| type            | string        |
+| callback        | VoidFunction  |
+| callback        | boolean       |
+
+</p>
+</details>
+
+<details><summary>Instance Properties</summary>
+<p>
+
+| Property        | Type               | Description                                                           |
+| --------------- | ------------------ | --------------------------------------------------------------------- |
+| planeView       | string             | Gets and sets the plane view in which the isometric text is created   |
+| right           | number             | Gets and sets the right isometric coordinates of the isometric text   |
+| left            | number             | Gets and sets the left isometric coordinates of the isometric text    |
+| top             | number             | Gets and sets the top isometric coordinates of the isometric text     |
+| fontFamily      | string             | Gets and sets the font-family of the isometric text                   |
+| fontSize        | string             | Gets and sets the font-size of the isometric text                     |
+| fontStyle       | string literal     | Gets and sets the font-style of the isometric text                    |
+| fontWeight      | number | string literal | Gets and sets the font-weight of the isometric text              |
+| rotation        | number             | Gets and sets the rotation of the isometric text                      |
+| origin          | string literal tuple | Gets and sets the origin of the isometric text position and transformations| 
+| selectable      | boolean            | Gets and sets the ability of the isometric text of being selectable   | 
+| fillColor       | string             | Gets and sets the fill color of the isometric text                    |
+| fillOpacity     | number             | Gets and sets the fill opacity of the isometric text                  |
+| strokeColor     | string             | Gets and sets the stroke color of the isometric text                  |
+| strokeOpacity   | number             | Gets and sets the stroke opacity of the isometric text                |
+| strokeDashArray | number[]           | Gets and sets the [SVG stroke dasharray][1] of the isometric text     |
+| strokeLinecap   | string             | Gets and sets the [SVG stroke linecap][2] of the isometric text       |
+| strokeLinejoin  | string             | Gets and sets the [SVG stroke linejoin][3] of the isometric text      |
+| strokeWidth     | number             | Gets and sets the stroke width of the isometric text                  |
+| texture         | Texture (`object`) | Gets and sets the texture of the isometric text                       |
+
+`planeView values`
+>"TOP" | "FRONT" | "SIDE"
+
+`fontStyle values`
+>"normal" | "italic" | "oblique"
+
+`fontWeight values`
+>number | "normal" | "bold" | "bolder" | "lighter"
+
+`origin values`
+>["left" | "center" | "right", "top" | "center", "bottom"]
+
+`texture properties`
+>Object to set the texture of the isometric text
+
+| Property        | Type                 | Default value    | Description                                                          |
+| --------------- | -------------------- | ---------------- | -------------------------------------------------------------------- |
+| url             | string               | -                | URL of the image texture                                             |
+| planeView       | PlaneView (`string`) | parent planeView | Sets the texture plane view. By default it takes the isometric text plane view |
+| height          | number               | -                | Sets the texture height                                              |
+| width           | number               | -                | Sets the texture width                                               |
+| scale           | number               | -                | Sets the scale of the texture                                        |
+| pixelated       | boolean              | -                | Sets the image rendering of the texture                              |
+| shift           | Point (`object`)     | -                | Shifts the background position                                       |
+| rotation        | Rotation (`object`)  | -                | Set the rotation of the texture                                      |
+
+`shift properties`
+>Object to shift the background position
+
+| Property | Type   | Default value | Description             |
+| -------- | ------ | --------------| ----------------------- |
+| right    | number | -             | Right coordinates       |
+| left     | number | -             | Left coordinates        |
+| top      | number | -             | Top coordinates         |
+
+`rotation properties`
+>Object to set the background rotation
+
+| Property | Type            | Default value | Description             |
+| -------- | --------------- | --------------| ----------------------- |
+| axis     | Axis (`string`) | -             | Rotation axis           |
+| value    | number          | -             | Rotation value          |
+
+`axis values`
+>"RIGHT" | "LEFT" | "TOP"
 
 </p>
 </details>

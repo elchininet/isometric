@@ -21,7 +21,8 @@ export default ( IsometricModule, container ) => {
         strokeWidth: 0,
         right: 0.5,
         left: 0.5,
-        top: 0.5
+        top: 0.5,
+        selectable: false
     };
 
     const pieces = [PlaneView.TOP, PlaneView.FRONT, PlaneView.SIDE].map((view, index) => {
