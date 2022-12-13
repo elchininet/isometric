@@ -91,10 +91,3 @@ export enum ORIGIN {
     TOP = 'top',
     BOTTOM = 'bottom'
 }
-
-export enum FONT_WEIGHT {
-    NORMAL = 'normal',
-    BOLD = 'bold',
-    BOLDER = 'bolder',
-    LIGHTER = 'lighter'
-}

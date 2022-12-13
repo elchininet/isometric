@@ -25,8 +25,8 @@ export class IsometricText extends IsometricGraphicAbstract {
 
     public constructor(props: IsometricTextProps) {
         const {
-            text,
             planeView,
+            text = '',
             fontFamily = 'Arial',
             fontSize = 12,
             fontStyle = 'normal',
@@ -36,6 +36,7 @@ export class IsometricText extends IsometricGraphicAbstract {
             left = 0,
             top = 0,
             rotation = 0,
+            selectable = true,
             ...rest
         } = props;
         // Exclude the next line from the coverage reports
@@ -51,24 +52,13 @@ export class IsometricText extends IsometricGraphicAbstract {
         this.fontSize = fontSize;
         this.fontStyle = fontStyle;
         this.fontWeight = fontWeight;
+        this.selectable = selectable;
         this.origin = origin;
         this.right = right;
         this.left = left;
         this.top = top;
         this.rotation = rotation;
         this.text = text;
-
-        addSVGProperties(this._textElement, {
-            style: [
-                '-webkit-user-select',
-                '-moz-user-select',
-                '-ms-user-select',
-                'user-select',
-                'pointer-events'
-            ].map(
-                (decl) => `${decl}: none`
-            ).join(';')
-        });
 
     }
 
@@ -81,6 +71,7 @@ export class IsometricText extends IsometricGraphicAbstract {
     private _fontStyle: IsometricTextProps['fontStyle'];
     private _fontWeight: IsometricTextProps['fontWeight'];
     private _origin: IsometricTextProps['origin'];
+    private _selectable: boolean;
     private _right: number;
     private _left: number;
     private _top: number;
@@ -330,6 +321,30 @@ export class IsometricText extends IsometricGraphicAbstract {
         addSVGProperties(this._tspan, {
             'font-weight': `${this._fontWeight}`
         });
+    }
+
+    // selectable
+    public get selectable(): boolean {
+        return this._selectable;
+    }
+
+    public set selectable(value: boolean) {
+        this._selectable = value;
+        if (this._selectable) {
+            this._textElement.removeAttribute('style');
+        } else {
+            addSVGProperties(this._textElement, {
+                style: [
+                    '-webkit-user-select',
+                    '-moz-user-select',
+                    '-ms-user-select',
+                    'user-select',
+                    'pointer-events'
+                ].map(
+                    (decl) => `${decl}: none`
+                ).join(';')
+            });
+        }
     }
 
     // origin

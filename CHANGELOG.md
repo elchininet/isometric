@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.7.0] - 2022-12-13
+
+- Create a new class to work with texts (`IsometricText`)
+
 ## [3.6.0] - 2022-07-03
 
 - Capture drag events and possibility of preventing the the drag event modifies the coordinates of the element using `preventDefault` on `drag` event

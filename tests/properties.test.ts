@@ -86,6 +86,7 @@ describe('Test properties', (): void => {
             rotation: 45,
             origin: ['left', 'bottom'],
             text: 'TEST',
+            selectable: false,
             ...commonProps
         });
 
@@ -363,6 +364,7 @@ describe('Test properties', (): void => {
         expect(text.top).toBe(1.5);
         expect(text.rotation).toBe(45);
         expect(text.origin).toMatchObject(['left', 'bottom']);
+        expect(text.selectable).toBe(false);
 
         expect(textGroupElement.getAttribute('fill')).toBe('#FFF');
         expect(textGroupElement.getAttribute('fill-opacity')).toBe('0.5');
@@ -403,6 +405,7 @@ describe('Test properties', (): void => {
         text.top = 0.5;
         text.rotation = 90;
         text.origin = ['right', 'top'];
+        text.selectable = true;
 
         expect(text.fillColor).toBe('#000');
         expect(text.fillOpacity).toBe(1);
@@ -423,6 +426,7 @@ describe('Test properties', (): void => {
         expect(text.top).toBe(0.5);
         expect(text.rotation).toBe(90);
         expect(text.origin).toMatchObject(['right', 'top']);
+        expect(text.selectable).toBe(true);
 
         expect(textGroupElement.getAttribute('fill')).toBe('#000');
         expect(textGroupElement.getAttribute('fill-opacity')).toBe('1');
@@ -433,6 +437,8 @@ describe('Test properties', (): void => {
         expect(textGroupElement.getAttribute('stroke-opacity')).toBe('0.75');
         expect(textGroupElement.getAttribute('stroke-width')).toBe('1');
 
+        expect(textElement.style.userSelect).toBe('');
+        expect(textElement.style.pointerEvents).toBe('');
         expect(textElement.getAttribute('transform')).toBe('translate(301.9615 250) matrix(0.707107,-0.408248,0,0.816496,0,0) scale(1.224745) rotate(90)');
 
         expect(textSpanElement.getAttribute('font-family')).toBe('Helvetica');

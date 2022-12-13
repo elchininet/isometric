@@ -118,7 +118,6 @@ exports[`Snapshot tests Draw animations with a single value 1`] = `
       stroke-width="1"
     >
       <text
-        style="-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;pointer-events: none"
         transform="translate(250 160) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745) rotate(0)"
       >
         <tspan
@@ -259,7 +258,6 @@ exports[`Snapshot tests Draw animations with from and to 1`] = `
       stroke-width="1"
     >
       <text
-        style="-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;pointer-events: none"
         transform="translate(250 160) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745) rotate(0)"
       >
         <tspan
@@ -398,7 +396,6 @@ exports[`Snapshot tests Draw animations with values 1`] = `
       stroke-width="1"
     >
       <text
-        style="-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;pointer-events: none"
         transform="translate(250 160) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745) rotate(0)"
       >
         <tspan
