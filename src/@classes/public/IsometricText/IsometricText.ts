@@ -29,6 +29,7 @@ export class IsometricText extends IsometricGraphicAbstract {
             planeView,
             fontFamily = 'Arial',
             fontSize = 12,
+            fontStyle = 'normal',
             fontWeight = 'normal',
             origin = ['center', 'center'],
             right = 0,
@@ -48,6 +49,7 @@ export class IsometricText extends IsometricGraphicAbstract {
         this.planeView = planeView;
         this.fontFamily = fontFamily;
         this.fontSize = fontSize;
+        this.fontStyle = fontStyle;
         this.fontWeight = fontWeight;
         this.origin = origin;
         this.right = right;
@@ -76,6 +78,7 @@ export class IsometricText extends IsometricGraphicAbstract {
     private _planeView: IsometricPlaneView;
     private _fontFamily: string;
     private _fontSize: number;
+    private _fontStyle: IsometricTextProps['fontStyle'];
     private _fontWeight: IsometricTextProps['fontWeight'];
     private _origin: IsometricTextProps['origin'];
     private _right: number;
@@ -212,6 +215,10 @@ export class IsometricText extends IsometricGraphicAbstract {
                         animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animateTransform) as SVGAnimateElement;
                     }
 
+                    this.addAnimationBasicProperties('transform', animation);
+
+                    addSVGProperties(animation.element, properties);
+
                     if (!animation.element.parentNode) {
                         if (isRotation) {
                             this._textElement.appendChild(animation.element);
@@ -220,11 +227,12 @@ export class IsometricText extends IsometricGraphicAbstract {
                         }
                     }
 
-                    this.addAnimationBasicProperties('transform', animation);
-
-                    addSVGProperties(animation.element, properties);
-
-                    animation.element.beginElement();
+                    // Exclude the next line from the coverage reports
+                    // beginElement is not available in Jest
+                    /* istanbul ignore next */
+                    window.requestAnimationFrame(() => {
+                        animation.element.beginElement();
+                    });
 
                 }
             }
@@ -296,7 +304,19 @@ export class IsometricText extends IsometricGraphicAbstract {
     public set fontSize(value: number) {
         this._fontSize = value;
         addSVGProperties(this._tspan, {
-            'font-family': `${this._fontSize}px`
+            'font-size': `${this._fontSize}px`
+        });
+    }
+
+    // fontStyle
+    public get fontStyle(): IsometricTextProps['fontStyle'] {
+        return this._fontStyle;
+    }
+
+    public set fontStyle(value: IsometricTextProps['fontStyle']) {
+        this._fontStyle = value;
+        addSVGProperties(this._tspan, {
+            'font-style': `${this._fontStyle}`
         });
     }
 
