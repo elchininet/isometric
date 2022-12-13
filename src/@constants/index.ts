@@ -6,6 +6,7 @@ export enum SVG_ELEMENTS {
     path = 'path',
     rect = 'rect',
     text = 'text',
+    tspan = 'tspan',
     pattern = 'pattern',
     image = 'image',
     animate = 'animate',

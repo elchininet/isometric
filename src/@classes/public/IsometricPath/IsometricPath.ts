@@ -1,6 +1,7 @@
 import {
     Command,
-    SVG_ELEMENTS
+    SVG_ELEMENTS,
+    SVG_NAMESPACE
 } from '@constants';
 import {
     CommandPoint,
@@ -38,36 +39,44 @@ export class IsometricPath extends IsometricPathAbstract {
         this._autoclose
     );
 
-    protected getSVGAnimationElement(): SVG_ELEMENTS {
-        return SVG_ELEMENTS.animate;
-    }
+    protected updateSubClassAnimations(): void {
 
-    protected getSVGProperty(): string {
-        return 'd';
-    }
+        this.animations.forEach((animation: SVGAnimationObject): void => {
 
-    protected getAnimationProps(animation: SVGAnimationObject): Record<string, string> {
+            if (animation.property === 'path') {
 
-        if (animation.property === 'path') {
+                let properties: Record<string, string>;
 
-            if (animation.values) {
-                return {
-                    values: Array.isArray(animation.values)
-                        ? animation.values.map((value: string | number): string => {
-                            return this.getPathFromCommands(`${value}`);
-                          }).join(';')
-                        : this.getPathFromCommands(`${animation.values}`)
-                };
-            } else {
-                return {
-                    from: this.getPathFromCommands(`${animation.from}`),
-                    to: this.getPathFromCommands(`${animation.to}`)
-                };
+                if (animation.values) {
+                    properties =  {
+                        values: Array.isArray(animation.values)
+                            ? animation.values.map((value: string | number): string => {
+                                return this.getPathFromCommands(`${value}`);
+                            }).join(';')
+                            : this.getPathFromCommands(`${animation.values}`)
+                    };
+                } else {
+                    properties = {
+                        from: this.getPathFromCommands(`${animation.from}`),
+                        to: this.getPathFromCommands(`${animation.to}`)
+                    };
+                }
+
+                if (!animation.element) {
+                    animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
+                }
+
+                if (!animation.element.parentNode) {
+                    this.element.appendChild(animation.element);
+                }
+
+                this.addAnimationBasicProperties('d', animation);
+
+                addSVGProperties(animation.element, properties);
+
             }
 
-        }
-
-        throw new TypeError(`The property ${animation.property} is not an allowed animation property for the IsometricPath class`);
+        });
 
     }
 

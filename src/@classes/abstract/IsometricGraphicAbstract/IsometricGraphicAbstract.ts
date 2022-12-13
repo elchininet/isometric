@@ -121,35 +121,36 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
     protected patternId: string;
     protected pattern: SVGPatternElement;
     protected animations: SVGAnimationObject[];
-    protected abstract getSVGAnimationElement(): SVG_ELEMENTS;
-    protected abstract getSVGProperty(property: string): string;
-    protected abstract getAnimationProps(animation: SVGAnimationObject): Record<string, string>;
+    protected abstract updateSubClassAnimations(): void;
+
+    protected addAnimationBasicProperties(attributeName: string, animation: SVGAnimationObject): void {
+        addSVGProperties(animation.element, {
+            repeatCount: `${animation.repeat || 'indefinite'}`,
+            attributeName,
+            dur: `${animation.duration || 1}s`
+        });
+    }
 
     protected updateAnimations(): void {
 
         this.animations.forEach((animation: SVGAnimationObject): void => {
 
-            if (!animation.element) {
-                animation.element = document.createElementNS(SVG_NAMESPACE, this.getSVGAnimationElement()) as SVGAnimateElement;
-            }
-
-            if (!animation.element.parentNode) {
-                this.element.appendChild(animation.element);
-            }
-
             const isNativeSVGProperty = isSVGProperty(animation.property);
 
-            const property = isNativeSVGProperty
-                ? getSVGProperty(animation.property)
-                : this.getSVGProperty(animation.property);
-
-            addSVGProperties(animation.element, {
-                repeatCount: `${animation.repeat || 'indefinite'}`,
-                attributeName: property,
-                dur: `${animation.duration || 1}s`
-            });
-
             if (isNativeSVGProperty) {
+
+                const property = getSVGProperty(animation.property);
+
+                if (!animation.element) {
+                    animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
+                }
+
+                if (!animation.element.parentNode) {
+                    this.element.appendChild(animation.element);
+                }
+
+                this.addAnimationBasicProperties(property, animation);
+
                 if (animation.values) {
                     addSVGProperties(
                         animation.element,
@@ -167,10 +168,11 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
                         }
                     );
                 }
-            } else {
-                addSVGProperties(animation.element, this.getAnimationProps(animation));
+
             }
         });
+
+        this.updateSubClassAnimations();
 
     }
 

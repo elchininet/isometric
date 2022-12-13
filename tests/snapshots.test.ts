@@ -222,7 +222,7 @@ describe('Snapshot tests', (): void => {
 
     });
 
-    it('Draw animations', (): void => {
+    it('Draw animations with values', (): void => {
 
         const isometric = new IsometricCanvas({
             container,
@@ -259,6 +259,125 @@ describe('Snapshot tests', (): void => {
                     'M0 0 0.5 L1 0 0.5 L1 1 0.5 L0 1 0.5',
                     'M0 0 1 L1 0 1 L1 1 1 L0 1 1'
                 ]
+            } as SVGPathAnimation)
+            .addAnimation(colorAnimationProps as SVGPathAnimation);
+
+        rightPiece
+            .addAnimation({
+                property: 'height',
+                duration,
+                from: 1,
+                to: 0.5
+            } as SVGRectangleAnimation)
+            .addAnimation(colorAnimationProps as SVGRectangleAnimation);
+
+        leftPiece
+            .addAnimation({
+                property: 'height',
+                duration,
+                values: 0.5
+            } as SVGRectangleAnimation)
+            .addAnimation(colorAnimationProps as SVGRectangleAnimation);
+
+        isometric.addChildren(topPiece, rightPiece, leftPiece);
+
+        expect(container).toMatchSnapshot();
+
+    });
+
+    it('Draw animations with a single value', (): void => {
+
+        const isometric = new IsometricCanvas({
+            container,
+            backgroundColor: '#CCC',
+            scale: 120,
+            width: 500,
+            height: 320
+        });
+
+        const commonProps = {height: 1, width: 1};
+
+        const duration = 3;
+
+        const colorAnimationProps = {
+            property: 'fillColor',
+            duration,
+            values: '#FFF'
+        };
+
+        const topPiece = new IsometricPath();
+        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+
+        topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
+        rightPiece.right = 1;
+        leftPiece.left = 1;
+
+        topPiece
+            .addAnimation({
+                property: 'path',
+                duration,
+                values: 'M0 0 1 L1 0 1 L1 1 1 L0 1 1'
+            } as SVGPathAnimation)
+            .addAnimation(colorAnimationProps as SVGPathAnimation);
+
+        rightPiece
+            .addAnimation({
+                property: 'height',
+                duration,
+                values: 1
+            } as SVGRectangleAnimation)
+            .addAnimation(colorAnimationProps as SVGRectangleAnimation);
+
+        leftPiece
+            .addAnimation({
+                property: 'height',
+                duration,
+                values: 0.5
+            } as SVGRectangleAnimation)
+            .addAnimation(colorAnimationProps as SVGRectangleAnimation);
+
+        isometric.addChildren(topPiece, rightPiece, leftPiece);
+
+        expect(container).toMatchSnapshot();
+
+    });
+
+    it('Draw animations with from and to', (): void => {
+
+        const isometric = new IsometricCanvas({
+            container,
+            backgroundColor: '#CCC',
+            scale: 120,
+            width: 500,
+            height: 320
+        });
+
+        const commonProps = {height: 1, width: 1};
+
+        const duration = 3;
+
+        const colorAnimationProps = {
+            property: 'fillColor',
+            duration,
+            from: '#FFF',
+            to: '#DDD'
+        };
+
+        const topPiece = new IsometricPath();
+        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+
+        topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
+        rightPiece.right = 1;
+        leftPiece.left = 1;
+
+        topPiece
+            .addAnimation({
+                property: 'path',
+                duration,
+                from: 'M0 0 1 L1 0 1 L1 1 1 L0 1 1',
+                to: 'M0 0 0.5 L1 0 0.5 L1 1 0.5 L0 1 0.5'
             } as SVGPathAnimation)
             .addAnimation(colorAnimationProps as SVGPathAnimation);
 

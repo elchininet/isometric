@@ -1,4 +1,4 @@
-import { IsometricCanvas, IsometricPath, IsometricRectangle, IsometricCircle } from '../src';
+import { IsometricCanvas, IsometricPath } from '../src';
 
 describe('Wrong drawing commands', (): void => {
 
@@ -57,111 +57,6 @@ describe('Wrong drawing commands', (): void => {
         const topElement = top.getElement();
 
         expect(topElement.getAttribute('d')).toBe('M320 240 A 0 0 0 0 0 320 240z');
-
-    });
-
-    it('Wrong animation with IsometricPath', (): void => {
-
-        container = document.createElement('div');
-        document.body.appendChild(container);
-
-        const cube = new IsometricCanvas({container});
-
-        const top = new IsometricPath();
-
-        cube.addChild(top);
-
-        top.draw('C 1 1 1 2 2 2');
-
-        const addAnimation = () => {
-            top.addAnimation({
-                // @ts-ignore
-                property: 'color',
-                duration: 1,
-                values: [
-                    '#FFF',
-                    'F0F',
-                    '#FFF'
-                ]
-            });
-        };
-
-        expect(addAnimation).toThrowError();
-
-    });
-
-    it('Wrong animation with IsometricRectanle', (): void => {
-
-        container = document.createElement('div');
-        document.body.appendChild(container);
-
-        const cube = new IsometricCanvas({container});
-
-        const top = new IsometricRectangle({ planeView: 'TOP', height: 10, width: 10 });
-
-        cube.addChild(top);
-
-        const addRightAnimation = () => {
-            top.addAnimation({
-                property: 'fillColor',
-                duration: 1,
-                values: '#FF0000'
-            });
-        };
-
-        const addWrongAnimation = () => {
-            top.addAnimation({
-                // @ts-ignore
-                property: 'text',
-                duration: 1,
-                values: [
-                    'abc',
-                    'def',
-                    'ghi'
-                ]
-            });
-        };
-
-        expect(addRightAnimation).not.toThrowError();
-        expect(addWrongAnimation).toThrowError();
-
-    });
-
-    it('Wrong animation with IsometricCircle', (): void => {
-
-        container = document.createElement('div');
-        document.body.appendChild(container);
-
-        const cube = new IsometricCanvas({container});
-
-        const top = new IsometricCircle({ planeView: 'TOP', radius: 10 });
-
-        cube.addChild(top);
-
-        const addRightAnimation = () => {
-            top.addAnimation({
-                property: 'fillColor',
-                duration: 1,
-                from: '#FF0000',
-                to: '#FFFFFF'
-            });
-        };
-
-        const addWrongAnimation = () => {
-            top.addAnimation({
-                // @ts-ignore
-                property: 'diameter',
-                duration: 1,
-                values: [
-                    '100',
-                    '50',
-                    '100'
-                ]
-            });
-        };
-
-        expect(addRightAnimation).not.toThrowError();
-        expect(addWrongAnimation).toThrowError();
 
     });
 

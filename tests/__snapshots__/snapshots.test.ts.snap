@@ -21,7 +21,7 @@ exports[`Snapshot tests Default options 1`] = `
 
 exports[`Snapshot tests Default options 2`] = `"<svg viewBox="0 0 640 480" width="640px" height="480px"><rect fill="white" x="0" y="0" width="640px" height="480px"></rect></svg>"`;
 
-exports[`Snapshot tests Draw animations 1`] = `
+exports[`Snapshot tests Draw animations with a single value 1`] = `
 <div>
   <svg
     height="320px"
@@ -47,16 +47,16 @@ exports[`Snapshot tests Draw animations 1`] = `
       stroke-width="1"
     >
       <animate
-        attributeName="d"
-        dur="3s"
-        repeatCount="indefinite"
-        values="M250 40 L353.923 100 L250 160 L146.077 100z;M250 100 L353.923 160 L250 220 L146.077 160z;M250 40 L353.923 100 L250 160 L146.077 100z"
-      />
-      <animate
         attributeName="fill"
         dur="3s"
         repeatCount="indefinite"
-        values="#FFF;#DDD;#FFF"
+        values="#FFF"
+      />
+      <animate
+        attributeName="d"
+        dur="3s"
+        repeatCount="indefinite"
+        values="M250 40 L353.923 100 L250 160 L146.077 100z"
       />
     </path>
     <path
@@ -71,17 +71,16 @@ exports[`Snapshot tests Draw animations 1`] = `
       stroke-width="1"
     >
       <animate
-        attributeName="d"
-        dur="3s"
-        from="M353.923 220 L250 280 L250 160 L353.923 100z"
-        repeatCount="indefinite"
-        to="M353.923 220 L250 280 L250 220 L353.923 160z"
-      />
-      <animate
         attributeName="fill"
         dur="3s"
         repeatCount="indefinite"
-        values="#FFF;#DDD;#FFF"
+        values="#FFF"
+      />
+      <animate
+        attributeName="d"
+        dur="3s"
+        repeatCount="indefinite"
+        values="M353.923 220 L250 280 L250 160 L353.923 100z"
       />
     </path>
     <path
@@ -96,16 +95,202 @@ exports[`Snapshot tests Draw animations 1`] = `
       stroke-width="1"
     >
       <animate
+        attributeName="fill"
+        dur="3s"
+        repeatCount="indefinite"
+        values="#FFF"
+      />
+      <animate
         attributeName="d"
         dur="3s"
         repeatCount="indefinite"
         values="M146.077 220 L250 280 L250 220 L146.077 160z"
       />
+    </path>
+  </svg>
+</div>
+`;
+
+exports[`Snapshot tests Draw animations with from and to 1`] = `
+<div>
+  <svg
+    height="320px"
+    viewBox="0 0 500 320"
+    width="500px"
+  >
+    <rect
+      fill="#CCC"
+      height="320px"
+      width="500px"
+      x="0"
+      y="0"
+    />
+    <path
+      d="M250 40 L353.923 100 L250 160 L146.077 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="fill"
+        dur="3s"
+        from="#FFF"
+        repeatCount="indefinite"
+        to="#DDD"
+      />
+      <animate
+        attributeName="d"
+        dur="3s"
+        from="M250 40 L353.923 100 L250 160 L146.077 100z"
+        repeatCount="indefinite"
+        to="M250 100 L353.923 160 L250 220 L146.077 160z"
+      />
+    </path>
+    <path
+      d="M353.923 220 L250 280 L250 160 L353.923 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="fill"
+        dur="3s"
+        from="#FFF"
+        repeatCount="indefinite"
+        to="#DDD"
+      />
+      <animate
+        attributeName="d"
+        dur="3s"
+        from="M353.923 220 L250 280 L250 160 L353.923 100z"
+        repeatCount="indefinite"
+        to="M353.923 220 L250 280 L250 220 L353.923 160z"
+      />
+    </path>
+    <path
+      d="M146.077 220 L250 280 L250 160 L146.077 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="fill"
+        dur="3s"
+        from="#FFF"
+        repeatCount="indefinite"
+        to="#DDD"
+      />
+      <animate
+        attributeName="d"
+        dur="3s"
+        repeatCount="indefinite"
+        values="M146.077 220 L250 280 L250 220 L146.077 160z"
+      />
+    </path>
+  </svg>
+</div>
+`;
+
+exports[`Snapshot tests Draw animations with values 1`] = `
+<div>
+  <svg
+    height="320px"
+    viewBox="0 0 500 320"
+    width="500px"
+  >
+    <rect
+      fill="#CCC"
+      height="320px"
+      width="500px"
+      x="0"
+      y="0"
+    />
+    <path
+      d="M250 40 L353.923 100 L250 160 L146.077 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
       <animate
         attributeName="fill"
         dur="3s"
         repeatCount="indefinite"
         values="#FFF;#DDD;#FFF"
+      />
+      <animate
+        attributeName="d"
+        dur="3s"
+        repeatCount="indefinite"
+        values="M250 40 L353.923 100 L250 160 L146.077 100z;M250 100 L353.923 160 L250 220 L146.077 160z;M250 40 L353.923 100 L250 160 L146.077 100z"
+      />
+    </path>
+    <path
+      d="M353.923 220 L250 280 L250 160 L353.923 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="fill"
+        dur="3s"
+        repeatCount="indefinite"
+        values="#FFF;#DDD;#FFF"
+      />
+      <animate
+        attributeName="d"
+        dur="3s"
+        from="M353.923 220 L250 280 L250 160 L353.923 100z"
+        repeatCount="indefinite"
+        to="M353.923 220 L250 280 L250 220 L353.923 160z"
+      />
+    </path>
+    <path
+      d="M146.077 220 L250 280 L250 160 L146.077 100z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="fill"
+        dur="3s"
+        repeatCount="indefinite"
+        values="#FFF;#DDD;#FFF"
+      />
+      <animate
+        attributeName="d"
+        dur="3s"
+        repeatCount="indefinite"
+        values="M146.077 220 L250 280 L250 220 L146.077 160z"
       />
     </path>
   </svg>

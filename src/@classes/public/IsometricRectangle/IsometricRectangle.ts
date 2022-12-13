@@ -2,6 +2,7 @@ import {
     Command,
     PlaneView,
     SVG_ELEMENTS,
+    SVG_NAMESPACE,
 } from '@constants';
 import {
     LinePoint,
@@ -11,7 +12,12 @@ import {
     SVGRectangleAnimation,
     SVGAnimationObject
 } from '@types';
-import { getSVGPath, translateCommandPoints } from '@utils/svg';
+import {
+    getSVGPath,
+    translateCommandPoints,
+    addSVGProperties,
+    isSVGProperty
+} from '@utils/svg';
 import { IsometricShapeAbstract } from '@classes/abstract/IsometricShapeAbstract';
 import {
     IsometricRectangleProps,
@@ -78,60 +84,73 @@ export class IsometricRectangle extends IsometricShapeAbstract {
         );
     }
 
-    protected getSVGAnimationElement(): SVG_ELEMENTS {
-        return SVG_ELEMENTS.animate;
-    }
+    protected updateSubClassAnimations(): void {
 
-    protected getSVGProperty(): string {
-        return 'd';
-    }
+        this.animations.forEach((animation: SVGAnimationObject): void => {
 
-    protected getAnimationProps(animation: SVGAnimationObject): Record<string, string> {
+            const isNativeSVGProperty = isSVGProperty(animation.property);
 
-        const props = {
-            right: this.right,
-            left: this.left,
-            top: this.top,
-            width: this.width,
-            height: this.height
-        };
+            if (!isNativeSVGProperty) {
 
-        if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
+                const props = {
+                    right: this.right,
+                    left: this.left,
+                    top: this.top,
+                    width: this.width,
+                    height: this.height
+                };
 
-            const property = animation.property as SVGPositionableProperties | SVGRectangleProperties;
+                if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
 
-            if (animation.values) {
+                    const property = animation.property as SVGPositionableProperties | SVGRectangleProperties;
+                    let properties: Record<string, string>;
 
-                if (Array.isArray(animation.values)) {
-                    return {
-                        values: animation.values.map((value: string | number): string => {
+                    if (animation.values) {
+
+                        if (Array.isArray(animation.values)) {
+                            properties = {
+                                values: animation.values.map((value: string | number): string => {
+                                    const modifiedArgs = { ...props };
+                                    modifiedArgs[property] = +value;
+                                    return this.getRectanglePath(modifiedArgs);
+                                }).join(';')
+                            };
+                        } else {
                             const modifiedArgs = { ...props };
-                            modifiedArgs[property] = +value;
-                            return this.getRectanglePath(modifiedArgs);
-                        }).join(';')
-                    };
-                } else {
-                    const modifiedArgs = { ...props };
-                    modifiedArgs[property] = +animation.values;
-                    return {
-                        values: this.getRectanglePath(modifiedArgs)
-                    };
+                            modifiedArgs[property] = +animation.values;
+                            properties = {
+                                values: this.getRectanglePath(modifiedArgs)
+                            };
+                        }
+
+                    } else {
+                        const fromArgs = { ...props };
+                        const toArgs = { ...props };
+                        fromArgs[property] = +animation.from;
+                        toArgs[property] = +animation.to;
+                        properties = {
+                            from: this.getRectanglePath(fromArgs),
+                            to: this.getRectanglePath(toArgs)
+                        };
+                    }
+
+                    if (!animation.element) {
+                        animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
+                    }
+
+                    if (!animation.element.parentNode) {
+                        this.element.appendChild(animation.element);
+                    }
+
+                    this.addAnimationBasicProperties('d', animation);
+
+                    addSVGProperties(animation.element, properties);
+
                 }
 
-            } else {
-                const fromArgs = { ...props };
-                const toArgs = { ...props };
-                fromArgs[property] = +animation.from;
-                toArgs[property] = +animation.to;
-                return {
-                    from: this.getRectanglePath(fromArgs),
-                    to: this.getRectanglePath(toArgs)
-                };
             }
 
-        }
-
-        throw new TypeError(`The property ${animation.property} is not an allowed animation property for the IsometricRectangle class`);
+        });
 
     }
 

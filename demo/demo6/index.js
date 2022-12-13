@@ -1,47 +1,50 @@
 export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricGroup, IsometricRectangle, PlaneView } = IsometricModule;
+    const { IsometricCanvas, IsometricPath } = IsometricModule;
 
-    const canvas = new IsometricCanvas({
+    const cube = new IsometricCanvas({
         container,
         backgroundColor: '#CCC',
-        scale: 20,
+        scale: 120,
         width: 500,
         height: 320
     });
 
-    function resetPlanes() {
-        cube.right = cube.left = cube.top = 0;
-        planeTop.fillOpacity = planeRight.fillOpacity = planeLeft.fillOpacity = 0.25;
-    }
+    const under = new IsometricPath({ fillColor: '#EEE' });
+    const top = new IsometricPath();
+    const right = new IsometricPath();
+    const left = new IsometricPath();
 
-    function changePlane() {
-        resetPlanes();
-        this.fillOpacity = 1;
-        cube.drag = this.planeView;
-    }
+    under
+        .mt(0, 0, 1)
+        .mt(0.25, 0, 1).ct(0.5, 0, 0.75, 0.75, 0, 1).lt(1, 0, 1)
+        .lt(1, 0, 0.75).ct(0.75, 0, 0.5, 1, 0, 0.25).lt(1, 0, 0)
+        .lt(1, 0.25, 0).ct(0.75, 0.5, 0, 1, 0.75, 0).lt(1, 1, 0)
+        .lt(0.75, 1, 0).ct(0.5, 0.75, 0, 0.25, 1, 0).lt(0, 1, 0)
+        .lt(0, 1, 0.25).ct(0, 0.75, 0.5, 0, 1, 0.75).lt(0, 1, 1)
+        .lt(0, 0.75, 1).ct(0, 0.5, 0.75, 0, 0.25, 1).lt(0, 0, 1);
 
-    const planeProps = { height: 6, width: 6, fillOpacity: 0.25 };
-    const planeTop = new IsometricRectangle({ ...planeProps, planeView: PlaneView.TOP, fillOpacity: 1 });
-    const planeRight = new IsometricRectangle({ ...planeProps, planeView: PlaneView.FRONT });
-    const planeLeft = new IsometricRectangle({ ...planeProps, planeView: PlaneView.SIDE });
+    top
+        .mt(0, 0, 1)
+        .lt(0.25, 0, 1).ct(0.5, 0.25, 1, 0.75, 0, 1).lt(1, 0, 1)
+        .lt(1, 0.25, 1).ct(0.75, 0.5, 1, 1, 0.75, 1).lt(1, 1, 1)
+        .lt(0.75, 1, 1).ct(0.5, 0.75, 1, 0.25, 1, 1).lt(0, 1, 1)
+        .lt(0, 0.75, 1).ct(0.25, 0.5, 1, 0, 0.25, 1).lt(0, 0, 1);
 
-    const cubeProps = { height: 1, width: 1 };
-    const cubeTop = new IsometricRectangle({ ...cubeProps, planeView: PlaneView.TOP, top: 1 });
-    const cubeRight = new IsometricRectangle({ ...cubeProps, planeView: PlaneView.FRONT, right: 1 });
-    const cubeLeft = new IsometricRectangle({ ...cubeProps, planeView: PlaneView.SIDE, left: 1 });
+    right
+        .mt(1, 0, 1)
+        .lt(1, 0, 0.75).ct(1, 0.25, 0.5, 1, 0, 0.25).lt(1, 0, 0)
+        .lt(1, 0.25, 0).ct(1, 0.5, 0.25, 1, 0.75, 0).lt(1, 1, 0)
+        .lt(1, 1, 0.25).ct(1, 0.75, 0.5, 1, 1, 0.75).lt(1, 1, 1)
+        .lt(1, 0.75, 1).ct(1, 0.5, 0.75, 1, 0.25, 1).lt(1, 0, 1);
 
-    const cube = new IsometricGroup();
+    left
+        .mt(1, 1, 1)
+        .lt(1, 1, 0.75).ct(0.75, 1, 0.5, 1, 1, 0.25).lt(1, 1, 0)
+        .lt(0.75, 1, 0).ct(0.5, 1, 0.25, 0.25, 1, 0).lt(0, 1, 0)
+        .lt(0, 1, 0.25).ct(0.25, 1, 0.5, 0, 1, 0.75).lt(0, 1, 1)
+        .lt(0.25, 1, 1).ct(0.5, 1, 0.75, 0.75, 1, 1).lt(1, 1, 1);
 
-    const bounds = [0, 5];
-    cube.drag = 'TOP';
-    cube.bounds = { top: bounds, right: bounds, left: bounds };
-
-    planeTop.addEventListener('click', changePlane, true);
-    planeRight.addEventListener('click', changePlane, true);
-    planeLeft.addEventListener('click', changePlane, true);
-
-    cube.addChildren(cubeTop, cubeRight, cubeLeft);
-    canvas.addChildren(planeTop, planeRight, planeLeft, cube);
+    cube.addChildren(under, top, right, left);
 
 };

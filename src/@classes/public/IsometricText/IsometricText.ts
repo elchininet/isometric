@@ -2,16 +2,22 @@ import {
     IsometricPlaneView,
     SVGAnimationObject,
     SVGPositionableProperties,
+    SVGTextProperties,
     IsometricPoint
 } from '@types';
-import { SVG_ELEMENTS, ORIGIN } from '@constants';
+import {
+    SVG_NAMESPACE,
+    SVG_ELEMENTS,
+    ORIGIN
+} from '@constants';
 import { IsometricDraggableProps } from '@classes/abstract/IsometricDraggableAbstract';
 import { IsometricGraphicAbstract } from '@classes/abstract/IsometricGraphicAbstract';
 import { getPointFromIsometricPoint } from '@utils/math';
 import {
     addSVGProperties,
     elementHasSVGParent,
-    getPatternTransform
+    getPatternTransform,
+    isSVGProperty
 } from '@utils/svg';
 import { IsometricTextProps } from './types';
 
@@ -28,13 +34,17 @@ export class IsometricText extends IsometricGraphicAbstract {
             right = 0,
             left = 0,
             top = 0,
+            rotation = 0,
             ...rest
         } = props;
         // Exclude the next line from the coverage reports
         // Check https://github.com/microsoft/TypeScript/issues/13029
         /* istanbul ignore next */
-        super(rest, SVG_ELEMENTS.text);
-        this.text = text;
+        super(rest, SVG_ELEMENTS.group);
+        this._textElement = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.text);
+        this._tspan = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.tspan);
+        this._textElement.appendChild(this._tspan);
+        this.element.appendChild(this._textElement);
         this.planeView = planeView;
         this.fontFamily = fontFamily;
         this.fontSize = fontSize;
@@ -43,8 +53,25 @@ export class IsometricText extends IsometricGraphicAbstract {
         this.right = right;
         this.left = left;
         this.top = top;
+        this.rotation = rotation;
+        this.text = text;
+
+        addSVGProperties(this._textElement, {
+            style: [
+                '-webkit-user-select',
+                '-moz-user-select',
+                '-ms-user-select',
+                'user-select',
+                'pointer-events'
+            ].map(
+                (decl) => `${decl}: none`
+            ).join(';')
+        });
+
     }
 
+    private _textElement: SVGTextElement;
+    private _tspan: SVGTSpanElement;
     private _text: string;
     private _planeView: IsometricPlaneView;
     private _fontFamily: string;
@@ -54,6 +81,7 @@ export class IsometricText extends IsometricGraphicAbstract {
     private _right: number;
     private _left: number;
     private _top: number;
+    private _rotation: number;
     private _originHash = {
         [ORIGIN.CENTER]: 'middle',
         [ORIGIN.LEFT]: 'start',
@@ -62,10 +90,21 @@ export class IsometricText extends IsometricGraphicAbstract {
         [ORIGIN.BOTTOM]: 'baseline'
     };
 
-    private getTransformPosition = (props: Required<IsometricDraggableProps>): IsometricPoint => {
+    private commonAnimationAttributes = {
+        attributeName: 'transform',
+        attributeType: 'XML',
+        additive: 'sum',
+        fill: 'freeze'
+    };
+
+    private getPositionTransform(props: Required<IsometricDraggableProps>, fromCenter = true): IsometricPoint {
         return getPointFromIsometricPoint(
-            this.data.centerX,
-            this.data.centerY,
+            fromCenter
+                ? this.data.centerX
+                : 0,
+            fromCenter
+                ? this.data.centerY
+                : 0,
             {
                 r: props.right,
                 l: props.left,
@@ -73,92 +112,147 @@ export class IsometricText extends IsometricGraphicAbstract {
             },
             this.data.scale
         );
+    }
+
+    private getMatrixTransform = (props: Required<IsometricDraggableProps>): string => {
+        const transformMatrix = getPatternTransform(
+            this.getPositionTransform(props),
+            this.planeView,
+            1
+        );
+        return `${transformMatrix} rotate(${this.rotation})`;
     };
 
-    protected getSVGAnimationElement(): SVG_ELEMENTS {
-        return SVG_ELEMENTS.animateTransform;
-    }
-
-    protected getSVGProperty(): string {
-        return 'transform';
-    }
-
-    protected getAnimationProps(animation: SVGAnimationObject): Record<string, string> {
+    protected updateSubClassAnimations(): void {
 
         const props = {
-            right: this.right,
-            left: this.left,
-            top: this.top
+            right: 0,
+            left: 0,
+            top: 0,
+            rotation: 0,
         };
 
-        if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
+        this.animations.forEach((animation: SVGAnimationObject): void => {
 
-            const property = animation.property as SVGPositionableProperties;
-            const commonProps = {
-                type: 'translate',
-                additive: 'sum'
-            };
+            const isNativeSVGProperty = isSVGProperty(animation.property);
 
-            if (animation.values) {
+            if (!isNativeSVGProperty) {
 
-                if (Array.isArray(animation.values)) {
-                    return {
-                        values: animation.values.map((value: string | number): string => {
-                            const modifiedArgs = { ...props };
-                            modifiedArgs[property] = +value;
-                            const coords = this.getTransformPosition(modifiedArgs);
-                            return `${coords.x} ${coords.y}`;
-                        }).join(';'),
-                        ...commonProps
+                if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
+
+                    const property = animation.property as SVGPositionableProperties | SVGTextProperties;
+                    const isRotation = property === 'rotation';
+                    const commonProps = {
+                        ...this.commonAnimationAttributes,
+                        type: isRotation
+                            ? 'rotate'
+                            : 'translate',
+                        begin: 'indefinite'
                     };
-                } else {
-                    const modifiedArgs = { ...props };
-                    modifiedArgs[property] = +animation.values;
-                    const coords = this.getTransformPosition(modifiedArgs);
-                    return {
-                        values: `${coords.x} ${coords.y}`,
-                        ...commonProps
-                    };
+
+                    let properties: Record<string, string>;
+
+                    if (animation.values) {
+
+                        if (Array.isArray(animation.values)) {
+                            properties = {
+                                values: animation.values.map((value: string | number): string => {
+                                    if (isRotation) {
+                                        return `${value}`;
+                                    } else {
+                                        const modifiedArgs = { ...props };
+                                        modifiedArgs[property] = +value - this[property];
+                                        const coords = this.getPositionTransform(modifiedArgs, false);
+                                        return `${coords.x},${coords.y}`;
+                                    }
+                                }).join(';'),
+                                ...commonProps
+                            };
+                        } else {
+                            if (isRotation) {
+                                properties = {
+                                    values: `${animation.values}`,
+                                    ...commonProps
+                                };
+                            } else {
+                                const modifiedArgs = { ...props };
+                                modifiedArgs[property] = +animation.values - this[property];
+                                const coords = this.getPositionTransform(modifiedArgs, false);
+                                properties = {
+                                    values: `${coords.x},${coords.y}`,
+                                    ...commonProps
+                                };
+                            }
+                        }
+
+                    } else {
+                        if (isRotation) {
+                            properties = {
+                                from: `${animation.from}`,
+                                to: `${animation.to}`,
+                                ...commonProps
+                            };
+                        } else {
+                            const fromArgs = { ...props };
+                            const toArgs = { ...props };
+                            fromArgs[property] = +animation.from - this[property];
+                            toArgs[property] = +animation.to - this[property];
+                            const coordsFrom = this.getPositionTransform(fromArgs, false);
+                            const coordsTo = this.getPositionTransform(toArgs, false);
+                            properties = {
+                                from: `${coordsFrom.x},${coordsFrom.y}`,
+                                to: `${coordsTo.x},${coordsTo.y}`,
+                                ...commonProps
+                            };
+                        }
+
+                    }
+
+                    if (!animation.element) {
+                        animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animateTransform) as SVGAnimateElement;
+                    }
+
+                    if (!animation.element.parentNode) {
+                        if (isRotation) {
+                            this._textElement.appendChild(animation.element);
+                        } else {
+                            this.element.appendChild(animation.element);
+                        }
+                    }
+
+                    this.addAnimationBasicProperties('transform', animation);
+
+                    addSVGProperties(animation.element, properties);
+
+                    animation.element.beginElement();
+
                 }
-
-            } else {
-                const fromArgs = { ...props };
-                const toArgs = { ...props };
-                fromArgs[property] = +animation.from;
-                toArgs[property] = +animation.to;
-                const coordsFrom = this.getTransformPosition(fromArgs);
-                const coordsTo = this.getTransformPosition(toArgs);
-                return {
-                    from: `${coordsFrom.x} ${coordsFrom.y}`,
-                    to: `${coordsTo.x} ${coordsTo.y}`,
-                    ...commonProps
-                };
             }
 
-        }
-
-        throw new TypeError(`The property ${animation.property} is not an allowed animation property for the IsometricText class`);
+        });
 
     }
 
     public update(): this {
         if (elementHasSVGParent(this.element)) {
-            const coords = this.getTransformPosition({
-                right: this.right,
-                left: this.left,
-                top: this.top
-            });
-            const transform = getPatternTransform(coords, this.planeView);
-            this.element.textContent = this._text;
-            addSVGProperties(this.element, {
-                transform
-            });
+            const transform = this.getMatrixTransform(
+                {
+                    right: this.right,
+                    left: this.left,
+                    top: this.top
+                }
+            );
+            addSVGProperties(this._textElement, { transform });
+            this._tspan.textContent = this._text;
+            this.updatePatternTransform({ x: 0, y: 0 }, this.planeView);
+            this.updateAnimations();
         }
         return this;
     }
 
     public clear (): this {
         this.text = '';
+        this.update();
         return this;
     }
 
@@ -189,7 +283,7 @@ export class IsometricText extends IsometricGraphicAbstract {
 
     public set fontFamily(value: string) {
         this._fontFamily = value;
-        addSVGProperties(this.element, {
+        addSVGProperties(this._tspan, {
             'font-family': this._fontFamily
         });
     }
@@ -201,7 +295,7 @@ export class IsometricText extends IsometricGraphicAbstract {
 
     public set fontSize(value: number) {
         this._fontSize = value;
-        addSVGProperties(this.element, {
+        addSVGProperties(this._tspan, {
             'font-family': `${this._fontSize}px`
         });
     }
@@ -213,7 +307,7 @@ export class IsometricText extends IsometricGraphicAbstract {
 
     public set fontWeight(value: IsometricTextProps['fontWeight']) {
         this._fontWeight = value;
-        addSVGProperties(this.element, {
+        addSVGProperties(this._tspan, {
             'font-weight': `${this._fontWeight}`
         });
     }
@@ -226,12 +320,13 @@ export class IsometricText extends IsometricGraphicAbstract {
     public set origin(value: IsometricTextProps['origin']) {
         this._origin = value;
         const [textAnchor, alignmentBaseline] = this._origin;
-        addSVGProperties(this.element, {
+        addSVGProperties(this._tspan, {
             'text-anchor': this._originHash[textAnchor],
             'alignment-baseline': this._originHash[alignmentBaseline]
         });
     }
 
+    // right
     public get right(): number {
         return this._right;
     }
@@ -243,6 +338,7 @@ export class IsometricText extends IsometricGraphicAbstract {
         }
     }
 
+    // left
     public get left(): number {
         return this._left;
     }
@@ -254,6 +350,7 @@ export class IsometricText extends IsometricGraphicAbstract {
         }
     }
 
+    // top
     public get top(): number {
         return this._top;
     }
@@ -261,6 +358,18 @@ export class IsometricText extends IsometricGraphicAbstract {
     public set top(value: number) {
         if (this._top !== value) {
             this._top = value;
+            this.update();
+        }
+    }
+
+    // rotation
+    public get rotation(): number {
+        return this._rotation;
+    }
+
+    public set rotation(value: number) {
+        if (this._rotation !== value) {
+            this._rotation = value;
             this.update();
         }
     }
