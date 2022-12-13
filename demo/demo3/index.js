@@ -1,8 +1,11 @@
+import '../images/block_side.png';
+import '../images/block_top.png';
+
 export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricGroup, IsometricPath } = IsometricModule;
+    const { IsometricCanvas, IsometricRectangle, IsometricText, PlaneView } = IsometricModule;
 
-    const isometric = new IsometricCanvas({
+    const cube = new IsometricCanvas({
         container,
         backgroundColor: '#CCC',
         scale: 120,
@@ -10,40 +13,41 @@ export default ( IsometricModule, container ) => {
         height: 320
     });
 
-    const bottomT = new IsometricPath();
-    const bottomR = new IsometricPath();
-    const bottomL = new IsometricPath();
+    const rectangleCommonProps = { height: 1, width: 1 };
 
-    const topT = new IsometricPath();
-    const topR = new IsometricPath();
-    const topL = new IsometricPath();
+    const textCommonProps = {
+        fontSize: 15,
+        fillColor: '#666',
+        strokeWidth: 0,
+        right: 0.5,
+        left: 0.5,
+        top: 0.5
+    };
 
-    bottomT.mt(0, 0, .5).lt(1, 0, .5).lt(1, 1, .5).lt(0, 1, .5);
-    bottomR.mt(1, 0, .5).lt(1, 0, 0).lt(1, 1, 0).lt(1, 1, .5);
-    bottomL.mt(1, 1, .5).lt(1, 1, 0).lt(0, 1, 0).lt(0, 1, .5);
-
-    topT.mt(.25, .25, 1).lt(.75, .25, 1).lt(.75, .75, .75).lt(.25, .75, .75);
-    topR.mt(.75, .25, 1).lt(.75, .75, .75).lt(.75, .75, .25).lt(.75, .25, .25);
-    topL.mt(.75, .75, .75).lt(.25, .75, .75).lt(.25, .75, .25).lt(.75, .75, .25);
-
-    const bottomPiece = new IsometricGroup();
-    const topPiece = new IsometricGroup();
-    topPiece.top = .25;
-
-    bottomPiece.addChildren(bottomT, bottomR, bottomL);
-    topPiece.addChildren(topT, topR, topL);
-
-    let flip = true;
-
-    topPiece.addEventListener('click', function() {
-        if (this.right) {
-            this.right = 0;
-            return;
-        }
-        this.right = flip ? 0.25 : -0.25;
-        flip = !flip;
+    const pieces = [PlaneView.TOP, PlaneView.FRONT, PlaneView.SIDE].map((view, index) => {
+        return {
+            face: new IsometricRectangle({...rectangleCommonProps, planeView: view}),
+            label: new IsometricText({...textCommonProps, planeView: view}),
+            property: ['top', 'right', 'left'][index]
+        };
     });
 
-    isometric.addChildren(bottomPiece, topPiece);
+    pieces.forEach((piece) => {
+
+        const { face, label, property } = piece;
+
+        face[property] = 1;
+        label[property] = 1;
+        label.text = `${property.toUpperCase()} 0º`;
+
+        face.addEventListener('click', () => {
+            const rotation = label.rotation + 45;
+            label.rotation = rotation === 360 ? 0 : rotation;
+            label.text = label.text.replace(/\d+/, label.rotation);
+        });
+
+        cube.addChild(piece.face);
+        cube.addChild(piece.label);
+    });
 
 };

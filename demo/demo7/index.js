@@ -1,42 +1,47 @@
-import '../images/block_side.png';
-import '../images/block_top.png';
-
 export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricRectangle, IsometricText, PlaneView } = IsometricModule;
+    const { IsometricCanvas, IsometricGroup, IsometricRectangle, PlaneView } = IsometricModule;
 
-    const cube = new IsometricCanvas({
+    const canvas = new IsometricCanvas({
         container,
         backgroundColor: '#CCC',
-        scale: 120,
+        scale: 20,
         width: 500,
         height: 320
     });
 
-    const rectangleCommonProps = {height: 1, width: 1};
-    const textCommonProps = { fontFamily: 'Arial', fontSize: 15, fillColor: '#666', strokeWidth: 0 };
-    const topPiece = new IsometricRectangle({...rectangleCommonProps, planeView: PlaneView.TOP});
-    const rightPiece = new IsometricRectangle({...rectangleCommonProps, planeView: PlaneView.FRONT});
-    const leftPiece = new IsometricRectangle({...rectangleCommonProps, planeView: PlaneView.SIDE});
+    function resetPlanes() {
+        cube.right = cube.left = cube.top = 0;
+        planeTop.fillOpacity = planeRight.fillOpacity = planeLeft.fillOpacity = 0.25;
+    }
 
-    const topText = new IsometricText({...textCommonProps, planeView: PlaneView.TOP, right: 0.5, left: 0.5, top: 1});
-    const rightText = new IsometricText({...textCommonProps, planeView: PlaneView.FRONT, right: 1, left: 0.5, top: 0.5});
-    const leftText = new IsometricText({...textCommonProps, planeView: PlaneView.SIDE, right: 0.5, left: 1, top: 0.5});
+    function changePlane() {
+        resetPlanes();
+        this.fillOpacity = 1;
+        cube.drag = this.planeView;
+    }
 
-    topPiece.top = 1;
-    rightPiece.right = 1;
-    leftPiece.left = 1;
+    const planeProps = { height: 6, width: 6, fillOpacity: 0.25 };
+    const planeTop = new IsometricRectangle({ ...planeProps, planeView: PlaneView.TOP, fillOpacity: 1 });
+    const planeRight = new IsometricRectangle({ ...planeProps, planeView: PlaneView.FRONT });
+    const planeLeft = new IsometricRectangle({ ...planeProps, planeView: PlaneView.SIDE });
 
-    topText.text = 'TOP FACE';
-    rightText.text = 'RIGHT FACE';
-    leftText.text = 'LEFT FACE';
+    const cubeProps = { height: 1, width: 1 };
+    const cubeTop = new IsometricRectangle({ ...cubeProps, planeView: PlaneView.TOP, top: 1 });
+    const cubeRight = new IsometricRectangle({ ...cubeProps, planeView: PlaneView.FRONT, right: 1 });
+    const cubeLeft = new IsometricRectangle({ ...cubeProps, planeView: PlaneView.SIDE, left: 1 });
 
-    cube
-        .addChild(topPiece)
-        .addChild(rightPiece)
-        .addChild(leftPiece)
-        .addChild(topText)
-        .addChild(rightText)
-        .addChild(leftText);
+    const cube = new IsometricGroup();
+
+    const bounds = [0, 5];
+    cube.drag = 'TOP';
+    cube.bounds = { top: bounds, right: bounds, left: bounds };
+
+    planeTop.addEventListener('click', changePlane, true);
+    planeRight.addEventListener('click', changePlane, true);
+    planeLeft.addEventListener('click', changePlane, true);
+
+    cube.addChildren(cubeTop, cubeRight, cubeLeft);
+    canvas.addChildren(planeTop, planeRight, planeLeft, cube);
 
 };

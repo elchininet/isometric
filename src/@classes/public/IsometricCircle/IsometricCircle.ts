@@ -1,7 +1,8 @@
 import {
     Command,
     PlaneView,
-    SVG_ELEMENTS
+    SVG_ELEMENTS,
+    SVG_NAMESPACE
 } from '@constants';
 import {
     CommandPoint,
@@ -10,7 +11,12 @@ import {
     SVGCircleProperties,
     SVGAnimationObject
 } from '@types';
-import { getSVGPath, translateCommandPoints } from '@utils/svg';
+import {
+    getSVGPath,
+    translateCommandPoints,
+    addSVGProperties,
+    isSVGProperty
+} from '@utils/svg';
 import { IsometricShapeAbstract } from '@classes/abstract/IsometricShapeAbstract';
 import {
     IsometricCircleProps,
@@ -107,59 +113,72 @@ export class IsometricCircle extends IsometricShapeAbstract {
         );
     }
 
-    protected getSVGAnimationElement(): SVG_ELEMENTS {
-        return SVG_ELEMENTS.animate;
-    }
+    protected updateSubClassAnimations(): void {
 
-    protected getSVGProperty(): string {
-        return 'd';
-    }
+        this.animations.forEach((animation: SVGAnimationObject): void => {
 
-    protected getAnimationProps(animation: SVGAnimationObject): Record<string, string> {
+            const isNativeSVGProperty = isSVGProperty(animation.property);
 
-        const props = {
-            right: this.right,
-            left: this.left,
-            top: this.top,
-            radius: this.radius
-        };
+            if (!isNativeSVGProperty) {
 
-        if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
+                const props = {
+                    right: this.right,
+                    left: this.left,
+                    top: this.top,
+                    radius: this.radius
+                };
 
-            const property = animation.property as SVGPositionableProperties | SVGCircleProperties;
+                if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
 
-            if (animation.values) {
+                    const property = animation.property as SVGPositionableProperties | SVGCircleProperties;
+                    let properties: Record<string, string>;
 
-                if (Array.isArray(animation.values)) {
-                    return {
-                        values: animation.values.map((value: string | number): string => {
+                    if (animation.values) {
+
+                        if (Array.isArray(animation.values)) {
+                            properties = {
+                                values: animation.values.map((value: string | number): string => {
+                                    const modifiedArgs = { ...props };
+                                    modifiedArgs[property] = +value;
+                                    return this.getCirclePath(modifiedArgs);
+                                }).join(';')
+                            };
+                        } else {
                             const modifiedArgs = { ...props };
-                            modifiedArgs[property] = +value;
-                            return this.getCirclePath(modifiedArgs);
-                        }).join(';')
-                    };
-                } else {
-                    const modifiedArgs = { ...props };
-                    modifiedArgs[property] = +animation.values;
-                    return {
-                        values: this.getCirclePath(modifiedArgs)
-                    };
+                            modifiedArgs[property] = +animation.values;
+                            properties = {
+                                values: this.getCirclePath(modifiedArgs)
+                            };
+                        }
+
+                    } else {
+                        const fromArgs = { ...props };
+                        const toArgs = { ...props };
+                        fromArgs[property] = +animation.from;
+                        toArgs[property] = +animation.to;
+                        properties = {
+                            from: this.getCirclePath(fromArgs),
+                            to: this.getCirclePath(toArgs)
+                        };
+                    }
+
+                    if (!animation.element) {
+                        animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
+                    }
+
+                    if (!animation.element.parentNode) {
+                        this.element.appendChild(animation.element);
+                    }
+
+                    this.addAnimationBasicProperties('d', animation);
+
+                    addSVGProperties(animation.element, properties);
+
                 }
 
-            } else {
-                const fromArgs = { ...props };
-                const toArgs = { ...props };
-                fromArgs[property] = +animation.from;
-                toArgs[property] = +animation.to;
-                return {
-                    from: this.getCirclePath(fromArgs),
-                    to: this.getCirclePath(toArgs)
-                };
             }
 
-        }
-
-        throw new TypeError(`The property ${animation.property} is not an allowed animation property for the IsometricCircle class`);
+        });
 
     }
 
