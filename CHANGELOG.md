@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.7.1] - 2022-12-22
+
+- Solve an error in Node environments related to `ReferenceError: SVGSVGElement is not defined`
+
 ## [3.7.0] - 2022-12-13
 
 - Create a new class to work with texts (`IsometricText`)

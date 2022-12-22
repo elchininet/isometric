@@ -233,7 +233,7 @@ export const getPatternTransform = (
 
 export const elementHasSVGParent = (element: Node): boolean => {
     if (element.parentNode) {
-        if (element.parentNode instanceof SVGSVGElement) {
+        if (element.parentNode.constructor.name === 'SVGSVGElement') {
             return true;
         }
         return elementHasSVGParent(element.parentNode);
