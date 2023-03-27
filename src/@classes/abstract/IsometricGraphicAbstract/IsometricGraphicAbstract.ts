@@ -260,7 +260,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
         }
     }
 
-    public get texture(): Texture | undefined {
+    public get texture(): Texture {
         return this.props.texture;
     }
 
