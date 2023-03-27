@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.7.2] - 2023-03-27
+
+- Fix a getter with a different type from the setter
+
 ## [3.7.1] - 2022-12-22
 
 - Solve an error in Node environments related to `ReferenceError: SVGSVGElement is not defined`
