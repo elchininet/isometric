@@ -25,3 +25,64 @@ jobs:
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Build Changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v3
+        with:
+          configurationJson: |
+            {
+              "categories": [
+                {
+                  "title": "## 🚀 Features",
+                  "labels": ["feature-request", "enhancement"]
+                },
+                {
+                  "title": "## 🛠 Fixes",
+                  "labels": ["fix", "bug"]
+                },
+                {
+                  "title": "## 🎲 Demo",
+                  "labels": ["demo", "docs"]
+                },
+                {
+                  "title": "## 📝 Documentation",
+                  "labels": ["documentation"]
+                },
+                {
+                  "title": "## 🧩 Dependencies",
+                  "labels": ["dependencies"]
+                },
+                {
+                  "title": "## ⚙️ Configuration",
+                  "labels": ["configuration", "technical"]
+                },
+                {
+                  "title": "## 📦 Other",
+                  "labels": []
+                }
+              ],
+              "template": "#{{CHANGELOG}}",
+              "pr_template": "- #{{TITLE}}\n   - PR: ##{{NUMBER}} by @#{{AUTHOR}}",
+              "empty_template": "#{{OWNER}}\n#{{REPO}}\n#{{FROM_TAG}}\n#{{TO_TAG}}",
+              "max_pull_requests": 1000,
+              "max_back_track_time_days": 1000,
+              "label_extractor": [
+                {
+                  "pattern": "^fix",
+                  "on_property": "title",
+                  "method": "match",
+                  "flags": "i"
+                }
+              ]
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create a release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            esm/index.js
+            esm/index.node.js
+            index.d.ts
+          body: |
+            ${{ steps.build_changelog.outputs.changelog }}
