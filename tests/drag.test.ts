@@ -235,7 +235,7 @@ describe('Test dragging', (): void => {
 
         group.bounds = { right: bounds.right, left: bounds.left };
 
-        expect(group.bounds).toMatchObject({
+        expect(group.bounds).toStrictEqual({
             right: bounds.right,
             left: bounds.left
         });
@@ -256,7 +256,7 @@ describe('Test dragging', (): void => {
 
         group.bounds = { left: bounds.left, top: bounds.top };
 
-        expect(group.bounds).toMatchObject({
+        expect(group.bounds).toStrictEqual({
             left: bounds.left,
             top: bounds.top
         });
@@ -277,7 +277,7 @@ describe('Test dragging', (): void => {
 
         group.bounds = { right: bounds.right, top: bounds.top };
 
-        expect(group.bounds).toMatchObject({
+        expect(group.bounds).toStrictEqual({
             right: bounds.right,
             top: bounds.top
         });

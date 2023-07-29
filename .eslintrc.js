@@ -23,6 +23,7 @@ module.exports = {
         quotes: ['error', 'single', { 'avoidEscape': true, 'allowTemplateLiterals': true }],
         semi: ['error', 'always'],
         '@typescript-eslint/no-empty-interface': ['error', { allowSingleExtends: true }],
+        '@typescript-eslint/no-unsafe-declaration-merging': 'off',
         'no-trailing-spaces': ['error']
     },
     overrides: [

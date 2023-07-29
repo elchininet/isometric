@@ -550,7 +550,7 @@ describe('Test textures', (): void => {
 
         pathPattern = path.getPattern();
 
-        expect(path.texture).toMatchObject(cloneTexture);
+        expect(path.texture).toStrictEqual(cloneTexture);
         expect(pathPattern.getAttribute('patternTransform')).toBe('translate(146.077 100) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745)');
 
         cloneTexture = {
@@ -562,7 +562,7 @@ describe('Test textures', (): void => {
         path.texture = cloneTexture;
         const image = pathPattern.firstChild as SVGImageElement;
 
-        expect(path.texture).toMatchObject(cloneTexture);
+        expect(path.texture).toStrictEqual(cloneTexture);
         expect(image.style.imageRendering).toBe('');
         expect(pathPattern.getAttribute('patternTransform')).toBe('translate(250 160) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(0.612372)');
 
@@ -616,7 +616,7 @@ describe('Test textures', (): void => {
         pathPattern = path.getPattern();
         image = pathPattern.firstChild as SVGImageElement;
 
-        expect(path.texture).toMatchObject({
+        expect(path.texture).toStrictEqual({
             ...cloneTexture,
             shift: { left: 1 }
         });
@@ -631,7 +631,7 @@ describe('Test textures', (): void => {
             url: newUrl
         });
 
-        expect(path.texture).toMatchObject({
+        expect(path.texture).toStrictEqual({
             ...cloneTexture,
             url: newUrl,
             shift: { left: 1 }
@@ -643,7 +643,7 @@ describe('Test textures', (): void => {
             pixelated: false
         });
 
-        expect(path.texture).toMatchObject({
+        expect(path.texture).toStrictEqual({
             ...cloneTexture,
             shift: { left: 1 },
             pixelated: false
