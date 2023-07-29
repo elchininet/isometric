@@ -163,7 +163,7 @@ describe('Test properties', (): void => {
         expect(path.fillColor).toBe(rectangle.fillColor);
         expect(path.fillOpacity).toBe(rectangle.fillOpacity);
         expect(path.strokeColor).toBe(rectangle.strokeColor);
-        expect(path.strokeDashArray).toMatchObject(rectangle.strokeDashArray);
+        expect(path.strokeDashArray).toStrictEqual(rectangle.strokeDashArray);
         expect(path.strokeLinecap).toBe(rectangle.strokeLinecap);
         expect(path.strokeLinejoin).toBe(rectangle.strokeLinejoin);
         expect(path.strokeOpacity).toBe(rectangle.strokeOpacity);
@@ -178,7 +178,7 @@ describe('Test properties', (): void => {
         expect(path.fillColor).toBe(circle.fillColor);
         expect(path.fillOpacity).toBe(circle.fillOpacity);
         expect(path.strokeColor).toBe(circle.strokeColor);
-        expect(path.strokeDashArray).toMatchObject(circle.strokeDashArray);
+        expect(path.strokeDashArray).toStrictEqual(circle.strokeDashArray);
         expect(path.strokeLinecap).toBe(circle.strokeLinecap);
         expect(path.strokeLinejoin).toBe(circle.strokeLinejoin);
         expect(path.strokeOpacity).toBe(circle.strokeOpacity);
@@ -245,7 +245,7 @@ describe('Test properties', (): void => {
         expect(path.fillColor).toBe('#FFF');
         expect(path.fillOpacity).toBe(0.5);
         expect(path.strokeColor).toBe('#000');
-        expect(path.strokeDashArray).toMatchObject([1, 2, 3]);
+        expect(path.strokeDashArray).toStrictEqual([1, 2, 3]);
         expect(path.strokeLinecap).toBe('round');
         expect(path.strokeLinejoin).toBe('miter');
         expect(path.strokeOpacity).toBe(0.25);
@@ -275,7 +275,7 @@ describe('Test properties', (): void => {
         expect(path.fillColor).toBe('#000');
         expect(path.fillOpacity).toBe(1);
         expect(path.strokeColor).toBe('#FFF');
-        expect(path.strokeDashArray).toMatchObject([3, 2, 1]);
+        expect(path.strokeDashArray).toStrictEqual([3, 2, 1]);
         expect(path.strokeLinecap).toBe('butt');
         expect(path.strokeLinejoin).toBe('bevel');
         expect(path.strokeOpacity).toBe(0.75);
@@ -299,7 +299,7 @@ describe('Test properties', (): void => {
         expect(rectangle.fillColor).toBe('#FFF');
         expect(rectangle.fillOpacity).toBe(0.5);
         expect(rectangle.strokeColor).toBe('#000');
-        expect(rectangle.strokeDashArray).toMatchObject([1, 2, 3]);
+        expect(rectangle.strokeDashArray).toStrictEqual([1, 2, 3]);
         expect(rectangle.strokeLinecap).toBe('round');
         expect(rectangle.strokeLinejoin).toBe('miter');
         expect(rectangle.strokeOpacity).toBe(0.25);
@@ -326,7 +326,7 @@ describe('Test properties', (): void => {
         expect(rectangle.fillColor).toBe('#000');
         expect(rectangle.fillOpacity).toBe(1);
         expect(rectangle.strokeColor).toBe('#FFF');
-        expect(rectangle.strokeDashArray).toMatchObject([3, 2, 1]);
+        expect(rectangle.strokeDashArray).toStrictEqual([3, 2, 1]);
         expect(rectangle.strokeLinecap).toBe('butt');
         expect(rectangle.strokeLinejoin).toBe('bevel');
         expect(rectangle.strokeOpacity).toBe(0.75);
@@ -348,7 +348,7 @@ describe('Test properties', (): void => {
         expect(text.fillColor).toBe('#FFF');
         expect(text.fillOpacity).toBe(0.5);
         expect(text.strokeColor).toBe('#000');
-        expect(text.strokeDashArray).toMatchObject([1, 2, 3]);
+        expect(text.strokeDashArray).toStrictEqual([1, 2, 3]);
         expect(text.strokeLinecap).toBe('round');
         expect(text.strokeLinejoin).toBe('miter');
         expect(text.strokeOpacity).toBe(0.25);
@@ -363,7 +363,7 @@ describe('Test properties', (): void => {
         expect(text.left).toBe(0.5);
         expect(text.top).toBe(1.5);
         expect(text.rotation).toBe(45);
-        expect(text.origin).toMatchObject(['left', 'bottom']);
+        expect(text.origin).toStrictEqual(['left', 'bottom']);
         expect(text.selectable).toBe(false);
 
         expect(textGroupElement.getAttribute('fill')).toBe('#FFF');
@@ -410,7 +410,7 @@ describe('Test properties', (): void => {
         expect(text.fillColor).toBe('#000');
         expect(text.fillOpacity).toBe(1);
         expect(text.strokeColor).toBe('#FFF');
-        expect(text.strokeDashArray).toMatchObject([3, 2, 1]);
+        expect(text.strokeDashArray).toStrictEqual([3, 2, 1]);
         expect(text.strokeLinecap).toBe('butt');
         expect(text.strokeLinejoin).toBe('bevel');
         expect(text.strokeOpacity).toBe(0.75);
@@ -425,7 +425,7 @@ describe('Test properties', (): void => {
         expect(text.left).toBe(1);
         expect(text.top).toBe(0.5);
         expect(text.rotation).toBe(90);
-        expect(text.origin).toMatchObject(['right', 'top']);
+        expect(text.origin).toStrictEqual(['right', 'top']);
         expect(text.selectable).toBe(true);
 
         expect(textGroupElement.getAttribute('fill')).toBe('#000');
@@ -461,11 +461,11 @@ describe('Test properties', (): void => {
         expect(groupElement.contains(rectangleElement)).toBeTruthy();
         expect(groupElement.contains(circleElement)).toBeTruthy();
 
-        expect(group.children).toMatchObject([rectangle, circle]);
+        expect(group.children).toStrictEqual([rectangle, circle]);
 
         group.removeChild(circle);
 
-        expect(group.children).toMatchObject([rectangle]);
+        expect(group.children).toStrictEqual([rectangle]);
 
         expect(groupElement.contains(circleElement)).toBeFalsy();
         expect(svgElement.contains(circleElement)).toBeFalsy();
