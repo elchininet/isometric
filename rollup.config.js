@@ -3,7 +3,7 @@ import ts from 'rollup-plugin-ts';
 import { terser } from 'rollup-plugin-terser';
 
 const reference = '/// <reference types="./index.d.ts" />';
-const esmReference = '/// <reference types="../index.d.ts" />';
+const nodeReference = '/// <reference types="./node.d.ts" />';
 const banner = `
 var dom = new jsdom.JSDOM('<!DOCTYPE html><html><body></body></html>');
 var document = dom.window.document;
@@ -29,14 +29,14 @@ export default [
                 name: 'isometric'
             },
             {
-                file: pkg.main,
+                file: pkg.exports['.'].require.default,
                 format: 'cjs',
                 banner: reference
             },
             {
-                file: pkg.module,
+                file: pkg.exports['.'].import.default,
                 format: 'es',
-                banner: esmReference
+                banner: reference
             }
         ]
     },
@@ -45,19 +45,19 @@ export default [
         input: 'src/index.ts',
         output: [
             {
-                file: pkg.exports['./node'].require,
+                file: pkg.exports['./node'].require.default,
                 format: 'cjs',
                 banner: `
-                ${reference}
+                ${nodeReference}
                 var jsdom = require('jsdom');
                 ${banner}
                 `
             },
             {
-                file: pkg.exports['./node'].import,
+                file: pkg.exports['./node'].import.default,
                 format: 'es',
                 banner: `
-                ${esmReference}
+                ${nodeReference}
                 import jsdom from 'jsdom';
                 ${banner}
                 `
