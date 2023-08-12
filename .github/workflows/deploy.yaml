@@ -84,5 +84,6 @@ jobs:
             esm/index.js
             esm/index.node.js
             index.d.ts
+            node.d.ts
           body: |
             ${{ steps.build_changelog.outputs.changelog }}
