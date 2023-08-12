@@ -2,8 +2,7 @@
 
 mkdir -p dist/web/
 
-rm esm/index.d.ts
-rm esm/index.node.d.ts
+mv esm/index.node.d.ts esm/node.d.ts
 rm web/isometric.d.ts
 cp web/isometric.js dist/web/isometric.js
 mv index.node.d.ts node.d.ts

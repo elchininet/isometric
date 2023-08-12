@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.7.3] - 2023-08-12
+
+- Fix ESM types
+
 ## [3.7.2] - 2023-03-27
 
 - Fix a getter with a different type from the setter

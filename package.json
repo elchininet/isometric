@@ -7,12 +7,24 @@
   "types": "index.d.ts",
   "exports": {
     ".": {
-      "require": "./index.js",
-      "import": "./esm/index.js"
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "import": {
+        "types": "./esm/index.d.ts",
+        "default": "./esm/index.js"
+      }
     },
     "./node": {
-      "require": "./index.node.js",
-      "import": "./esm/index.node.js"
+      "require": {
+        "types": "./node.d.ts",
+        "default": "./index.node.js"
+      },
+      "import": {
+        "types": "./esm/node.d.ts",
+        "default": "./esm/index.node.js"
+      }
     }
   },
   "files": [
