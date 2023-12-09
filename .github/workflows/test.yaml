@@ -10,21 +10,23 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: node:16
+      image: node:18
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
           cache: 'yarn'
       - name: Install
         run: yarn install --frozen-lockfile --ignore-scripts --prefer-offline
+      - name: Test TypeScript
+        run: yarn test:ts
       - name: Linting files
-        run: yarn lint
+        run: yarn test:lint
       - name: Make coverage
-        run: yarn test --coverage
+        run: yarn test:unit --coverage
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
