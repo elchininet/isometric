@@ -1,6 +1,6 @@
 #! /bin/sh
 
-RIMRAF="./node_modules/rimraf/dist/cjs/src/bin.js"
+RIMRAF="./node_modules/rimraf/dist/esm/bin.mjs"
 
 $RIMRAF dist/
 $RIMRAF esm/
