@@ -14,27 +14,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'yarn'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: dependencies-v1-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          cache: 'pnpm'
       - name: Install
-        run: yarn install --frozen-lockfile --ignore-scripts --prefer-offline
+        run: pnpm install --ignore-scripts --prefer-offline
       - name: Test TypeScript
-        run: yarn test:ts
+        run: pnpm test:ts
       - name: Linting files
-        run: yarn test:lint
+        run: pnpm test:lint
       - name: Make coverage
-        run: yarn test:unit --coverage
+        run: pnpm test:unit --coverage
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
