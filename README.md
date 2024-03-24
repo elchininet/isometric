@@ -23,6 +23,12 @@ https://elchininet.github.io/isometric/
 npm install @elchininet/isometric
 ```
 
+#### Using PNPM
+
+```
+pnpm add @elchininet/isometric
+```
+
 #### Using Yarn
 
 ```

@@ -1,6 +1,6 @@
 import pkg from './package.json';
 import ts from 'rollup-plugin-ts';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 
 const reference = '/// <reference types="./index.d.ts" />';
 const nodeReference = '/// <reference types="./node.d.ts" />';
