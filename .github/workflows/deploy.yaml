@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
       - name: Publish
         run: |
           pnpm install --ignore-scripts --prefer-offline
