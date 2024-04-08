@@ -10,7 +10,7 @@ module.exports = [
                 SharedArrayBuffer: 'readonly',
                 ...globals.browser,
                 ...globals.node,
-                ...globals.es2018
+                ...globals.es2020
             }
         }
     },
