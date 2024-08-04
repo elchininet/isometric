@@ -31,7 +31,8 @@ module.exports = [
             'no-trailing-spaces': ['error'],
             '@typescript-eslint/no-duplicate-enum-values': 'off',
             '@typescript-eslint/no-var-requires': 'off',
-            '@typescript-eslint/no-unsafe-declaration-merging': 'off'
+            '@typescript-eslint/no-unsafe-declaration-merging': 'off',
+            '@typescript-eslint/no-empty-object-type': 'off'
         }
     },
     {
@@ -44,6 +45,12 @@ module.exports = [
         files: ['tests/*.ts'],
         rules: {
             '@typescript-eslint/ban-ts-comment': 'off'
+        }
+    },
+    {
+        files: ['*.js'],
+        rules: {
+            '@typescript-eslint/no-require-imports': 'off'
         }
     }
 ];

@@ -1,8 +1,5 @@
-import {
-    PlaneView,
-    Command,
-    Axis
-} from '@constants';
+import type { PlaneView, Axis } from '@constants';
+import { Command } from '@constants';
 
 export type IsometricPlaneView = keyof typeof PlaneView;
 

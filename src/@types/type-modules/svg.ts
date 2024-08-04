@@ -1,4 +1,4 @@
-import { LineCap, LineJoin } from '@constants';
+import type { LineCap, LineJoin } from '@constants';
 import { StringOrNumber } from './generic';
 
 export type StrokeLinecap = keyof typeof LineCap;
