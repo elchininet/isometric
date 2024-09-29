@@ -152,6 +152,24 @@ exports[`Snapshot tests Draw animations with a single value 1`] = `
         values="103.923,60"
       />
     </g>
+    <path
+      d="M275.98075 145 L252.195451 151.997035 L233.319332 141.098897 L237.495329 156.321441 L213.71003 163.318476 L240.076237 165.72949 L244.252233 180.952034 L256.371448 167.219579 L282.737655 169.630593 L263.861535 158.732455z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="d"
+        dur="3s"
+        repeatCount="indefinite"
+        values="M353.923 100 L258.781806 127.988141 L183.277327 84.395589 L199.981314 145.285763 L104.84012 173.273905 L210.304946 182.917961 L227.008934 243.808135 L275.485793 188.878315 L380.950619 198.522371 L305.44614 154.92982z"
+      />
+    </path>
   </svg>
 </div>
 `;
@@ -243,8 +261,9 @@ exports[`Snapshot tests Draw animations with from and to 1`] = `
       <animate
         attributeName="d"
         dur="3s"
+        from="M146.077 220 L250 280 L250 160 L146.077 100z"
         repeatCount="indefinite"
-        values="M146.077 220 L250 280 L250 220 L146.077 160z"
+        to="M146.077 220 L250 280 L250 40 L146.077 -20z"
       />
     </path>
     <g
@@ -294,6 +313,25 @@ exports[`Snapshot tests Draw animations with from and to 1`] = `
         type="translate"
       />
     </g>
+    <path
+      d="M275.98075 175 L263.861535 161.267545 L282.737655 150.369407 L256.371448 152.780421 L244.252233 139.047966 L240.076237 154.27051 L213.71003 156.681524 L237.495329 163.678559 L233.319332 178.901103 L252.195451 168.002965z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="d"
+        dur="3s"
+        from="M275.98075 175 L263.861535 161.267545 L282.737655 150.369407 L256.371448 152.780421 L244.252233 139.047966 L240.076237 154.27051 L213.71003 156.681524 L237.495329 163.678559 L233.319332 178.901103 L252.195451 168.002965z"
+        repeatCount="indefinite"
+        to="M353.923 220 L305.44614 165.07018 L380.950619 121.477629 L275.485793 131.121685 L227.008934 76.191865 L210.304946 137.082039 L104.84012 146.726095 L199.981314 174.714237 L183.277327 235.604411 L258.781806 192.011859z"
+      />
+    </path>
   </svg>
 </div>
 `;
@@ -432,6 +470,24 @@ exports[`Snapshot tests Draw animations with values 1`] = `
         values="0,0;103.923,60;0,0"
       />
     </g>
+    <path
+      d="M275.98075 85 L252.195451 91.997035 L233.319332 81.098897 L237.495329 96.321441 L213.71003 103.318476 L240.076237 105.72949 L244.252233 120.952034 L256.371448 107.219579 L282.737655 109.630593 L263.861535 98.732455z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    >
+      <animate
+        attributeName="d"
+        dur="3s"
+        repeatCount="indefinite"
+        values="M275.98075 85 L252.195451 91.997035 L233.319332 81.098897 L237.495329 96.321441 L213.71003 103.318476 L240.076237 105.72949 L244.252233 120.952034 L256.371448 107.219579 L282.737655 109.630593 L263.861535 98.732455z;M353.923 40 L258.781806 67.988141 L183.277327 24.395589 L199.981314 85.285763 L104.84012 113.273905 L210.304946 122.917961 L227.008934 183.808135 L275.485793 128.878315 L380.950619 138.522371 L305.44614 94.92982z;M275.98075 85 L252.195451 91.997035 L233.319332 81.098897 L237.495329 96.321441 L213.71003 103.318476 L240.076237 105.72949 L244.252233 120.952034 L256.371448 107.219579 L282.737655 109.630593 L263.861535 98.732455z"
+      />
+    </path>
   </svg>
 </div>
 `;
@@ -868,6 +924,17 @@ exports[`Snapshot tests Remove animations 1`] = `
     />
     <path
       d="M146.077 220 A 146.969316 84.852814 0 0 0 353.923 100 A 146.969316 84.852814 180 0 0 146.077 220z"
+      fill="white"
+      fill-opacity="1"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      d="M250 130 L244.166958 154.0972 L225.290838 164.995338 L240.56194 168.990089 L234.728898 193.087289 L250 171.45898 L265.271102 175.453731 L259.43806 158.091951 L274.709162 136.463642 L255.833042 147.36178z"
       fill="white"
       fill-opacity="1"
       stroke="black"

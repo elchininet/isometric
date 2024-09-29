@@ -1,6 +1,6 @@
 export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricPath, IsometricRectangle, PlaneView } = IsometricModule;
+    const { IsometricCanvas, IsometricPath, IsometricRectangle, IsometricPentagram, PlaneView } = IsometricModule;
 
     const cube = new IsometricCanvas({
         container,
@@ -27,6 +27,7 @@ export default ( IsometricModule, container ) => {
     };
 
     const topPiece = new IsometricPath();
+    const star = new IsometricPentagram({ radius: 0.35, planeView: PlaneView.TOP, right: 0.5, left: 0.5, top: 1});
     const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT, right: 1});
     const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE, left: 1});
 
@@ -48,6 +49,13 @@ export default ( IsometricModule, container ) => {
         })
         .addAnimation(colorAnimationProps);
 
+    star
+        .addAnimation({
+            property: 'top',
+            duration,
+            values: [1, 0.5, 1]
+        });
+
     rightPiece
         .addAnimation(rectangleAnimationProps)
         .addAnimation(colorAnimationProps);
@@ -64,6 +72,6 @@ export default ( IsometricModule, container ) => {
         }
     });
 
-    cube.addChildren(topPiece, rightPiece, leftPiece);
+    cube.addChildren(topPiece, rightPiece, leftPiece, star);
 
 };

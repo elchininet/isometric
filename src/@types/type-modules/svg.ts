@@ -9,6 +9,7 @@ export type SVGPathProperties = 'path';
 export type SVGPositionableProperties = 'left' | 'right' | 'top';
 export type SVGRectangleProperties = 'width' | 'height';
 export type SVGCircleProperties = 'radius';
+export type SVGPentagramProperties = 'radius' | 'rotation';
 export type SVGTextProperties = 'rotation';
 export type SVGAnimationProperties = SVGProperties | SVGPathProperties | SVGPositionableProperties | SVGRectangleProperties | SVGCircleProperties | SVGTextProperties;
 export type SVGNativeProperties = 'fill' | 'fill-opacity' | 'stroke' | 'stroke-opacity' | 'stroke-width' | 'd';
@@ -45,6 +46,10 @@ export type SVGRectangleAnimation = SVGAnimation & {
 
 export type SVGCircleAnimation = SVGAnimation & {
     property: SVGProperties | SVGPositionableProperties | SVGCircleProperties;
+}
+
+export type SVGPentagramAnimation = SVGAnimation & {
+    property: SVGProperties | SVGPositionableProperties | SVGPentagramProperties;
 }
 
 export type SVGAnimationObject = SVGAnimation &  {

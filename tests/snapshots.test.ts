@@ -2,6 +2,7 @@ import {
     IsometricCanvas,
     IsometricRectangle,
     IsometricCircle,
+    IsometricPentagram,
     IsometricPath,
     IsometricText,
     PlaneView,
@@ -247,11 +248,15 @@ describe('Snapshot tests', (): void => {
         const topPiece = new IsometricPath();
         const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
         const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+        const star = new IsometricPentagram({radius: 0.25, planeView: PlaneView.TOP});
         const label = new IsometricText({ planeView: PlaneView.TOP });
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
         rightPiece.right = 1;
         leftPiece.left = 1;
+        star.left = 0.5;
+        star.right = 0.5;
+        star.top = 1;
         label.text = 'TEST';
 
         topPiece
@@ -283,6 +288,13 @@ describe('Snapshot tests', (): void => {
             } as SVGRectangleAnimation)
             .addAnimation(colorAnimationProps as SVGRectangleAnimation);
 
+        star
+            .addAnimation({
+                property: 'radius',
+                duration,
+                values: [0.25, 1, 0.25]
+            });
+
         label.
             addAnimation({
                 property: 'right',
@@ -295,10 +307,9 @@ describe('Snapshot tests', (): void => {
                 values: [0, 180, 360]
             });
 
-        isometric.addChildren(topPiece, rightPiece, leftPiece, label);
+        isometric.addChildren(topPiece, rightPiece, leftPiece, label, star);
 
         expect(container).toMatchSnapshot();
-        //expect(spySVGAnimateBeginElement).toHaveBeenCalledTimes(2);
 
     });
 
@@ -325,6 +336,7 @@ describe('Snapshot tests', (): void => {
         const topPiece = new IsometricPath();
         const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
         const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+        const star = new IsometricPentagram({radius: 0.25, planeView: PlaneView.TOP});
         const label = new IsometricText({ planeView: PlaneView.TOP });
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
@@ -355,6 +367,13 @@ describe('Snapshot tests', (): void => {
             } as SVGRectangleAnimation)
             .addAnimation(colorAnimationProps as SVGRectangleAnimation);
 
+        star
+            .addAnimation({
+                property: 'radius',
+                duration,
+                values: 1
+            });
+
         label.
             addAnimation({
                 property: 'right',
@@ -367,7 +386,7 @@ describe('Snapshot tests', (): void => {
                 values: 180
             });
 
-        isometric.addChildren(topPiece, rightPiece, leftPiece, label);
+        isometric.addChildren(topPiece, rightPiece, leftPiece, label, star);
 
         expect(container).toMatchSnapshot();
 
@@ -397,6 +416,7 @@ describe('Snapshot tests', (): void => {
         const topPiece = new IsometricPath();
         const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
         const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+        const star = new IsometricPentagram({radius: 0.25, planeView: PlaneView.TOP, rotation: 90});
         const label = new IsometricText({ planeView: PlaneView.TOP });
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
@@ -425,9 +445,18 @@ describe('Snapshot tests', (): void => {
             .addAnimation({
                 property: 'height',
                 duration,
-                values: 0.5
+                from: 1,
+                to: 2
             } as SVGRectangleAnimation)
             .addAnimation(colorAnimationProps as SVGRectangleAnimation);
+
+        star
+            .addAnimation({
+                property: 'radius',
+                duration,
+                from: 0.25,
+                to: 1
+            });
 
         label.
             addAnimation({
@@ -443,7 +472,7 @@ describe('Snapshot tests', (): void => {
                 to: 180
             });
 
-        isometric.addChildren(topPiece, rightPiece, leftPiece, label);
+        isometric.addChildren(topPiece, rightPiece, leftPiece, label, star);
 
         expect(container).toMatchSnapshot();
 
@@ -469,6 +498,7 @@ describe('Snapshot tests', (): void => {
         const topPiece = new IsometricPath();
         const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
         const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+        const star = new IsometricPentagram({radius: 0.25, planeView: PlaneView.FRONT});
         const circlePiece = new IsometricCircle({radius: 1, planeView: PlaneView.TOP});
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
@@ -504,13 +534,19 @@ describe('Snapshot tests', (): void => {
                 to: 0.5
             })
             .addAnimation(colorAnimationProps as SVGCircleAnimation);
+        star
+            .addAnimation({
+                property: 'radius',
+                values: [0.25, 1, 0.25]
+            });
 
         // Remove animation before adding the elements
         rightPiece.removeAnimations();
         topPiece.removeAnimationByIndex(1);
         circlePiece.removeAnimationByIndex(0);
+        star.removeAnimations();
 
-        isometric.addChildren(topPiece, rightPiece, leftPiece, circlePiece);
+        isometric.addChildren(topPiece, rightPiece, leftPiece, circlePiece, star);
 
         // Redraw the elements with animations
         topPiece.update();
@@ -519,6 +555,7 @@ describe('Snapshot tests', (): void => {
         leftPiece.removeAnimationByIndex(0);
         leftPiece.removeAnimations();
         circlePiece.removeAnimations();
+        star.removeAnimations();
 
         // Remove a wrong index
         topPiece.removeAnimationByIndex(1);
