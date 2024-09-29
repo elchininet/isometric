@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.8.0] - 2024-09-29
+
+- Create a new class to work with pentagrams (star polygons)
+
 ## [3.7.3] - 2023-08-12
 
 - Fix ESM types

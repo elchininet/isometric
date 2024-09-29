@@ -3,6 +3,7 @@ import {
     IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
+    IsometricPentagram,
     IsometricPath,
     IsometricText,
     IsometricGraphicProps,
@@ -19,12 +20,14 @@ describe('Test properties', (): void => {
     let path: IsometricPath;
     let rectangle: IsometricRectangle;
     let circle: IsometricCircle;
+    let pentagram: IsometricPentagram;
     let text: IsometricText;
     let svgElement: SVGElement;
     let groupElement: SVGElement;
     let pathElement: SVGElement;
     let rectangleElement: SVGElement;
     let circleElement: SVGElement;
+    let pentagramElement: SVGElement;
     let textGroupElement: SVGElement;
     let textElement: SVGElement;
     let textSpanElement: SVGElement;
@@ -72,6 +75,15 @@ describe('Test properties', (): void => {
             ...commonProps
         });
 
+        pentagram = new IsometricPentagram({
+            radius: 0.25,
+            right: 0.5,
+            left: 0.5,
+            top: 1,
+            planeView: PlaneView.TOP,
+            ...commonProps
+        });
+
         path.moveTo(0, 0, 0).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(0, 1, 0);
 
         text = new IsometricText({
@@ -98,13 +110,14 @@ describe('Test properties', (): void => {
 
         group.addChildren(rectangle, circle);
 
-        cube.addChildren(path, group, text);
+        cube.addChildren(path, group, text, pentagram);
 
         svgElement = cube.getElement();
         groupElement = group.getElement();
         pathElement = path.getElement();
         rectangleElement = rectangle.getElement();
         circleElement = circle.getElement();
+        pentagramElement = pentagram.getElement();
         textGroupElement = text.getElement();
         textElement = textGroupElement.querySelector('text') as SVGElement;
         textSpanElement = textElement.querySelector('tspan') as SVGElement;
@@ -186,6 +199,19 @@ describe('Test properties', (): void => {
 
     });
 
+    it('Compare IsometricPentagram vs IsometricCircle', (): void => {
+
+        expect(pentagram.fillColor).toBe(circle.fillColor);
+        expect(pentagram.fillOpacity).toBe(circle.fillOpacity);
+        expect(pentagram.strokeColor).toBe(circle.strokeColor);
+        expect(pentagram.strokeDashArray).toStrictEqual(circle.strokeDashArray);
+        expect(pentagram.strokeLinecap).toBe(circle.strokeLinecap);
+        expect(pentagram.strokeLinejoin).toBe(circle.strokeLinejoin);
+        expect(pentagram.strokeOpacity).toBe(circle.strokeOpacity);
+        expect(pentagram.strokeWidth).toBe(circle.strokeWidth);
+
+    });
+
     it('IsometricRectangle change position', (): void => {
 
         rectangle.planeView = PlaneView.TOP;
@@ -237,6 +263,38 @@ describe('Test properties', (): void => {
         expect(circleElement.getAttribute('d')).toBe('');
         circle.update();
         expect(circleElement.getAttribute('d')).toBe('M42.154 340 A 146.969316 84.852814 0 0 0 250 220 A 146.969316 84.852814 180 0 0 42.154 340z');
+
+    });
+
+    it('IsometricPentagram change position', (): void => {
+
+        expect(pentagram.right).toBe(0.5);
+        expect(pentagram.left).toBe(0.5);
+        expect(pentagram.top).toBe(1);
+
+        pentagram.planeView = PlaneView.FRONT;
+        expect(pentagramElement.getAttribute('d')).toBe('M250 70 L244.166958 94.0972 L225.290838 104.995338 L240.56194 108.990089 L234.728898 133.087289 L250 111.45898 L265.271102 115.453731 L259.43806 98.091951 L274.709162 76.463642 L255.833042 87.36178z');
+
+        pentagram.planeView = PlaneView.SIDE;
+        expect(pentagramElement.getAttribute('d')).toBe('M250 70 L255.833042 94.0972 L274.709162 104.995338 L259.43806 108.990089 L265.271102 133.087289 L250 111.45898 L234.728898 115.453731 L240.56194 98.091951 L225.290838 76.463642 L244.166958 87.36178z');
+
+        pentagram.planeView = PlaneView.TOP;
+        expect(pentagramElement.getAttribute('d')).toBe('M275.98075 85 L252.195451 91.997035 L233.319332 81.098897 L237.495329 96.321441 L213.71003 103.318476 L240.076237 105.72949 L244.252233 120.952034 L256.371448 107.219579 L282.737655 109.630593 L263.861535 98.732455z');
+
+        pentagram.planeView = PlaneView.SIDE;
+        pentagram.radius = 1;
+        expect(pentagram.radius).toBe(1);
+        expect(pentagramElement.getAttribute('d')).toBe('M250 -20 L273.332167 76.3888 L348.836646 119.981352 L287.75224 135.960354 L311.084407 232.349154 L250 145.835921 L188.915593 161.814924 L212.24776 92.367803 L151.163354 5.85457 L226.667833 49.447121z');
+
+        pentagram.rotation = 90;
+        expect(pentagram.rotation).toBe(90);
+        expect(pentagramElement.getAttribute('d')).toBe('M146.077 40 L217.886027 54.517302 L217.886027 -32.667802 L262.266446 63.489488 L334.075473 78.006789 L289.695054 122.917961 L334.075473 219.07525 L262.266446 150.674591 L217.886027 195.585762 L217.886027 108.400659z');
+
+        pentagram.rotation = 0;
+        pentagram.clear();
+        expect(pentagramElement.getAttribute('d')).toBe('');
+        pentagram.update();
+        expect(pentagramElement.getAttribute('d')).toBe('M250 -20 L273.332167 76.3888 L348.836646 119.981352 L287.75224 135.960354 L311.084407 232.349154 L250 145.835921 L188.915593 161.814924 L212.24776 92.367803 L151.163354 5.85457 L226.667833 49.447121z');
 
     });
 
