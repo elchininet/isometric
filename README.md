@@ -55,6 +55,7 @@ isometric.IsometricCanvas;
 isometric.IsometricGroup;
 isometric.IsometricRectangle;
 isometric.IsometricCircle;
+isometric.IsometricStarPolygon;
 isometric.IsometricPentagram;
 isometric.IsometricPath;
 ```
@@ -67,6 +68,7 @@ const {
     IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
+    IsometricStarPolygon,
     IsometricPentagram,
     IsometricPath
 } = require('@elchininet/isometric');
@@ -80,6 +82,7 @@ import {
     IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
+    IsometricStarPolygon,
     IsometricPentagram,
     IsometricPath
 } from '@elchininet/isometric';
@@ -97,6 +100,7 @@ const {
     IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
+    IsometricStarPolygon,
     IsometricPentagram,
     IsometricPath
 } = require('@elchininet/isometric/node');
@@ -110,6 +114,7 @@ import {
     IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
+    IsometricStarPolygon,
     IsometricPentagram,
     IsometricPath
 } from '@elchininet/isometric/node';
@@ -125,6 +130,7 @@ import {
     IsometricGroup,
     IsometricRectangle,
     IsometricCircle,
+    IsometricStarPolygon,
     IsometricPentagram,
     IsometricPath
 } from 'https://cdn.jsdelivr.net/npm/@elchininet/isometric/esm/index.js';
@@ -1024,9 +1030,253 @@ removeEventListener(type, listener, [useCapture])
 
 ---
 
+### Class IsometricStarPolygon
+
+This class is to create isometric star polygons that can be added to the isometric canvas.
+
+```javascript
+const path = new IsometricStarPolygon(properties);
+```
+
+<details><summary>Parameters</summary>
+<p>
+
+`properties`
+>Object to set the properties of the isometric star polygon
+
+| Property        | Type                 | Default value        | Description                                                             |
+| --------------- | -------------------- | -------------------- | ----------------------------------------------------------------------- |
+| radius          | number               | -                    | Sets the radius of the isometric star polygon                           |
+| points          | number               | -                    | Sets the number of points of the isometric star polygon                 |
+| density         | number               | -                    | Sets the density of the isometric star polygon                          |
+| rotation        | number               | -                    | Sets the rotation of the isometric star polygon                         |
+| right           | number               | 0                    | Sets the right isometric coordinates of the isometric star polygon      |
+| left            | number               | 0                    | Sets the left isometric coordinates of the isometric star polygon       |
+| top             | number               | 0                    | Sets the top isometric coordinates of the isometric star polygon        |
+| planeView       | PlaneView (`string`) | -                    | Sets the plane view in which the isometric star polygon will be created |
+| fillColor       | string               | "white"              | Sets the fill color of the isometric star polygon                       |
+| fillOpacity     | number               | 1                    | Sets the fill opacity of the isometric star polygon                     |
+| strokeColor     | string               | "black"              | Sets the stroke color of the isometric star polygon                     |
+| strokeOpacity   | number               | 1                    | Sets stroke opacity of the isometric star polygon                       |
+| strokeDashArray | number[]             | []                   | Sets the [SVG stroke dasharray][1] of the isometric star polygon        |
+| strokeLinecap   | string               | "butt"               | Sets the [SVG stroke linecap][2] of the isometric star polygon          |
+| strokeLinejoin  | string               | "round"              | Sets the [SVG stroke linejoin][3] of the isometric star polygon         |
+| strokeWidth     | number               | 1                    | Sets the stroke width of the isometric star polygon                     |
+| texture         | Texture (`object`)   | -                    | Sets the texture of the isometric star polygon                          |
+
+`planeView values`
+>"TOP" | "FRONT" | "SIDE"
+
+`texture properties`
+>Object to set the texture of the isometric star polygon
+
+| Property        | Type                 | Default value    | Description                                                          |
+| --------------- | -------------------- | ---------------- | -------------------------------------------------------------------- |
+| url             | string               | -                | URL of the image texture                                             |
+| planeView       | PlaneView (`string`) | parent planeView | Sets the texture plane view. By default it takes the isometric star polygon plane view |
+| height          | number               | -                | Sets the texture height                                              |
+| width           | number               | -                | Sets the texture width                                               |
+| scale           | number               | -                | Sets the scale of the texture                                        |
+| pixelated       | boolean              | -                | Sets the image rendering of the texture                              |
+| shift           | Point (`object`)     | -                | Shifts the background position                                       |
+| rotation        | Rotation (`object`)  | -                | Set the rotation of the texture                                      |
+
+`shift properties`
+>Object to shift the background position
+
+| Property | Type   | Default value | Description             |
+| -------- | ------ | --------------| ----------------------- |
+| right    | number | -             | Right coordinates       |
+| left     | number | -             | Left coordinates        |
+| top      | number | -             | Top coordinates         |
+
+`rotation properties`
+>Object to set the background rotation
+
+| Property | Type            | Default value | Description             |
+| -------- | --------------- | --------------| ----------------------- |
+| axis     | Axis (`string`) | -             | Rotation axis           |
+| value    | number          | -             | Rotation value          |
+
+`axis values`
+>"RIGHT" | "LEFT" | "TOP"
+
+</p>
+</details>
+
+<details><summary>Instance Methods</summary>
+<p>
+
+>All the instance methods (except `getElement` and `getPattern`) return the same instance, so they are chainable.
+
+```javascript
+getElement()
+```
+>Returns the native `SVG` path element
+
+```javascript
+getPattern()
+```
+>Returns the native `SVGPatternElement` responsible for the texture
+
+```javascript
+update()
+```
+>Forces a re-render of the SVG pentagram
+
+```javascript
+updateTexture(texture)
+```
+>Adds or override the texture properties
+
+| Property  | Type                 | Optional  | Description                                     |
+| --------- | -------------------- | --------- | ----------------------------------------------- |
+| url       | string               | yes       | URL of the image texture                        |
+| planeView | PlaneView (`string`) | yes       | Texture plane view                              |
+| height    | number               | yes       | Texture height                                  |
+| width     | number               | yes       | Texture width                                   |
+| scale     | number               | yes       | Texture scale                                   |
+| pixelated | boolean              | yes       | Image rendering of the texture                  |
+| shift     | Point (`object`)     | yes       | Shifts the background position                  |
+| rotation  | Rotation (`object`)  | yes       | Rotation of the texture                         |
+
+`shift properties`
+>Object to shift the background position
+
+| Property | Type   | Default value | Description             |
+| -------- | ------ | --------------| ----------------------- |
+| right    | number | -             | Right coordinates       |
+| left     | number | -             | Left coordinates        |
+| top      | number | -             | Top coordinates         |
+
+`rotation properties`
+>Object to set the background rotation
+
+| Property | Type            | Default value | Description             |
+| -------- | --------------- | --------------| ----------------------- |
+| axis     | Axis (`string`) | -             | Rotation axis           |
+| value    | number          | -             | Rotation value          |
+
+`axis values`
+>"RIGHT" | "LEFT" | "TOP"
+
+```javascript
+clear()
+```
+>Cleans the isometric star polygon (removes all the path commands from the native SVG path element)
+
+```javascript
+addAnimation(animation)
+```
+>Adds an animated element to the isometric star polygon (not compatible with Internet Explorer). These are the properties of the `SVGPentagramAnimation` object:
+
+| Property        | Type     | Optional  | Default |  Description                                     |
+| --------------- | -------- | --------- | ------- | ------------------------------------------------ |
+| property        | string   | no        | -       | Indicates which property should be animated      |
+| duration        | number   | yes       | 1       | Indicates the number of seconds of the animation |
+| repeat          | number   | yes       | 0       | Number of times that the animation will run. `0` runs indefinitely |
+| from            | string / number | yes | - | Initial value of the animation (if this property is used, `values` property can't be used) |
+| to              | string / number | yes | - | Final value of the animation (if this property is used, `values` property can't be used) |
+| values          | string / number / string[] / number[] | yes | - | All the values of the animation (if this property is used, `from` and `to` properties can't be used) |
+
+These are the properties that can be animated (property `property`)
+
+* fillColor
+* fillOpacity
+* strokeColor
+* strokeOpacity
+* strokeWidth
+* right\*
+* left\*
+* top\*
+* radius\*
+* density\*
+* rotation\*
+
+>\* At the moment, it is not possible to animate more than one of these properties at the same time. If you do it, only the last one will be applied.
+
+```javascript
+removeAnimationByIndex(index)
+```
+>Remove an especific animation element by its index.
+
+```javascript
+removeAnimations()
+```
+>Remove all the animation elements.
+
+```javascript
+addEventListener(type, callback, [useCapture])
+```
+>Sets up a function that will be called whenever the specified event is delivered to the isometric star polygon (the SVG path element)
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| type            | string        |
+| callback        | VoidFunction  |
+| callback        | boolean       |
+
+```javascript
+removeEventListener(type, listener, [useCapture])
+```
+>Removes from the isometric star polygon (the SVG path element) an event listener previously registered with `addEventListener`
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| type            | string        |
+| callback        | VoidFunction  |
+| callback        | boolean       |
+
+</p>
+</details>
+
+<details><summary>Instance Properties</summary>
+<p>
+
+| Property        | Type               | Description                                                                 |
+| --------------- | ------------------ | --------------------------------------------------------------------------- |
+| radius          | number             | Gets and sets the radius of the isometric star polygon                      |
+| rotation        | number             | Gets and sets the rotation of the isometric star polygon                    |
+| points          | number             | Gets and sets the number of points of the isometric star polygon            |
+| density         | number             | Gets and sets the density of the isometric star polygon                     |
+| right           | number             | Gets and sets the right isometric coordinates of the isometric star polygon |
+| left            | number             | Gets and sets the left isometric coordinates of the isometric star polygon  |
+| top             | number             | Gets and sets the top isometric coordinates of the isometric star polygon   |
+| planeView       | string             | Gets and sets the plane view in which the isometric star polygon is created |
+| fillColor       | string             | Gets and sets the fill color of the isometric star polygon                  |
+| fillOpacity     | number             | Gets and sets the fill opacity of the isometric star polygon                |
+| strokeColor     | string             | Gets and sets the stroke color of the isometric star polygon                |
+| strokeOpacity   | number             | Gets and sets the stroke opacity of the isometric star polygon              |
+| strokeDashArray | number[]           | Gets and sets the [SVG stroke dasharray][1] of the isometric star polygon   |
+| strokeLinecap   | string             | Gets and sets the [SVG stroke linecap][2] of the isometric star polygon     |
+| strokeLinejoin  | string             | Gets and sets the [SVG stroke linejoin][3] of the isometric star polygon    |
+| strokeWidth     | number             | Gets and sets the stroke width of the isometric star polygon                |
+| texture         | Texture (`object`) | Gets and sets the texture of the isometric star polygon                     |
+| drag \*          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric star polygon    |
+| bounds          | object / false | Gets an sets the boundaries of the isometric star polygon position              |
+
+>\* When dragging an isometric star polygon, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric star polygon will receive. The `drag` event can be prevented using `preventDefault` so, if it is prevented, the isometric star polygon will not change its position when it is dragged.
+
+`planeView values`
+>"TOP" | "FRONT" | "SIDE" | false
+
+`bounds properties`
+>Object to set the boundaries of the isometric star polygon position. If it is set as false the isometric star polygon will not have boundaries.
+
+| Property  | Type             | Default value | Description                                             |
+| --------- | ---------------- | ------------- | ------------------------------------------------------- |
+| right     | [number, number] | -             | Minimum and maximum boundaries of the right coordinates |
+| left      | [number, number] | -             | Minimum and maximum boundaries of the left coordinates  |
+| top       | [number, number] | -             | Minimum and maximum boundaries of the top coordinates   |
+
+</p>
+</details>
+
+---
+
 ### Class IsometricPentagram
 
-This class is to create isometric pentagrams (star polygons) that can be added to the isometric canvas.
+This class is to create isometric pentagrams (a specific star polygon with `5` points and density `2`) that can be added to the isometric canvas.
 
 ```javascript
 const path = new IsometricPentagram(properties);

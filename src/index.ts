@@ -8,7 +8,8 @@ export {
     SVGPathAnimation,
     SVGRectangleAnimation,
     SVGCircleAnimation,
-    SVGPentagramAnimation
+    SVGPentagramAnimation,
+    SVGStarPolygonAnimation
 } from '@types';
 export { IsometricGraphicProps } from '@classes/abstract/IsometricGraphicAbstract';
 export { IsometricCanvas, IsometricCanvasProps } from '@classes/public/IsometricCanvas';
@@ -16,5 +17,6 @@ export { IsometricGroup, IsometricGroupProps } from '@classes/public/IsometricGr
 export { IsometricRectangle, IsometricRectangleProps } from '@classes/public/IsometricRectangle';
 export { IsometricCircle, IsometricCircleProps } from '@classes/public/IsometricCircle';
 export { IsometricPentagram, IsometricPentagramProps } from '@classes/public/IsometricPentagram';
+export { IsometricStarPolygon, IsometricStarPolygonProps } from '@classes/public/IsometricStarPolygon';
 export { IsometricPath, IsometricPathProps } from '@classes/public/IsometricPath';
 export { IsometricText, IsometricTextProps } from '@classes/public/IsometricText';

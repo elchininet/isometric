@@ -10,6 +10,7 @@ export type SVGPositionableProperties = 'left' | 'right' | 'top';
 export type SVGRectangleProperties = 'width' | 'height';
 export type SVGCircleProperties = 'radius';
 export type SVGPentagramProperties = 'radius' | 'rotation';
+export type SVGStarPolygonProperties = 'radius' | 'density' | 'rotation';
 export type SVGTextProperties = 'rotation';
 export type SVGAnimationProperties = SVGProperties | SVGPathProperties | SVGPositionableProperties | SVGRectangleProperties | SVGCircleProperties | SVGTextProperties;
 export type SVGNativeProperties = 'fill' | 'fill-opacity' | 'stroke' | 'stroke-opacity' | 'stroke-width' | 'd';
@@ -50,6 +51,10 @@ export type SVGCircleAnimation = SVGAnimation & {
 
 export type SVGPentagramAnimation = SVGAnimation & {
     property: SVGProperties | SVGPositionableProperties | SVGPentagramProperties;
+}
+
+export type SVGStarPolygonAnimation = SVGAnimation & {
+    property: SVGProperties | SVGPositionableProperties | SVGStarPolygonProperties;
 }
 
 export type SVGAnimationObject = SVGAnimation &  {
