@@ -1,14 +1,5 @@
-import { IsometricShapeProps } from '@classes/abstract/IsometricShapeAbstract';
+import { IsometricStarPolygonAbstractProps, GetStarPolygonAbstractPathArguments } from '@classes/abstract/IsometricStarPolygonAbstract';
 
-export interface IsometricPentagramProps extends IsometricShapeProps {
-    radius: number;
-    rotation?: number;
-}
-
-export interface GetPentagramPathArguments {
-    right: number;
-    left: number;
-    top: number;
-    radius: number;
-    rotation: number;
-}
+type RemoveProps = 'points' | 'density';
+export type IsometricPentagramProps = Omit<IsometricStarPolygonAbstractProps, RemoveProps>
+export type GetPentagramPathArguments = Omit<GetStarPolygonAbstractPathArguments, RemoveProps>;

@@ -4,6 +4,7 @@ import {
     IsometricRectangle,
     IsometricCircle,
     IsometricPentagram,
+    IsometricStarPolygon,
     IsometricPath,
     IsometricText,
     IsometricGraphicProps,
@@ -21,6 +22,7 @@ describe('Test properties', (): void => {
     let rectangle: IsometricRectangle;
     let circle: IsometricCircle;
     let pentagram: IsometricPentagram;
+    let starPolygon: IsometricStarPolygon;
     let text: IsometricText;
     let svgElement: SVGElement;
     let groupElement: SVGElement;
@@ -28,6 +30,7 @@ describe('Test properties', (): void => {
     let rectangleElement: SVGElement;
     let circleElement: SVGElement;
     let pentagramElement: SVGElement;
+    let starPolygonElement: SVGElement;
     let textGroupElement: SVGElement;
     let textElement: SVGElement;
     let textSpanElement: SVGElement;
@@ -84,6 +87,17 @@ describe('Test properties', (): void => {
             ...commonProps
         });
 
+        starPolygon = new IsometricStarPolygon({
+            radius: 0.25,
+            points: 8,
+            density: 3,
+            right: 0.5,
+            left: 1,
+            top: 0.5,
+            planeView: PlaneView.SIDE,
+            ...commonProps
+        });
+
         path.moveTo(0, 0, 0).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(0, 1, 0);
 
         text = new IsometricText({
@@ -110,7 +124,7 @@ describe('Test properties', (): void => {
 
         group.addChildren(rectangle, circle);
 
-        cube.addChildren(path, group, text, pentagram);
+        cube.addChildren(path, group, text, pentagram, starPolygon);
 
         svgElement = cube.getElement();
         groupElement = group.getElement();
@@ -118,6 +132,7 @@ describe('Test properties', (): void => {
         rectangleElement = rectangle.getElement();
         circleElement = circle.getElement();
         pentagramElement = pentagram.getElement();
+        starPolygonElement = starPolygon.getElement();
         textGroupElement = text.getElement();
         textElement = textGroupElement.querySelector('text') as SVGElement;
         textSpanElement = textElement.querySelector('tspan') as SVGElement;
@@ -212,6 +227,21 @@ describe('Test properties', (): void => {
 
     });
 
+    it('Compare IsometricPentagram vs IsometricStarPolygon', (): void => {
+
+        expect(pentagram.radius).toBe(starPolygon.radius);
+        expect(pentagram.rotation).toBe(starPolygon.rotation);
+        expect(pentagram.fillColor).toBe(starPolygon.fillColor);
+        expect(pentagram.fillOpacity).toBe(starPolygon.fillOpacity);
+        expect(pentagram.strokeColor).toBe(starPolygon.strokeColor);
+        expect(pentagram.strokeDashArray).toStrictEqual(starPolygon.strokeDashArray);
+        expect(pentagram.strokeLinecap).toBe(starPolygon.strokeLinecap);
+        expect(pentagram.strokeLinejoin).toBe(starPolygon.strokeLinejoin);
+        expect(pentagram.strokeOpacity).toBe(starPolygon.strokeOpacity);
+        expect(pentagram.strokeWidth).toBe(starPolygon.strokeWidth);
+
+    });
+
     it('IsometricRectangle change position', (): void => {
 
         rectangle.planeView = PlaneView.TOP;
@@ -295,6 +325,32 @@ describe('Test properties', (): void => {
         expect(pentagramElement.getAttribute('d')).toBe('');
         pentagram.update();
         expect(pentagramElement.getAttribute('d')).toBe('M250 -20 L273.332167 76.3888 L348.836646 119.981352 L287.75224 135.960354 L311.084407 232.349154 L250 145.835921 L188.915593 161.814924 L212.24776 92.367803 L151.163354 5.85457 L226.667833 49.447121z');
+
+    });
+
+    it('IsometricStarPolygon change properties and compare them with IsometricPentagram', (): void => {
+
+        expect(starPolygon.right).toBe(0.5);
+        expect(starPolygon.left).toBe(1);
+        expect(starPolygon.top).toBe(0.5);
+        expect(starPolygon.points).toBe(8);
+        expect(starPolygon.density).toBe(3);
+
+        starPolygon.planeView = PlaneView.TOP;
+        starPolygon.top = 1;
+        starPolygon.left = 0.5;
+        starPolygon.points = 5;
+        starPolygon.density = 2;
+
+        expect(starPolygonElement.getAttribute('d')).toBe(pentagramElement.getAttribute('d'));
+
+        starPolygon.planeView = PlaneView.SIDE;
+        pentagram.planeView = PlaneView.SIDE;
+        expect(starPolygonElement.getAttribute('d')).toBe(pentagramElement.getAttribute('d'));
+
+        starPolygon.planeView = PlaneView.FRONT;
+        pentagram.planeView = PlaneView.FRONT;
+        expect(starPolygonElement.getAttribute('d')).toBe(pentagramElement.getAttribute('d'));
 
     });
 

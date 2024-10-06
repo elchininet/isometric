@@ -3,7 +3,7 @@ import { elementHasSVGParent } from '@utils/svg';
 import { IsometricElementAbstract } from '@classes/abstract/IsometricElementAbstract';
 import { IsometricGraphicAbstract } from '@classes/abstract/IsometricGraphicAbstract';
 
-export class IsometricContainerAbstract extends IsometricElementAbstract {
+export abstract class IsometricContainerAbstract extends IsometricElementAbstract {
 
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029

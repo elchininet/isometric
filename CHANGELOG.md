@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.9.0] - 2024-10-06
+
+- Create a new class to create star polygons (`IsometricStarPolygon`)
+- Refactor the `IsometricPentagram` class to extends from the `IsometricStarPolygon` with fixed points as `5` and density as `2`
+
 ## [3.8.0] - 2024-09-29
 
 - Create a new class to work with pentagrams (star polygons)
