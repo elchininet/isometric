@@ -1,47 +1,46 @@
 export default ( IsometricModule, container ) => {
 
-    const { IsometricCanvas, IsometricGroup, IsometricRectangle, PlaneView } = IsometricModule;
+    const { IsometricCanvas, IsometricStarPolygon, PlaneView } = IsometricModule;
 
-    const canvas = new IsometricCanvas({
+    const cube = new IsometricCanvas({
         container,
         backgroundColor: '#CCC',
-        scale: 20,
+        scale: 120,
         width: 500,
         height: 320
     });
 
-    function resetPlanes() {
-        cube.right = cube.left = cube.top = 0;
-        planeTop.fillOpacity = planeRight.fillOpacity = planeLeft.fillOpacity = 0.25;
-    }
+    const commonProps = {
+        radius: 0.5,
+        points: 8,
+        density: 2,
+        right: 0.5,
+        left: 0.5,
+        top: 0.5
+    };
 
-    function changePlane() {
-        resetPlanes();
-        this.fillOpacity = 1;
-        cube.drag = this.planeView;
-    }
+    const planes = [PlaneView.SIDE, PlaneView.FRONT, PlaneView.TOP];
 
-    const planeProps = { height: 6, width: 6, fillOpacity: 0.25 };
-    const planeTop = new IsometricRectangle({ ...planeProps, planeView: PlaneView.TOP, fillOpacity: 1 });
-    const planeRight = new IsometricRectangle({ ...planeProps, planeView: PlaneView.FRONT });
-    const planeLeft = new IsometricRectangle({ ...planeProps, planeView: PlaneView.SIDE });
+    const planePropsHash = {
+        [PlaneView.TOP]: 'top',
+        [PlaneView.FRONT]: 'right',
+        [PlaneView.SIDE]: 'left'
+    };
 
-    const cubeProps = { height: 1, width: 1 };
-    const cubeTop = new IsometricRectangle({ ...cubeProps, planeView: PlaneView.TOP, top: 1 });
-    const cubeRight = new IsometricRectangle({ ...cubeProps, planeView: PlaneView.FRONT, right: 1 });
-    const cubeLeft = new IsometricRectangle({ ...cubeProps, planeView: PlaneView.SIDE, left: 1 });
+    planes.forEach((planeView) => {
+        const props = { ...commonProps, fillColor: '#EEE', planeView };
+        const coord = planePropsHash[planeView];
+        const starPolygonBack = new IsometricStarPolygon(props);
+        starPolygonBack[coord] = 0;
+        cube.addChild(starPolygonBack);
+    });
 
-    const cube = new IsometricGroup();
-
-    const bounds = [0, 5];
-    cube.drag = 'TOP';
-    cube.bounds = { top: bounds, right: bounds, left: bounds };
-
-    planeTop.addEventListener('click', changePlane, true);
-    planeRight.addEventListener('click', changePlane, true);
-    planeLeft.addEventListener('click', changePlane, true);
-
-    cube.addChildren(cubeTop, cubeRight, cubeLeft);
-    canvas.addChildren(planeTop, planeRight, planeLeft, cube);
+    planes.forEach((planeView) => {
+        const props = { ...commonProps, planeView };
+        const coord = planePropsHash[planeView];
+        const starPolygonFront = new IsometricStarPolygon(props);
+        starPolygonFront[coord] = 1;
+        cube.addChild(starPolygonFront);
+    });
 
 };
