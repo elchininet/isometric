@@ -147,6 +147,7 @@ describe('Test properties', (): void => {
 
     it('IsometricCanvas properties', (): void => {
 
+        expect(cube.id).toBeDefined();
         expect(cube.backgroundColor).toBe('#CCC');
         expect(cube.scale).toBe(120);
         expect(cube.height).toBe(320);
@@ -161,12 +162,16 @@ describe('Test properties', (): void => {
         expect(rect.getAttribute('width')).toBe('500px');
         expect(svgElement.getAttribute('height')).toBe('320px');
         expect(svgElement.getAttribute('width')).toBe('500px');
+        expect(svgElement.getAttribute('id')).toBe(cube.id);
 
+        cube.id = 'cube';
         cube.backgroundColor = '#EEE';
         cube.scale = 100;
         cube.height = 480;
         cube.width = 640;
 
+        expect(cube.id).toBe('cube');
+        expect(svgElement.getAttribute('id')).toBe('cube');
         expect(cube.backgroundColor).toBe('#EEE');
         expect(cube.scale).toBe(100);
         expect(cube.height).toBe(480);
@@ -330,18 +335,21 @@ describe('Test properties', (): void => {
 
     it('IsometricStarPolygon change properties and compare them with IsometricPentagram', (): void => {
 
+        expect(starPolygon.id).toBeDefined();
         expect(starPolygon.right).toBe(0.5);
         expect(starPolygon.left).toBe(1);
         expect(starPolygon.top).toBe(0.5);
         expect(starPolygon.points).toBe(8);
         expect(starPolygon.density).toBe(3);
 
+        starPolygon.id = 'star';
         starPolygon.planeView = PlaneView.TOP;
         starPolygon.top = 1;
         starPolygon.left = 0.5;
         starPolygon.points = 5;
         starPolygon.density = 2;
 
+        expect(starPolygonElement.getAttribute('id')).toBe('star');
         expect(starPolygonElement.getAttribute('d')).toBe(pentagramElement.getAttribute('d'));
 
         starPolygon.planeView = PlaneView.SIDE;
@@ -350,12 +358,15 @@ describe('Test properties', (): void => {
 
         starPolygon.planeView = PlaneView.FRONT;
         pentagram.planeView = PlaneView.FRONT;
+        pentagram.id = 'pentagram';
+        expect(pentagramElement.getAttribute('id')).toBe('pentagram');
         expect(starPolygonElement.getAttribute('d')).toBe(pentagramElement.getAttribute('d'));
 
     });
 
     it('IsometricPath properties', (): void => {
 
+        expect(path.id).toBeDefined();
         expect(path.fillColor).toBe('#FFF');
         expect(path.fillOpacity).toBe(0.5);
         expect(path.strokeColor).toBe('#000');
@@ -366,6 +377,7 @@ describe('Test properties', (): void => {
         expect(path.strokeWidth).toBe(2);
         expect(path.autoclose).toBeTruthy();
 
+        expect(pathElement.getAttribute('id')).toBe(path.id);
         expect(pathElement.getAttribute('fill')).toBe('#FFF');
         expect(pathElement.getAttribute('fill-opacity')).toBe('0.5');
         expect(pathElement.getAttribute('stroke')).toBe('#000');
@@ -376,6 +388,7 @@ describe('Test properties', (): void => {
         expect(pathElement.getAttribute('stroke-width')).toBe('2');
         expect(pathElement.getAttribute('d')?.endsWith('z')).toBeTruthy();
 
+        path.id = 'path';
         path.fillColor = '#000';
         path.fillOpacity = 1;
         path.strokeColor = '#FFF';
@@ -386,6 +399,7 @@ describe('Test properties', (): void => {
         path.strokeWidth = 1;
         path.autoclose = false;
 
+        expect(path.id).toBe('path');
         expect(path.fillColor).toBe('#000');
         expect(path.fillOpacity).toBe(1);
         expect(path.strokeColor).toBe('#FFF');
@@ -396,6 +410,7 @@ describe('Test properties', (): void => {
         expect(path.strokeWidth).toBe(1);
         expect(path.autoclose).toBeFalsy();
 
+        expect(pathElement.getAttribute('id')).toBe('path');
         expect(pathElement.getAttribute('fill')).toBe('#000');
         expect(pathElement.getAttribute('fill-opacity')).toBe('1');
         expect(pathElement.getAttribute('stroke')).toBe('#FFF');
@@ -410,6 +425,7 @@ describe('Test properties', (): void => {
 
     it('IsometricRectangle properties', (): void => {
 
+        expect(rectangle.id).toBeDefined();
         expect(rectangle.fillColor).toBe('#FFF');
         expect(rectangle.fillOpacity).toBe(0.5);
         expect(rectangle.strokeColor).toBe('#000');
@@ -419,6 +435,7 @@ describe('Test properties', (): void => {
         expect(rectangle.strokeOpacity).toBe(0.25);
         expect(rectangle.strokeWidth).toBe(2);
 
+        expect(rectangleElement.getAttribute('id')).toBe(rectangle.id);
         expect(rectangleElement.getAttribute('fill')).toBe('#FFF');
         expect(rectangleElement.getAttribute('fill-opacity')).toBe('0.5');
         expect(rectangleElement.getAttribute('stroke')).toBe('#000');
@@ -428,6 +445,7 @@ describe('Test properties', (): void => {
         expect(rectangleElement.getAttribute('stroke-opacity')).toBe('0.25');
         expect(rectangleElement.getAttribute('stroke-width')).toBe('2');
 
+        rectangle.id = 'rectangle';
         rectangle.fillColor = '#000';
         rectangle.fillOpacity = 1;
         rectangle.strokeColor = '#FFF';
@@ -437,6 +455,7 @@ describe('Test properties', (): void => {
         rectangle.strokeOpacity = 0.75;
         rectangle.strokeWidth = 1;
 
+        expect(rectangle.id).toBe('rectangle');
         expect(rectangle.fillColor).toBe('#000');
         expect(rectangle.fillOpacity).toBe(1);
         expect(rectangle.strokeColor).toBe('#FFF');
@@ -446,6 +465,7 @@ describe('Test properties', (): void => {
         expect(rectangle.strokeOpacity).toBe(0.75);
         expect(rectangle.strokeWidth).toBe(1);
 
+        expect(rectangleElement.getAttribute('id')).toBe('rectangle');
         expect(rectangleElement.getAttribute('fill')).toBe('#000');
         expect(rectangleElement.getAttribute('fill-opacity')).toBe('1');
         expect(rectangleElement.getAttribute('stroke')).toBe('#FFF');
@@ -459,6 +479,7 @@ describe('Test properties', (): void => {
 
     it('IsometricText properties', (): void => {
 
+        expect(text.id).toBeDefined();
         expect(text.fillColor).toBe('#FFF');
         expect(text.fillOpacity).toBe(0.5);
         expect(text.strokeColor).toBe('#000');
@@ -480,6 +501,7 @@ describe('Test properties', (): void => {
         expect(text.origin).toStrictEqual(['left', 'bottom']);
         expect(text.selectable).toBe(false);
 
+        expect(textGroupElement.getAttribute('id')).toBe(text.id);
         expect(textGroupElement.getAttribute('fill')).toBe('#FFF');
         expect(textGroupElement.getAttribute('fill-opacity')).toBe('0.5');
         expect(textGroupElement.getAttribute('stroke')).toBe('#000');
@@ -500,6 +522,7 @@ describe('Test properties', (): void => {
         expect(textSpanElement.getAttribute('text-anchor')).toBe('start');
         expect(textSpanElement.getAttribute('alignment-baseline')).toBe('baseline');
 
+        text.id = 'text';
         text.fillColor = '#000';
         text.fillOpacity = 1;
         text.strokeColor = '#FFF';
@@ -521,6 +544,7 @@ describe('Test properties', (): void => {
         text.origin = ['right', 'top'];
         text.selectable = true;
 
+        expect(text.id).toBe('text');
         expect(text.fillColor).toBe('#000');
         expect(text.fillOpacity).toBe(1);
         expect(text.strokeColor).toBe('#FFF');
@@ -542,6 +566,7 @@ describe('Test properties', (): void => {
         expect(text.origin).toStrictEqual(['right', 'top']);
         expect(text.selectable).toBe(true);
 
+        expect(textGroupElement.getAttribute('id')).toBe('text');
         expect(textGroupElement.getAttribute('fill')).toBe('#000');
         expect(textGroupElement.getAttribute('fill-opacity')).toBe('1');
         expect(textGroupElement.getAttribute('stroke')).toBe('#FFF');
@@ -570,6 +595,7 @@ describe('Test properties', (): void => {
 
     it('IsometricGroup properties', (): void => {
 
+        expect(group.id).toBeDefined();
         expect(groupElement.tagName).toBe('g');
         expect(svgElement.contains(groupElement)).toBeTruthy();
         expect(groupElement.contains(rectangleElement)).toBeTruthy();
@@ -583,6 +609,23 @@ describe('Test properties', (): void => {
 
         expect(groupElement.contains(circleElement)).toBeFalsy();
         expect(svgElement.contains(circleElement)).toBeFalsy();
+
+        expect(group.getChildById('circle')).toBeNull();
+
+        rectangle.id = 'rectangle';
+
+        expect(group.getChildById('rectangle')).toBe(rectangle);
+
+        group.removeChildById('rectangle');
+
+        expect(group.children).toStrictEqual([]);
+
+        path.id = 'path';
+
+        const pathIndex = cube.children.indexOf(path);
+        expect(cube.getChildByIndex(pathIndex)).toBe(path);
+
+        expect(cube.getChildByIndex(100)).toBeNull();
 
     });
 

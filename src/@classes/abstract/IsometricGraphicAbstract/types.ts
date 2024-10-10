@@ -5,6 +5,7 @@ import {
 } from '@types';
 
 export interface IsometricGraphicProps {
+    id?: string;
     fillColor?: string;
     fillOpacity?: number;
     strokeColor?: string;

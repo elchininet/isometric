@@ -43,9 +43,15 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
     /* istanbul ignore next */
     public constructor(props: IsometricGraphicProps, svgElement: SVG_ELEMENTS) {
 
-        super(svgElement);
+        super(
+            props.id || uuid(),
+            svgElement
+        );
 
-        this.props = {...defaultObjectProps, ...props};
+        this.props = {
+            ...defaultObjectProps,
+            ...props
+        };
         this.animations = [];
 
         if (this.props.texture) {
@@ -69,7 +75,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     private createTexture(texture: Texture) {
 
-        this.patternId = uuid();
+        this.patternId = `${this.id}__texture`;
 
         this.pattern = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.pattern);
 
@@ -221,6 +227,21 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
                     'width': width
                 }
             );
+        }
+    }
+
+    // id
+    public get id(): string {
+        return this._id;
+    }
+
+    public set id(value: string) {
+        this.setId(value);
+        if (this.pattern) {
+            this.patternId = `${this.id}__texture`;
+            addSVGProperties(this.pattern, {
+                'id': this.patternId
+            });
         }
     }
 

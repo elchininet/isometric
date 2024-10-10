@@ -8,23 +8,40 @@ import {
 } from '@constants';
 import { IsometricStore } from '@classes/abstract/IsometricStore';
 import {
+    addSVGProperties,
     addEventListenerToElement,
     removeEventListenerFromElement
 } from '@utils/svg';
 
 export abstract class IsometricElementAbstract extends IsometricStore {
 
-    public constructor(svgElement: SVG_ELEMENTS) {
+    public constructor(id: string, svgElement: SVG_ELEMENTS) {
 
         super();
 
+        this._id = id;
         this.listeners = [];
         this.element = document.createElementNS(SVG_NAMESPACE, svgElement);
+        addSVGProperties(this.element, {
+            'id': this._id
+        });
 
     }
 
+    protected _id: string;
     protected element: SVGElement;
     protected listeners: Listener[];
+
+    protected setId(value: string): void {
+        this._id = value;
+        addSVGProperties(this.element, {
+            'id': this._id
+        });
+    }
+
+    // id
+    public abstract get id(): string;
+    public abstract set id(value: string);
 
     public abstract update(): this;
     public abstract clear(): this;
