@@ -1,5 +1,5 @@
 import { SVG_ELEMENTS } from '@constants';
-import { getPointFromIsometricPoint } from '@utils/math';
+import { uuid, getPointFromIsometricPoint } from '@utils/math';
 import {
     elementHasSVGParent,
     addSVGProperties
@@ -21,7 +21,10 @@ export class IsometricGroup extends IsometricContainerAbstract {
     // Check https://github.com/microsoft/TypeScript/issues/13029
     /* istanbul ignore next */
     constructor(props: IsometricGroupProps = {}) {
-        super(SVG_ELEMENTS.group);
+        super(
+            props.id || uuid(),
+            SVG_ELEMENTS.group
+        );
         this.props = { ...defaultProps, ...props };
     }
 

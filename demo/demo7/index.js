@@ -28,19 +28,21 @@ export default ( IsometricModule, container ) => {
     };
 
     planes.forEach((planeView) => {
-        const props = { ...commonProps, fillColor: '#EEE', planeView };
+        const props = { ...commonProps, planeView };
         const coord = planePropsHash[planeView];
-        const starPolygonBack = new IsometricStarPolygon(props);
+        const starPolygonBack = new IsometricStarPolygon({...props, id: `${coord}-back`, fillColor: '#EEE'});
+        const starPolygonFront = new IsometricStarPolygon({...props, id: `${coord}-front`});
         starPolygonBack[coord] = 0;
-        cube.addChild(starPolygonBack);
+        starPolygonFront[coord] = 1;
+        cube.addChildren(starPolygonBack, starPolygonFront);
     });
 
     planes.forEach((planeView) => {
-        const props = { ...commonProps, planeView };
         const coord = planePropsHash[planeView];
-        const starPolygonFront = new IsometricStarPolygon(props);
-        starPolygonFront[coord] = 1;
-        cube.addChild(starPolygonFront);
+        const starPolygonBack = cube.getChildById(`${coord}-back`);
+        const starPolygonFront = cube.getChildById(`${coord}-front`);
+        cube.sendChildToBack(starPolygonBack);
+        cube.bringChildToFront(starPolygonFront);
     });
 
 };

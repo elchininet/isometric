@@ -8,8 +8,11 @@ export abstract class IsometricContainerAbstract extends IsometricElementAbstrac
     // Exclude the next constructor from the coverage reports
     // Check https://github.com/microsoft/TypeScript/issues/13029
     /* istanbul ignore next */
-    public constructor(svgElement: SVG_ELEMENTS) {
-        super(svgElement);
+    public constructor(id: string, svgElement: SVG_ELEMENTS) {
+        super(
+            id,
+            svgElement
+        );
         this._children = [];
     }
 
@@ -40,6 +43,14 @@ export abstract class IsometricContainerAbstract extends IsometricElementAbstrac
         if (pattern) {
             this.element.insertBefore(pattern, this.element.firstChild);
         }
+    }
+
+    public get id(): string {
+        return this._id;
+    }
+
+    public set id(value: string) {
+        this.setId(value);
     }
 
     public get children(): IsometricElementAbstract[] {
@@ -80,6 +91,15 @@ export abstract class IsometricContainerAbstract extends IsometricElementAbstrac
         return this;
     }
 
+    public getChildByIndex<T extends IsometricElementAbstract = IsometricElementAbstract>(index: number): T | null {
+        return this._children[index] as T || null;
+    }
+
+    public getChildById<T extends IsometricElementAbstract = IsometricElementAbstract>(id: string): T | null {
+        const child = this._children.find<T>((child: IsometricElementAbstract): child is T => child.id === id);
+        return child || null;
+    }
+
     public removeChild(child: IsometricElementAbstract): this {
         const childIndex = this.getChildIndex(child);
         if (childIndex > -1) {
@@ -107,6 +127,13 @@ export abstract class IsometricContainerAbstract extends IsometricElementAbstrac
             this.removeSVGChild(child);
         }
         return this;
+    }
+
+    public removeChildById(id: string): this {
+        const child = this.getChildById(id);
+        if (child) {
+            return this.removeChild(child);
+        }
     }
 
     public setChildIndex(child: IsometricElementAbstract, index: number): this {

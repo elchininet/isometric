@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.10.0] - 2024-10-10
+
+- Add an optional `id` property to all the elements. If the `id` is not specified as a property of an instance, a random `id` is generated.
+- Implement new methods in container classes (as `IsometricCanvas` and `IsometricGroup`):
+    * `getChildByIndex` method to return a child taking into account its index
+    * `getChildById` method to return a child taking into account its id
+    * `removeChildById` method to remove a child taking into account its id
+
 ## [3.9.0] - 2024-10-06
 
 - Create a new class to create star polygons (`IsometricStarPolygon`)

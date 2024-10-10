@@ -11,6 +11,18 @@ import {
     SVGCircleAnimation
 } from '../src';
 
+enum IDS {
+    SVG = 'svg',
+    PATH = 'path',
+    STAR = 'star',
+    CIRCLE = 'circle',
+    LABEL = 'label',
+    TOP = 'top',
+    RIGHT = 'right',
+    LEFT = 'left',
+    UNDER = 'under'
+}
+
 describe('Snapshot tests', (): void => {
 
     let container: HTMLDivElement;
@@ -28,7 +40,7 @@ describe('Snapshot tests', (): void => {
     });
 
     it('Default options', (): void => {
-        const svg = new IsometricCanvas();
+        const svg = new IsometricCanvas({ id: IDS.SVG });
         expect(document.body).toMatchSnapshot();
         expect(svg.getSVGCode()).toMatchSnapshot();
         expect(svg.getElement().outerHTML).toBe(svg.getSVGCode());
@@ -38,6 +50,7 @@ describe('Snapshot tests', (): void => {
 
         const cube = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -45,9 +58,9 @@ describe('Snapshot tests', (): void => {
         });
 
         const commonProps = {height: 1, width: 1};
-        const topPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.TOP});
-        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
-        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
+        const topPiece = new IsometricRectangle({...commonProps, id: IDS.TOP, planeView: PlaneView.TOP});
+        const rightPiece = new IsometricRectangle({...commonProps, id: IDS.RIGHT, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps, id: 'left', planeView: PlaneView.SIDE});
 
         topPiece.top = 1;
         rightPiece.right = 1;
@@ -63,6 +76,7 @@ describe('Snapshot tests', (): void => {
 
         const cube = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -70,9 +84,9 @@ describe('Snapshot tests', (): void => {
         });
 
         const commonProps = {radius: 0.5};
-        const topPiece = new IsometricCircle({...commonProps, planeView: PlaneView.TOP});
-        const rightPiece = new IsometricCircle({...commonProps, planeView: PlaneView.FRONT});
-        const leftPiece = new IsometricCircle({...commonProps, planeView: PlaneView.SIDE});
+        const topPiece = new IsometricCircle({...commonProps, id: IDS.TOP, planeView: PlaneView.TOP});
+        const rightPiece = new IsometricCircle({...commonProps, id: IDS.RIGHT, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricCircle({...commonProps, id: 'left', planeView: PlaneView.SIDE});
 
         topPiece.right = topPiece.left = 0.5;
         topPiece.top = 1;
@@ -91,19 +105,20 @@ describe('Snapshot tests', (): void => {
 
         const isometric = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
             height: 320
         });
 
-        const bottomT = new IsometricPath();
-        const bottomR = new IsometricPath();
-        const bottomL = new IsometricPath();
+        const bottomT = new IsometricPath({ id: `${IDS.PATH}-bottom-top` });
+        const bottomR = new IsometricPath({ id: `${IDS.PATH}-bottom-right` });
+        const bottomL = new IsometricPath({ id: `${IDS.PATH}-bottom-left` });
 
-        const topT = new IsometricPath();
-        const topR = new IsometricPath();
-        const topL = new IsometricPath();
+        const topT = new IsometricPath({ id: `${IDS.PATH}-top-top` });
+        const topR = new IsometricPath({ id: `${IDS.PATH}-top-right` });
+        const topL = new IsometricPath({ id: `${IDS.PATH}-top-left` });
 
         bottomT.moveTo(0, 0, .5).lineTo(1, 0, .5).lineTo(1, 1, .5).lineTo(0, 1, .5);
         bottomR.moveTo(1, 0, .5).lineTo(1, 0, 0).lineTo(1, 1, 0).lineTo(1, 1, .5);
@@ -123,19 +138,20 @@ describe('Snapshot tests', (): void => {
 
         const isometric = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
             height: 320
         });
 
-        const right = new IsometricPath();
-        const top1 = new IsometricPath();
-        const top2 = new IsometricPath();
-        const top3 = new IsometricPath();
-        const top4 = new IsometricPath();
-        const left1 = new IsometricPath();
-        const left2 = new IsometricPath();
+        const right = new IsometricPath({ id: IDS.RIGHT });
+        const top1 = new IsometricPath({ id: IDS.TOP });
+        const top2 = new IsometricPath({ id: `${IDS.TOP}-2` });
+        const top3 = new IsometricPath({ id: `${IDS.TOP}-3` });
+        const top4 = new IsometricPath({ id: `${IDS.TOP}-4` });
+        const left1 = new IsometricPath({ id: IDS.LEFT });
+        const left2 = new IsometricPath({ id: `${IDS.LEFT}-2` });
 
         right.draw('M1 0 0 L1 1 0 L1 1 0.25 L1 0.5 0.25 L1 0.5 1 L1 0 1');
         top1.draw('M0.25 0.5 1 C0.5 0.5 0.75 0.75 0.5 1 L0.75 0 1 C0.5 0 0.75 0.25 0 1 L0.25 0.5 1');
@@ -155,14 +171,15 @@ describe('Snapshot tests', (): void => {
 
         const isometric = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
             height: 320
         });
 
-        const pathA = new IsometricPath();
-        const pathB = new IsometricPath({ autoclose: false });
+        const pathA = new IsometricPath({ id: `${IDS.PATH}-a` });
+        const pathB = new IsometricPath({ id: `${IDS.PATH}-b`, autoclose: false });
         const commands = 'M0 0 0 L1 0 0 L1 1 0 L0 1 0';
 
         pathA.draw(commands);
@@ -178,16 +195,17 @@ describe('Snapshot tests', (): void => {
 
         const cube = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
             height: 320
         });
 
-        const under = new IsometricPath({ fillColor: '#EEE' });
-        const top = new IsometricPath();
-        const right = new IsometricPath();
-        const left = new IsometricPath();
+        const under = new IsometricPath({ id: IDS.UNDER, fillColor: '#EEE' });
+        const top = new IsometricPath({ id: IDS.TOP });
+        const right = new IsometricPath({ id: IDS.RIGHT });
+        const left = new IsometricPath({ id: IDS.LEFT });
 
         under
             .mt(0, 0, 1)
@@ -229,6 +247,7 @@ describe('Snapshot tests', (): void => {
 
         const isometric = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -245,11 +264,11 @@ describe('Snapshot tests', (): void => {
             values: ['#FFF', '#DDD', '#FFF']
         };
 
-        const topPiece = new IsometricPath();
-        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
-        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
-        const star = new IsometricPentagram({radius: 0.25, planeView: PlaneView.TOP});
-        const label = new IsometricText({ planeView: PlaneView.TOP });
+        const topPiece = new IsometricPath({ id: IDS.TOP });
+        const rightPiece = new IsometricRectangle({...commonProps, id: IDS.RIGHT, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps, id: IDS.LEFT, planeView: PlaneView.SIDE});
+        const star = new IsometricPentagram({id: IDS.STAR, radius: 0.25, planeView: PlaneView.TOP});
+        const label = new IsometricText({id: IDS.LABEL, planeView: PlaneView.TOP});
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
         rightPiece.right = 1;
@@ -317,6 +336,7 @@ describe('Snapshot tests', (): void => {
 
         const isometric = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -333,11 +353,11 @@ describe('Snapshot tests', (): void => {
             values: '#FFF'
         };
 
-        const topPiece = new IsometricPath();
-        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
-        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
-        const star = new IsometricPentagram({radius: 0.25, planeView: PlaneView.TOP});
-        const label = new IsometricText({ planeView: PlaneView.TOP });
+        const topPiece = new IsometricPath({ id: IDS.TOP });
+        const rightPiece = new IsometricRectangle({...commonProps, id: IDS.RIGHT, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps, id: IDS.LEFT, planeView: PlaneView.SIDE});
+        const star = new IsometricPentagram({id: IDS.STAR, radius: 0.25, planeView: PlaneView.TOP});
+        const label = new IsometricText({id: IDS.LABEL, planeView: PlaneView.TOP});
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
         rightPiece.right = 1;
@@ -396,6 +416,7 @@ describe('Snapshot tests', (): void => {
 
         const isometric = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -413,11 +434,11 @@ describe('Snapshot tests', (): void => {
             to: '#DDD'
         };
 
-        const topPiece = new IsometricPath();
-        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
-        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
-        const star = new IsometricPentagram({radius: 0.25, planeView: PlaneView.TOP, rotation: 90});
-        const label = new IsometricText({ planeView: PlaneView.TOP });
+        const topPiece = new IsometricPath({ id: IDS.TOP });
+        const rightPiece = new IsometricRectangle({...commonProps, id: IDS.RIGHT, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps,id: IDS.LEFT, planeView: PlaneView.SIDE});
+        const star = new IsometricPentagram({id: IDS.STAR, radius: 0.25, planeView: PlaneView.TOP, rotation: 90});
+        const label = new IsometricText({id: IDS.LABEL, planeView: PlaneView.TOP});
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
         rightPiece.right = 1;
@@ -482,6 +503,7 @@ describe('Snapshot tests', (): void => {
 
         const isometric = new IsometricCanvas({
             container,
+            id: IDS.SVG,
             backgroundColor: '#CCC',
             scale: 120,
             width: 500,
@@ -495,11 +517,11 @@ describe('Snapshot tests', (): void => {
             values: ['#FFF', '#DDD', '#FFF']
         };
 
-        const topPiece = new IsometricPath();
-        const rightPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.FRONT});
-        const leftPiece = new IsometricRectangle({...commonProps, planeView: PlaneView.SIDE});
-        const star = new IsometricPentagram({radius: 0.25, planeView: PlaneView.FRONT});
-        const circlePiece = new IsometricCircle({radius: 1, planeView: PlaneView.TOP});
+        const topPiece = new IsometricPath({ id: IDS.TOP });
+        const rightPiece = new IsometricRectangle({...commonProps, id: IDS.TOP, planeView: PlaneView.FRONT});
+        const leftPiece = new IsometricRectangle({...commonProps, id: IDS.LEFT, planeView: PlaneView.SIDE});
+        const star = new IsometricPentagram({id: IDS.STAR, radius: 0.25, planeView: PlaneView.FRONT});
+        const circlePiece = new IsometricCircle({id: IDS.CIRCLE, radius: 1, planeView: PlaneView.TOP});
 
         topPiece.mt(0, 0, 1).lt(1, 0, 1).lt(1, 1, 1).lt(0, 1, 1);
         rightPiece.right = 1;

@@ -72,10 +72,12 @@ describe('Test textures', (): void => {
         expect(pathPattern.getAttribute('patternUnits')).toBe('userSpaceOnUse');
         expect(pathPattern.getAttribute('height')).toBe('120');
         expect(pathPattern.getAttribute('width')).toBe('120');
+        expect(pathPattern.getAttribute('id')).toBe(`${path.id}__texture`);
 
         isometric.removeChild(path);
 
         path = new IsometricPath({
+            id: 'path',
             texture: {
                 url: texture.url
             }
@@ -89,6 +91,10 @@ describe('Test textures', (): void => {
 
         expect(pathPattern.getAttribute('height')).toBe('100%');
         expect(pathPattern.getAttribute('width')).toBe('100%');
+        expect(pathPattern.getAttribute('id')).toBe('path__texture');
+
+        path.id = 'path-id-renamed';
+        expect(pathPattern.getAttribute('id')).toBe('path-id-renamed__texture');
 
     });
 

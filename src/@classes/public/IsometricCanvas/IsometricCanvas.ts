@@ -7,6 +7,7 @@ import {
     Colors
 } from '@constants';
 import { addSVGProperties } from '@utils/svg';
+import { uuid } from '@utils/math';
 import { Store } from '@store';
 import { IsometricContainerAbstract } from '@classes/abstract/IsometricContainerAbstract';
 import { IsometricCanvasProps } from './types';
@@ -25,7 +26,10 @@ export class IsometricCanvas extends IsometricContainerAbstract {
     // Check https://github.com/microsoft/TypeScript/issues/13029
     /* istanbul ignore next */
     public constructor(props: IsometricCanvasProps = {}) {
-        super(SVG_ELEMENTS.svg);
+        super(
+            props.id || uuid(),
+            SVG_ELEMENTS.svg
+        );
         this.props = { ...defaultProps, ...props };
         this.isAnimated = true;
 
@@ -64,10 +68,6 @@ export class IsometricCanvas extends IsometricContainerAbstract {
     private props: IsometricCanvasProps;
     private background: SVGRectElement;
     private isAnimated: boolean;
-
-    public getSVGCode(): string {
-        return this.element.outerHTML;
-    }
 
     public get backgroundColor(): string {
         return this.props.backgroundColor;
@@ -121,6 +121,10 @@ export class IsometricCanvas extends IsometricContainerAbstract {
 
     public get animated(): boolean {
         return this.isAnimated;
+    }
+
+    public getSVGCode(): string {
+        return this.element.outerHTML;
     }
 
     public pauseAnimations(): IsometricCanvas {

@@ -189,6 +189,7 @@ const isometric = new IsometricCanvas([properties]);
 | Property        | Type                 | Default value  | Description                                       |
 | --------------- | -------------------- | -------------- | ------------------------------------------------- |
 | container       | HTMLElement or string | "body"        | The DOM element or the query selector of the element in which the isometric will be inserted. This parameter should not be provided in Node environments |
+| id              | string               | random         | Sets the id of the isometric canvas. It also sets the id of the native SVG element |
 | backgroundColor | string               | "white"        | Sets the background color of the isometric canvas |
 | scale           | number               | 1              | Sets the scale multiplier of each isometric unit  |
 | height          | number               | 480            | Sets the height of the isometric canvas           |
@@ -200,7 +201,7 @@ const isometric = new IsometricCanvas([properties]);
 <details><summary>Instance Methods</summary>
 <p>
 
->All the instance methods (excepting `getElement` and `getSVGCode`) return the same instance, so they are chainable.
+>All the instance methods (excluding `getElement`, `getChildByIndex`, `getChildById`, and `getSVGCode`) return the same instance, so they are chainable.
 
 ```javascript
 getElement()
@@ -219,7 +220,7 @@ addChild(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 addChildren(child, child, child...)
@@ -228,7 +229,25 @@ addChildren(child, child, child...)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
+
+```javascript
+getChildByIndex(index)
+```
+>Gets a child taking into account its index
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| index           | number        |
+
+```javascript
+getChildById(id)
+```
+>Gets a child taking into account its id
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| id              | string        |
 
 ```javascript
 removeChild(child)
@@ -237,7 +256,7 @@ removeChild(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 removeChildren(child, child, child...)
@@ -246,7 +265,7 @@ removeChildren(child, child, child...)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 removeChildByIndex(index)
@@ -258,13 +277,22 @@ removeChildByIndex(index)
 | index           | number        |
 
 ```javascript
+removeChildById(id)
+```
+>Removes a child taking into account its id
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| id              | string        |
+
+```javascript
 setChildIndex(child, index)
 ```
 >Change the index of a child of the isometric canvas. This method also changes the index of the native elements inside the SVG.
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 | index           | number        |
 
 ```javascript
@@ -274,7 +302,7 @@ bringChildToFront(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 sendChildToBack(child)
@@ -283,7 +311,7 @@ sendChildToBack(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 bringChildForward(child)
@@ -292,7 +320,7 @@ bringChildForward(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 sendChildBackward(child)
@@ -301,7 +329,7 @@ sendChildBackward(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 update()
@@ -353,6 +381,7 @@ removeEventListener(type, callback, [useCapture])
 
 | Property        | Type     | Description                                                       |
 | --------------- | -------- | ----------------------------------------------------------------- |
+| id              | string   | Gets and sets the id of the isometric canvas. This property also sets the id of the native `SVG` element |
 | backgroundColor | string   | Gets and sets the background color of the isometric canvas        |
 | scale           | number   | Gets and sets the multiplier scale of the isometric canvas        |
 | height          | number   | Gets and sets the height of the isometric canvas                  |
@@ -381,6 +410,7 @@ const isometric = new IsometricGroup([properties]);
 
 | Property        | Type                 | Default value  | Description                                                  |
 | --------------- | -------------------- | -------------- | ------------------------------------------------------------ |
+| id              | string               | random         | Sets the id of the isometric group. It also sets the id of the native SVG element |
 | right           | number               | 0              | Sets the right isometric coordinates of the isometric group  |
 | left            | number               | 0              | Sets the left isometric coordinates of the isometric group   |
 | top             | number               | 0              | Sets the top isometric coordinates of the isometric group    |
@@ -391,7 +421,7 @@ const isometric = new IsometricGroup([properties]);
 <details><summary>Instance Methods</summary>
 <p>
 
->All the instance methods (excepting `getElement`) return the same instance, so they are chainable.
+>All the instance methods (excluding `getChildByIndex`, `getChildById`, and `getElement`) return the same instance, so they are chainable.
 
 ```javascript
 getElement()
@@ -405,7 +435,7 @@ addChild(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 addChildren(child, child, child...)
@@ -414,7 +444,25 @@ addChildren(child, child, child...)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
+
+```javascript
+getChildByIndex(index)
+```
+>Gets a child taking into account its index
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| index           | number        |
+
+```javascript
+getChildById(id)
+```
+>Gets a child taking into account its id
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| id              | string        |
 
 ```javascript
 removeChild(child)
@@ -423,7 +471,7 @@ removeChild(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 removeChildren(child, child, child...)
@@ -432,7 +480,7 @@ removeChildren(child, child, child...)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 removeChildByIndex(index)
@@ -444,13 +492,22 @@ removeChildByIndex(index)
 | index           | number        |
 
 ```javascript
+removeChildById(id)
+```
+>Removes a child taking into account its id
+
+| Parameter       | Type          |
+| --------------- | ------------- |
+| id              | string        |
+
+```javascript
 setChildIndex(child, index)
 ```
 >Change the index of a child of the isometric group. This method also changes the index of the native elements inside the `g` element.
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 | index           | number        |
 
 ```javascript
@@ -460,7 +517,7 @@ bringChildToFront(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 sendChildToBack(child)
@@ -469,7 +526,7 @@ sendChildToBack(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 bringChildForward(child)
@@ -478,7 +535,7 @@ bringChildForward(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 sendChildBackward(child)
@@ -487,7 +544,7 @@ sendChildBackward(child)
 
 | Parameter       | Type          |
 | --------------- | ------------- |
-| child           | IsometricGroup<br>IsometricPath<br>IsometricRectangle<br>IsometricCircle |
+| child           | Any isometric element |
 
 ```javascript
 update()
@@ -529,6 +586,7 @@ removeEventListener(type, callback, [useCapture])
 
 | Property        | Type     | Description                                                          |
 | --------------- | -------- | -------------------------------------------------------------------- |
+| id              | string   | Gets and sets the id of the isometric group. This property also sets the id of the native `SVG` element |
 | right           | number   | Gets and sets the right isometric coordinates of the isometric group |
 | left            | number   | Gets and sets the left isometric coordinates of the isometric group  |
 | top             | number   | Gets and sets the top isometric coordinates of the isometric group   |
@@ -571,6 +629,7 @@ const path = new IsometricRectangle(properties);
 
 | Property        | Type                 | Default value | Description                                                          |
 | --------------- | -------------------- | ------------- | -------------------------------------------------------------------- |
+| id              | string               | random        | Sets the id of the isometric rectangle. It also sets the id of the native SVG element |
 | height          | number               | -             | Sets the height of the isometric rectangle                           |
 | width           | number               | -             | Sets the width of the isometric rectangle                            |
 | right           | number               | 0             | Sets the right isometric coordinates of the isometric rectangle      |
@@ -757,6 +816,7 @@ removeEventListener(type, listener, [useCapture])
 
 | Property        | Type               | Description                                                              |
 | --------------- | ------------------ | ------------------------------------------------------------------------ |
+| id              | string             | Gets and sets the id of the isometric rectangle. This property also sets the id of the native `SVG` element |
 | height          | number             | Gets and sets the height of the isometric rectangle                      |
 | width           | number             | Gets and sets the width of the isometric rectangle                       |
 | right           | number             | Gets and sets the right isometric coordinates of the isometric rectangle |
@@ -810,6 +870,7 @@ const path = new IsometricCircle(properties);
 
 | Property        | Type                 | Default value        | Description                                                       |
 | --------------- | -------------------- | -------------------- | ----------------------------------------------------------------- |
+| id              | string               | random               | Sets the id of the isometric circle. It also sets the id of the native SVG element |
 | radius          | number               | -                    | Sets the radius of the isometric circle                           |
 | right           | number               | 0                    | Sets the right isometric coordinates of the isometric circle      |
 | left            | number               | 0                    | Sets the left isometric coordinates of the isometric circle       |
@@ -994,6 +1055,7 @@ removeEventListener(type, listener, [useCapture])
 
 | Property        | Type               | Description                                                           |
 | --------------- | ------------------ | --------------------------------------------------------------------- |
+| id              | string             | Gets and sets the id of the isometric circle. This property also sets the id of the native `SVG` element |
 | radius          | number             | Gets and sets the radius of the isometric circle                      |
 | right           | number             | Gets and sets the right isometric coordinates of the isometric circle |
 | left            | number             | Gets and sets the left isometric coordinates of the isometric circle  |
@@ -1046,6 +1108,7 @@ const path = new IsometricStarPolygon(properties);
 
 | Property        | Type                 | Default value        | Description                                                             |
 | --------------- | -------------------- | -------------------- | ----------------------------------------------------------------------- |
+| id              | string               | random               | Sets the id of the isometric star polygon. It also sets the id of the native SVG element |
 | radius          | number               | -                    | Sets the radius of the isometric star polygon                           |
 | points          | number               | -                    | Sets the number of points of the isometric star polygon                 |
 | density         | number               | -                    | Sets the density of the isometric star polygon                          |
@@ -1235,6 +1298,7 @@ removeEventListener(type, listener, [useCapture])
 
 | Property        | Type               | Description                                                                 |
 | --------------- | ------------------ | --------------------------------------------------------------------------- |
+| id              | string             | Gets and sets the id of the isometric star polygon. This property also sets the id of the native `SVG` element |
 | radius          | number             | Gets and sets the radius of the isometric star polygon                      |
 | rotation        | number             | Gets and sets the rotation of the isometric star polygon                    |
 | points          | number             | Gets and sets the number of points of the isometric star polygon            |
@@ -1290,6 +1354,7 @@ const path = new IsometricPentagram(properties);
 
 | Property        | Type                 | Default value        | Description                                                          |
 | --------------- | -------------------- | -------------------- | -------------------------------------------------------------------- |
+| id              | string               | random               | Sets the id of the isometric pentagram. It also sets the id of the native SVG element |
 | radius          | number               | -                    | Sets the radius of the isometric pentagram                           |
 | rotation        | number               | -                    | Sets the rotation of the isometric pentagram                         |
 | right           | number               | 0                    | Sets the right isometric coordinates of the isometric pentagram      |
@@ -1476,6 +1541,7 @@ removeEventListener(type, listener, [useCapture])
 
 | Property        | Type               | Description                                                              |
 | --------------- | ------------------ | ------------------------------------------------------------------------ |
+| id              | string             | Gets and sets the id of the isometric pentagram. This property also sets the id of the native `SVG` element |
 | radius          | number             | Gets and sets the radius of the isometric pentagram                      |
 | rotation        | number             | Gets and sets the rotation of the isometric pentagram                    |
 | right           | number             | Gets and sets the right isometric coordinates of the isometric pentagram |
@@ -1529,6 +1595,7 @@ const path = new IsometricPath([properties]);
 
 | Property        | Type               | Default value  | Description                                              |
 | --------------- | ------------------ | -------------- | -------------------------------------------------------- |
+| id              | string             | random         | Sets the id of the isometric path. It also sets the id of the native SVG element |
 | fillColor       | string             | "white"        | Sets the fill color of the isometric path                |
 | fillOpacity     | number             | 1              | Sets the fill opacity of the isometric path              |
 | strokeColor     | string             | "black"        | Sets the stroke color of the isometric path              |
@@ -1761,6 +1828,7 @@ removeEventListener(type, listener, [useCapture])
 
 | Property        | Type               | Description                                                       |
 | --------------- | ------------------ | ----------------------------------------------------------------- |
+| id              | string             | Gets and sets the id of the isometric path. This property also sets the id of the native `SVG` element |
 | fillColor       | string             | Gets and sets the fill color of the isometric path                |
 | fillOpacity     | number             | Gets and sets the fill opacity of the isometric path              |
 | strokeColor     | string             | Gets and sets the stroke color of the isometric path              |
@@ -1793,6 +1861,7 @@ const path = new IsometricText(properties);
 
 | Property        | Type                 | Default value        | Description                                                       |
 | --------------- | -------------------- | -------------------- | ----------------------------------------------------------------- |
+| id              | string               | random               | Sets the id of the isometric text. It also sets the id of the native SVG group element |
 | planeView       | PlaneView (`string`) | -                    | Sets the plane view in which the isometric text will be created   |
 | text            | string               | ''                   | Sets the text content of the isometric text                       |
 | right           | number               | 0                    | Sets the right isometric coordinates of the isometric text        |
@@ -1993,6 +2062,7 @@ removeEventListener(type, listener, [useCapture])
 
 | Property        | Type               | Description                                                           |
 | --------------- | ------------------ | --------------------------------------------------------------------- |
+| id              | string             | Gets and sets the id of the isometric text. This property also sets the id of the native `SVG` element |
 | planeView       | string             | Gets and sets the plane view in which the isometric text is created   |
 | right           | number             | Gets and sets the right isometric coordinates of the isometric text   |
 | left            | number             | Gets and sets the left isometric coordinates of the isometric text    |
