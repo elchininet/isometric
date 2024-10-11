@@ -1,6 +1,6 @@
 # Changelog
 
-## [3.10.0] - 2024-10-10
+## [3.10.0] - 2024-10-11
 
 - Add an optional `id` property to all the elements. If the `id` is not specified as a property of an instance, a random `id` is generated.
 - Implement new methods in container classes (as `IsometricCanvas` and `IsometricGroup`):
