@@ -13,7 +13,8 @@ import {
     StrokeLinejoin,
     SVGAnimation,
     SVGAnimationObject,
-    Texture
+    Texture,
+    SVGProps
 } from '@types';
 import {
     addSVGProperties,
@@ -33,8 +34,7 @@ const defaultObjectProps: IsometricGraphicProps = {
     strokeLinecap: LineCap.butt,
     strokeLinejoin: LineJoin.round,
     strokeOpacity: 1,
-    strokeWidth: 1,
-    className: ''
+    strokeWidth: 1
 };
 
 export abstract class IsometricGraphicAbstract extends IsometricElementAbstract {
@@ -59,7 +59,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
             this.createTexture(this.props.texture);
         }
 
-        addSVGProperties(this.element, {
+        const propsToSet: SVGProps = {
             'fill': this.props.texture
                 ? `url(#${this.patternId}) ${this.fillColor}`
                 : this.fillColor,
@@ -70,8 +70,13 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
             'stroke-linejoin': this.strokeLinejoin,
             'stroke-opacity': `${this.strokeOpacity}`,
             'stroke-width': `${this.strokeWidth}`,
-            'class': this.props.className
-        });
+        }
+
+        if (this.props.className) {
+            propsToSet['class'] = this.props.className;
+        }
+
+        addSVGProperties(this.element, propsToSet);
 
     }
 
