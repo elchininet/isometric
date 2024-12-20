@@ -15,4 +15,5 @@ export interface IsometricGraphicProps {
     strokeOpacity?: number;
     strokeWidth?: number;
     texture?: Texture;
+    className?: string;
 }

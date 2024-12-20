@@ -33,7 +33,8 @@ const defaultObjectProps: IsometricGraphicProps = {
     strokeLinecap: LineCap.butt,
     strokeLinejoin: LineJoin.round,
     strokeOpacity: 1,
-    strokeWidth: 1
+    strokeWidth: 1,
+    className: ''
 };
 
 export abstract class IsometricGraphicAbstract extends IsometricElementAbstract {
@@ -68,7 +69,8 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
             'stroke-linecap': this.strokeLinecap,
             'stroke-linejoin': this.strokeLinejoin,
             'stroke-opacity': `${this.strokeOpacity}`,
-            'stroke-width': `${this.strokeWidth}`
+            'stroke-width': `${this.strokeWidth}`,
+            'class': this.props.className
         });
 
     }
@@ -343,6 +345,18 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
     public set strokeWidth(value: number) {
         this.props.strokeWidth = value;
         addSVGProperties(this.element, { 'stroke-width': `${this.strokeWidth}` });
+    }
+
+    // className
+    public get className(): string {
+        return this.props.className;
+    }
+
+    public set className(value: string) {
+        this.props.className = value;
+        addSVGProperties(this.element, {
+            'class': this.props.className
+        });
     }
 
     public getPattern(): SVGPatternElement | undefined {

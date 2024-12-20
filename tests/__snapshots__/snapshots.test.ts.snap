@@ -38,6 +38,7 @@ exports[`Snapshot tests Draw animations with a single value 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M250 40 L353.923 100 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -63,6 +64,7 @@ exports[`Snapshot tests Draw animations with a single value 1`] = `
       />
     </path>
     <path
+      class=""
       d="M353.923 220 L250 280 L250 160 L353.923 100z"
       fill="white"
       fill-opacity="1"
@@ -88,6 +90,7 @@ exports[`Snapshot tests Draw animations with a single value 1`] = `
       />
     </path>
     <path
+      class=""
       d="M146.077 220 L250 280 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -113,6 +116,7 @@ exports[`Snapshot tests Draw animations with a single value 1`] = `
       />
     </path>
     <g
+      class=""
       fill="white"
       fill-opacity="1"
       id="label"
@@ -159,6 +163,7 @@ exports[`Snapshot tests Draw animations with a single value 1`] = `
       />
     </g>
     <path
+      class=""
       d="M275.98075 145 L252.195451 151.997035 L233.319332 141.098897 L237.495329 156.321441 L213.71003 163.318476 L240.076237 165.72949 L244.252233 180.952034 L256.371448 167.219579 L282.737655 169.630593 L263.861535 158.732455z"
       fill="white"
       fill-opacity="1"
@@ -197,6 +202,7 @@ exports[`Snapshot tests Draw animations with from and to 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M250 40 L353.923 100 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -224,6 +230,7 @@ exports[`Snapshot tests Draw animations with from and to 1`] = `
       />
     </path>
     <path
+      class=""
       d="M353.923 220 L250 280 L250 160 L353.923 100z"
       fill="white"
       fill-opacity="1"
@@ -251,6 +258,7 @@ exports[`Snapshot tests Draw animations with from and to 1`] = `
       />
     </path>
     <path
+      class=""
       d="M146.077 220 L250 280 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -278,6 +286,7 @@ exports[`Snapshot tests Draw animations with from and to 1`] = `
       />
     </path>
     <g
+      class=""
       fill="white"
       fill-opacity="1"
       id="label"
@@ -326,6 +335,7 @@ exports[`Snapshot tests Draw animations with from and to 1`] = `
       />
     </g>
     <path
+      class=""
       d="M275.98075 175 L263.861535 161.267545 L282.737655 150.369407 L256.371448 152.780421 L244.252233 139.047966 L240.076237 154.27051 L213.71003 156.681524 L237.495329 163.678559 L233.319332 178.901103 L252.195451 168.002965z"
       fill="white"
       fill-opacity="1"
@@ -365,6 +375,7 @@ exports[`Snapshot tests Draw animations with values 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M250 40 L353.923 100 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -390,6 +401,7 @@ exports[`Snapshot tests Draw animations with values 1`] = `
       />
     </path>
     <path
+      class=""
       d="M353.923 220 L250 280 L250 160 L353.923 100z"
       fill="white"
       fill-opacity="1"
@@ -416,6 +428,7 @@ exports[`Snapshot tests Draw animations with values 1`] = `
       />
     </path>
     <path
+      class=""
       d="M146.077 220 L250 280 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -441,6 +454,7 @@ exports[`Snapshot tests Draw animations with values 1`] = `
       />
     </path>
     <g
+      class=""
       fill="white"
       fill-opacity="1"
       id="label"
@@ -489,6 +503,7 @@ exports[`Snapshot tests Draw animations with values 1`] = `
       />
     </g>
     <path
+      class=""
       d="M275.98075 85 L252.195451 91.997035 L233.319332 81.098897 L237.495329 96.321441 L213.71003 103.318476 L240.076237 105.72949 L244.252233 120.952034 L256.371448 107.219579 L282.737655 109.630593 L263.861535 98.732455z"
       fill="white"
       fill-opacity="1"
@@ -527,6 +542,7 @@ exports[`Snapshot tests Draw circles 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M198.0385 130 A 73.484658 42.426407 0 0 0 301.9615 70 A 73.484658 42.426407 180 0 0 198.0385 130z"
       fill="white"
       fill-opacity="1"
@@ -539,6 +555,7 @@ exports[`Snapshot tests Draw circles 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M250 220 A 73.484684 42.426392 119.999977 0 0 353.923 160 A 73.484684 42.426392 -60.000023 0 0 250 220z"
       fill="white"
       fill-opacity="1"
@@ -551,6 +568,7 @@ exports[`Snapshot tests Draw circles 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M146.077 160 A 73.484684 42.426392 60.000023 0 0 250 220 A 73.484684 42.426392 -119.999977 0 0 146.077 160z"
       fill="white"
       fill-opacity="1"
@@ -582,6 +600,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M353.923 220 L250 280 L250 250 L301.9615 220 L301.9615 130 L353.923 100z"
       fill="white"
       fill-opacity="1"
@@ -594,6 +613,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M224.01925 85 A 36.742342 21.213196 60.000023 0 0 275.98075 115 L327.94225 85 A 36.742342 21.213196 60.000023 0 1 275.98075 55 L224.01925 85z"
       fill="white"
       fill-opacity="1"
@@ -606,6 +626,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M353.923 100 L327.94225 85 L275.98075 115 L301.9615 130 L353.923 100 M250 40 L275.98075 55 L224.01925 85 L198.0385 70 L250 40z"
       fill="white"
       fill-opacity="1"
@@ -618,6 +639,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M198.0385 130 L250 160 L198.0385 190 L146.077 160z"
       fill="white"
       fill-opacity="1"
@@ -630,6 +652,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M250 160 L301.9615 220 L250 250 L198.0385 190z"
       fill="white"
       fill-opacity="1"
@@ -642,6 +665,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M198.0385 70 L198.0385 130 L250 160 L301.9615 220 L301.9615 130 L275.98075 115 A 36.742342 21.213196 60.000023 0 1 224.01925 85 L198.0385 70z"
       fill="white"
       fill-opacity="1"
@@ -654,6 +678,7 @@ exports[`Snapshot tests Draw commands 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M146.077 160 L198.0385 190 L250 250 L250 280 L146.077 220z"
       fill="white"
       fill-opacity="1"
@@ -685,6 +710,7 @@ exports[`Snapshot tests Draw curves with method aliases 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M250 40 M275.98075 55 A 36.742342 21.213196 60.000023 0 0 327.94225 85 L353.923 100 L353.923 130 A 36.742342 21.213196 -119.999977 0 0 353.923 190 L353.923 220 L327.94225 235 A 36.742329 21.213203 -180 0 0 275.98075 265 L250 280 L224.01925 265 A 36.742329 21.213203 0 0 0 172.05775 235 L146.077 220 L146.077 190 A 36.742342 21.213196 -60.000023 0 0 146.077 130 L146.077 100 L172.05775 85 A 36.742342 21.213196 119.999977 0 0 224.01925 55 L250 40z"
       fill="#EEE"
       fill-opacity="1"
@@ -697,6 +723,7 @@ exports[`Snapshot tests Draw curves with method aliases 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M250 40 L275.98075 55 A 36.742329 21.213203 180 0 0 327.94225 85 L353.923 100 L327.94225 115 A 36.742329 21.213203 -180 0 0 275.98075 145 L250 160 L224.01925 145 A 36.742329 21.213203 0 0 0 172.05775 115 L146.077 100 L172.05775 85 A 36.742329 21.213203 0 0 0 224.01925 55 L250 40z"
       fill="white"
       fill-opacity="1"
@@ -709,6 +736,7 @@ exports[`Snapshot tests Draw curves with method aliases 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M353.923 100 L353.923 130 A 36.742342 21.213196 119.999977 0 0 353.923 190 L353.923 220 L327.94225 235 A 36.742342 21.213196 -60.000023 0 0 275.98075 265 L250 280 L250 250 A 36.742342 21.213196 -60.000023 0 0 250 190 L250 160 L275.98075 145 A 36.742342 21.213196 119.999977 0 0 327.94225 115 L353.923 100z"
       fill="white"
       fill-opacity="1"
@@ -721,6 +749,7 @@ exports[`Snapshot tests Draw curves with method aliases 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M250 160 L250 190 A 36.742342 21.213196 -119.999977 0 0 250 250 L250 280 L224.01925 265 A 36.742342 21.213196 -119.999977 0 0 172.05775 235 L146.077 220 L146.077 190 A 36.742342 21.213196 60.000023 0 0 146.077 130 L146.077 100 L172.05775 115 A 36.742342 21.213196 60.000023 0 0 224.01925 145 L250 160z"
       fill="white"
       fill-opacity="1"
@@ -752,6 +781,7 @@ exports[`Snapshot tests Draw methods 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M250 100 L353.923 160 L250 220 L146.077 160z"
       fill="white"
       fill-opacity="1"
@@ -764,6 +794,7 @@ exports[`Snapshot tests Draw methods 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M353.923 160 L353.923 220 L250 280 L250 220z"
       fill="white"
       fill-opacity="1"
@@ -776,6 +807,7 @@ exports[`Snapshot tests Draw methods 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M250 220 L250 280 L146.077 220 L146.077 160z"
       fill="white"
       fill-opacity="1"
@@ -788,6 +820,7 @@ exports[`Snapshot tests Draw methods 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M250 40 L301.9615 70 L250 130 L198.0385 100z"
       fill="white"
       fill-opacity="1"
@@ -800,6 +833,7 @@ exports[`Snapshot tests Draw methods 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M301.9615 70 L250 130 L250 190 L301.9615 160z"
       fill="white"
       fill-opacity="1"
@@ -812,6 +846,7 @@ exports[`Snapshot tests Draw methods 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M250 130 L198.0385 100 L198.0385 160 L250 190z"
       fill="white"
       fill-opacity="1"
@@ -843,6 +878,7 @@ exports[`Snapshot tests Draw rectangles 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M250 40 L353.923 100 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -855,6 +891,7 @@ exports[`Snapshot tests Draw rectangles 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M353.923 220 L250 280 L250 160 L353.923 100z"
       fill="white"
       fill-opacity="1"
@@ -867,6 +904,7 @@ exports[`Snapshot tests Draw rectangles 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M146.077 220 L250 280 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -898,6 +936,7 @@ exports[`Snapshot tests Paths without autoclose 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M250 160 L353.923 220 L250 280 L146.077 220z"
       fill="white"
       fill-opacity="1"
@@ -910,6 +949,7 @@ exports[`Snapshot tests Paths without autoclose 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M250 160 L353.923 220 L250 280 L146.077 220"
       fill="white"
       fill-opacity="1"
@@ -941,6 +981,7 @@ exports[`Snapshot tests Remove animations 1`] = `
       y="0"
     />
     <path
+      class=""
       d="M250 40 L353.923 100 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -953,6 +994,7 @@ exports[`Snapshot tests Remove animations 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M353.923 220 L250 280 L250 160 L353.923 100z"
       fill="white"
       fill-opacity="1"
@@ -965,6 +1007,7 @@ exports[`Snapshot tests Remove animations 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M146.077 220 L250 280 L250 160 L146.077 100z"
       fill="white"
       fill-opacity="1"
@@ -977,6 +1020,7 @@ exports[`Snapshot tests Remove animations 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M146.077 220 A 146.969316 84.852814 0 0 0 353.923 100 A 146.969316 84.852814 180 0 0 146.077 220z"
       fill="white"
       fill-opacity="1"
@@ -989,6 +1033,7 @@ exports[`Snapshot tests Remove animations 1`] = `
       stroke-width="1"
     />
     <path
+      class=""
       d="M250 130 L244.166958 154.0972 L225.290838 164.995338 L240.56194 168.990089 L234.728898 193.087289 L250 171.45898 L265.271102 175.453731 L259.43806 158.091951 L274.709162 136.463642 L255.833042 147.36178z"
       fill="white"
       fill-opacity="1"
