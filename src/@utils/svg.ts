@@ -162,7 +162,8 @@ export const isSVGProperty = (property: string): property is SVGProperties => {
         'fillOpacity',
         'strokeColor',
         'strokeOpacity',
-        'strokeWidth'
+        'strokeWidth',
+        'className'
     ].includes(property);
 };
 
@@ -172,7 +173,8 @@ export const getSVGProperty = (property: string): SVGNativeProperties => {
         fillOpacity: 'fill-opacity',
         strokeColor: 'stroke',
         strokeOpacity: 'stroke-opacity',
-        strokeWidth: 'stroke-width'
+        strokeWidth: 'stroke-width',
+        className: 'class'
     }[property] as SVGNativeProperties;
 };
 
