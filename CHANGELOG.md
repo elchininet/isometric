@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.10.1] - 2024-12-20
+
+- Fix a bug related to animations not taken into account of some of the values were `0`
+
 ## [3.10.0] - 2024-10-11
 
 - Add an optional `id` property to all the elements. If the `id` is not specified as a property of an instance, a random `id` is generated.
