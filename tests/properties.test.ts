@@ -49,7 +49,8 @@ describe('Test properties', (): void => {
             strokeLinecap: 'round',
             strokeLinejoin: 'miter',
             strokeOpacity: 0.25,
-            strokeWidth: 2
+            strokeWidth: 2,
+            className: 'test-class'
         };
 
         cube = new IsometricCanvas({
@@ -376,6 +377,7 @@ describe('Test properties', (): void => {
         expect(path.strokeOpacity).toBe(0.25);
         expect(path.strokeWidth).toBe(2);
         expect(path.autoclose).toBeTruthy();
+        expect(path.className).toBe('test-class');
 
         expect(pathElement.getAttribute('id')).toBe(path.id);
         expect(pathElement.getAttribute('fill')).toBe('#FFF');
@@ -387,6 +389,7 @@ describe('Test properties', (): void => {
         expect(pathElement.getAttribute('stroke-opacity')).toBe('0.25');
         expect(pathElement.getAttribute('stroke-width')).toBe('2');
         expect(pathElement.getAttribute('d')?.endsWith('z')).toBeTruthy();
+        expect(pathElement.getAttribute('class')).toBe('test-class');
 
         path.id = 'path';
         path.fillColor = '#000';
@@ -398,6 +401,7 @@ describe('Test properties', (): void => {
         path.strokeOpacity = 0.75;
         path.strokeWidth = 1;
         path.autoclose = false;
+        path.className = 'new-class'
 
         expect(path.id).toBe('path');
         expect(path.fillColor).toBe('#000');
@@ -409,6 +413,7 @@ describe('Test properties', (): void => {
         expect(path.strokeOpacity).toBe(0.75);
         expect(path.strokeWidth).toBe(1);
         expect(path.autoclose).toBeFalsy();
+        expect(path.className).toBe('new-class');
 
         expect(pathElement.getAttribute('id')).toBe('path');
         expect(pathElement.getAttribute('fill')).toBe('#000');
@@ -420,6 +425,7 @@ describe('Test properties', (): void => {
         expect(pathElement.getAttribute('stroke-opacity')).toBe('0.75');
         expect(pathElement.getAttribute('stroke-width')).toBe('1');
         expect(pathElement.getAttribute('d')?.endsWith('z')).toBeFalsy();
+        expect(pathElement.getAttribute('class')).toBe('new-class');
 
     });
 
@@ -434,6 +440,7 @@ describe('Test properties', (): void => {
         expect(rectangle.strokeLinejoin).toBe('miter');
         expect(rectangle.strokeOpacity).toBe(0.25);
         expect(rectangle.strokeWidth).toBe(2);
+        expect(rectangle.className).toBe('test-class');
 
         expect(rectangleElement.getAttribute('id')).toBe(rectangle.id);
         expect(rectangleElement.getAttribute('fill')).toBe('#FFF');
@@ -444,6 +451,7 @@ describe('Test properties', (): void => {
         expect(rectangleElement.getAttribute('stroke-linejoin')).toBe('miter');
         expect(rectangleElement.getAttribute('stroke-opacity')).toBe('0.25');
         expect(rectangleElement.getAttribute('stroke-width')).toBe('2');
+        expect(rectangleElement.getAttribute('class')).toBe('test-class');
 
         rectangle.id = 'rectangle';
         rectangle.fillColor = '#000';
@@ -454,6 +462,7 @@ describe('Test properties', (): void => {
         rectangle.strokeLinejoin = 'bevel';
         rectangle.strokeOpacity = 0.75;
         rectangle.strokeWidth = 1;
+        rectangle.className = 'new-class';
 
         expect(rectangle.id).toBe('rectangle');
         expect(rectangle.fillColor).toBe('#000');
@@ -464,6 +473,7 @@ describe('Test properties', (): void => {
         expect(rectangle.strokeLinejoin).toBe('bevel');
         expect(rectangle.strokeOpacity).toBe(0.75);
         expect(rectangle.strokeWidth).toBe(1);
+        expect(rectangle.className).toBe('new-class');
 
         expect(rectangleElement.getAttribute('id')).toBe('rectangle');
         expect(rectangleElement.getAttribute('fill')).toBe('#000');
@@ -474,6 +484,7 @@ describe('Test properties', (): void => {
         expect(rectangleElement.getAttribute('stroke-linejoin')).toBe('bevel');
         expect(rectangleElement.getAttribute('stroke-opacity')).toBe('0.75');
         expect(rectangleElement.getAttribute('stroke-width')).toBe('1');
+        expect(rectangleElement.getAttribute('class')).toBe('new-class');
 
     });
 
@@ -500,6 +511,7 @@ describe('Test properties', (): void => {
         expect(text.rotation).toBe(45);
         expect(text.origin).toStrictEqual(['left', 'bottom']);
         expect(text.selectable).toBe(false);
+        expect(text.className).toBe('test-class');
 
         expect(textGroupElement.getAttribute('id')).toBe(text.id);
         expect(textGroupElement.getAttribute('fill')).toBe('#FFF');
@@ -510,6 +522,7 @@ describe('Test properties', (): void => {
         expect(textGroupElement.getAttribute('stroke-linejoin')).toBe('miter');
         expect(textGroupElement.getAttribute('stroke-opacity')).toBe('0.25');
         expect(textGroupElement.getAttribute('stroke-width')).toBe('2');
+        expect(textGroupElement.getAttribute('class')).toBe('test-class');
 
         expect(textElement.style.userSelect).toBe('none');
         expect(textElement.style.pointerEvents).toBe('none');
@@ -543,6 +556,7 @@ describe('Test properties', (): void => {
         text.rotation = 90;
         text.origin = ['right', 'top'];
         text.selectable = true;
+        text.className = 'new-class';
 
         expect(text.id).toBe('text');
         expect(text.fillColor).toBe('#000');
@@ -565,6 +579,7 @@ describe('Test properties', (): void => {
         expect(text.rotation).toBe(90);
         expect(text.origin).toStrictEqual(['right', 'top']);
         expect(text.selectable).toBe(true);
+        expect(text.className).toBe('new-class');
 
         expect(textGroupElement.getAttribute('id')).toBe('text');
         expect(textGroupElement.getAttribute('fill')).toBe('#000');
@@ -575,6 +590,7 @@ describe('Test properties', (): void => {
         expect(textGroupElement.getAttribute('stroke-linejoin')).toBe('bevel');
         expect(textGroupElement.getAttribute('stroke-opacity')).toBe('0.75');
         expect(textGroupElement.getAttribute('stroke-width')).toBe('1');
+        expect(textGroupElement.getAttribute('class')).toBe('new-class');
 
         expect(textElement.style.userSelect).toBe('');
         expect(textElement.style.pointerEvents).toBe('');

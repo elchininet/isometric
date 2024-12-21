@@ -72,6 +72,28 @@ describe('Snapshot tests', (): void => {
 
     });
 
+    it('Draw a rectangle with a class', (): void => {
+        const canvas = new IsometricCanvas({
+            container,
+            id: IDS.SVG,
+            backgroundColor: '#CCC',
+            scale: 120,
+            width: 500,
+            height: 320
+        });
+
+        const piece = new IsometricRectangle({
+            height: 1,
+            width: 1,
+            id: IDS.TOP,
+            planeView: PlaneView.TOP,
+            className: 'test-class'
+        });
+
+        canvas.addChild(piece);
+        expect(container).toMatchSnapshot();
+    })
+
     it('Draw circles', (): void => {
 
         const cube = new IsometricCanvas({

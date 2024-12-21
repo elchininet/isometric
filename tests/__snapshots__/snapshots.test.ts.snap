@@ -22,6 +22,38 @@ exports[`Snapshot tests Default options 1`] = `
 
 exports[`Snapshot tests Default options 2`] = `"<svg id="svg" viewBox="0 0 640 480" width="640px" height="480px"><rect fill="white" x="0" y="0" width="640px" height="480px"></rect></svg>"`;
 
+exports[`Snapshot tests Draw a rectangle with a class 1`] = `
+<div>
+  <svg
+    height="320px"
+    id="svg"
+    viewBox="0 0 500 320"
+    width="500px"
+  >
+    <rect
+      fill="#CCC"
+      height="320px"
+      width="500px"
+      x="0"
+      y="0"
+    />
+    <path
+      class="test-class"
+      d="M250 160 L353.923 220 L250 280 L146.077 220z"
+      fill="white"
+      fill-opacity="1"
+      id="top"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+  </svg>
+</div>
+`;
+
 exports[`Snapshot tests Draw animations with a single value 1`] = `
 <div>
   <svg
