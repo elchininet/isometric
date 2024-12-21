@@ -4,7 +4,7 @@ import { StringOrNumber } from './generic';
 export type StrokeLinecap = keyof typeof LineCap;
 export type StrokeLinejoin = keyof typeof LineJoin;
 
-export type SVGProperties = 'fillColor' | 'fillOpacity' | 'strokeColor' | 'strokeOpacity' | 'strokeWidth' | 'className';
+export type SVGProperties = 'fillColor' | 'fillOpacity' | 'strokeColor' | 'strokeOpacity' | 'strokeWidth';
 export type SVGPathProperties = 'path';
 export type SVGPositionableProperties = 'left' | 'right' | 'top';
 export type SVGRectangleProperties = 'width' | 'height';
