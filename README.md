@@ -645,6 +645,7 @@ const path = new IsometricRectangle(properties);
 | strokeLinejoin  | string               | "round"       | Sets the [SVG stroke linejoin][3] of the isometric rectangle         |
 | strokeWidth     | number               | 1             | Sets the stroke width of the isometric rectangle                     |
 | texture         | Texture (`object`)   | -             | Sets the texture of the isometric rectangle                          |
+| className       | string               | -             | Sets the CSS class of the isometric rectangle                                         |
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE"
@@ -833,7 +834,8 @@ removeEventListener(type, listener, [useCapture])
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric rectangle                |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric rectangle                     |
 | drag \*         | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric rectangle     |
-| bounds          | object / false | Gets an sets the boundaries of the isometric rectangle position              |
+| bounds          | object / false | Gets and sets the boundaries of the isometric rectangle position              |
+| className       | string             | Gets and sets the CSS class of the isometric rectangle
 
 >\* When dragging an isometric rectangle, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric rectangle will receive. The `drag` event can be prevented using `preventDefault` so, if it is prevented, the isometric rectangle will not change its position when it is dragged.
 
@@ -885,6 +887,7 @@ const path = new IsometricCircle(properties);
 | strokeLinejoin  | string               | "round"              | Sets the [SVG stroke linejoin][3] of the isometric circle         |
 | strokeWidth     | number               | 1                    | Sets the stroke width of the isometric circle                     |
 | texture         | Texture (`object`)   | -                    | Sets the texture of the isometric circle                          |
+| className       | string             | Sets the CSS class of the isometric circle
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE"
@@ -1072,6 +1075,7 @@ removeEventListener(type, listener, [useCapture])
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric circle                     |
 | drag \*         | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric circle     |
 | bounds          | object / false | Gets an sets the boundaries of the isometric circle position              |
+| className       | string             | Gets and sets the CSS class of the isometric circle
 
 >\* When dragging an isometric circle, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric circle will receive. The `drag` event can be prevented using `preventDefault` so, if it is prevented, the isometric circle will not change its position when it is dragged.
 
@@ -1126,6 +1130,7 @@ const path = new IsometricStarPolygon(properties);
 | strokeLinejoin  | string               | "round"              | Sets the [SVG stroke linejoin][3] of the isometric star polygon         |
 | strokeWidth     | number               | 1                    | Sets the stroke width of the isometric star polygon                     |
 | texture         | Texture (`object`)   | -                    | Sets the texture of the isometric star polygon                          |
+| className       | string             | Sets the CSS class of the isometric star polygon
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE"
@@ -1317,7 +1322,8 @@ removeEventListener(type, listener, [useCapture])
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric star polygon                |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric star polygon                     |
 | drag \*          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric star polygon    |
-| bounds          | object / false | Gets an sets the boundaries of the isometric star polygon position              |
+| bounds          | object / false | Gets and sets the boundaries of the isometric star polygon position              |
+| className       | string             | Gets and sets the CSS class of the isometric star polygon
 
 >\* When dragging an isometric star polygon, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric star polygon will receive. The `drag` event can be prevented using `preventDefault` so, if it is prevented, the isometric star polygon will not change its position when it is dragged.
 
@@ -1370,6 +1376,7 @@ const path = new IsometricPentagram(properties);
 | strokeLinejoin  | string               | "round"              | Sets the [SVG stroke linejoin][3] of the isometric pentagram         |
 | strokeWidth     | number               | 1                    | Sets the stroke width of the isometric pentagram                     |
 | texture         | Texture (`object`)   | -                    | Sets the texture of the isometric pentagram                          |
+| className       | string             | Sets the CSS class of the isometric pentagram
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE"
@@ -1558,7 +1565,8 @@ removeEventListener(type, listener, [useCapture])
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric pentagram                |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric pentagram                     |
 | drag \*          | PlaneView (`string`) / false | Gets an sets the dragging plane of the isometric pentagram     |
-| bounds          | object / false | Gets an sets the boundaries of the isometric pentagram position              |
+| bounds          | object / false | Gets and sets the boundaries of the isometric pentagram position              |
+| className       | string             | Gets and sets the CSS class of the isometric pentagram
 
 >\* When dragging an isometric pentagram, the events `dragstart`, `drag` and `dragend` will be fired in that order. These events will be `CustomEvents` with a `detail` property containing the `right`, `left` and `top` properties that the isometric pentagram will receive. The `drag` event can be prevented using `preventDefault` so, if it is prevented, the isometric pentagram will not change its position when it is dragged.
 
@@ -1606,6 +1614,7 @@ const path = new IsometricPath([properties]);
 | strokeWidth     | number             | 1              | Sets the stroke width of the isometric path              |
 | texture         | Texture (`object`) | -              | Sets the texture of the isometric path                   |
 | autoclose       | boolean            | true           | Sets if the path should close automatically or not       |
+| className       | string             | Sets the CSS class of the isometric path
 
 `texture properties`
 >Object to set the texture of the isometric path
@@ -1839,6 +1848,7 @@ removeEventListener(type, listener, [useCapture])
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric path              |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric path                   |
 | autoclose       | boolean            | Gets and sets the autoclose property of the isometric path        |
+| className       | string             | Gets and sets the CSS class of the isometric path
 
 </p>
 </details>
@@ -1883,6 +1893,7 @@ const path = new IsometricText(properties);
 | strokeLinejoin  | string               | "round"              | Sets the [SVG stroke linejoin][3] of the isometric text           |
 | strokeWidth     | number               | 1                    | Sets the stroke width of the isometric text                       |
 | texture         | Texture (`object`)   | -                    | Sets the texture of the isometric text                            |
+| className       | string             | Sets the CSS class of the isometric text
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE"
@@ -2083,6 +2094,7 @@ removeEventListener(type, listener, [useCapture])
 | strokeLinejoin  | string             | Gets and sets the [SVG stroke linejoin][3] of the isometric text      |
 | strokeWidth     | number             | Gets and sets the stroke width of the isometric text                  |
 | texture         | Texture (`object`) | Gets and sets the texture of the isometric text                       |
+| className       | string             | Gets and sets the CSS class of the isometric text
 
 `planeView values`
 >"TOP" | "FRONT" | "SIDE"

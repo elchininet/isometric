@@ -8,7 +8,8 @@ import {
     PlaneView,
     SVGPathAnimation,
     SVGRectangleAnimation,
-    SVGCircleAnimation
+    SVGCircleAnimation,
+    IsometricStarPolygon
 } from '../src';
 
 enum IDS {
@@ -70,6 +71,62 @@ describe('Snapshot tests', (): void => {
 
         expect(container).toMatchSnapshot();
 
+    });
+
+    it('Draw a rectangle with a class', (): void => {
+        const canvas = new IsometricCanvas({
+            container,
+            id: IDS.SVG,
+            backgroundColor: '#CCC',
+            scale: 120,
+            width: 500,
+            height: 320
+        });
+
+        const rect = new IsometricRectangle({
+            height: 1,
+            width: 1,
+            id: IDS.TOP,
+            planeView: PlaneView.TOP,
+            className: 'rect'
+        });
+
+        const circle = new IsometricCircle({
+            radius: 0.5,
+            id: IDS.CIRCLE,
+            planeView: PlaneView.TOP,
+            className: 'circle'
+        });
+
+        const polygon = new IsometricStarPolygon({
+            radius: 0.5,
+            points: 5,
+            density: 2,
+            rotation: 0,
+            id: IDS.STAR,
+            planeView: PlaneView.TOP,
+            className: 'polygon'
+        });
+
+        const pentagram = new IsometricPentagram({
+            id: IDS.STAR,
+            radius: 0.25,
+            planeView: PlaneView.TOP,
+            className: 'pentagram'
+        });
+
+        const path = new IsometricPath({
+            id: IDS.PATH,
+            className: 'path'
+        });
+
+        canvas
+            .addChild(rect)
+            .addChild(circle)
+            .addChild(polygon)
+            .addChild(pentagram)
+            .addChild(path);
+        expect(container).toMatchSnapshot();
     });
 
     it('Draw circles', (): void => {

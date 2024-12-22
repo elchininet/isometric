@@ -22,6 +22,90 @@ exports[`Snapshot tests Default options 1`] = `
 
 exports[`Snapshot tests Default options 2`] = `"<svg id="svg" viewBox="0 0 640 480" width="640px" height="480px"><rect fill="white" x="0" y="0" width="640px" height="480px"></rect></svg>"`;
 
+exports[`Snapshot tests Draw a rectangle with a class 1`] = `
+<div>
+  <svg
+    height="320px"
+    id="svg"
+    viewBox="0 0 500 320"
+    width="500px"
+  >
+    <rect
+      fill="#CCC"
+      height="320px"
+      width="500px"
+      x="0"
+      y="0"
+    />
+    <path
+      class="rect"
+      d="M250 160 L353.923 220 L250 280 L146.077 220z"
+      fill="white"
+      fill-opacity="1"
+      id="top"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      class="circle"
+      d="M198.0385 190 A 73.484658 42.426407 0 0 0 301.9615 130 A 73.484658 42.426407 180 0 0 198.0385 190z"
+      fill="white"
+      fill-opacity="1"
+      id="circle"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      class="polygon"
+      d="M301.9615 130 L254.390903 143.994071 L216.638663 122.197795 L224.990657 152.642882 L177.42006 166.636952 L230.152473 171.45898 L238.504467 201.904067 L262.742897 174.439158 L315.47531 179.261186 L277.72307 157.46491z"
+      fill="white"
+      fill-opacity="1"
+      id="star"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      class="pentagram"
+      d="M275.98075 145 L252.195451 151.997035 L233.319332 141.098897 L237.495329 156.321441 L213.71003 163.318476 L240.076237 165.72949 L244.252233 180.952034 L256.371448 167.219579 L282.737655 169.630593 L263.861535 158.732455z"
+      fill="white"
+      fill-opacity="1"
+      id="star"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+    <path
+      class="path"
+      d=""
+      fill="white"
+      fill-opacity="1"
+      id="path"
+      stroke="black"
+      stroke-dasharray=""
+      stroke-linecap="butt"
+      stroke-linejoin="round"
+      stroke-opacity="1"
+      stroke-width="1"
+    />
+  </svg>
+</div>
+`;
+
 exports[`Snapshot tests Draw animations with a single value 1`] = `
 <div>
   <svg
