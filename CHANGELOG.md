@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.11.0] - 2024-12-22
+
+- Added a new option to set a CSS class to `IsometricCircle`, `IsometricPath`, `IsometricPentagram`, `IsometricRectangle`, `IsometricStarPolygon` and `IsometricText`
+
 ## [3.10.1] - 2024-12-20
 
 - Fix a bug related to animations not taken into account of some of the values were `0`
