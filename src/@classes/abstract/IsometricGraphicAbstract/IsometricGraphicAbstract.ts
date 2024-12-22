@@ -70,7 +70,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
             'stroke-linejoin': this.strokeLinejoin,
             'stroke-opacity': `${this.strokeOpacity}`,
             'stroke-width': `${this.strokeWidth}`,
-        }
+        };
 
         if (this.props.className) {
             propsToSet['class'] = this.props.className;

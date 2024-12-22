@@ -109,8 +109,8 @@ describe('Snapshot tests', (): void => {
         });
 
         const pentagram = new IsometricPentagram({
-            id: IDS.STAR, 
-            radius: 0.25, 
+            id: IDS.STAR,
+            radius: 0.25,
             planeView: PlaneView.TOP,
             className: 'pentagram'
         });
@@ -118,7 +118,7 @@ describe('Snapshot tests', (): void => {
         const path = new IsometricPath({
             id: IDS.PATH,
             className: 'path'
-        })
+        });
 
         canvas
             .addChild(rect)
@@ -127,7 +127,7 @@ describe('Snapshot tests', (): void => {
             .addChild(pentagram)
             .addChild(path);
         expect(container).toMatchSnapshot();
-    })
+    });
 
     it('Draw circles', (): void => {
 

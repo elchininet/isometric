@@ -401,7 +401,7 @@ describe('Test properties', (): void => {
         path.strokeOpacity = 0.75;
         path.strokeWidth = 1;
         path.autoclose = false;
-        path.className = 'new-class'
+        path.className = 'new-class';
 
         expect(path.id).toBe('path');
         expect(path.fillColor).toBe('#000');
