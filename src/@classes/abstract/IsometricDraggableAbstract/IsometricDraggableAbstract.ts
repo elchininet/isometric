@@ -20,6 +20,7 @@ import {
     IsometricDraggableProps,
     Drag,
     Boundaries,
+    Bounds,
     ClientCoords
 } from './types';
 
@@ -102,8 +103,15 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
         );
     }
 
+    private getBoundOrMaximum(prop: 'right' | 'left' | 'top'): Bounds {
+        if (this.bounds) {
+            return this.bounds[prop] ?? [ ...NO_LIMITS ];
+        }
+        return [ ...NO_LIMITS ];
+    }
+
     private getRight(value: number): number {
-        const bounds = this._bounds && this._bounds.right || NO_LIMITS;
+        const bounds = this.getBoundOrMaximum('right');
         return this.betweenBounds(
             this._dragStore.right + value / this.data.scale,
             bounds
@@ -111,7 +119,7 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
     }
 
     private getLeft(value: number): number {
-        const bounds = this._bounds && this._bounds.left || NO_LIMITS;
+        const bounds = this.getBoundOrMaximum('left');
         return this.betweenBounds(
             this._dragStore.left + value / this.data.scale,
             bounds,
@@ -119,7 +127,7 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
     }
 
     private getTop(value: number): number {
-        const bounds = this._bounds && this._bounds.top || NO_LIMITS;
+        const bounds = this.getBoundOrMaximum('top');
         return this.betweenBounds(
             this._dragStore.top + value / this.data.scale,
             bounds
@@ -149,9 +157,9 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
             {
                 cancelable: eventType === DRAG_EVENT.DRAG,
                 detail: {
-                    right: this._coords.right || this.right,
-                    left: this._coords.left || this.left,
-                    top: this._coords.top || this.top
+                    right: this._coords.right ?? this.right,
+                    left: this._coords.left ?? this.left,
+                    top: this._coords.top ?? this.top
                 }
             }
         );
@@ -318,9 +326,9 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
 
     public set bounds(value: Boundaries) {
         this._bounds = value;
-        const boundsRight = this._bounds && this._bounds.right || NO_LIMITS;
-        const boundsLeft = this._bounds && this._bounds.left || NO_LIMITS;
-        const boundsTop = this._bounds && this._bounds.top || NO_LIMITS;
+        const boundsRight = this.getBoundOrMaximum('right');
+        const boundsLeft = this.getBoundOrMaximum('left');
+        const boundsTop = this.getBoundOrMaximum('top');
         this.right = this.betweenBounds(this.right, boundsRight);
         this.left = this.betweenBounds(this.left, boundsLeft);
         this.top = this.betweenBounds(this.top, boundsTop);

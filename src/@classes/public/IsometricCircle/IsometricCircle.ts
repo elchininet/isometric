@@ -37,10 +37,10 @@ export class IsometricCircle extends IsometricShapeAbstract {
     private _radius: number;
 
     protected getCommands(args?: GetCirclePathArguments): CommandPoint[] {
-        const right = args?.right || this.right;
-        const left = args?.left || this.left;
-        const top = args?.top || this.top;
-        const radius = args?.radius || this.radius;
+        const right = args?.right ?? this.right;
+        const left = args?.left ?? this.left;
+        const top = args?.top ?? this.top;
+        const radius = args?.radius ?? this.radius;
         const commands: CommandPoint[] = [];
         switch(this.planeView) {
             case PlaneView.FRONT:

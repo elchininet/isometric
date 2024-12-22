@@ -56,13 +56,13 @@ export abstract class IsometricStarPolygonAbstract extends IsometricShapeAbstrac
     protected _halfSector: number;
 
     protected getCommands(args?: GetStarPolygonAbstractPathArguments): CommandPoint[] {
-        const right = args?.right || this.right;
-        const left = args?.left || this.left;
-        const top = args?.top || this.top;
-        const radius = args?.radius || this.radius;
-        const points = args?.points || this._points;
-        const density = args?.density || this._density;
-        const rotation = args?.rotation || this.rotation;
+        const right = args?.right ?? this.right;
+        const left = args?.left ?? this.left;
+        const top = args?.top ?? this.top;
+        const radius = args?.radius ?? this.radius;
+        const points = args?.points ?? this._points;
+        const density = args?.density ?? this._density;
+        const rotation = args?.rotation ?? this.rotation;
         const coordinates = this.get2DCoordinates(
             radius,
             points,

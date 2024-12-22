@@ -40,11 +40,11 @@ export class IsometricRectangle extends IsometricShapeAbstract {
     private _height: number;
 
     protected getCommands(args?: GetRectanglePathArguments): CommandPoint[] {
-        const right = args?.right || this.right;
-        const left = args?.left || this.left;
-        const top = args?.top || this.top;
-        const width = args?.width || this.width;
-        const height = args?.height || this.height;
+        const right = args?.right ?? this.right;
+        const left = args?.left ?? this.left;
+        const top = args?.top ?? this.top;
+        const width = args?.width ?? this.width;
+        const height = args?.height ?? this.height;
         const commands: LinePoint[] = [ {command: Command.move, point: {r: 0, l: 0, t: 0}} ];
         switch(this.planeView) {
             case PlaneView.FRONT:
