@@ -7,15 +7,14 @@ import {
 import {
     CommandPoint,
     SVGCircleAnimation,
-    SVGPositionableProperties,
-    SVGCircleProperties,
     SVGAnimationObject
 } from '@types';
 import {
     getSVGPath,
     translateCommandPoints,
     addSVGProperties,
-    isSVGProperty
+    isSVGProperty,
+    getAnimationProperties
 } from '@utils/svg';
 import { IsometricShapeAbstract } from '@classes/abstract/IsometricShapeAbstract';
 import {
@@ -121,7 +120,7 @@ export class IsometricCircle extends IsometricShapeAbstract {
 
             if (!isNativeSVGProperty) {
 
-                const props = {
+                const props: GetCirclePathArguments = {
                     right: this.right,
                     left: this.left,
                     top: this.top,
@@ -130,37 +129,11 @@ export class IsometricCircle extends IsometricShapeAbstract {
 
                 if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
 
-                    const property = animation.property as SVGPositionableProperties | SVGCircleProperties;
-                    let properties: Record<string, string>;
-
-                    if (animation.values) {
-
-                        if (Array.isArray(animation.values)) {
-                            properties = {
-                                values: animation.values.map((value: string | number): string => {
-                                    const modifiedArgs = { ...props };
-                                    modifiedArgs[property] = +value;
-                                    return this.getCirclePath(modifiedArgs);
-                                }).join(';')
-                            };
-                        } else {
-                            const modifiedArgs = { ...props };
-                            modifiedArgs[property] = +animation.values;
-                            properties = {
-                                values: this.getCirclePath(modifiedArgs)
-                            };
-                        }
-
-                    } else {
-                        const fromArgs = { ...props };
-                        const toArgs = { ...props };
-                        fromArgs[property] = +animation.from;
-                        toArgs[property] = +animation.to;
-                        properties = {
-                            from: this.getCirclePath(fromArgs),
-                            to: this.getCirclePath(toArgs)
-                        };
-                    }
+                    const properties: Record<string, string> = getAnimationProperties(
+                        this.getCirclePath.bind(this),
+                        animation,
+                        props
+                    );
 
                     if (!animation.element) {
                         animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;

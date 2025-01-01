@@ -8,8 +8,6 @@ import {
     IsometricPoint,
     LinePoint,
     CommandPoint,
-    SVGPositionableProperties,
-    SVGPentagramProperties,
     SVGPentagramAnimation,
     SVGAnimationObject
 } from '@types';
@@ -17,7 +15,8 @@ import {
     getSVGPath,
     translateCommandPoints,
     addSVGProperties,
-    isSVGProperty
+    isSVGProperty,
+    getAnimationProperties
 } from '@utils/svg';
 import { IsometricShapeAbstract } from '@classes/abstract/IsometricShapeAbstract';
 import {
@@ -175,7 +174,7 @@ export abstract class IsometricStarPolygonAbstract extends IsometricShapeAbstrac
 
             if (!isNativeSVGProperty) {
 
-                const props = {
+                const props: GetStarPolygonAbstractPathArguments = {
                     right: this.right,
                     left: this.left,
                     top: this.top,
@@ -187,37 +186,11 @@ export abstract class IsometricStarPolygonAbstract extends IsometricShapeAbstrac
 
                 if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
 
-                    const property = animation.property as SVGPositionableProperties | SVGPentagramProperties;
-                    let properties: Record<string, string>;
-
-                    if (animation.values) {
-
-                        if (Array.isArray(animation.values)) {
-                            properties = {
-                                values: animation.values.map((value: string | number): string => {
-                                    const modifiedArgs = { ...props };
-                                    modifiedArgs[property] = +value;
-                                    return this.getPentagramPath(modifiedArgs);
-                                }).join(';')
-                            };
-                        } else {
-                            const modifiedArgs = { ...props };
-                            modifiedArgs[property] = +animation.values;
-                            properties = {
-                                values: this.getPentagramPath(modifiedArgs)
-                            };
-                        }
-
-                    } else {
-                        const fromArgs = { ...props };
-                        const toArgs = { ...props };
-                        fromArgs[property] = +animation.from;
-                        toArgs[property] = +animation.to;
-                        properties = {
-                            from: this.getPentagramPath(fromArgs),
-                            to: this.getPentagramPath(toArgs)
-                        };
-                    }
+                    const properties: Record<string, string> = getAnimationProperties(
+                        this.getPentagramPath.bind(this),
+                        animation,
+                        props
+                    );
 
                     if (!animation.element) {
                         animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
