@@ -11,7 +11,8 @@ import {
 import {
     addSVGProperties,
     parseDrawCommands,
-    getSVGPath
+    getSVGPath,
+    getAnimationProperties
 } from '@utils/svg';
 import { IsometricPathAbstract } from '@classes/abstract/IsometricPathAbstract';
 import { IsometricPathProps } from './types';
@@ -31,8 +32,8 @@ export class IsometricPath extends IsometricPathAbstract {
     private commands: CommandPoint[];
     private _autoclose: boolean;
 
-    private getPathFromCommands = (commands: string): string => getSVGPath(
-        parseDrawCommands(commands),
+    private getPathFromCommands = (commands: string | number): string => getSVGPath(
+        parseDrawCommands(`${commands}`),
         this.data.centerX,
         this.data.centerY,
         this.data.scale,
@@ -45,22 +46,10 @@ export class IsometricPath extends IsometricPathAbstract {
 
             if (animation.property === 'path') {
 
-                let properties: Record<string, string>;
-
-                if (animation.values) {
-                    properties =  {
-                        values: Array.isArray(animation.values)
-                            ? animation.values.map((value: string | number): string => {
-                                return this.getPathFromCommands(`${value}`);
-                            }).join(';')
-                            : this.getPathFromCommands(`${animation.values}`)
-                    };
-                } else {
-                    properties = {
-                        from: this.getPathFromCommands(`${animation.from}`),
-                        to: this.getPathFromCommands(`${animation.to}`)
-                    };
-                }
+                const properties: Record<string, string> = getAnimationProperties(
+                    this.getPathFromCommands.bind(this),
+                    animation
+                );
 
                 if (!animation.element) {
                     animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;

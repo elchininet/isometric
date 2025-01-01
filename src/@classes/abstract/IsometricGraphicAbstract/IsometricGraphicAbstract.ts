@@ -19,7 +19,8 @@ import {
     addSVGProperties,
     getSVGProperty,
     getPatternTransform,
-    isSVGProperty
+    isSVGProperty,
+    getAnimationProperties
 } from '@utils/svg';
 import { uuid, round, getPointFromIsometricPoint } from '@utils/math';
 import { IsometricElementAbstract } from '../IsometricElementAbstract';
@@ -162,23 +163,15 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
                 this.addAnimationBasicProperties(property, animation);
 
-                if (animation.values) {
-                    addSVGProperties(
-                        animation.element,
-                        {
-                            values: Array.isArray(animation.values)
-                                ? animation.values.map((value: string | number): string => `${value}`).join(';')
-                                : `${animation.values}`
-                        }
-                    );
-                } else {
-                    addSVGProperties(
-                        animation.element, {
-                            from: `${animation.from}`,
-                            to: `${animation.to}`
-                        }
-                    );
-                }
+                const properties = getAnimationProperties(
+                    (value: string | number) => `${value}`,
+                    animation
+                );
+
+                addSVGProperties(
+                    animation.element,
+                    properties
+                );
 
             }
         });

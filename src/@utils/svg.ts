@@ -7,6 +7,7 @@ import {
     SVGProperties,
     SVGNativeProperties,
     SVGProps,
+    SVGAnimationObject,
     AddEventListenerCallback
 } from '@types';
 import {
@@ -239,4 +240,45 @@ export const elementHasSVGParent = (element: Node): boolean => {
         return elementHasSVGParent(element.parentNode);
     }
     return false;
+};
+
+export const getAnimationProperties = <P>(
+    getPath: (...args: unknown[]) => string,
+    animation: SVGAnimationObject,
+    props?: P
+): Record<string, string> => {
+
+    let properties: Record<string, string>;
+
+    const localGetPath = (value: string | number): string => {
+        if (props) {
+            return getPath({
+                ...props,
+                [animation.property]: +value
+            });
+        }
+        return getPath(value);
+    };
+
+    if (animation.values) {
+        if (Array.isArray(animation.values)) {
+            properties = {
+                values: animation.values.map((value: string | number): string => {
+                    return localGetPath(value);
+                }).join(';')
+            };
+        } else {
+            properties = {
+                values: localGetPath(animation.values)
+            };
+        }
+    } else {
+        properties = {
+            from: localGetPath(animation.from),
+            to: localGetPath(animation.to)
+        };
+    }
+
+    return properties;
+
 };

@@ -7,8 +7,6 @@ import {
 import {
     LinePoint,
     CommandPoint,
-    SVGPositionableProperties,
-    SVGRectangleProperties,
     SVGRectangleAnimation,
     SVGAnimationObject
 } from '@types';
@@ -16,7 +14,8 @@ import {
     getSVGPath,
     translateCommandPoints,
     addSVGProperties,
-    isSVGProperty
+    isSVGProperty,
+    getAnimationProperties
 } from '@utils/svg';
 import { IsometricShapeAbstract } from '@classes/abstract/IsometricShapeAbstract';
 import {
@@ -92,7 +91,7 @@ export class IsometricRectangle extends IsometricShapeAbstract {
 
             if (!isNativeSVGProperty) {
 
-                const props = {
+                const props: GetRectanglePathArguments = {
                     right: this.right,
                     left: this.left,
                     top: this.top,
@@ -102,37 +101,11 @@ export class IsometricRectangle extends IsometricShapeAbstract {
 
                 if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
 
-                    const property = animation.property as SVGPositionableProperties | SVGRectangleProperties;
-                    let properties: Record<string, string>;
-
-                    if (animation.values) {
-
-                        if (Array.isArray(animation.values)) {
-                            properties = {
-                                values: animation.values.map((value: string | number): string => {
-                                    const modifiedArgs = { ...props };
-                                    modifiedArgs[property] = +value;
-                                    return this.getRectanglePath(modifiedArgs);
-                                }).join(';')
-                            };
-                        } else {
-                            const modifiedArgs = { ...props };
-                            modifiedArgs[property] = +animation.values;
-                            properties = {
-                                values: this.getRectanglePath(modifiedArgs)
-                            };
-                        }
-
-                    } else {
-                        const fromArgs = { ...props };
-                        const toArgs = { ...props };
-                        fromArgs[property] = +animation.from;
-                        toArgs[property] = +animation.to;
-                        properties = {
-                            from: this.getRectanglePath(fromArgs),
-                            to: this.getRectanglePath(toArgs)
-                        };
-                    }
+                    const properties: Record<string, string> = getAnimationProperties(
+                        this.getRectanglePath.bind(this),
+                        animation,
+                        props,
+                    );
 
                     if (!animation.element) {
                         animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;

@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.11.1] - 2025-01-01
+
+- Created a utility to build animation properties and refactored the classes to make use of this utility to avoid code repetition
+
 ## [3.11.0] - 2024-12-22
 
 - Added a new option to set a CSS class to `IsometricCircle`, `IsometricPath`, `IsometricPentagram`, `IsometricRectangle`, `IsometricStarPolygon` and `IsometricText`
