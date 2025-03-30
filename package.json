@@ -106,5 +106,10 @@
   },
   "dependencies": {
     "jsdom": "^26.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@babel/helpers@<7.26.10": ">=7.26.10"
+    }
   }
 }
