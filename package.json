@@ -75,7 +75,7 @@
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.15.29",
+    "@types/node": "^22.15.30",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
@@ -87,7 +87,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.9.2",
     "rimraf": "^6.0.1",
-    "rollup": "^4.41.1",
+    "rollup": "^4.42.0",
     "rollup-plugin-ts": "^3.4.5",
     "sass": "^1.89.0",
     "sass-loader": "^16.0.5",
@@ -96,10 +96,10 @@
     "ts-loader": "^9.5.2",
     "tslib": "^2.8.1",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.32.1",
+    "typescript-eslint": "^8.33.1",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.1"
+    "webpack-dev-server": "^5.2.2"
   },
   "engines": {
     "node": ">=12.22.0"
