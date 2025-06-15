@@ -353,17 +353,17 @@ describe('Test dragging', (): void => {
 
         await dragElement(groupElement, 200, 300);
 
-        expect(mockDragstart).toBeCalledTimes(1);
+        expect(mockDragstart).toHaveBeenCalledTimes(1);
         expect(mockDragstart.mock.calls[0][0].detail.right).toBe(41.547011);
         expect(mockDragstart.mock.calls[0][0].detail.left).toBe(18.452989);
         expect(mockDragstart.mock.calls[0][0].detail.top).toBe(0);
 
-        expect(mockDrag).toBeCalledTimes(1);
+        expect(mockDrag).toHaveBeenCalledTimes(1);
         expect(mockDrag.mock.calls[0][0].detail.right).toBe(41.547011);
         expect(mockDrag.mock.calls[0][0].detail.left).toBe(18.452989);
         expect(mockDrag.mock.calls[0][0].detail.top).toBe(0);
 
-        expect(mockEnd).toBeCalledTimes(1);
+        expect(mockEnd).toHaveBeenCalledTimes(1);
         expect(mockEnd.mock.calls[0][0].detail.right).toBe(41.547011);
         expect(mockEnd.mock.calls[0][0].detail.left).toBe(18.452989);
         expect(mockEnd.mock.calls[0][0].detail.top).toBe(0);
@@ -374,9 +374,9 @@ describe('Test dragging', (): void => {
 
         await dragElement(groupElement, 300, 200);
 
-        expect(mockDragstart).toBeCalledTimes(1);
-        expect(mockDrag).toBeCalledTimes(1);
-        expect(mockEnd).toBeCalledTimes(1);
+        expect(mockDragstart).toHaveBeenCalledTimes(1);
+        expect(mockDrag).toHaveBeenCalledTimes(1);
+        expect(mockEnd).toHaveBeenCalledTimes(1);
 
     });
 
@@ -396,17 +396,17 @@ describe('Test dragging', (): void => {
 
         await dragElement(groupElement, 200, 300);
 
-        expect(mockDragstart).toBeCalledTimes(1);
+        expect(mockDragstart).toHaveBeenCalledTimes(1);
         expect(mockDragstart.mock.calls[0][0].detail.right).toBe(41.547011);
         expect(mockDragstart.mock.calls[0][0].detail.left).toBe(18.452989);
         expect(mockDragstart.mock.calls[0][0].detail.top).toBe(0);
 
-        expect(mockDrag).toBeCalledTimes(1);
+        expect(mockDrag).toHaveBeenCalledTimes(1);
         expect(mockDrag.mock.calls[0][0].detail.right).toBe(41.547011);
         expect(mockDrag.mock.calls[0][0].detail.left).toBe(18.452989);
         expect(mockDrag.mock.calls[0][0].detail.top).toBe(0);
 
-        expect(mockEnd).toBeCalledTimes(1);
+        expect(mockEnd).toHaveBeenCalledTimes(1);
         expect(mockEnd.mock.calls[0][0].detail.right).toBe(41.547011);
         expect(mockEnd.mock.calls[0][0].detail.left).toBe(18.452989);
         expect(mockEnd.mock.calls[0][0].detail.top).toBe(0);

@@ -1,9 +1,6 @@
 import { SVG_ELEMENTS } from '@constants';
 import { uuid, getPointFromIsometricPoint } from '@utils/math';
-import {
-    elementHasSVGParent,
-    addSVGProperties
-} from '@utils/svg';
+import { addSVGProperties } from '@utils/svg';
 import { applyMixins } from '@utils/other';
 import { IsometricContainerAbstract } from '@classes/abstract/IsometricContainerAbstract';
 import { IsometricDraggableAbstract } from '@classes/abstract/IsometricDraggableAbstract';
@@ -31,24 +28,22 @@ export class IsometricGroup extends IsometricContainerAbstract {
     protected props: IsometricGroupProps;
 
     public override update(): this {
-        if (elementHasSVGParent(this.element)) {
-            const point = getPointFromIsometricPoint(
-                0,
-                0,
-                {
-                    r: this.props.right,
-                    l: this.props.left,
-                    t: this.props.top
-                },
-                this.data.scale
-            );
-            addSVGProperties(
-                this.element,
-                {
-                    transform: `translate(${point.x}, ${point.y})`
-                }
-            );
-        }
+        const point = getPointFromIsometricPoint(
+            0,
+            0,
+            {
+                r: this.props.right,
+                l: this.props.left,
+                t: this.props.top
+            },
+            this.data.scale
+        );
+        addSVGProperties(
+            this.element,
+            {
+                transform: `translate(${point.x}, ${point.y})`
+            }
+        );
         return super.update();
     }
 

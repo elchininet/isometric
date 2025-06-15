@@ -76,26 +76,26 @@ describe('Removing methods', (): void => {
         // Removing wrong elements should throw an error
         expect(() => {
             cube.removeChild(top);
-        }).toThrowError();
+        }).toThrow();
 
         // Removing elements that belongs to the children but are already removed from DOM should not throw an error
         expect(() => {
             cube.addChild(top);
             topElement.parentNode.removeChild(topElement);
             cube.removeChild(top);
-        }).not.toThrowError();
+        }).not.toThrow();
 
         // Removing by a wrong index should not throw an error
         expect(() => {
             cube.removeChildByIndex(10);
-        }).not.toThrowError();
+        }).not.toThrow();
 
         cube.addChild(top);
 
         // Removing an array of children with a wrong child should throw an error
         expect(() => {
             cube.removeChildren(group, left);
-        }).toThrowError();
+        }).toThrow();
 
     });
 

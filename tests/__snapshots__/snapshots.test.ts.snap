@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Snapshot tests Default options 1`] = `
 <body>
@@ -560,6 +560,12 @@ exports[`Snapshot tests Draw animations with values 1`] = `
           values="0;180;360"
         />
       </text>
+      <animate
+        attributeName="fill"
+        dur="3s"
+        repeatCount="indefinite"
+        values="#FFF;#DDD;#FFF"
+      />
       <animatetransform
         additive="sum"
         attributeName="transform"
@@ -584,6 +590,12 @@ exports[`Snapshot tests Draw animations with values 1`] = `
       stroke-opacity="1"
       stroke-width="1"
     >
+      <animate
+        attributeName="fill"
+        dur="3s"
+        repeatCount="indefinite"
+        values="#FFF;#DDD;#FFF"
+      />
       <animate
         attributeName="d"
         dur="3s"

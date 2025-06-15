@@ -106,6 +106,14 @@ describe('Test changing container‘s child index', (): void => {
 
     it('setChildIndex', (): void => {
 
+        canvas.setChildIndex(group, 0);
+
+        expect(canvas.children).toStrictEqual([group, circle, path]);
+
+        expect(childIndex(groupElement)).toBe(1);
+        expect(childIndex(circleElement)).toBe(2);
+        expect(childIndex(pathElement)).toBe(3);
+
         canvas.setChildIndex(group, 2);
 
         expect(canvas.children).toStrictEqual([circle, path, group]);
@@ -232,43 +240,43 @@ describe('Test changing container‘s child index', (): void => {
 
         expect(() => {
             canvas.setChildIndex(right, 2);
-        }).toThrowError();
+        }).toThrow();
 
         expect(() => {
             group.setChildIndex(path, 1);
-        }).toThrowError();
+        }).toThrow();
 
         expect(() => {
             canvas.bringChildToFront(top);
-        }).toThrowError();
+        }).toThrow();
 
         expect(() => {
             group.bringChildToFront(circle);
-        }).toThrowError();
+        }).toThrow();
 
         expect(() => {
             canvas.bringChildForward(left);
-        }).toThrowError();
+        }).toThrow();
 
         expect(() => {
             group.bringChildForward(group);
-        }).toThrowError();
+        }).toThrow();
 
         expect(() => {
             canvas.sendChildToBack(top);
-        }).toThrowError();
+        }).toThrow();
 
         expect(() => {
             group.sendChildToBack(path);
-        }).toThrowError();
+        }).toThrow();
 
         expect(() => {
             canvas.sendChildBackward(right);
-        }).toThrowError();
+        }).toThrow();
 
         expect(() => {
             group.sendChildBackward(circle);
-        }).toThrowError();
+        }).toThrow();
 
     });
 

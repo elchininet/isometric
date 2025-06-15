@@ -130,10 +130,9 @@ export abstract class IsometricContainerAbstract extends IsometricElementAbstrac
     }
 
     public removeChildById(id: string): this {
-        const child = this.getChildById(id);
-        if (child) {
-            return this.removeChild(child);
-        }
+        return this.removeChild(
+            this.getChildById(id)
+        );
     }
 
     public setChildIndex(child: IsometricElementAbstract, index: number): this {
@@ -172,9 +171,7 @@ export abstract class IsometricContainerAbstract extends IsometricElementAbstrac
     public bringChildForward(child: IsometricElementAbstract): this {
         const childIndex = this.getChildIndex(child);
         if (childIndex > -1) {
-            if (childIndex < this._children.length - 1) {
-                this.setChildIndex(child, childIndex + 1);
-            }
+            this.setChildIndex(child, childIndex + 1);
             return this;
         }
         this.throwChildError();
@@ -192,9 +189,7 @@ export abstract class IsometricContainerAbstract extends IsometricElementAbstrac
     public sendChildBackward(child: IsometricElementAbstract): this {
         const childIndex = this.getChildIndex(child);
         if (childIndex > -1) {
-            if (childIndex > 0) {
-                this.setChildIndex(child, childIndex - 1);
-            }
+            this.setChildIndex(child, childIndex - 1);
             return this;
         }
         this.throwChildError();

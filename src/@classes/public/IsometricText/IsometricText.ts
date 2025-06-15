@@ -132,100 +132,92 @@ export class IsometricText extends IsometricGraphicAbstract {
 
             if (!isNativeSVGProperty) {
 
-                if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
+                const property = animation.property as SVGPositionableProperties | SVGTextProperties;
+                const isRotation = property === 'rotation';
+                const commonProps = {
+                    ...this.commonAnimationAttributes,
+                    type: isRotation
+                        ? 'rotate'
+                        : 'translate',
+                    begin: 'indefinite'
+                };
 
-                    const property = animation.property as SVGPositionableProperties | SVGTextProperties;
-                    const isRotation = property === 'rotation';
-                    const commonProps = {
-                        ...this.commonAnimationAttributes,
-                        type: isRotation
-                            ? 'rotate'
-                            : 'translate',
-                        begin: 'indefinite'
-                    };
+                let properties: Record<string, string>;
 
-                    let properties: Record<string, string>;
+                if (animation.values) {
 
-                    if (animation.values) {
-
-                        if (Array.isArray(animation.values)) {
-                            properties = {
-                                values: animation.values.map((value: string | number): string => {
-                                    if (isRotation) {
-                                        return `${value}`;
-                                    } else {
-                                        const modifiedArgs = { ...props };
-                                        modifiedArgs[property] = +value - this[property];
-                                        const coords = this.getPositionTransform(modifiedArgs, false);
-                                        return `${coords.x},${coords.y}`;
-                                    }
-                                }).join(';'),
-                                ...commonProps
-                            };
-                        } else {
-                            if (isRotation) {
-                                properties = {
-                                    values: `${animation.values}`,
-                                    ...commonProps
-                                };
-                            } else {
-                                const modifiedArgs = { ...props };
-                                modifiedArgs[property] = +animation.values - this[property];
-                                const coords = this.getPositionTransform(modifiedArgs, false);
-                                properties = {
-                                    values: `${coords.x},${coords.y}`,
-                                    ...commonProps
-                                };
-                            }
-                        }
-
+                    if (Array.isArray(animation.values)) {
+                        properties = {
+                            values: animation.values.map((value: string | number): string => {
+                                if (isRotation) {
+                                    return `${value}`;
+                                } else {
+                                    const modifiedArgs = { ...props };
+                                    modifiedArgs[property] = +value - this[property];
+                                    const coords = this.getPositionTransform(modifiedArgs, false);
+                                    return `${coords.x},${coords.y}`;
+                                }
+                            }).join(';'),
+                            ...commonProps
+                        };
                     } else {
                         if (isRotation) {
                             properties = {
-                                from: `${animation.from}`,
-                                to: `${animation.to}`,
+                                values: `${animation.values}`,
                                 ...commonProps
                             };
                         } else {
-                            const fromArgs = { ...props };
-                            const toArgs = { ...props };
-                            fromArgs[property] = +animation.from - this[property];
-                            toArgs[property] = +animation.to - this[property];
-                            const coordsFrom = this.getPositionTransform(fromArgs, false);
-                            const coordsTo = this.getPositionTransform(toArgs, false);
+                            const modifiedArgs = { ...props };
+                            modifiedArgs[property] = +animation.values - this[property];
+                            const coords = this.getPositionTransform(modifiedArgs, false);
                             properties = {
-                                from: `${coordsFrom.x},${coordsFrom.y}`,
-                                to: `${coordsTo.x},${coordsTo.y}`,
+                                values: `${coords.x},${coords.y}`,
                                 ...commonProps
                             };
                         }
-
                     }
 
-                    if (!animation.element) {
-                        animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animateTransform) as SVGAnimateElement;
+                } else {
+                    if (isRotation) {
+                        properties = {
+                            from: `${animation.from}`,
+                            to: `${animation.to}`,
+                            ...commonProps
+                        };
+                    } else {
+                        const fromArgs = { ...props };
+                        const toArgs = { ...props };
+                        fromArgs[property] = +animation.from - this[property];
+                        toArgs[property] = +animation.to - this[property];
+                        const coordsFrom = this.getPositionTransform(fromArgs, false);
+                        const coordsTo = this.getPositionTransform(toArgs, false);
+                        properties = {
+                            from: `${coordsFrom.x},${coordsFrom.y}`,
+                            to: `${coordsTo.x},${coordsTo.y}`,
+                            ...commonProps
+                        };
                     }
-
-                    this.addAnimationBasicProperties('transform', animation);
-
-                    addSVGProperties(animation.element, properties);
-
-                    if (!animation.element.parentNode) {
-                        if (isRotation) {
-                            this._textElement.appendChild(animation.element);
-                        } else {
-                            this.element.appendChild(animation.element);
-                        }
-                    }
-
-                    // Exclude the next line from the coverage reports
-                    // beginElement is not available in Jest
-                    /* istanbul ignore next */
-                    window.requestAnimationFrame(() => {
-                        animation.element.beginElement();
-                    });
 
                 }
+
+                animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animateTransform) as SVGAnimateElement;
+
+                this.addAnimationBasicProperties('transform', animation);
+
+                addSVGProperties(animation.element, properties);
+
+                if (isRotation) {
+                    this._textElement.appendChild(animation.element);
+                } else {
+                    this.element.appendChild(animation.element);
+                }
+
+                // Exclude the next line from the coverage reports
+                // beginElement is not available in Jest
+                /* istanbul ignore next */
+                window.requestAnimationFrame(() => {
+                    animation.element.beginElement();
+                });
             }
 
         });
@@ -367,10 +359,8 @@ export class IsometricText extends IsometricGraphicAbstract {
     }
 
     public set right(value: number) {
-        if (this._right !== value) {
-            this._right = value;
-            this.update();
-        }
+        this._right = value;
+        this.update();
     }
 
     // left
@@ -379,10 +369,8 @@ export class IsometricText extends IsometricGraphicAbstract {
     }
 
     public set left(value: number) {
-        if (this._left !== value) {
-            this._left = value;
-            this.update();
-        }
+        this._left = value;
+        this.update();
     }
 
     // top
@@ -391,10 +379,8 @@ export class IsometricText extends IsometricGraphicAbstract {
     }
 
     public set top(value: number) {
-        if (this._top !== value) {
-            this._top = value;
-            this.update();
-        }
+        this._top = value;
+        this.update();
     }
 
     // rotation
@@ -403,10 +389,8 @@ export class IsometricText extends IsometricGraphicAbstract {
     }
 
     public set rotation(value: number) {
-        if (this._rotation !== value) {
-            this._rotation = value;
-            this.update();
-        }
+        this._rotation = value;
+        this.update();
     }
 
 }
