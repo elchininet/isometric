@@ -1,15 +1,17 @@
 import {
     IsometricCanvas,
-    IsometricRectangle,
     IsometricCircle,
-    IsometricPentagram,
     IsometricPath,
+    IsometricPentagram,
+    IsometricRectangle,
+    IsometricStarPolygon,
     IsometricText,
     PlaneView,
+    SVGCircleAnimation,
     SVGPathAnimation,
     SVGRectangleAnimation,
-    SVGCircleAnimation,
-    IsometricStarPolygon
+    SVGStarPolygonAnimation,
+    SVGTextAnimation
 } from '../src';
 
 enum IDS {
@@ -369,7 +371,8 @@ describe('Snapshot tests', (): void => {
                 property: 'radius',
                 duration,
                 values: [0.25, 1, 0.25]
-            });
+            })
+            .addAnimation(colorAnimationProps as SVGStarPolygonAnimation);
 
         label.
             addAnimation({
@@ -381,7 +384,8 @@ describe('Snapshot tests', (): void => {
                 property: 'rotation',
                 duration,
                 values: [0, 180, 360]
-            });
+            })
+            .addAnimation(colorAnimationProps as SVGTextAnimation);
 
         isometric.addChildren(topPiece, rightPiece, leftPiece, label, star);
 

@@ -273,6 +273,10 @@ describe('Test properties', (): void => {
         rectangle.update();
         expect(rectangleElement.getAttribute('d')).toBe('M250 160 L457.846 280 L250 400 L42.154 280z');
 
+        // Repeat the update
+        rectangle.update();
+        expect(rectangleElement.getAttribute('d')).toBe('M250 160 L457.846 280 L250 400 L42.154 280z');
+
     });
 
     it('IsometricCircle change position', (): void => {

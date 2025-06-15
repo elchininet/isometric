@@ -9,7 +9,8 @@ export {
     SVGRectangleAnimation,
     SVGCircleAnimation,
     SVGPentagramAnimation,
-    SVGStarPolygonAnimation
+    SVGStarPolygonAnimation,
+    SVGTextAnimation
 } from '@types';
 export { IsometricGraphicProps } from '@classes/abstract/IsometricGraphicAbstract';
 export { IsometricCanvas, IsometricCanvasProps } from '@classes/public/IsometricCanvas';

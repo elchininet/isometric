@@ -104,12 +104,12 @@ describe('Test event listeners', (): void => {
         // Remove an event listsner that doesn't exist should not throw an error
         expect(() => {
             cube.removeEventListener('click', mockCallBackNotAdded);
-        }).not.toThrowError();
+        }).not.toThrow();
 
         // Remove an event listsner that doesn't exist should not throw an error
         expect(() => {
             top.removeEventListener('click', mockCallBackNotAdded);
-        }).not.toThrowError();
+        }).not.toThrow();
 
     });
 

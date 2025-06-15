@@ -184,27 +184,19 @@ export abstract class IsometricStarPolygonAbstract extends IsometricShapeAbstrac
                     rotation: this.rotation
                 };
 
-                if (Object.prototype.hasOwnProperty.call(props, animation.property)) {
+                const properties: Record<string, string> = getAnimationProperties(
+                    this.getPentagramPath.bind(this),
+                    animation,
+                    props
+                );
 
-                    const properties: Record<string, string> = getAnimationProperties(
-                        this.getPentagramPath.bind(this),
-                        animation,
-                        props
-                    );
+                animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
 
-                    if (!animation.element) {
-                        animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
-                    }
+                this.element.appendChild(animation.element);
 
-                    if (!animation.element.parentNode) {
-                        this.element.appendChild(animation.element);
-                    }
+                this.addAnimationBasicProperties('d', animation);
 
-                    this.addAnimationBasicProperties('d', animation);
-
-                    addSVGProperties(animation.element, properties);
-
-                }
+                addSVGProperties(animation.element, properties);
 
             }
 

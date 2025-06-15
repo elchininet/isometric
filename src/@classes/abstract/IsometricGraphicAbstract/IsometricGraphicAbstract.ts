@@ -153,13 +153,9 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
                 const property = getSVGProperty(animation.property);
 
-                if (!animation.element) {
-                    animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
-                }
+                animation.element = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.animate) as SVGAnimateElement;
 
-                if (!animation.element.parentNode) {
-                    this.element.appendChild(animation.element);
-                }
+                this.element.appendChild(animation.element);
 
                 this.addAnimationBasicProperties(property, animation);
 

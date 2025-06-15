@@ -57,6 +57,10 @@ export type SVGStarPolygonAnimation = SVGAnimation & {
     property: SVGProperties | SVGPositionableProperties | SVGStarPolygonProperties;
 }
 
+export type SVGTextAnimation = SVGAnimation & {
+    property: SVGProperties | SVGPositionableProperties | SVGTextProperties;
+}
+
 export type SVGAnimationObject = SVGAnimation &  {
     element?: SVGAnimateElement;
 };

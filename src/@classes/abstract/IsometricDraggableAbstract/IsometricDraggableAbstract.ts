@@ -84,12 +84,8 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
         if (typeof this._bounds === Typeof.UNDEFINED) {
             this._bounds = false;
         }
-        if (typeof this._dragStore === Typeof.UNDEFINED) {
-            this._dragStore = _dragStoreDefault;
-        }
-        if (typeof this._coords === Typeof.UNDEFINED) {
-            this._coords = {};
-        }
+        this._dragStore = _dragStoreDefault;
+        this._coords = {};
     }
 
     private betweenBounds(value: number, bounds: readonly [number, number]): number {
@@ -231,9 +227,7 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
 
             event.preventDefault();
 
-            if (!this._dragging) {
-                this.dispatchEvent(DRAG_EVENT.DRAG_START);
-            }
+            this.dispatchEvent(DRAG_EVENT.DRAG_START);
 
             this._dragging = true;
 
@@ -314,6 +308,8 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
             this.setup();
         }
         this._drag = value;
+        // Tests work in jsdom environment so window will be always defined
+        /* istanbul ignore next */
         if (_isBrowser) {
             this.stopDrag();
             this.beginDrag();
