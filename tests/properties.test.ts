@@ -649,4 +649,14 @@ describe('Test properties', (): void => {
 
     });
 
+    it('IsometricGroup properties without being adding to canvas', () => {
+        const group = new IsometricGroup();
+        group.top = 1;
+        group.right = 0.5;
+        group.left = 2;
+        expect(group.top).toBe(1);
+        expect(group.right).toBe(0.5);
+        expect(group.left).toBe(2);
+    });
+
 });
