@@ -106,5 +106,11 @@
   },
   "dependencies": {
     "jsdom": "^26.1.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@eslint/plugin-kit@<0.3.4": ">=0.3.4",
+      "on-headers@<1.1.0": ">=1.1.0"
+    }
   }
 }
