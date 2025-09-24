@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.11.2] - 2025-09-24
+
+- Avoid updating a group that has not been added to a canvas. This will avoid an error if a property is set before the group has been added to a canvas.
+
 ## [3.11.1] - 2025-01-01
 
 - Created a utility to build animation properties and refactored the classes to make use of this utility to avoid code repetition
