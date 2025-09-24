@@ -102,8 +102,7 @@
     "webpack-dev-server": "^5.2.2"
   },
   "engines": {
-    "node": ">=12.22.0",
-    "pnpm": ">=10.17.0"
+    "node": ">=12.22.0"
   },
   "dependencies": {
     "jsdom": "^26.1.0"
