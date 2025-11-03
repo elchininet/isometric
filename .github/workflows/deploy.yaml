@@ -35,7 +35,7 @@ jobs:
           npm publish
       - name: Build Changelog
         id: build_changelog
-        uses: mikepenz/release-changelog-builder-action@v5
+        uses: mikepenz/release-changelog-builder-action@v6
         with:
           configurationJson: |
             {
