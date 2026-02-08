@@ -9,8 +9,6 @@ on:
 jobs:      
   test:
     runs-on: ubuntu-latest
-    container:
-      image: node:20
     steps:
       - name: Checkout
         uses: actions/checkout@v6
