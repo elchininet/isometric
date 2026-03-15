@@ -106,7 +106,7 @@
     "node": ">=12.22.0"
   },
   "dependencies": {
-    "jsdom": "^28.1.0"
+    "jsdom": "^29.0.0"
   },
   "pnpm": {
     "overrides": {
