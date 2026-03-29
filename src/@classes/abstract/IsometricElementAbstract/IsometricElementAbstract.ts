@@ -28,9 +28,9 @@ export abstract class IsometricElementAbstract extends IsometricStore {
 
     }
 
-    protected _id: string;
-    protected element: SVGElement;
-    protected listeners: Listener[];
+    protected _id!: string;
+    protected element!: SVGElement;
+    protected listeners!: Listener[];
 
     protected setId(value: string): void {
         this._id = value;

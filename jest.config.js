@@ -6,7 +6,7 @@ module.exports = {
     moduleNameMapper: pathsToModuleNameMapper(
         tsconfig.compilerOptions.paths,
         {
-            prefix: '<rootDir>/src'
+            prefix: '<rootDir>'
         }
     ),
     transform: {

@@ -2,8 +2,7 @@ import { Position } from '@types';
 import {
     EVENTS,
     DECIMALS,
-    PlaneView,
-    Typeof
+    PlaneView
 } from '@constants';
 import {
     getTopPlanePointFromCoordinates,
@@ -11,6 +10,7 @@ import {
     getSidePlanePointFromCoordinates,
     round
 } from '@utils/math';
+import { isNumber, isUndefined } from '@utils/predicates';
 import { IsometricElementAbstract } from '@classes/abstract/IsometricElementAbstract';
 import {
     NO_LIMITS,
@@ -24,7 +24,7 @@ import {
     ClientCoords
 } from './types';
 
-const _isBrowser = typeof window !== Typeof.UNDEFINED;
+const _isBrowser = !isUndefined(window);
 
 /* istanbul ignore next */
 const _requestAnimationFrame = _isBrowser
@@ -63,15 +63,14 @@ const getClientCoords = (event: MouseEvent | TouchEvent | ClientCoords): ClientC
 
 export abstract class IsometricDraggableAbstract extends IsometricElementAbstract {
 
-    protected props: IsometricDraggableProps;
+    protected props!: IsometricDraggableProps;
 
-    private _drag: Drag;
-    private _bounds: Boundaries;
-    private _dragStore: typeof _dragStoreDefault;
-    private _coords: Partial<Position>;
-    private _update: boolean;
-    private _dragging: boolean;
-    private _prevented: boolean;
+    private _drag!: Drag;
+    private _bounds!: Boundaries;
+    private _dragStore!: typeof _dragStoreDefault;
+    private _coords!: Partial<Position>;
+    private _update!: boolean;
+    private _prevented!: boolean;
 
     private setup() {
 
@@ -81,7 +80,7 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
         this.dropElement = this.dropElement.bind(this);
         this.animate = this.animate.bind(this);
 
-        if (typeof this._bounds === Typeof.UNDEFINED) {
+        if (isUndefined(this._bounds)) {
             this._bounds = false;
         }
         this._dragStore = _dragStoreDefault;
@@ -166,17 +165,17 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
     private animate() {
         if (this._update) {
             if (!this._prevented) {
-                if (typeof this._coords.right === Typeof.NUMBER) {
+                if (isNumber(this._coords.right)) {
                     this.right = this._coords.right;
                 }
-                if (typeof this._coords.left === Typeof.NUMBER) {
+                if (isNumber(this._coords.left)) {
                     this.left = this._coords.left;
                 }
-                if (typeof this._coords.top === Typeof.NUMBER) {
+                if (isNumber(this._coords.top)) {
                     this.top = this._coords.top;
                 }
             }
-            _requestAnimationFrame(this.animate);
+            _requestAnimationFrame!(this.animate);
         }
     }
 
@@ -198,7 +197,7 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
         this.element.addEventListener(EVENTS.TOUCH_END, this.dropElement, true);
         document.addEventListener(EVENTS.MOUSE_MOVE, this.moveElement, true);
         document.addEventListener(EVENTS.MOUSE_UP, this.dropElement, true);
-        _requestAnimationFrame(this.animate);
+        _requestAnimationFrame!(this.animate);
     }
 
     private moveElement(event: MouseEvent | TouchEvent | ClientCoords) {
@@ -221,15 +220,13 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
             );
         }
 
-        let dragEvent: CustomEvent;
+        let dragEvent: CustomEvent | null = null;
 
         if (event instanceof Event) {
 
             event.preventDefault();
 
             this.dispatchEvent(DRAG_EVENT.DRAG_START);
-
-            this._dragging = true;
 
             dragEvent = this.dispatchEvent(DRAG_EVENT.DRAG);
 
@@ -241,7 +238,6 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
 
     private dropElement() {
         this._update = false;
-        this._dragging = false;
 
         this.element.removeEventListener(EVENTS.TOUCH_MOVE, this.moveElement, true);
         this.element.removeEventListener(EVENTS.TOUCH_END, this.dropElement, true);
@@ -267,7 +263,7 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
     }
 
     public get right(): number {
-        return this.props.right;
+        return this.props.right!;
     }
 
     public set right(value: number) {
@@ -278,7 +274,7 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
     }
 
     public get left(): number {
-        return this.props.left;
+        return this.props.left!;
     }
 
     public set left(value: number) {
@@ -289,7 +285,7 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
     }
 
     public get top(): number {
-        return this.props.top;
+        return this.props.top!;
     }
 
     public set top(value: number) {
@@ -304,7 +300,7 @@ export abstract class IsometricDraggableAbstract extends IsometricElementAbstrac
     }
 
     public set drag(value: Drag) {
-        if (typeof this._drag === Typeof.UNDEFINED) {
+        if (isUndefined(this._drag)) {
             this.setup();
         }
         this._drag = value;

@@ -659,4 +659,86 @@ describe('Test properties', (): void => {
         expect(group.left).toBe(2);
     });
 
+    it('removing an unexistent child id should not throw', () => {
+        expect(
+            () => group.removeChildById('unexistent')
+        ).not.toThrow();
+    });
+
+    it('by default className is empty', () => {
+
+        const commonProps: IsometricGraphicProps = {
+            fillColor: '#FFF',
+            fillOpacity: 0.5,
+            strokeColor: '#000',
+            strokeDashArray: [1, 2, 3],
+            strokeLinecap: 'round',
+            strokeLinejoin: 'miter',
+            strokeOpacity: 0.25,
+            strokeWidth: 2
+        };
+
+        const path = new IsometricPath(commonProps);
+
+        const rectangle = new IsometricRectangle({
+            height: 1,
+            width: 1,
+            planeView: PlaneView.TOP,
+            ...commonProps
+        });
+
+        const circle = new IsometricCircle({
+            radius: 0.5,
+            right: 1,
+            left: 2,
+            top: 0.5,
+            planeView: PlaneView.TOP,
+            ...commonProps
+        });
+
+        const pentagram = new IsometricPentagram({
+            radius: 0.25,
+            right: 0.5,
+            left: 0.5,
+            top: 1,
+            planeView: PlaneView.TOP,
+            ...commonProps
+        });
+
+        const starPolygon = new IsometricStarPolygon({
+            radius: 0.25,
+            points: 8,
+            density: 3,
+            right: 0.5,
+            left: 1,
+            top: 0.5,
+            planeView: PlaneView.SIDE,
+            ...commonProps
+        });
+
+        const text = new IsometricText({
+            planeView: PlaneView.TOP,
+            fontFamily: 'sans-serif',
+            fontSize: 15,
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+            right: 1,
+            left: 0.5,
+            top: 1.5,
+            rotation: 45,
+            origin: ['left', 'bottom'],
+            text: 'TEST',
+            selectable: false,
+            ...commonProps
+        });
+
+        expect(path.className).toBe('');
+        expect(rectangle.className).toBe('');
+        expect(circle.className).toBe('');
+        expect(pentagram.className).toBe('');
+        expect(starPolygon.className).toBe('');
+        expect(text.className).toBe('');
+
+    });
+
 });

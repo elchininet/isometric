@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.0.0] - 2026-03-29
+
+- Migrated to `TypeScript 6`, so the target of the library is now `es6` instead of the previous `es5`
+- Some refactors have been needed to make the project compatible with `TypeScript 6` but they should not affect the functionality of the plugin
+
 ## [3.11.2] - 2025-09-24
 
 - Avoid updating a group that has not been added to a canvas. This will avoid an error if a property is set before the group has been added to a canvas.

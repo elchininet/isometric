@@ -14,6 +14,7 @@ import {
     getSVGPath,
     getAnimationProperties
 } from '@utils/svg';
+import { isBoolean } from '@utils/predicates';
 import { IsometricPathAbstract } from '@classes/abstract/IsometricPathAbstract';
 import { IsometricPathProps } from './types';
 
@@ -24,7 +25,7 @@ export class IsometricPath extends IsometricPathAbstract {
     public constructor(props: IsometricPathProps = {}) {
         super(props, SVG_ELEMENTS.path);
         this.commands = [];
-        this._autoclose = 'autoclose' in props
+        this._autoclose = isBoolean(props.autoclose)
             ? props.autoclose
             : true;
     }

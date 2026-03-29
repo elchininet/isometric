@@ -71,8 +71,10 @@ export enum Axis {
 }
 
 export enum Typeof {
+    BOOLEAN = 'boolean',
     UNDEFINED = 'undefined',
-    NUMBER = 'number'
+    NUMBER = 'number',
+    STRING = 'string'
 }
 
 export enum EVENTS {

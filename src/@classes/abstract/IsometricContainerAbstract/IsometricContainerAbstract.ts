@@ -22,7 +22,7 @@ export abstract class IsometricContainerAbstract extends IsometricElementAbstrac
         return this._children.indexOf(child);
     }
 
-    private throwChildError() {
+    private throwChildError(): never {
         throw new Error('You cannot provide a child that is not a children of the container');
     }
 
@@ -130,9 +130,11 @@ export abstract class IsometricContainerAbstract extends IsometricElementAbstrac
     }
 
     public removeChildById(id: string): this {
-        return this.removeChild(
-            this.getChildById(id)
-        );
+        const child = this.getChildById(id);
+        if (child) {
+            this.removeChild(child);
+        }
+        return this;
     }
 
     public setChildIndex(child: IsometricElementAbstract, index: number): this {

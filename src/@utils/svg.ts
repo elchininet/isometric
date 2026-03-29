@@ -23,6 +23,7 @@ import {
     round
 } from '@utils/math';
 import { getViewMatrix } from '@utils/matrix';
+import { isSVGAnimationPropsValues } from '@utils/predicates';
 
 export const addSVGProperties = (svg: SVGElement, props: SVGProps): void => {
     Object.keys(props).forEach((prop: string): void => {
@@ -114,13 +115,13 @@ export const translateCommandPoints = (
     top: number
 ): void => {
     commands.forEach((command: CommandPoint): void => {
-        command.point.r += right;
-        command.point.l += left;
-        command.point.t += top;
+        command.point.r! += right;
+        command.point.l! += left;
+        command.point.t! += top;
         if (command.control) {
-            command.control.r += right;
-            command.control.l += left;
-            command.control.t += top;
+            command.control.r! += right;
+            command.control.l! += left;
+            command.control.t! += top;
         }
     });
 };
@@ -177,7 +178,8 @@ export const getSVGProperty = (property: string): SVGNativeProperties => {
     }[property] as SVGNativeProperties;
 };
 
-export function addEventListenerToElement(
+export function addEventListenerToElement<T>(
+    this: T,
     element: SVGElement,
     listeners: Listener[],
     event: string,
@@ -199,21 +201,21 @@ export function removeEventListenerFromElement(
     callback: AddEventListenerCallback,
     useCapture: boolean
 ): void {
-    let listener: Listener;
-    listeners.find((ln: Listener, index: number): boolean => {
-        if (ln.fn === callback) {
-            listener = listeners.splice(index, 1)[0];
-            return true;
-        }
+    const listener: Listener | undefined = listeners.find((ln: Listener): boolean => {
+        return ln.fn === callback;
     });
     if (listener) {
+        listeners.splice(
+            listeners.indexOf(listener),
+            1
+        );
         element.removeEventListener(event, listener.fnBind, useCapture);
     }
 }
 
 export const getPatternTransform = (
     corner: IsometricPoint,
-    planeView?: IsometricPlaneView,
+    planeView: IsometricPlaneView | undefined,
     scale?: number,
     rotation?: Rotation
 ): string => {
@@ -243,7 +245,8 @@ export const elementHasSVGParent = (element: Node): boolean => {
 };
 
 export const getAnimationProperties = <P>(
-    getPath: (...args: unknown[]) => string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getPath: (...args: any[]) => string,
     animation: SVGAnimationObject,
     props?: P
 ): Record<string, string> => {
@@ -260,7 +263,7 @@ export const getAnimationProperties = <P>(
         return getPath(value);
     };
 
-    if (animation.values) {
+    if (isSVGAnimationPropsValues(animation)) {
         if (Array.isArray(animation.values)) {
             properties = {
                 values: animation.values.map((value: string | number): string => {

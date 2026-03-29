@@ -33,9 +33,9 @@ export class IsometricGroup extends IsometricContainerAbstract {
                 0,
                 0,
                 {
-                    r: this.props.right,
-                    l: this.props.left,
-                    t: this.props.top
+                    r: this.props.right!,
+                    l: this.props.left!,
+                    t: this.props.top!
                 },
                 this.data.scale
             );

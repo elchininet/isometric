@@ -81,7 +81,7 @@ describe('Removing methods', (): void => {
         // Removing elements that belongs to the children but are already removed from DOM should not throw an error
         expect(() => {
             cube.addChild(top);
-            topElement.parentNode.removeChild(topElement);
+            topElement.parentNode!.removeChild(topElement);
             cube.removeChild(top);
         }).not.toThrow();
 

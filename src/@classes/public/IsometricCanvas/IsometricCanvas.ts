@@ -8,6 +8,7 @@ import {
 } from '@constants';
 import { addSVGProperties } from '@utils/svg';
 import { uuid } from '@utils/math';
+import { isString } from '@utils/predicates';
 import { Store } from '@store';
 import { IsometricContainerAbstract } from '@classes/abstract/IsometricContainerAbstract';
 import { IsometricCanvasProps } from './types';
@@ -34,9 +35,9 @@ export class IsometricCanvas extends IsometricContainerAbstract {
         this.isAnimated = true;
 
         this.data = new Store(
-            this.props.width,
-            this.props.height,
-            this.props.scale
+            this.props.width!,
+            this.props.height!,
+            this.props.scale!
         );
 
         addSVGProperties(this.element, {
@@ -57,11 +58,13 @@ export class IsometricCanvas extends IsometricContainerAbstract {
 
         this.element.appendChild(this.background);
 
-        const containerElement = typeof this.props.container === 'string'
+        const containerElement = isString(this.props.container)
             ? document.querySelector(this.props.container)
             : this.props.container;
 
-        containerElement.appendChild(this.element);
+        if (containerElement) {
+            containerElement.appendChild(this.element);
+        }
 
     }
 
@@ -70,7 +73,7 @@ export class IsometricCanvas extends IsometricContainerAbstract {
     private isAnimated: boolean;
 
     public get backgroundColor(): string {
-        return this.props.backgroundColor;
+        return this.props.backgroundColor!;
     }
 
     public set backgroundColor(value: string) {

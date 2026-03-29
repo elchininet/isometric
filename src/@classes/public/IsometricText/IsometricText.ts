@@ -19,6 +19,7 @@ import {
     getPatternTransform,
     isSVGProperty
 } from '@utils/svg';
+import { isSVGAnimationPropsValues } from '@utils/predicates';
 import { IsometricTextProps } from './types';
 
 export class IsometricText extends IsometricGraphicAbstract {
@@ -43,6 +44,7 @@ export class IsometricText extends IsometricGraphicAbstract {
         // Check https://github.com/microsoft/TypeScript/issues/13029
         /* istanbul ignore next */
         super(rest, SVG_ELEMENTS.group);
+        this._text = text;
         this._textElement = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.text);
         this._tspan = document.createElementNS(SVG_NAMESPACE, SVG_ELEMENTS.tspan);
         this._textElement.appendChild(this._tspan);
@@ -62,20 +64,20 @@ export class IsometricText extends IsometricGraphicAbstract {
 
     }
 
-    private _textElement: SVGTextElement;
-    private _tspan: SVGTSpanElement;
-    private _text: string;
-    private _planeView: IsometricPlaneView;
-    private _fontFamily: string;
-    private _fontSize: number;
-    private _fontStyle: IsometricTextProps['fontStyle'];
-    private _fontWeight: IsometricTextProps['fontWeight'];
-    private _origin: IsometricTextProps['origin'];
-    private _selectable: boolean;
-    private _right: number;
-    private _left: number;
-    private _top: number;
-    private _rotation: number;
+    private _textElement!: SVGTextElement;
+    private _tspan!: SVGTSpanElement;
+    private _text!: string;
+    private _planeView!: IsometricPlaneView;
+    private _fontFamily!: string;
+    private _fontSize!: number;
+    private _fontStyle!: IsometricTextProps['fontStyle'];
+    private _fontWeight!: IsometricTextProps['fontWeight'];
+    private _origin!: IsometricTextProps['origin'];
+    private _selectable!: boolean;
+    private _right!: number;
+    private _left!: number;
+    private _top!: number;
+    private _rotation!: number;
     private _originHash = {
         [ORIGIN.CENTER]: 'middle',
         [ORIGIN.LEFT]: 'start',
@@ -144,7 +146,7 @@ export class IsometricText extends IsometricGraphicAbstract {
 
                 let properties: Record<string, string>;
 
-                if (animation.values) {
+                if (isSVGAnimationPropsValues(animation)) {
 
                     if (Array.isArray(animation.values)) {
                         properties = {
@@ -216,7 +218,7 @@ export class IsometricText extends IsometricGraphicAbstract {
                 // beginElement is not available in Jest
                 /* istanbul ignore next */
                 window.requestAnimationFrame(() => {
-                    animation.element.beginElement();
+                    animation.element!.beginElement();
                 });
             }
 
@@ -344,7 +346,7 @@ export class IsometricText extends IsometricGraphicAbstract {
         return this._origin;
     }
 
-    public set origin(value: IsometricTextProps['origin']) {
+    public set origin(value: NonNullable<IsometricTextProps['origin']>) {
         this._origin = value;
         const [textAnchor, alignmentBaseline] = this._origin;
         addSVGProperties(this._tspan, {

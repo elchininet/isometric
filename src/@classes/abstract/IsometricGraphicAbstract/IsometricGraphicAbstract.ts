@@ -111,14 +111,14 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
     private _updateTexture() {
         const image = this.pattern.firstChild as SVGImageElement;
         if (
-            this.props.texture.url &&
-            image.getAttribute('href') !== this.props.texture.url
+            this.props.texture!.url &&
+            image.getAttribute('href') !== this.props.texture!.url
         ) {
             addSVGProperties(image, {
-                'href': this.props.texture.url
+                'href': this.props.texture!.url
             });
         }
-        if (this.props.texture.pixelated) {
+        if (this.props.texture!.pixelated) {
             addSVGProperties(image, {
                 'style': 'image-rendering: pixelated'
             });
@@ -130,13 +130,13 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     protected props: IsometricGraphicProps;
 
-    protected patternId: string;
-    protected pattern: SVGPatternElement;
-    protected animations: SVGAnimationObject[];
+    protected patternId!: string;
+    protected pattern!: SVGPatternElement;
+    protected animations!: SVGAnimationObject[];
     protected abstract updateSubClassAnimations(): void;
 
     protected addAnimationBasicProperties(attributeName: string, animation: SVGAnimationObject): void {
-        addSVGProperties(animation.element, {
+        addSVGProperties(animation.element!, {
             repeatCount: `${animation.repeat || 'indefinite'}`,
             attributeName,
             dur: `${animation.duration || 1}s`
@@ -178,7 +178,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     protected updatePatternTransform(
         corner: IsometricPoint,
-        planeView?: IsometricPlaneView
+        planeView: IsometricPlaneView | undefined
     ) {
         if (this.props.texture) {
             const height = this.props.texture.height
@@ -202,7 +202,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
                     x: round(corner.x + shift.x, DECIMALS),
                     y: round(corner.y + shift.y, DECIMALS)
                 },
-                this.props.texture.planeView || planeView,
+                this.props.texture.planeView ?? planeView,
                 this.props.texture.scale,
                 this.props.texture.rotation
             );
@@ -241,7 +241,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     // fillColor
     public get fillColor(): string {
-        return this.props.fillColor;
+        return this.props.fillColor!;
     }
 
     public set fillColor(value: string) {
@@ -255,7 +255,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     // fillOpacity
     public get fillOpacity(): number {
-        return this.props.fillOpacity;
+        return this.props.fillOpacity!;
     }
 
     public set fillOpacity(value: number) {
@@ -275,13 +275,13 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
         }
     }
 
-    public get texture(): Texture {
+    public get texture(): Texture | undefined {
         return this.props.texture;
     }
 
     // strokeColor
     public get strokeColor(): string {
-        return this.props.strokeColor;
+        return this.props.strokeColor!;
     }
 
     public set strokeColor(value: string) {
@@ -291,7 +291,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     // strokeDashArray
     public get strokeDashArray(): number[] {
-        return this.props.strokeDashArray;
+        return this.props.strokeDashArray!;
     }
 
     public set strokeDashArray(value: number[]) {
@@ -301,7 +301,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     // strokeLinecap
     public get strokeLinecap(): StrokeLinecap {
-        return this.props.strokeLinecap;
+        return this.props.strokeLinecap!;
     }
 
     public set strokeLinecap(value: StrokeLinecap) {
@@ -311,7 +311,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     // strokeLinejoin
     public get strokeLinejoin(): StrokeLinejoin {
-        return this.props.strokeLinejoin;
+        return this.props.strokeLinejoin!;
     }
 
     public set strokeLinejoin(value: StrokeLinejoin) {
@@ -321,7 +321,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     // strokeOpacity
     public get strokeOpacity(): number {
-        return this.props.strokeOpacity;
+        return this.props.strokeOpacity!;
     }
 
     public set strokeOpacity(value: number) {
@@ -331,7 +331,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     // strokeWidth
     public get strokeWidth(): number {
-        return this.props.strokeWidth;
+        return this.props.strokeWidth!;
     }
 
     public set strokeWidth(value: number) {
@@ -341,7 +341,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
 
     // className
     public get className(): string {
-        return this.props.className;
+        return this.props.className ?? '';
     }
 
     public set className(value: string) {
@@ -361,7 +361,7 @@ export abstract class IsometricGraphicAbstract extends IsometricElementAbstract 
             const { shift, rotation, ...newProps } = value;
             this.props.texture = hasTexture
                 ? {
-                    ...this.props.texture,
+                    ...this.props.texture!,
                     ...newProps
                 }
                 : { ...newProps } as Texture;

@@ -383,7 +383,7 @@ describe('Test dragging', (): void => {
     it('Preventing dragging', async (): Promise<void> => {
 
         const mockDragstart = jest.fn();
-        const mockDrag = jest.fn((event: CustomEvent) => {
+        const mockDrag = jest.fn((event: Event) => {
             event.preventDefault();
         });
         const mockEnd = jest.fn();
@@ -402,9 +402,9 @@ describe('Test dragging', (): void => {
         expect(mockDragstart.mock.calls[0][0].detail.top).toBe(0);
 
         expect(mockDrag).toHaveBeenCalledTimes(1);
-        expect(mockDrag.mock.calls[0][0].detail.right).toBe(41.547011);
-        expect(mockDrag.mock.calls[0][0].detail.left).toBe(18.452989);
-        expect(mockDrag.mock.calls[0][0].detail.top).toBe(0);
+        expect((mockDrag.mock.calls[0][0] as CustomEvent).detail.right).toBe(41.547011);
+        expect((mockDrag.mock.calls[0][0] as CustomEvent).detail.left).toBe(18.452989);
+        expect((mockDrag.mock.calls[0][0] as CustomEvent).detail.top).toBe(0);
 
         expect(mockEnd).toHaveBeenCalledTimes(1);
         expect(mockEnd.mock.calls[0][0].detail.right).toBe(41.547011);

@@ -19,7 +19,7 @@ export abstract class IsometricPathAbstract extends IsometricGraphicAbstract {
 
     protected abstract getCommands(args?: unknown): CommandPoint[];
 
-    protected updateGraphic(planeView?: IsometricPlaneView, autoclose = true) {
+    protected updateGraphic(planeView: IsometricPlaneView | undefined, autoclose = true) {
         if (elementHasSVGParent(this.element)) {
             const commands = this.getCommands();
             const corner = getTextureCorner(

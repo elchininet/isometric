@@ -3,7 +3,7 @@ export const applyMixins = (BaseClass: any, constructor: any) => {
         Object.defineProperty(
             BaseClass.prototype,
             name,
-            Object.getOwnPropertyDescriptor(constructor.prototype, name)
+            Object.getOwnPropertyDescriptor(constructor.prototype, name)!
         );
     });
 };
