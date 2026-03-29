@@ -1,5 +1,5 @@
 import type { LineCap, LineJoin } from '@constants';
-import { StringOrNumber } from './generic';
+import { StringOrNumber, AddEventListenerCallback } from './generic';
 
 export type StrokeLinecap = keyof typeof LineCap;
 export type StrokeLinejoin = keyof typeof LineJoin;
@@ -25,15 +25,19 @@ type SVGAnimationBase = {
     repeat?: number;
 };
 
-type SVGAnimationProps = {
+export type SVGAnimationPropsFromTo = {
     from: StringOrNumber;
     to: StringOrNumber;
     values?: never;
-} | {
+};
+
+export type SVGAnimationPropsValues = {
     from?: never;
     to?: never;
     values: StringOrNumber | StringOrNumber[];
 };
+
+export type SVGAnimationProps = SVGAnimationPropsFromTo | SVGAnimationPropsValues;
 
 export type SVGAnimation = SVGAnimationBase & SVGAnimationProps;
 
@@ -66,6 +70,6 @@ export type SVGAnimationObject = SVGAnimation &  {
 };
 
 export type Listener = {
-    fn: VoidFunction;
-    fnBind: VoidFunction;
+    fn: AddEventListenerCallback;
+    fnBind: AddEventListenerCallback;
 };

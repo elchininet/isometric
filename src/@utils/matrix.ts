@@ -74,7 +74,7 @@ const sideMatrix = multiplyMatrices(
     rotateZ(-ROT_45)
 );
 
-const rotationToRotationMatrix = (view: IsometricPlaneView, rotation: Rotation): Matrix | null => {
+const rotationToRotationMatrix = (view: IsometricPlaneView | undefined, rotation: Rotation): Matrix | null => {
     const value = radian(rotation.value);
     switch(view) {
         case PlaneView.TOP: {
@@ -119,7 +119,7 @@ const rotationToRotationMatrix = (view: IsometricPlaneView, rotation: Rotation):
 };
 
 export const getViewMatrix = (
-    planeView?: IsometricPlaneView,
+    planeView: IsometricPlaneView | undefined,
     rotation?: Rotation
 ): Matrix | null => {
 

@@ -64,7 +64,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(path);
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         expect(pathPattern).toBeTruthy();
         expect(isometricElement.contains(pathPattern)).toBeTruthy();
@@ -87,7 +87,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(path);
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         expect(pathPattern.getAttribute('height')).toBe('100%');
         expect(pathPattern.getAttribute('width')).toBe('100%');
@@ -109,7 +109,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(path);
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         expect(pathPattern.firstChild).toBeTruthy();
         expect(pathPattern.childNodes.length).toBe(1);
@@ -139,7 +139,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(path);
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         image = pathPattern.firstChild as SVGImageElement;
 
@@ -158,7 +158,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(path);
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         image = pathPattern.firstChild as SVGImageElement;
 
@@ -178,7 +178,7 @@ describe('Test textures', (): void => {
         isometric.addChild(path);
 
         pathElement = path.getElement();
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         expect(pathElement.getAttribute('fill')).toBe(`url(#${pathPattern.id}) white`);
 
@@ -197,7 +197,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(path);
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         expect(pathPattern.getAttribute('patternTransform')).toBe('translate(9007199254740991 9007199254740991)');
 
@@ -294,7 +294,7 @@ describe('Test textures', (): void => {
 
             isometric.addChild(path);
 
-            pathPattern = path.getPattern();
+            pathPattern = path.getPattern()!;
 
             expect(pathPattern.getAttribute('patternTransform')).toBe(props.value);
 
@@ -408,7 +408,7 @@ describe('Test textures', (): void => {
 
             isometric.addChild(rectangle);
 
-            const rectanglePattern = rectangle.getPattern();
+            const rectanglePattern = rectangle.getPattern()!;
 
             expect(rectanglePattern.getAttribute('patternTransform')).toBe(test.expect);
 
@@ -428,7 +428,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(rectangle);
 
-        let patternRectangle = rectangle.getPattern();
+        let patternRectangle = rectangle.getPattern()!;
 
         expect(patternRectangle.getAttribute('patternTransform')).toBe('translate(146.077 220) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745)');
 
@@ -444,7 +444,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(rectangle);
 
-        patternRectangle = rectangle.getPattern();
+        patternRectangle = rectangle.getPattern()!;
 
         expect(patternRectangle.getAttribute('patternTransform')).toBe('translate(250 40) matrix(0.707107,0.408248,0,0.816496,0,0) scale(1.224745)');
 
@@ -460,7 +460,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(rectangle);
 
-        patternRectangle = rectangle.getPattern();
+        patternRectangle = rectangle.getPattern()!;
 
         expect(patternRectangle.getAttribute('patternTransform')).toBe('translate(146.077 100) matrix(0.707107,-0.408248,0,0.816496,0,0) scale(1.224745)');
 
@@ -479,7 +479,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(circle);
 
-        let patternCircle = circle.getPattern();
+        let patternCircle = circle.getPattern()!;
 
         expect(patternCircle.getAttribute('patternTransform')).toBe('translate(198.0385 190) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745)');
 
@@ -494,7 +494,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(circle);
 
-        patternCircle = circle.getPattern();
+        patternCircle = circle.getPattern()!;
 
         expect(patternCircle.getAttribute('patternTransform')).toBe('translate(198.0385 130) matrix(0.707107,0.408248,0,0.816496,0,0) scale(1.224745)');
 
@@ -509,7 +509,7 @@ describe('Test textures', (): void => {
 
         isometric.addChild(circle);
 
-        patternCircle = circle.getPattern();
+        patternCircle = circle.getPattern()!;
 
         expect(patternCircle.getAttribute('patternTransform')).toBe('translate(198.0385 190) matrix(0.707107,-0.408248,0,0.816496,0,0) scale(1.224745)');
 
@@ -527,7 +527,7 @@ describe('Test textures', (): void => {
 
         isometric.addChildren(path);
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         isometric.removeChildren(path);
 
@@ -543,7 +543,7 @@ describe('Test textures', (): void => {
 
         isometric.addChildren(path);
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         expect(pathPattern).toBeFalsy();
 
@@ -554,7 +554,7 @@ describe('Test textures', (): void => {
 
         path.texture = cloneTexture;
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         expect(path.texture).toStrictEqual(cloneTexture);
         expect(pathPattern.getAttribute('patternTransform')).toBe('translate(146.077 100) matrix(0.707107,-0.408248,0.707107,0.408248,0,0) scale(1.224745)');
@@ -588,7 +588,7 @@ describe('Test textures', (): void => {
             width: 3
         });
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
         let image = pathPattern.firstChild as SVGImageElement;
 
         expect(pathPattern.getAttribute('height')).toBe('240');
@@ -619,7 +619,7 @@ describe('Test textures', (): void => {
 
         path.updateTexture(cloneTexture);
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
         image = pathPattern.firstChild as SVGImageElement;
 
         expect(path.texture).toStrictEqual({
@@ -668,7 +668,7 @@ describe('Test textures', (): void => {
             pixelated: true
         });
 
-        pathPattern = path.getPattern();
+        pathPattern = path.getPattern()!;
 
         expect(pathPattern).toBeFalsy();
 

@@ -1,20 +1,21 @@
 {
     "compilerOptions": {
-        "outDir": "./docs-dist/",
+        "outDir": "./",
         "module": "esnext",
-        "target": "es5",
-        "moduleResolution": "node",
+        "target": "es6",
+        "moduleResolution": "bundler",
         "esModuleInterop": true,
-        "declaration": true,
+        "declaration": false,
         "noImplicitAny": true,
         "removeComments": true,
-        "baseUrl": "./src",
+        "rootDir": "./src",
+        "types": ["node", "jest"],
         "paths": {
-            "@store": ["@store"],
-            "@types": ["@types"],
-            "@constants": ["@constants"],
-            "@utils/*": ["@utils/*"],
-            "@classes/*": ["@classes/*"]
+            "@store": ["./src/@store"],
+            "@types": ["./src/@types"],
+            "@constants": ["./src/@constants"],
+            "@utils/*": ["./src/@utils/*"],
+            "@classes/*": ["./src/@classes/*"]
         }
     },
     "include": ["src/**/*.ts"],

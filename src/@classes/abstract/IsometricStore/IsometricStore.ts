@@ -2,7 +2,7 @@ import { Store } from '@store';
 
 export abstract class IsometricStore {
 
-    protected dataStore: Store;
+    protected dataStore!: Store;
 
     public get data(): Store {
         return this.dataStore;

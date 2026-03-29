@@ -21,7 +21,7 @@ export abstract class IsometricShapeAbstract extends IsometricPathAbstract {
         super({...defaultProps, ...props}, SVG_ELEMENTS.path);
     }
 
-    protected override props: IsometricShapeProps;
+    protected override props!: IsometricShapeProps;
 
     public update(): this {
         this.updateGraphic(this.planeView);
