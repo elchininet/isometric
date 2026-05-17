@@ -1,0 +1,54 @@
+name: Deploy Demo to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-demo:
+    name: Build Demo
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11
+          run_install: false
+      - name: Set-up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: |
+          pnpm install
+      - name: Build Demo
+        run: |
+          pnpm run docs
+      - name: Upload Build Artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs/
+
+  deploy-demo:
+    name: Deploy Demo
+    needs: build-demo
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Deployment
+        id: deployment
+        uses: actions/deploy-pages@v5

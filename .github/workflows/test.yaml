@@ -28,6 +28,8 @@ jobs:
         run: pnpm test:ts
       - name: Linting files
         run: pnpm test:lint
+      - name: Test demo build
+        run: pnpm run docs
       - name: Make coverage
         run: pnpm test:unit --coverage
       - name: Coveralls
