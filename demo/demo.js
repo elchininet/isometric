@@ -1,7 +1,7 @@
 import 'google-code-prettify/bin/run_prettify.min';
 import '../node_modules/google-code-prettify/bin/prettify.min.css';
 import './tomorrow.min.css';
-import './styles.scss';
+import './styles.css';
 import * as IsometricModule from '../src';
 import demo1 from './demo1';
 import demo2 from './demo2';
