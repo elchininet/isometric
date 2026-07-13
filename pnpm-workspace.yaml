@@ -2,4 +2,7 @@ allowBuilds:
   '@parcel/watcher': false
   unrs-resolver: false
 overrides:
-  postcss@<8.5.10: ^8.5.10
+  '@babel/core@<=7.29.0': ^7.29.1
+  js-yaml@<3.15.0: ^3.15.0
+  js-yaml@>=4.0.0 <=4.1.1: ^4.1.2
+  undici@>=7.0.0 <7.28.0: ^7.28.0
