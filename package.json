@@ -89,7 +89,7 @@
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "mini-css-extract-plugin": "^2.10.2",
-    "postcss": "^8.5.17",
+    "postcss": "^8.5.18",
     "postcss-loader": "^8.2.1",
     "postcss-nested": "^7.0.2",
     "rimraf": "^6.1.3",
