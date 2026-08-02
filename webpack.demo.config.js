@@ -1,14 +1,14 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const aliases = require('./aliases');
+import path from 'node:path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import aliases from './aliases.js';
 
-module.exports = {
+export default {
     mode: 'development',
     devtool: 'eval-source-map',
     entry: './demo/demo.js',
     output: {
-        path: path.resolve(__dirname, 'docs'),
+        path: path.resolve('docs'),
         filename: 'scripts/bundle.js',
         assetModuleFilename: 'images/[name][ext]'
     },
