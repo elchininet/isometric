@@ -2,7 +2,8 @@ import { Position } from '@types';
 import {
     EVENTS,
     DECIMALS,
-    PlaneView
+    PlaneView,
+    Typeof
 } from '@constants';
 import {
     getTopPlanePointFromCoordinates,
@@ -24,7 +25,7 @@ import {
     ClientCoords
 } from './types';
 
-const _isBrowser = !isUndefined(window);
+const _isBrowser = typeof window !== Typeof.UNDEFINED;
 
 /* istanbul ignore next */
 const _requestAnimationFrame = _isBrowser
