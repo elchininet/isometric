@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.0.2] - 2026-11-22
+
+- Fix missing cjs files in published package
+
 ## [4.0.1] - 2026-11-22
 
 - Fix error in node environment about non-existing windows
