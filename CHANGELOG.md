@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.0.1] - 2026-11-22
+
+- Fix error in node environment about non-existing windows
+- Fix an error in CJS environments
+
 ## [4.0.0] - 2026-03-29
 
 - Migrated to `TypeScript 6`, so the target of the library is now `es6` instead of the previous `es5`
