@@ -10,7 +10,7 @@
     ".": {
       "require": {
         "types": "./index.d.ts",
-        "default": "./index.js"
+        "default": "./index.cjs"
       },
       "import": {
         "types": "./esm/index.d.ts",
@@ -20,7 +20,7 @@
     "./node": {
       "require": {
         "types": "./node.d.ts",
-        "default": "./index.node.js"
+        "default": "./index.node.cjs"
       },
       "import": {
         "types": "./esm/node.d.ts",
