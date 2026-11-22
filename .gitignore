@@ -5,6 +5,6 @@
 /web/
 /index.d.ts
 /node.d.ts
-/index.node.js
-/index.js
+/index.node.cjs
+/index.cjs
 /docs
