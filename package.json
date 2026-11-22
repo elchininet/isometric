@@ -3,7 +3,7 @@
   "version": "4.0.2",
   "description": "A JavaScript library written in TypeScript to create isometric projections using SVGs",
   "type": "module",
-  "main": "index.js",
+  "main": "index.cjs",
   "module": "esm/index.js",
   "types": "index.d.ts",
   "exports": {
