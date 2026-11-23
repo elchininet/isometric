@@ -112,5 +112,5 @@
   "dependencies": {
     "jsdom": "^31.0.1"
   },
-  "packageManager": "pnpm@11.15.0"
+  "packageManager": "pnpm@12.23.0"
 }
